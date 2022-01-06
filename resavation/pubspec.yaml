@@ -18,6 +18,8 @@ dependencies:
   # ui
   google_fonts: ^2.2.0
   cupertino_icons: ^1.0.2
+  animations: ^2.0.2
+  flutter_svg: ^1.0.0
 
 dev_dependencies:
   stacked_generator: ^0.5.6
