@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/shared/widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/views/onboarding/onboarding_viewmodel.dart';
 import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
