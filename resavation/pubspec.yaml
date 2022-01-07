@@ -14,12 +14,14 @@ dependencies:
   # state_managment
   stacked: ^2.2.7+1
   stacked_services: ^0.8.16
+  flutter_hooks: ^0.18.2
 
   # ui
   google_fonts: ^2.2.0
   cupertino_icons: ^1.0.2
   animations: ^2.0.2
   flutter_svg: ^1.0.0
+  dots_indicator: ^2.0.0
 
 dev_dependencies:
   stacked_generator: ^0.5.6
