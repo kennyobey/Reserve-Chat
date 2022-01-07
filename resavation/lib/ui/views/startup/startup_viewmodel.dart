@@ -6,8 +6,8 @@ import 'package:stacked_services/stacked_services.dart';
 class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  Future<void> goToMainView() async {
-    await Future.delayed(Duration(milliseconds: 10000));
-    await _navigationService.replaceWith(Routes.mainView);
+  Future<void> goToOnboardingView() async {
+    await Future.delayed(Duration(seconds: 3));
+    await _navigationService.replaceWith(Routes.onboardingView);
   }
 }
