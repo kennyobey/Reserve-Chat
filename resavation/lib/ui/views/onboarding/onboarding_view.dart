@@ -11,11 +11,11 @@ import 'package:stacked/stacked.dart';
 
 class OnboardingView extends HookWidget {
   const OnboardingView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final pageViewController = usePageController();
     return ViewModelBuilder<OnboardingViewModel>.reactive(
+      onModelReady: (model) => model.loadSvgs(),
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
             body: Stack(
@@ -47,7 +47,7 @@ class OnboardingView extends HookWidget {
               child: model.pagePosition == 2
                   ? ResavationButton(
                       title: "Get Started",
-                      onTap: model.goToMainView,
+                      onTap: model.goToSignUpView,
                     )
                   : DotsIndicator(
                       dotsCount: 3,
