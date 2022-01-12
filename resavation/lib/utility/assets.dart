@@ -10,4 +10,5 @@ class Assets {
   static const lagos_location_placeholder = 'https://image.shutterstock.com/image-photo/lagos-nigeria-skyline-dawn-600w-1055844236.jpg';
   static const abuja_location_placeholder = 'https://image.shutterstock.com/image-photo/zuma-rock-large-monolith-igneous-600w-1022345497.jpg';
   static const kaduna_location_placeholder = 'https://image.shutterstock.com/image-photo/29th-september-2019-kaduna-nigeria-600w-1521109949.jpg';
+  static const sitting_room_placeholder = 'https://image.shutterstock.com/image-photo/white-designed-living-room-modern-600w-295930376.jpg';
 }

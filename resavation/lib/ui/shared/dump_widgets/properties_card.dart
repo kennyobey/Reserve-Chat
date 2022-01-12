@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
+import 'package:resavation/ui/shared/spacing.dart';
+import 'package:resavation/ui/shared/text_styles.dart';
+
+class PropertyCard extends StatelessWidget {
+  const PropertyCard({
+    Key? key,
+    required this.image,
+    this.onFavoriteTap,
+    this.amountPerYear,
+    required this.location,
+    this.address = '',
+    required this.numberOfBedrooms,
+    required this.numberOfBathrooms,
+    required this.squareFeet,
+    this.isFavoriteTap = false,
+  }) : super(key: key);
+
+  final void Function()? onFavoriteTap;
+  final String image;
+  final int? amountPerYear;
+  final String location;
+  final String address;
+  final int numberOfBedrooms;
+  final int numberOfBathrooms;
+  final int squareFeet;
+  final bool isFavoriteTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 400),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 150,
+                  color: kBlack,
+                  child: ResavationImage(
+                    image: image,
+                  ),
+                ),
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: IconButton(
+                    icon: Icon(
+                      isFavoriteTap ? Icons.favorite : Icons.favorite_border,
+                      color: isFavoriteTap ? kRed : null,
+                    ),
+                    iconSize: 25,
+                    onPressed: onFavoriteTap,
+                  ),
+                ),
+              ],
+            ),
+            verticalSpaceSmall,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        location,
+                        style: AppStyle.kBodyBold,
+                      ),
+                      Text(
+                        amountPerYear.toString() + ' /year',
+                        style: AppStyle.kBodyBold.copyWith(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    address,
+                    style: AppStyle.kBodyRegular,
+                  ),
+                ],
+              ),
+            ),
+            verticalSpaceSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  numberOfBedrooms.toString() + ' Beds',
+                  style: AppStyle.kBodySmallRegular,
+                ),
+                Text(
+                  numberOfBathrooms.toString() + ' Baths',
+                  style: AppStyle.kBodySmallRegular,
+                ),
+                Text(
+                  squareFeet.toString() + ' Sqft',
+                  style: AppStyle.kBodySmallRegular,
+                ),
+              ],
+            ),
+            verticalSpaceSmall,
+          ],
+        ),
+      ),
+    );
+  }
+}

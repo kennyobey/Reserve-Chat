@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
-class SignUpText extends StatelessWidget {
-  const SignUpText({
+class ResavationTextSpan extends StatelessWidget {
+  const ResavationTextSpan({
     Key? key,
     this.onTap,
+    this.leading = '',
+    this.trailing = '',
   }) : super(key: key);
-
+  final String leading;
+  final String trailing;
   final void Function()? onTap;
 
   @override
@@ -18,10 +21,10 @@ class SignUpText extends StatelessWidget {
       child: Text.rich(
         TextSpan(children: [
           TextSpan(
-            text: "Don't have an account? ",
+            text: leading,
           ),
           TextSpan(
-            text: 'Sign up',
+            text: trailing,
             style: AppStyle.kBodyBold.copyWith(
               color: kPrimaryColor,
             ),
