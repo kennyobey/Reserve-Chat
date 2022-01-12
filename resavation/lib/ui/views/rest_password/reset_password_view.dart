@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
-import 'package:resavation/ui/shared/dump_widgets/signup_text.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_textspan.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/rest_password/reset_password_viewmodel.dart';
@@ -41,12 +43,20 @@ class ResetPasswordView extends StatelessWidget {
                   hintText: 'Email',
                 ),
                 verticalSpaceMedium,
+                ResavationTextSpan(
+                  leading: "Don't receive link? ",
+                  trailing: 'Resend',
+                  onTap: () {},
+                ),
+                verticalSpaceSmall,
                 ResavationButton(
                   title: 'Send Reset Link',
                   onTap: model.goToMainView,
                 ),
                 verticalSpaceMassive,
-                SignUpText(
+                ResavationTextSpan(
+                  leading: "Don't have an account? ",
+                  trailing: 'Sign up',
                   onTap: model.goToSignUpView,
                 ),
                 verticalSpaceMassive,
