@@ -1,14 +1,12 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
-import 'package:resavation/ui/shared/dump_widgets/signup_text.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_textspan.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class LogInView extends StatelessWidget {
   const LogInView({Key? key}) : super(key: key);
@@ -76,7 +74,9 @@ class LogInView extends StatelessWidget {
                     onTap: model.goToMainView,
                   ),
                   verticalSpaceMassive,
-                  SignUpText(
+                  ResavationTextSpan(
+                    leading: "Don't have an account? ",
+                    trailing: 'Sign up',
                     onTap: model.goToSignUpView,
                   ),
                   verticalSpaceMedium,
