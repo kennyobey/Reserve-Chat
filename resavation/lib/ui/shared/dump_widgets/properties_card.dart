@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -90,22 +91,10 @@ class PropertyCard extends StatelessWidget {
               ),
             ),
             verticalSpaceSmall,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  numberOfBedrooms.toString() + ' Beds',
-                  style: AppStyle.kBodySmallRegular,
-                ),
-                Text(
-                  numberOfBathrooms.toString() + ' Baths',
-                  style: AppStyle.kBodySmallRegular,
-                ),
-                Text(
-                  squareFeet.toString() + ' Sqft',
-                  style: AppStyle.kBodySmallRegular,
-                ),
-              ],
+            PropertyDetails(
+              numberOfBedrooms: numberOfBedrooms,
+              numberOfBathrooms: numberOfBathrooms,
+              squareFeet: squareFeet,
             ),
             verticalSpaceSmall,
           ],
