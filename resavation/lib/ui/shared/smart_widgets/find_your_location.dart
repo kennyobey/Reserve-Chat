@@ -6,7 +6,10 @@ import 'package:resavation/ui/shared/spacing.dart';
 class FindYourLocation extends StatelessWidget {
   const FindYourLocation({
     Key? key,
+    this.onTap,
   }) : super(key: key);
+
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +23,19 @@ class FindYourLocation extends StatelessWidget {
           ),
         ),
         horizontalSpaceSmall,
-        Container(
-          height: 45,
-          width: 40,
-          child: Icon(
-            Icons.filter_list,
-            color: kWhite,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: kPrimaryColor,
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            height: 45,
+            width: 40,
+            child: Icon(
+              Icons.filter_list,
+              color: kWhite,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: kPrimaryColor,
+            ),
           ),
         )
       ],
