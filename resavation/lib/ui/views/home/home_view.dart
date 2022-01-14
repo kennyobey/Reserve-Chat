@@ -53,7 +53,9 @@ class HomeView extends StatelessWidget {
                         style: AppStyle.kHeading1,
                       ),
                       verticalSpaceMedium,
-                      FindYourLocation(),
+                      FindYourLocation(
+                        onTap: model.goToFilterView,
+                      ),
                       verticalSpaceMedium,
                       TitleListTile(
                         title: 'Categories',
