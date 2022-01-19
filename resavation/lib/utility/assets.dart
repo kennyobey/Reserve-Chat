@@ -11,4 +11,5 @@ class Assets {
   static const abuja_location_placeholder = 'https://image.shutterstock.com/image-photo/zuma-rock-large-monolith-igneous-600w-1022345497.jpg';
   static const kaduna_location_placeholder = 'https://image.shutterstock.com/image-photo/29th-september-2019-kaduna-nigeria-600w-1521109949.jpg';
   static const sitting_room_placeholder = 'https://image.shutterstock.com/image-photo/white-designed-living-room-modern-600w-295930376.jpg';
+  static const flower_background = 'https://image.shutterstock.com/image-photo/round-frame-wreath-pattern-roses-600w-450853336.jpg';
 }
