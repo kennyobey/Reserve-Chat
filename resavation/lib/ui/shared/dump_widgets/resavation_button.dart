@@ -11,6 +11,7 @@ class ResavationButton extends StatelessWidget {
     this.buttonColor = kPrimaryColor,
     this.height,
     this.width,
+    this.borderColor = kPrimaryColor,
   }) : super(key: key);
   final void Function()? onTap;
   final String title;
@@ -18,6 +19,7 @@ class ResavationButton extends StatelessWidget {
   final Color buttonColor;
   final double? height;
   final double? width;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class ResavationButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: buttonColor,
           borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: borderColor),
         ),
         duration: const Duration(milliseconds: 300),
         height: height ?? 50,
