@@ -43,7 +43,7 @@ class PropertyCard extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 150,
-                  color: kBlack,
+                  color: kDarkBlue,
                   child: ResavationImage(
                     image: image,
                   ),
