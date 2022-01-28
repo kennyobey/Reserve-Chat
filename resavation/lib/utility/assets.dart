@@ -12,4 +12,13 @@ class Assets {
   static const kaduna_location_placeholder = 'https://image.shutterstock.com/image-photo/29th-september-2019-kaduna-nigeria-600w-1521109949.jpg';
   static const sitting_room_placeholder = 'https://image.shutterstock.com/image-photo/white-designed-living-room-modern-600w-295930376.jpg';
   static const flower_background = 'https://image.shutterstock.com/image-photo/round-frame-wreath-pattern-roses-600w-450853336.jpg';
+  static const air_conditional_icon = 'assets/icons/air_condotional_icon.svg';
+  static const barbeque_icon = 'assets/icons/barbeque_icon.svg';
+  static const central_heating_icon = 'assets/icons/central_heating_icon.svg';
+  static const dryer_icon = 'assets/icons/dryer_icon.svg';
+  static const laungry_icon = 'assets/icons/laungry_icon.svg';
+  static const tv_cable_icon = 'assets/icons/tv_cable_icon.svg';
+  static const wifi_icon = 'assets/icons/wifi_icon.svg';
+  static const gym_icon = 'assets/icons/gym_icon.svg';
+  static const map_image = 'assets/images/map_image.png';
 }
