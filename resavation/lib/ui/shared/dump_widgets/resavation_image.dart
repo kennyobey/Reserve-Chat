@@ -16,20 +16,20 @@ class ResavationImage extends StatelessWidget {
       fit: BoxFit.cover,
       placeholder: (context, url) => Container(
         alignment: Alignment.center,
-        color: kBlack,
+        color: kDarkBlue,
         child: Shimmer.fromColors(
           enabled: true,
           child: SvgPicture.asset(Assets.logo),
-          baseColor: kBlack,
+          baseColor: kDarkBlue,
           highlightColor: kWhite,
         ),
       ),
       errorWidget: (context, url, error) => Container(
         alignment: Alignment.center,
-        color: kBlack,
+        color: kDarkBlue,
         child: SvgPicture.asset(
           Assets.logo,
-          color: kBlack,
+          color: kDarkBlue,
         ),
       ),
     );
