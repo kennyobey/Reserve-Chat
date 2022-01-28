@@ -1,4 +1,7 @@
+import 'package:resavation/app/app.locator.dart';
+import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 enum ChoiceOfPayment {
   Monthly,
@@ -12,5 +15,10 @@ class DatePickerViewModel extends BaseViewModel {
   void onPaymentChoiceChanged(ChoiceOfPayment? value) {
     _paymentChoice = value!;
     notifyListeners();
+  }
+
+  final _navigationService = locator<NavigationService>();
+  void goToBookingSubmissiontView() {
+    _navigationService.navigateTo(Routes.bookingSubmissionView);
   }
 }

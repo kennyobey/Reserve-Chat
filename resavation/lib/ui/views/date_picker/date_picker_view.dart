@@ -64,6 +64,7 @@ class DatePickerView extends StatelessWidget {
               ),
               ResavationButton(
                 title: 'Continue',
+                onTap: model.goToBookingSubmissiontView,
               ),
             ],
           ),
