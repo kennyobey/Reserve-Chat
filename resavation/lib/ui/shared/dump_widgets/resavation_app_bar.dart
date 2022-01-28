@@ -14,7 +14,7 @@ class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: kWhite,
       title: Text(
         title ?? '',
-        style: AppStyle.kBodyBold.copyWith(color: kBlack),
+        style: AppStyle.kBodyBold.copyWith(color: kDarkBlue),
       ),
       elevation: 0,
       centerTitle: true,
@@ -24,7 +24,7 @@ class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () => Navigator.maybePop(context),
               icon: Icon(
                 CupertinoIcons.chevron_back,
-                color: kBlack,
+                color: kDarkBlue,
                 size: 24,
               ),
             )
