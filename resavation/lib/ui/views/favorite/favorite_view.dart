@@ -24,16 +24,12 @@ class FavoriteView extends StatelessWidget {
                       'Favorite',
                       style: AppStyle.kHeading1,
                     ),
-                    verticalSpaceMedium,
-                    SortProperty(
-                      noOfProperties: 30,
-                      sortByTitle: 'Date',
-                    ),
                   ],
                 ),
                 verticalSpaceMedium,
                 Expanded(
                   child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
                         for (final property in model.properties) ...[
