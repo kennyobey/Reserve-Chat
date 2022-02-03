@@ -15,10 +15,7 @@ class PaymentView extends StatelessWidget {
           title: "Payment Details",
         ),
         body: Center(
-          child: Text(
-            'Data Picker',
-            style: AppStyle.kHeading1,
-          ),
+          child: Image.asset('resavation\assets\images\paymentcard.png'),
         ),
       ),
       viewModelBuilder: () => PaymentViewModel(),
