@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/settings/settings_viewmodel.dart';
@@ -80,6 +81,11 @@ class SettingsView extends StatelessWidget {
                   style: AppStyle.kBodyRegular,
                 ),
                 verticalSpaceMedium,
+                ResavationButton(
+                  title: 'Switch to Property Owner',
+                ),
+                horizontalSpaceSmall,
+                verticalSpaceMedium,
                 GestureDetector(
                   onTap: model.logout,
                   child: Row(
@@ -89,7 +95,6 @@ class SettingsView extends StatelessWidget {
                         color: kRed,
                         // onTap: model.goToOff(),
                       ),
-                      horizontalSpaceSmall,
                       Text(
                         'Logout',
                         style: AppStyle.kBodyBold.copyWith(color: kRed),
@@ -97,8 +102,6 @@ class SettingsView extends StatelessWidget {
                     ],
                   ),
                 ),
-                // icon: Icons.logout,
-                // title: 'Logout',
               ],
             ),
           ),
