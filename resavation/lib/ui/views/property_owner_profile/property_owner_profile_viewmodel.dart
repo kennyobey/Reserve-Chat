@@ -9,6 +9,6 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
   List<Property> get properties => ListOfProperties;
 
   void goToProfileProductListView() {
-    _navigationService.navigateTo(Routes.profileProductListView);
+    //_navigationService.navigateTo(Routes.profileProductListView);
   }
 }

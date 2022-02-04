@@ -8,11 +8,13 @@ class PropertyDetails extends StatelessWidget {
     required this.numberOfBathrooms,
     required this.squareFeet,
     this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
+    this.title,
   }) : super(key: key);
 
   final int numberOfBedrooms;
   final int numberOfBathrooms;
   final int squareFeet;
+  final String? title;
   final MainAxisAlignment mainAxisAlignment;
 
   @override
