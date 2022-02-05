@@ -12,94 +12,96 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsViewModel>.reactive(
-      builder: (context, model, child) => SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'Settings',
-                    style: AppStyle.kHeading1,
+      builder: (context, model, child) => SingleChildScrollView(
+        child: SafeArea(
+          child: Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 15,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      'Settings',
+                      style: AppStyle.kHeading1,
+                    ),
                   ),
-                ),
-                verticalSpaceMedium,
-                SettingsRow(
-                  icon: Icons.people,
-                  title: 'Account',
-                ),
-                verticalSpaceMedium,
-                Text(
-                  'Edit Profile',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceSmall,
-                Text(
-                  'Change Password',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                SettingsRow(
-                  icon: Icons.notifications,
-                  title: 'Notification',
-                ),
-                SwitchListTile(
-                  value: model.notificationSwitchValue,
-                  onChanged: model.onNotificationSwitchChanged,
-                  title: Text(
-                    'Notifications',
+                  verticalSpaceMedium,
+                  SettingsRow(
+                    icon: Icons.people,
+                    title: 'Account',
+                  ),
+                  verticalSpaceMedium,
+                  Text(
+                    'Edit Profile',
                     style: AppStyle.kBodyRegular,
                   ),
-                ),
-                SwitchListTile(
-                  value: model.appNotificationSwitchValue,
-                  onChanged: model.onAppNotificationSwitchValue,
-                  title: Text(
-                    'App Notifications',
+                  verticalSpaceSmall,
+                  Text(
+                    'Change Password',
                     style: AppStyle.kBodyRegular,
                   ),
-                ),
-                verticalSpaceSmall,
-                SettingsRow(
-                  icon: Icons.more_rounded,
-                  title: 'More',
-                ),
-                verticalSpaceMedium,
-                Text(
-                  'Language',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceSmall,
-                Text(
-                  'Country',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                GestureDetector(
-                  onTap: model.logout,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.logout,
-                        color: kRed,
-                        // onTap: model.goToOff(),
-                      ),
-                      horizontalSpaceSmall,
-                      Text(
-                        'Logout',
-                        style: AppStyle.kBodyBold.copyWith(color: kRed),
-                      ),
-                    ],
+                  verticalSpaceMedium,
+                  SettingsRow(
+                    icon: Icons.notifications,
+                    title: 'Notification',
                   ),
-                ),
-                // icon: Icons.logout,
-                // title: 'Logout',
-              ],
+                  SwitchListTile(
+                    value: model.notificationSwitchValue,
+                    onChanged: model.onNotificationSwitchChanged,
+                    title: Text(
+                      'Notifications',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                  ),
+                  SwitchListTile(
+                    value: model.appNotificationSwitchValue,
+                    onChanged: model.onAppNotificationSwitchValue,
+                    title: Text(
+                      'App Notifications',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                  ),
+                  verticalSpaceSmall,
+                  SettingsRow(
+                    icon: Icons.more_rounded,
+                    title: 'More',
+                  ),
+                  verticalSpaceMedium,
+                  Text(
+                    'Language',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceSmall,
+                  Text(
+                    'Country',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceMedium,
+                  GestureDetector(
+                    onTap: model.logout,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          color: kRed,
+                          // onTap: model.goToOff(),
+                        ),
+                        horizontalSpaceSmall,
+                        Text(
+                          'Logout',
+                          style: AppStyle.kBodyBold.copyWith(color: kRed),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // icon: Icons.logout,
+                  // title: 'Logout',
+                ],
+              ),
             ),
           ),
         ),
