@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:resavation/ui/views/property_owner_step1/property_owner_step1_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -41,6 +42,7 @@ class Routes {
   static const String paymentView = '/payment-view';
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String confirmationView = '/confirmation-view';
+  static const String propertyOwnerStep1View = '/propertyOwnerStep1View';
   static const all = <String>{
     startupView,
     mainView,
@@ -57,6 +59,7 @@ class Routes {
     paymentView,
     propertyOwnerProfileView,
     confirmationView,
+    propertyOwnerStep1View
   };
 }
 
@@ -79,6 +82,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
+    RouteDef(Routes.propertyOwnerStep1View, page: PropertyOwnerStep1View),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -170,6 +174,12 @@ class StackedRouter extends RouterBase {
     ConfirmationView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ConfirmationView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerStep1View: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerStep1View(),
         settings: data,
       );
     },
