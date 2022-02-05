@@ -9,6 +9,7 @@ import 'package:resavation/ui/views/onboarding/onboarding_view.dart';
 import 'package:resavation/ui/views/payment/payment_view.dart';
 import 'package:resavation/ui/views/property_details/property_details_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_view.dart';
+import 'package:resavation/ui/views/property_owner_step1/property_owner_step1_view.dart';
 import 'package:resavation/ui/views/rest_password/reset_password_view.dart';
 import 'package:resavation/ui/views/settings/settings_view.dart';
 import 'package:resavation/ui/views/signup/signup_view.dart';
@@ -33,6 +34,7 @@ import 'package:stacked_services/stacked_services.dart';
     AdaptiveRoute(page: PaymentView),
     AdaptiveRoute(page: PropertyOwnerProfileView),
     AdaptiveRoute(page: ConfirmationView),
+    AdaptiveRoute(page: PropertyOwnerStep1View),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
