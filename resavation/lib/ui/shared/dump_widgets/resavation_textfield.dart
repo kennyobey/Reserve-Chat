@@ -13,6 +13,8 @@ class ResavationTextField extends StatefulWidget {
     this.labelText,
     this.obscureText = false,
     this.showPrefix = false,
+    this.textInputAction,
+    this.keyboardType,
   }) : super(key: key);
 
   final void Function()? onTap;
@@ -23,6 +25,8 @@ class ResavationTextField extends StatefulWidget {
   final Color? color;
   final bool obscureText;
   final bool showPrefix;
+  final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
 
   @override
   _ResavationTextFieldState createState() => _ResavationTextFieldState();
@@ -37,6 +41,8 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        keyboardType: widget.keyboardType,
+        textInputAction: widget.textInputAction,
         obscureText: _obscureText,
         style: style,
         decoration: InputDecoration(
