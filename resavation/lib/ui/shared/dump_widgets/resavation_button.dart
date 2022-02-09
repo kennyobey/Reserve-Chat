@@ -12,6 +12,7 @@ class ResavationButton extends StatelessWidget {
     this.height,
     this.width,
     this.borderColor = kPrimaryColor,
+    this.icon,
   }) : super(key: key);
   final void Function()? onTap;
   final String title;
@@ -20,26 +21,32 @@ class ResavationButton extends StatelessWidget {
   final double? height;
   final double? width;
   final Color borderColor;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: buttonColor,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: borderColor),
-        ),
-        duration: const Duration(milliseconds: 300),
-        height: height ?? 50,
-        width: width ?? 350,
-        child: Text(
-          title,
-          style: AppStyle.kBodyBold.copyWith(color: titleColor),
-        ),
-      ),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: buttonColor,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: borderColor),
+          ),
+          duration: const Duration(milliseconds: 300),
+          height: height ?? 50,
+          width: width ?? 350,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: AppStyle.kBodyBold.copyWith(color: titleColor),
+              ),
+              Icon(icon),
+            ],
+          )),
     );
   }
 }
