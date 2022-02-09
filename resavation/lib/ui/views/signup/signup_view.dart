@@ -33,6 +33,7 @@ class SignUpView extends StatelessWidget {
                 ),
                 ResavationTextField(
                   hintText: 'Ameh',
+                  textInputAction: TextInputAction.next,
                 ),
                 verticalSpaceSmall,
                 Text(
@@ -40,6 +41,7 @@ class SignUpView extends StatelessWidget {
                   style: AppStyle.kBodyRegular,
                 ),
                 ResavationTextField(
+                  textInputAction: TextInputAction.next,
                   hintText: 'Queen',
                 ),
                 verticalSpaceSmall,
@@ -48,6 +50,8 @@ class SignUpView extends StatelessWidget {
                   style: AppStyle.kBodyRegular,
                 ),
                 ResavationTextField(
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.emailAddress,
                   hintText: 'queenameh@gmail.com',
                 ),
                 verticalSpaceSmall,
@@ -56,6 +60,7 @@ class SignUpView extends StatelessWidget {
                   style: AppStyle.kBodyRegular,
                 ),
                 ResavationTextField(
+                  textInputAction: TextInputAction.next,
                   obscureText: true,
                   hintText: 'password',
                 ),
@@ -67,6 +72,7 @@ class SignUpView extends StatelessWidget {
                 ResavationTextField(
                   obscureText: true,
                   hintText: 'Verify password',
+                  textInputAction: TextInputAction.done,
                 ),
                 verticalSpaceSmall,
                 Row(
@@ -112,7 +118,7 @@ class SignUpView extends StatelessWidget {
                           text: 'Already a user? ',
                         ),
                         TextSpan(
-                          text: 'Sign in',
+                          text: 'log in',
                           style: AppStyle.kBodyBold.copyWith(
                             color: kPrimaryColor,
                           ),
