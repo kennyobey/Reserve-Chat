@@ -157,7 +157,7 @@ class FilterView extends StatelessWidget {
                 verticalSpaceSmall,
                 ResavationButton(
                   title: 'Apply',
-                  onTap: model.goToSearchView,
+                  onTap: model.goToMainView,
                 )
               ],
             ),

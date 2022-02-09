@@ -43,8 +43,8 @@ class FilterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToSearchView() {
-    _navigationService.navigateTo(Routes.searchView);
+  void goToMainView() {
+    _navigationService.navigateTo(Routes.mainView);
   }
 
   String _propertyValue = 'Flat';
