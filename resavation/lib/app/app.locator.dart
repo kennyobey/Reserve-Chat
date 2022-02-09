@@ -10,6 +10,9 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../services/core/custom_snackbar_service.dart';
+import '../services/core/http_service.dart';
+
 final locator = StackedLocator.instance;
 
 void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
@@ -19,4 +22,7 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
 
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
+  locator.registerLazySingleton(() => HttpService());
+  locator.registerLazySingleton(() => SnackbarService());
+  locator.registerLazySingleton(() => CustomSnackbarService());
 }
