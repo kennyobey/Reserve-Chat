@@ -33,6 +33,8 @@ class LogInView extends StatelessWidget {
                     style: AppStyle.kBodyRegular,
                   ),
                   ResavationTextField(
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.emailAddress,
                     hintText: 'queenameh@gmail.com',
                   ),
                   verticalSpaceSmall,
@@ -41,6 +43,7 @@ class LogInView extends StatelessWidget {
                     style: AppStyle.kBodyRegular,
                   ),
                   ResavationTextField(
+                    textInputAction: TextInputAction.done,
                     obscureText: true,
                     hintText: 'password',
                   ),
