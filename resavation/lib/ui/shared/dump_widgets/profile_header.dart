@@ -3,7 +3,9 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/utility/assets.dart';
 
 class ProfileHeader extends SliverPersistentHeaderDelegate {
-  ProfileHeader({Key? key});
+  ProfileHeader({this.onBackTap, Key? key});
+
+  final void Function()? onBackTap;
   @override
   Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
     return Stack(
@@ -37,16 +39,19 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
         Positioned(
           left: 30,
           top: 50,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[700],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(6),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
+          child: GestureDetector(
+            onTap: onBackTap,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[700],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(6),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
             ),
           ),
         )
