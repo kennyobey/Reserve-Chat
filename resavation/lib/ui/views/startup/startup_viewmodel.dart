@@ -7,7 +7,7 @@ class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   Future<void> goToOnboardingView() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
     await _navigationService.replaceWith(Routes.onboardingView);
   }
 }
