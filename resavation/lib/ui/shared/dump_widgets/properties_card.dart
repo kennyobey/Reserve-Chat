@@ -17,6 +17,7 @@ class PropertyCard extends StatelessWidget {
     required this.numberOfBathrooms,
     required this.squareFeet,
     this.isFavoriteTap = false,
+    this.onTap,
   }) : super(key: key);
 
   final void Function()? onFavoriteTap;
@@ -28,76 +29,80 @@ class PropertyCard extends StatelessWidget {
   final int numberOfBathrooms;
   final int squareFeet;
   final bool isFavoriteTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 400),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 150,
-                  color: kDarkBlue,
-                  child: ResavationImage(
-                    image: image,
-                  ),
-                ),
-                Positioned(
-                  right: 10,
-                  top: 10,
-                  child: IconButton(
-                    icon: Icon(
-                      isFavoriteTap ? Icons.favorite : Icons.favorite_border,
-                      color: isFavoriteTap ? kRed : null,
-                    ),
-                    iconSize: 25,
-                    onPressed: onFavoriteTap,
-                  ),
-                ),
-              ],
-            ),
-            verticalSpaceSmall,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 5,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 400),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        location,
-                        style: AppStyle.kBodyBold,
-                      ),
-                      Text(
-                        amountPerYear.toString() + ' /year',
-                        style: AppStyle.kBodyBold.copyWith(
-                          color: kPrimaryColor,
-                        ),
-                      ),
-                    ],
+                  Container(
+                    width: double.infinity,
+                    height: 150,
+                    color: kDarkBlue,
+                    child: ResavationImage(
+                      image: image,
+                    ),
                   ),
-                  Text(
-                    address,
-                    style: AppStyle.kBodyRegular,
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: IconButton(
+                      icon: Icon(
+                        isFavoriteTap ? Icons.favorite : Icons.favorite_border,
+                        color: isFavoriteTap ? kRed : null,
+                      ),
+                      iconSize: 25,
+                      onPressed: onFavoriteTap,
+                    ),
                   ),
                 ],
               ),
-            ),
-            verticalSpaceSmall,
-            PropertyDetails(
-              numberOfBedrooms: numberOfBedrooms,
-              numberOfBathrooms: numberOfBathrooms,
-              squareFeet: squareFeet,
-            ),
-            verticalSpaceSmall,
-          ],
+              verticalSpaceSmall,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          location,
+                          style: AppStyle.kBodyBold,
+                        ),
+                        Text(
+                          '\$ ' + amountPerYear.toString() + ' /year',
+                          style: AppStyle.kBodyBold.copyWith(
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      address,
+                      style: AppStyle.kBodyRegular,
+                    ),
+                  ],
+                ),
+              ),
+              verticalSpaceSmall,
+              PropertyDetails(
+                numberOfBedrooms: numberOfBedrooms,
+                numberOfBathrooms: numberOfBathrooms,
+                squareFeet: squareFeet,
+              ),
+              verticalSpaceSmall,
+            ],
+          ),
         ),
       ),
     );
