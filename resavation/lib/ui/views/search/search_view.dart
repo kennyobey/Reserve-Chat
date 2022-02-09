@@ -26,7 +26,9 @@ class SearchView extends StatelessWidget {
                     style: AppStyle.kHeading1,
                   ),
                   verticalSpaceMedium,
-                  FindYourLocation(),
+                  FindYourLocation(
+                    onTap: model.goToFilterView,
+                  ),
                   verticalSpaceMedium,
                   SortProperty(
                     noOfProperties: 40,
@@ -41,6 +43,7 @@ class SearchView extends StatelessWidget {
                     children: [
                       for (final property in model.properties) ...[
                         PropertyCard(
+                          onTap: model.goToPropertyDetails,
                           image: property.image,
                           amountPerYear: property.amountPerYear,
                           location: property.location,
