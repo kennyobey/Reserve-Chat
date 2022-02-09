@@ -40,6 +40,8 @@ class ResetPasswordView extends StatelessWidget {
                   style: AppStyle.kBodyRegular,
                 ),
                 ResavationTextField(
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
                   hintText: 'Email',
                 ),
                 verticalSpaceMedium,
@@ -51,7 +53,7 @@ class ResetPasswordView extends StatelessWidget {
                 verticalSpaceSmall,
                 ResavationButton(
                   title: 'Send Reset Link',
-                  onTap: model.goToMainView,
+                  onTap: model.goToLogin,
                 ),
                 verticalSpaceMassive,
                 ResavationTextSpan(
