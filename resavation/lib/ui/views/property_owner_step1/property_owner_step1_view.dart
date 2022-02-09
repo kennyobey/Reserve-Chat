@@ -9,7 +9,11 @@ import 'package:resavation/ui/views/settings/settings_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerStep1View extends StatelessWidget {
-  const PropertyOwnerStep1View({Key? key}) : super(key: key);
+  PropertyOwnerStep1View({Key? key}) : super(key: key);
+
+  get _radioValue1 => 1;
+
+  get _handleRadioValueChange1 => null;
 
   @override
   Widget build(BuildContext context) {
@@ -46,59 +50,73 @@ class PropertyOwnerStep1View extends StatelessWidget {
                     'Is your space serviced',
                     style: AppStyle.kBodyRegular,
                   ),
-                  // RadioListTile(
-                  //   title: const Text('Flutter'),
-                  //   value: FavoriteMethod.flutter,
-                  //   groupValue: _method,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       _method = value;
-                  //     });
-                  //   },
-                  // ),
-                  SwitchListTile(
-                    value: model.notificationSwitchValue,
-                    onChanged: model.onNotificationSwitchChanged,
-                    title: Text(
-                      'Yes',
-                      style: AppStyle.kBodyRegular,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Yes',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Radio(
+                        value: 1,
+                        groupValue: _radioValue1,
+                        onChanged: _handleRadioValueChange1,
+                      ),
+                    ],
                   ),
-                  SwitchListTile(
-                    value: model.appNotificationSwitchValue,
-                    onChanged: model.onAppNotificationSwitchValue,
-                    title: Text(
-                      'No',
-                      style: AppStyle.kBodyRegular,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'No',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Radio(
+                        value: 2,
+                        groupValue: _radioValue1,
+                        onChanged: _handleRadioValueChange1,
+                      ),
+                    ],
                   ),
                   verticalSpaceSmall,
                   Text(
                     'Is your space furnished',
                     style: AppStyle.kBodyRegular,
                   ),
-                  SwitchListTile(
-                    value: model.notificationSwitchValue,
-                    onChanged: model.onNotificationSwitchChanged,
-                    title: Text(
-                      'Yes',
-                      style: AppStyle.kBodyRegular,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Yes',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Radio(
+                        value: 3,
+                        groupValue: _radioValue1,
+                        onChanged: _handleRadioValueChange1,
+                      ),
+                    ],
                   ),
-                  SwitchListTile(
-                    value: model.appNotificationSwitchValue,
-                    onChanged: model.onAppNotificationSwitchValue,
-                    title: Text(
-                      'No',
-                      style: AppStyle.kBodyRegular,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'No',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Radio(
+                        value: 4,
+                        groupValue: _radioValue1,
+                        onChanged: _handleRadioValueChange1,
+                      ),
+                    ],
                   ),
-                  verticalSpaceMedium,
+                  verticalSpaceSmall,
                   Text(
                     'Listing Options',
                     style: AppStyle.kBodyRegular,
                   ),
-                  verticalSpaceSmall,
+                  verticalSpaceTiny,
                   Text(
                     'Country',
                     style: AppStyle.kBodyRegular,
@@ -111,21 +129,33 @@ class PropertyOwnerStep1View extends StatelessWidget {
                     'Do you leave in this space',
                     style: AppStyle.kBodyRegular,
                   ),
-                  SwitchListTile(
-                    value: model.notificationSwitchValue,
-                    onChanged: model.onNotificationSwitchChanged,
-                    title: Text(
-                      'Yes',
-                      style: AppStyle.kBodyRegular,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Yes',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Radio(
+                        value: 5,
+                        groupValue: _radioValue1,
+                        onChanged: _handleRadioValueChange1,
+                      ),
+                    ],
                   ),
-                  SwitchListTile(
-                    value: model.appNotificationSwitchValue,
-                    onChanged: model.onAppNotificationSwitchValue,
-                    title: Text(
-                      'No',
-                      style: AppStyle.kBodyRegular,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'No',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Radio(
+                        value: 6,
+                        groupValue: _radioValue1,
+                        onChanged: _handleRadioValueChange1,
+                      ),
+                    ],
                   ),
 
                   //Number of Bathroom and Bedroom
