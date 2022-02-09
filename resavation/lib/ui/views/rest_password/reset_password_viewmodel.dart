@@ -6,8 +6,8 @@ import 'package:stacked_services/stacked_services.dart';
 class ResetPasswordViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void goToMainView() {
-    _navigationService.clearStackAndShow(Routes.mainView);
+  void goToLogin() {
+    _navigationService.navigateTo(Routes.logInView);
   }
 
   void goToSignUpView() {
