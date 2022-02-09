@@ -183,7 +183,7 @@ class PropertyOwnerStep1View extends StatelessWidget {
                           'Next',
                           style: TextStyle(fontSize: 20.0),
                         ),
-                        color: Colors.blueAccent,
+                        color: kPrimaryColor,
                         textColor: Colors.white,
                         onPressed: () {},
                       ),
