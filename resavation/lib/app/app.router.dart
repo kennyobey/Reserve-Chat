@@ -6,7 +6,9 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:resavation/ui/views/property_owner_step1/property_owner_step1_view.dart';
+import 'package:flutter/material.dart';
+import 'package:resavation/ui/views/property_owner_step2/property_owner_step2_view.dart';
+import 'package:resavation/ui/views/property_owner_step2/property_owner_step2_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -21,6 +23,7 @@ import '../ui/views/onboarding/onboarding_view.dart';
 import '../ui/views/payment/payment_view.dart';
 import '../ui/views/property_details/property_details_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
+import '../ui/views/property_owner_step1/property_owner_step1_view.dart';
 import '../ui/views/rest_password/reset_password_view.dart';
 import '../ui/views/settings/settings_view.dart';
 import '../ui/views/signup/signup_view.dart';
@@ -34,7 +37,7 @@ class Routes {
   static const String logInView = '/log-in-view';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
-  static const String dataPickerView = '/data-picker-view';
+  static const String datePickerView = '/date-picker-view';
   static const String propertyDetailsView = '/property-details-view';
   static const String bookingSubmissionView = '/booking-submission-view';
   static const String settingsView = '/settings-view';
@@ -42,7 +45,9 @@ class Routes {
   static const String paymentView = '/payment-view';
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String confirmationView = '/confirmation-view';
-  static const String propertyOwnerStep1View = '/propertyOwnerStep1View';
+  static const String propertyOwnerStep1View = '/property-owner-step1-view';
+  static const String propertyOwnerStep_1_3View =
+      '/property-owner-step-1-3-view';
   static const all = <String>{
     startupView,
     mainView,
@@ -51,7 +56,7 @@ class Routes {
     logInView,
     resetPasswordView,
     filterView,
-    dataPickerView,
+    datePickerView,
     propertyDetailsView,
     bookingSubmissionView,
     settingsView,
@@ -59,7 +64,8 @@ class Routes {
     paymentView,
     propertyOwnerProfileView,
     confirmationView,
-    propertyOwnerStep1View
+    propertyOwnerStep1View,
+    propertyOwnerStep_1_3View
   };
 }
 
@@ -74,7 +80,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.logInView, page: LogInView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
-    RouteDef(Routes.dataPickerView, page: DatePickerView),
+    RouteDef(Routes.datePickerView, page: DatePickerView),
     RouteDef(Routes.propertyDetailsView, page: PropertyDetailsView),
     RouteDef(Routes.bookingSubmissionView, page: BookingSubmissionView),
     RouteDef(Routes.settingsView, page: SettingsView),
@@ -83,6 +89,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.propertyOwnerStep1View, page: PropertyOwnerStep1View),
+    RouteDef(Routes.propertyOwnerStep_1_3View, page: PropertyOwnerStep_1_3View),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -177,11 +184,24 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    PropertyOwnerStep_1_3ViewModel: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerStep_1_3View(),
+        settings: data,
+      );
+    },
     PropertyOwnerStep1View: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerStep1View(),
+        builder: (context) => PropertyOwnerStep_1_3View(),
         settings: data,
       );
     },
   };
 }
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// PropertyOwnerStep1View arguments holder class
+
