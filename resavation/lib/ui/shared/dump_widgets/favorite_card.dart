@@ -18,6 +18,7 @@ class FavoriteCard extends StatelessWidget {
     required this.squareFeet,
     this.isFavoriteTap = false,
     required this.category,
+    this.onTap,
   }) : super(key: key);
 
   final void Function()? onFavoriteTap;
@@ -30,6 +31,7 @@ class FavoriteCard extends StatelessWidget {
   final int squareFeet;
   final bool isFavoriteTap;
   final String? category;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +44,13 @@ class FavoriteCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: Container(
-                height: 100,
-                child: ResavationImage(
-                  image: image,
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  height: 100,
+                  child: ResavationImage(
+                    image: image,
+                  ),
                 ),
               ),
             ),
@@ -81,7 +86,7 @@ class FavoriteCard extends StatelessWidget {
                   ),
                   verticalSpaceSmall,
                   Text(
-                    amountPerYear.toString() + ' /year',
+                    '\$ ' + amountPerYear.toString() + ' /year',
                     style: AppStyle.kBodySmallBold.copyWith(
                       color: kPrimaryColor,
                     ),
