@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/dump_widgets/favorite_card.dart';
-import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/favorite/favorite_viewmodel.dart';
@@ -34,6 +33,7 @@ class FavoriteView extends StatelessWidget {
                       children: [
                         for (final property in model.properties) ...[
                           FavoriteCard(
+                            onTap: model.goToPropertyDetails,
                             image: property.image,
                             amountPerYear: property.amountPerYear,
                             location: property.location,
