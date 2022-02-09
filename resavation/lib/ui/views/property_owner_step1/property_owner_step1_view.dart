@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
@@ -117,11 +119,8 @@ class PropertyOwnerStep1View extends StatelessWidget {
                     style: AppStyle.kBodyRegular,
                   ),
                   verticalSpaceTiny,
-                  Text(
-                    'Country',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceMedium,
+
+                  verticalSpaceTiny,
                   ResavationTextField(
                     hintText: 'Choose your listing option',
                   ),
@@ -174,6 +173,21 @@ class PropertyOwnerStep1View extends StatelessWidget {
                       'Number of Bedrooms',
                       style: AppStyle.kBodyRegular,
                     ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text(
+                          'Next',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                        color: Colors.blueAccent,
+                        textColor: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
                 ],
               ),
