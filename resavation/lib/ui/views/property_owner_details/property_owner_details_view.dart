@@ -6,16 +6,16 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_owner_step2/property_owner_step2_viewmodel.dart';
+import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerStep_1_3View extends StatelessWidget {
-  const PropertyOwnerStep_1_3View({Key? key}) : super(key: key);
+class PropertyOwnerDetailsView extends StatelessWidget {
+  const PropertyOwnerDetailsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PropertyOwnerStep_1_3ViewModel>.reactive(
+    return ViewModelBuilder<PropertyOwnerDetailsViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
           body: Padding(
@@ -102,7 +102,7 @@ class PropertyOwnerStep_1_3View extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => PropertyOwnerStep_1_3ViewModel(),
+      viewModelBuilder: () => PropertyOwnerDetailsViewModel(),
     );
   }
 }

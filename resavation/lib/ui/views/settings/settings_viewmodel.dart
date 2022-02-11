@@ -21,6 +21,10 @@ class SettingsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void goToFilterView() {
+    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+  }
+
   void logout() async {
     await _navigationService.clearStackAndShow(Routes.onboardingView);
   }

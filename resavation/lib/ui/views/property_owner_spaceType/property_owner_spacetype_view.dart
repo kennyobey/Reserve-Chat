@@ -2,16 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
+
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_owner_step1/property_owner_step1_viewmodel.dart';
-import 'package:resavation/ui/views/settings/settings_viewmodel.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
+
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerStep1View extends StatelessWidget {
-  PropertyOwnerStep1View({Key? key}) : super(key: key);
+class PropertyOwnerSpacetypeView extends StatelessWidget {
+  PropertyOwnerSpacetypeView({Key? key}) : super(key: key);
 
   get _radioValue1 => 1;
 
@@ -19,7 +19,7 @@ class PropertyOwnerStep1View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PropertyOwnerStep1ViewModel>.reactive(
+    return ViewModelBuilder<PropertyOwnerSpacetypeViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
           body: Padding(
@@ -181,7 +181,7 @@ class PropertyOwnerStep1View extends StatelessWidget {
                       FlatButton(
                         child: Text(
                           'Next',
-                          style: TextStyle(fontSize: 20.0),
+                          style: AppStyle.kBodyRegular,
                         ),
                         color: kPrimaryColor,
                         textColor: Colors.white,
@@ -195,7 +195,9 @@ class PropertyOwnerStep1View extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => PropertyOwnerStep1ViewModel(),
+      viewModelBuilder: () => PropertyOwnerSpacetypeViewViewModel(),
     );
   }
 }
+
+PropertyOwnerSpacetypeViewViewModel() {}
