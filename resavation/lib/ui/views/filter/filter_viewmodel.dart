@@ -44,7 +44,7 @@ class FilterViewModel extends BaseViewModel {
   }
 
   void goToSearchView() {
-    _navigationService.navigateTo(Routes.propertyOwnerStep_1_3View);
+    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
   }
 
   String _propertyValue = 'Flat';

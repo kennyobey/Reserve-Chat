@@ -3,7 +3,7 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class PropertyOwnerStep1ViewModel extends BaseViewModel {
+class PropertyOwnerSpacetypeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   bool _notificationSwitchValue = false;
