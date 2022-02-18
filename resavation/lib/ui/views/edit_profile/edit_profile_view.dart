@@ -44,6 +44,7 @@ class EditProfileView extends StatelessWidget {
                         style: AppStyle.kBodyRegular,
                       ),
                       ResavationTextField(
+                        textInputAction: TextInputAction.next,
                         hintText: 'Ameh',
                       ),
                       verticalSpaceSmall,
@@ -52,6 +53,7 @@ class EditProfileView extends StatelessWidget {
                         style: AppStyle.kBodyRegular,
                       ),
                       ResavationTextField(
+                        textInputAction: TextInputAction.next,
                         hintText: 'Queen',
                       ),
                       verticalSpaceSmall,
@@ -63,12 +65,14 @@ class EditProfileView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: ResavationTextField(
+                              textInputAction: TextInputAction.next,
+                              keyboardType: TextInputType.emailAddress,
                               hintText: 'queenameh@gmail.com',
                             ),
                           ),
                           horizontalSpaceSmall,
                           GestureDetector(
-                            onTap: () {},
+                            onTap: model.showComingSoon,
                             child: Text(
                               'verify',
                               style: AppStyle.kBodyRegular.copyWith(
@@ -84,6 +88,7 @@ class EditProfileView extends StatelessWidget {
                         style: AppStyle.kBodyRegular,
                       ),
                       ResavationTextField(
+                        textInputAction: TextInputAction.done,
                         obscureText: true,
                         hintText: 'password',
                       ),
@@ -98,7 +103,7 @@ class EditProfileView extends StatelessWidget {
                   Expanded(
                     child: ResavationButton(
                       title: 'Cancel',
-                      onTap: () {},
+                      onTap: model.goToMainView,
                       buttonColor: kWhite,
                       titleColor: kBlack,
                       borderColor: kGray,
@@ -108,7 +113,7 @@ class EditProfileView extends StatelessWidget {
                   Expanded(
                     child: ResavationButton(
                       title: 'Save',
-                      onTap: () {},
+                      onTap: model.goToMainView,
                     ),
                   ),
                 ],
