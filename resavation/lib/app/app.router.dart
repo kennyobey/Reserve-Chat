@@ -7,6 +7,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
@@ -50,6 +51,8 @@ class Routes {
       '/property_owner_spacetype_view';
   static const String propertyOwnerDetailsView = '/property_owner_details_view';
   static const String propertyOwnerPaymentView = '/property_owner_payment_view';
+  static const String propertyOwnerAmenitiesView =
+      '/property_owner_amenities_view';
 
   static const all = <String>{
     startupView,
@@ -69,7 +72,8 @@ class Routes {
     confirmationView,
     propertyOwnerSpaceTypeView,
     propertyOwnerDetailsView,
-    propertyOwnerPaymentView
+    propertyOwnerPaymentView,
+    propertyOwnerAmenitiesView
   };
 }
 
@@ -96,6 +100,8 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerSpacetypeView),
     RouteDef(Routes.propertyOwnerDetailsView, page: PropertyOwnerDetailsView),
     RouteDef(Routes.propertyOwnerPaymentView, page: PropertyOwnerPaymentView),
+    RouteDef(Routes.propertyOwnerAmenitiesView,
+        page: PropertyOwnerAmenitiesView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -205,6 +211,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerPaymentView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerPaymentView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerAmenitiesView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerAmenitiesView(),
         settings: data,
       );
     },
