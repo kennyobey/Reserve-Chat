@@ -7,6 +7,7 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
+import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_viewModel.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -15,7 +16,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PropertyOwnerDetailsViewModel>.reactive(
+    return ViewModelBuilder<PropertyOwnerPaymentViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
           body: Padding(
@@ -141,7 +142,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => PropertyOwnerDetailsViewModel(),
+      viewModelBuilder: () => PropertyOwnerPaymentViewModel(),
     );
   }
 }

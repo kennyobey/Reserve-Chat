@@ -6,14 +6,15 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:flutter/material.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
+import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
+import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
+import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationView.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
 import '../ui/views/booking_submission/booking_submission_view.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
@@ -53,6 +54,12 @@ class Routes {
   static const String propertyOwnerPaymentView = '/property_owner_payment_view';
   static const String propertyOwnerAmenitiesView =
       '/property_owner_amenities_view';
+  static const String propertyOwnerIdentificationView =
+      '/property_owner_identification_view';
+  static const String propertyOwnerVerificationView =
+      '/property_owner_verification_view';
+  static const String propertyOwnerSettingsView =
+      '/property_owner_settings_view';
 
   static const all = <String>{
     startupView,
@@ -73,7 +80,10 @@ class Routes {
     propertyOwnerSpaceTypeView,
     propertyOwnerDetailsView,
     propertyOwnerPaymentView,
-    propertyOwnerAmenitiesView
+    propertyOwnerAmenitiesView,
+    propertyOwnerIdentificationView,
+    propertyOwnerVerificationView,
+    propertyOwnerSettingsView
   };
 }
 
@@ -102,6 +112,11 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerPaymentView, page: PropertyOwnerPaymentView),
     RouteDef(Routes.propertyOwnerAmenitiesView,
         page: PropertyOwnerAmenitiesView),
+    RouteDef(Routes.propertyOwnerIdentificationView,
+        page: PropertyOwnerIdentificationView),
+    RouteDef(Routes.propertyOwnerVerificationView,
+        page: PropertyOwnerVerificationView),
+    RouteDef(Routes.propertyOwnerSettingsView, page: PropertyOwnerSettingsView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -217,6 +232,24 @@ class StackedRouter extends RouterBase {
     PropertyOwnerAmenitiesView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerAmenitiesView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerIdentificationView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerIdentificationView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerVerificationView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerVerificationView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerSettingsView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerSettingsView(),
         settings: data,
       );
     },
