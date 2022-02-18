@@ -52,6 +52,29 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                   ResavationTextField(
                     hintText: 'Last Name',
                   ),
+                  verticalSpaceTiny,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Date of Birth',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                    ],
+                  ),
+                  verticalSpaceTiny,
+                  Row(
+                    children: [
+                      _buildTextField(''),
+                      horizontalSpaceMedium,
+                      _buildTextFieldDay(''),
+                      horizontalSpaceTiny,
+                      _buildTextFieldMonth(''),
+                      horizontalSpaceTiny,
+                      _buildTextFieldYear(''),
+                    ],
+                  ),
+                  verticalSpaceTiny,
                   Text(
                     'Complete your address',
                     style: AppStyle.kBodyRegular,
@@ -71,18 +94,6 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                   verticalSpaceTiny,
                   ResavationTextField(
                     hintText: 'Enter the address of the space',
-                  ),
-                  Text(
-                    'Avalability Period',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceTiny,
-                  Row(
-                    children: [
-                      _buildTextField(''),
-                      Spacer(),
-                      _buildTextField(''),
-                    ],
                   ),
                   verticalSpaceTiny,
                   Row(
@@ -125,13 +136,67 @@ Widget _buildTextField(String label) {
   String? label;
   const maxLines = 5;
   return Container(
-    width: 140,
-    height: maxLines * 12.0,
+    width: 100,
+    height: maxLines * 8.0,
     child: const TextField(
       maxLines: maxLines,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: ("From"),
+        labelText: ("Gender"),
+        isDense: true, // Added this
+        //contentPadding: EdgeInsets.all(8), // Added this
+      ),
+    ),
+  );
+}
+
+Widget _buildTextFieldDay(String label) {
+  String? label;
+  const maxLines = 5;
+  return Container(
+    width: 60,
+    height: maxLines * 8.0,
+    child: const TextField(
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: ("DD"),
+        isDense: true, // Added this
+        //contentPadding: EdgeInsets.all(8), // Added this
+      ),
+    ),
+  );
+}
+
+Widget _buildTextFieldMonth(String label) {
+  String? label;
+  const maxLines = 5;
+  return Container(
+    width: 60,
+    height: maxLines * 8.0,
+    child: const TextField(
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: ("MM"),
+        isDense: true, // Added this
+        //contentPadding: EdgeInsets.all(8), // Added this
+      ),
+    ),
+  );
+}
+
+Widget _buildTextFieldYear(String label) {
+  String? label;
+  const maxLines = 5;
+  return Container(
+    width: 80,
+    height: maxLines * 8.0,
+    child: const TextField(
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: ("YYYY"),
         isDense: true, // Added this
         //contentPadding: EdgeInsets.all(8), // Added this
       ),
