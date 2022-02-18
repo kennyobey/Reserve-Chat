@@ -109,7 +109,7 @@ class PropertyDetailsView extends StatelessWidget {
                             ResavationButton(
                               width: 150,
                               title: 'Rent Now',
-                              onTap: model.showComingSoon,
+                              onTap: model.goToDatePickerView,
                             ),
                           ],
                         ),
