@@ -6,6 +6,7 @@ import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/payment/payment_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class PaymentView extends StatelessWidget {
   const PaymentView({Key? key}) : super(key: key);
@@ -29,11 +30,26 @@ class PaymentView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        CreditCardWidget(
+                          width: 200,
+                          isHolderNameVisible: true,
+                          obscureCardNumber: false,
+                          cardHolderName: model.cardName,
+                          expiryDate: model.expiryDate,
+                          cardNumber: model.cardNumber,
+                          onCreditCardWidgetChange: (CreditCardBrand) {},
+                          showBackView: false,
+                          cvvCode: model.cvvCode,
+                        ),
                         ResavationTextField(
+                          textInputAction: TextInputAction.next,
                           labelText: 'Cardholder name',
+                          onChanged: model.onCardNameChanged,
                         ),
                         verticalSpaceMedium,
                         ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
                           labelText: 'Card number',
                         ),
                         verticalSpaceMedium,
@@ -41,12 +57,15 @@ class PaymentView extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ResavationTextField(
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.datetime,
                                 labelText: 'Expiration date',
                               ),
                             ),
                             horizontalSpaceMedium,
                             Expanded(
                               child: ResavationTextField(
+                                keyboardType: TextInputType.number,
                                 labelText: 'Security code',
                               ),
                             ),
@@ -70,7 +89,10 @@ class PaymentView extends StatelessWidget {
                   ),
                 ),
                 verticalSpaceMedium,
-                ResavationButton(title: 'Pay 115,000')
+                ResavationButton(
+                  title: 'Pay  \$ 115,000',
+                  onTap: model.goToConfirmationView,
+                )
               ],
             ),
           )),
