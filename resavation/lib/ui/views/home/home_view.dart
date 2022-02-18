@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: model.goToPropertyOwnerProfile,
+                      onTap: model.goToPropertyOwnerProfileView,
                       child: CircleAvatar(
                         radius: 20, // Image radius
                         backgroundImage: AssetImage(Assets.profile_image),
@@ -61,7 +61,7 @@ class HomeView extends StatelessWidget {
                       ),
                       verticalSpaceMedium,
                       TitleListTile(
-                        onTap: model.goToPropertyDetails,
+                        onTap: model.goToProfileProductListView,
                         title: 'Categories',
                       ),
                       verticalSpaceMedium,
@@ -81,7 +81,7 @@ class HomeView extends StatelessWidget {
                       ),
                       verticalSpaceMedium,
                       TitleListTile(
-                        onTap: model.goToPropertyDetails,
+                        onTap: model.goToProfileProductListView,
                         title: 'Top Cities',
                       ),
                       verticalSpaceSmall,
