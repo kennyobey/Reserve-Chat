@@ -30,4 +30,12 @@ class SettingsViewModel extends BaseViewModel {
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }
+
+  void goToEditProfileView() {
+    _navigationService.navigateTo(Routes.editProfileView);
+  }
+
+  void goToResetPasswordView() {
+    _navigationService.navigateTo(Routes.resetPasswordView);
+  }
 }

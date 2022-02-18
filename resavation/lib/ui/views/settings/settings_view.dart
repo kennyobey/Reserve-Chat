@@ -33,8 +33,14 @@ class SettingsView extends StatelessWidget {
                   icon: Icons.people,
                   title: 'Account',
                 ),
-                SettingsListTile(title: 'Edit Profile'),
-                SettingsListTile(title: 'Change Password'),
+                SettingsListTile(
+                  title: 'Edit Profile',
+                  onTap: model.goToEditProfileView,
+                ),
+                SettingsListTile(
+                  title: 'Change Password',
+                  onTap: model.goToResetPasswordView,
+                ),
                 SettingsListTile(
                   onTap: model.showComingSoon,
                   icon: Icons.notifications,
@@ -63,8 +69,14 @@ class SettingsView extends StatelessWidget {
                   icon: Icons.more_rounded,
                   title: 'More',
                 ),
-                SettingsListTile(title: 'Language'),
-                SettingsListTile(title: 'Country'),
+                SettingsListTile(
+                  title: 'Language',
+                  onTap: model.showComingSoon,
+                ),
+                SettingsListTile(
+                  title: 'Country',
+                  onTap: model.showComingSoon,
+                ),
                 verticalSpaceMedium,
                 ListTile(
                   minLeadingWidth: 0,
