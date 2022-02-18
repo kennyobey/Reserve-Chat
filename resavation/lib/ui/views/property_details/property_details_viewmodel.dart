@@ -1,4 +1,5 @@
 import 'package:resavation/app/app.locator.dart';
+import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
 import 'package:resavation/model/property_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
@@ -25,5 +26,9 @@ class PropertyDetailsViewModel extends BaseViewModel {
 
   void showComingSoon() {
     _snackbarService.showComingSoon();
+  }
+
+  void goToDatePickerView() {
+    _navigationService.navigateTo(Routes.datePickerView);
   }
 }
