@@ -44,3 +44,16 @@ List<Amenity> ListOfAmenities = [
     title: 'Tv Cable',
   ),
 ];
+
+class TestLogin {
+  TestLogin(this.roles, this.message, this.firstName, this.lastName, this.email);
+  final List<Map<String, dynamic>> roles;
+  final String message;
+  final String firstName;
+  final String lastName;
+  final String email;
+
+  void printRoles() {
+    roles.first.keys.first;
+  }
+}
