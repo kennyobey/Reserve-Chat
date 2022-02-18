@@ -51,7 +51,7 @@ class PropertyOwnerProfileView extends StatelessWidget {
                             ResavationButton(
                               width: 150,
                               title: 'Message',
-                              onTap: model.showComingSoon,
+                              onTap: model.goToMessagesView,
                             ),
                             ResavationButton(
                               buttonColor: kGreen,
