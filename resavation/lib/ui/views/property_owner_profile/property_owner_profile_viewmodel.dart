@@ -24,4 +24,8 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
   void navigateBack() {
     _navigationService.back();
   }
+
+  void goToMessagesView() {
+    _navigationService.navigateTo(Routes.messagesView);
+  }
 }
