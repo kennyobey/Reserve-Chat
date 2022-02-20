@@ -25,6 +25,7 @@ dependencies:
   cached_network_image: ^3.2.0
   shimmer: ^2.0.0
   country_picker: ^2.0.11
+  date_ranger: ^0.0.1
 
 dev_dependencies:
   stacked_generator: ^0.5.6
