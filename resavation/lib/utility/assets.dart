@@ -21,4 +21,6 @@ class Assets {
   static const wifi_icon = 'assets/icons/wifi_icon.svg';
   static const gym_icon = 'assets/icons/gym_icon.svg';
   static const map_image = 'assets/images/map_image.png';
+  static const profile_image2 = 'assets/images/profile_image2.png';
+  static const profile_image3 = 'assets/images/profile_image3.png';
 }
