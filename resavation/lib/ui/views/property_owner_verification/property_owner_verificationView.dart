@@ -29,114 +29,35 @@ class PropertyOwnerVerificationView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Text(
-                      'Step 2',
-                      style: AppStyle.kBodyBold,
-                    ),
+                  verticalSpaceMedium,
+                  Text(
+                    'Identification',
+                    style: AppStyle.kBodyBold,
+                  ),
+                  Text(
+                    ' Verification',
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceMedium,
                   Text(
-                    'Payment Type',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Ease Subscription',
-                  ),
-                  Text(
-                    'Choose your ease subscription type',
+                    'Submit Documents',
                     style: AppStyle.kBodyRegular,
                   ),
+                  verticalSpaceMedium,
                   Text(
-                    '(You can select more than one)',
-                    style: AppStyle.kBodyRegular,
+                    'Kindly Submit the documents below to process your application',
+                    style: AppStyle.kBodySmallRegular,
                   ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Select',
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'Avalability Period',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceTiny,
-                  Row(
+                  verticalSpaceMedium,
+                  Column(
                     children: [
                       _buildTextField(''),
-                      Spacer(),
-                      _buildTextField(''),
+                      verticalSpaceMedium,
+                      _buildTextField2(''),
                     ],
                   ),
-                  verticalSpaceTiny,
-                  Text(
-                    'Space Price',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the monthly rent of this unit?',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 100,000',
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the quarterlet rent of this unit?',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 300,000',
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the biannual rent of this unit?',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 600,000',
-                  ),
-                  verticalSpaceTiny,
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the annual rent of this unit?',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 600,000',
-                  ),
-                  verticalSpaceTiny,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Back',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kWhite,
-                        textColor: kBlack,
-                        onPressed: () {},
-                      ),
-                      Spacer(),
-                      FlatButton(
-                        child: Text(
-                          'Next',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kPrimaryColor,
-                        textColor: Colors.white,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
+                  verticalSpaceMedium,
+                  Center(child: _buildmaterial()),
                 ],
               ),
             ),
@@ -152,15 +73,55 @@ Widget _buildTextField(String label) {
   String? label;
   const maxLines = 5;
   return Container(
-    width: 140,
+    width: 360,
     height: maxLines * 12.0,
     child: const TextField(
       maxLines: maxLines,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: ("From"),
+        labelText: ("Photo ID"),
         isDense: true, // Added this
         //contentPadding: EdgeInsets.all(8), // Added this
+      ),
+    ),
+  );
+}
+
+Widget _buildTextField2(String label) {
+  String? label;
+  const maxLines = 5;
+  return Container(
+    width: 360,
+    height: maxLines * 12.0,
+    child: const TextField(
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: ("Take a Selfe"),
+        isDense: true, // Added this
+        //contentPadding: EdgeInsets.all(8), // Added this
+      ),
+    ),
+  );
+}
+
+Widget _buildmaterial() {
+  return Container(
+    margin: EdgeInsets.symmetric(horizontal: 10),
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: kPrimaryColor,
+        onPrimary: Colors.white,
+        shadowColor: Colors.greenAccent,
+        elevation: 0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        minimumSize: Size(100, 40), //////// HERE
+      ),
+      onPressed: () {},
+      child: Text(
+        'Continue',
+        style: AppStyle.kBodyRegular,
       ),
     ),
   );
