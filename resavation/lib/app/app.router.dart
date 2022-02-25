@@ -7,8 +7,10 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
+import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
+import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
 
 import '../ui/views/booking_submission/booking_submission_view.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
@@ -52,6 +54,12 @@ class Routes {
   static const String searchView = '/search-view';
   static const String editProfileView = '/edit-profile-view';
   static const String messagesView = '/messages-view';
+  static const String chatRoomView = '/chat-room-view';
+  static const String videoCallView = '/video-call-view';
+  static const String audioCallView = '/audio-call-view';
+
+
+
   static const all = <String>{
     startupView,
     mainView,
@@ -73,6 +81,9 @@ class Routes {
     searchView,
     editProfileView,
     messagesView,
+    chatRoomView,
+    videoCallView,
+    audioCallView,
   };
 }
 
@@ -100,6 +111,10 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.searchView, page: SearchView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
     RouteDef(Routes.messagesView, page: MessagesView),
+    RouteDef(Routes.chatRoomView, page: ChatRoomView),
+    RouteDef(Routes.videoCallView, page: VideoCallView),
+    RouteDef(Routes.audioCallView, page: AudioCallView),
+
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -227,6 +242,24 @@ class StackedRouter extends RouterBase {
     MessagesView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const MessagesView(),
+        settings: data,
+      );
+    },
+    ChatRoomView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) =>  ChatRoomView(),
+        settings: data,
+      );
+    },
+    VideoCallView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) =>  VideoCallView(),
+        settings: data,
+      );
+    },
+    AudioCallView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) =>  AudioCallView(),
         settings: data,
       );
     },

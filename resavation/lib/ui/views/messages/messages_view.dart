@@ -45,6 +45,9 @@ class MessagesView extends StatelessWidget {
               MessagesCard(
                 name: 'Queen Ameh',
                 image: AssetImage(Assets.profile_image2),
+                onTap: (){
+                  model.goToChatRoomView();
+                },
               ),
               verticalSpaceRegular,
               MessagesCard(
