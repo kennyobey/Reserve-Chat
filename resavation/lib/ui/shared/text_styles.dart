@@ -14,11 +14,24 @@ class AppStyle {
     height: 1.5,
   );
   static TextStyle kBodyBold = kBodyRegular.copyWith(fontWeight: FontWeight.bold);
+  static TextStyle kBodyBoldBlack = kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
+
+  //static TextStyle kBodyBoldBlack = kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
+
 
   static TextStyle kBodySmallRegular = GoogleFonts.poppins(
     fontWeight: FontWeight.normal,
     fontSize: 14,
     height: 1.5,
   );
+
+  static TextStyle kBodySmallRegularBlack = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 14,
+    height: 1.5,
+    color: Colors.black,
+  );
   static TextStyle kBodySmallBold = kBodyRegular.copyWith(fontWeight: FontWeight.bold);
+
+
 }

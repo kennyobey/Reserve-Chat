@@ -8,6 +8,7 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class PropertyOwnerProfileView extends StatelessWidget {
   const PropertyOwnerProfileView({Key? key}) : super(key: key);
@@ -20,7 +21,9 @@ class PropertyOwnerProfileView extends StatelessWidget {
           slivers: [
             SliverPersistentHeader(
               floating: true,
-              delegate: ProfileHeader(),
+              delegate: ProfileHeader(
+                onBackTap: () => model.navigateBack(),
+              ),
             ),
             SliverList(
               delegate: SliverChildListDelegate(
@@ -48,20 +51,21 @@ class PropertyOwnerProfileView extends StatelessWidget {
                             ResavationButton(
                               width: 150,
                               title: 'Message',
-                              onTap: () {},
+                              onTap: model.goToMessagesView,
                             ),
                             ResavationButton(
                               buttonColor: kGreen,
+                              borderColor: kGreen,
                               width: 150,
                               title: 'Call',
-                              onTap: () {},
+                              onTap: model.showComingSoon,
                             ),
                           ],
                         ),
                         verticalSpaceMedium,
                         TitleListTile(
                           title: 'Property Listing',
-                          onTap: model.goToProfileProductListView,
+                          onTap: model.goToPropertyDetails,
                         ),
                         verticalSpaceMedium,
                         ...model.properties
@@ -70,6 +74,7 @@ class PropertyOwnerProfileView extends StatelessWidget {
                                 return Column(
                                   children: [
                                     PropertyCard(
+                                      onTap: model.goToPropertyDetails,
                                       image: property.image,
                                       amountPerYear: property.amountPerYear,
                                       location: property.location,
@@ -100,3 +105,28 @@ class PropertyOwnerProfileView extends StatelessWidget {
     );
   }
 }
+// 
+//  verticalSpaceRegular,
+//                         Container(
+//                           padding: const EdgeInsets.symmetric(
+//                             horizontal: 24.0,
+//                             vertical: 10,
+//                           ),
+//                           decoration: BoxDecoration(
+//                             color: kPrimaryColor,
+//                             borderRadius: BorderRadius.circular(5),
+//                           ),
+//                           child: Row(
+//                             children: [
+//                               Text(
+//                                 'Message',
+//                                 style: AppStyle.kBodyRegular.copyWith(color: kWhite),
+//                               ),
+//                               horizontalSpaceSmall,
+//                               Icon(
+//                                 Icons.message_rounded,
+//                                 color: Colors.white,
+//                               ),
+//                             ],
+//                           ),
+//                         ),

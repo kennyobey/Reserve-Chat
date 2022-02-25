@@ -25,7 +25,7 @@ class PropertyDetailsView extends StatelessWidget {
             SliverPersistentHeader(
               floating: true,
               delegate: PropertyDetailsHeader(
-                onBackTap: () => model.navigateBack(),
+                onBackTap: model.navigateBack,
               ),
             ),
             SliverList(
@@ -73,14 +73,20 @@ class PropertyDetailsView extends StatelessWidget {
                               ],
                             ),
                             Spacer(),
-                            Icon(
-                              Icons.message_rounded,
-                              color: Colors.black38,
+                            GestureDetector(
+                              onTap: model.showComingSoon,
+                              child: Icon(
+                                Icons.message_rounded,
+                                color: Colors.black38,
+                              ),
                             ),
                             Spacer(),
-                            Icon(
-                              Icons.call,
-                              color: Colors.black38,
+                            GestureDetector(
+                              onTap: model.showComingSoon,
+                              child: Icon(
+                                Icons.call,
+                                color: Colors.black38,
+                              ),
                             ),
                           ],
                         ),
@@ -103,7 +109,7 @@ class PropertyDetailsView extends StatelessWidget {
                             ResavationButton(
                               width: 150,
                               title: 'Rent Now',
-                              onTap: () {},
+                              onTap: model.goToDatePickerView,
                             ),
                           ],
                         ),
@@ -161,11 +167,14 @@ class PropertyDetailsView extends StatelessWidget {
                       ],
                     ),
                     verticalSpaceSmall,
-                    Image.asset(
-                      'assets/images/map_image.png',
-                      width: 600.0,
-                      height: 240.0,
-                      fit: BoxFit.cover,
+                    GestureDetector(
+                      onTap: model.showComingSoon,
+                      child: Image.asset(
+                        'assets/images/map_image.png',
+                        width: 600.0,
+                        height: 240.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     verticalSpaceMedium,
                     Text(

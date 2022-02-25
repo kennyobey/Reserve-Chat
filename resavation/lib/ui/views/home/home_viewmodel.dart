@@ -34,6 +34,21 @@ class HomeViewModel extends BaseViewModel {
   ];
 
   void goToFilterView() {
+
+    _navigationService.navigateTo(Routes.filterView);
+  }
+
+  void goToPropertyDetails() {
+    _navigationService.navigateTo(Routes.propertyDetailsView);
+  }
+
+  void goToProfileProductListView() {
+    _navigationService.navigateTo(Routes.profileProductListView);
+  }
+
+  void goToPropertyOwnerProfileView() {
+    _navigationService.navigateTo(Routes.propertyOwnerProfileView);
     _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
+
   }
 }

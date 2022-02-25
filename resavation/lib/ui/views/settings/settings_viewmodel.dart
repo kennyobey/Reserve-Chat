@@ -1,10 +1,12 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SettingsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _snackbarService = locator<CustomSnackbarService>();
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
 
@@ -27,5 +29,17 @@ class SettingsViewModel extends BaseViewModel {
 
   void logout() async {
     await _navigationService.clearStackAndShow(Routes.onboardingView);
+  }
+
+  void showComingSoon() {
+    _snackbarService.showComingSoon();
+  }
+
+  void goToEditProfileView() {
+    _navigationService.navigateTo(Routes.editProfileView);
+  }
+
+  void goToResetPasswordView() {
+    _navigationService.navigateTo(Routes.resetPasswordView);
   }
 }

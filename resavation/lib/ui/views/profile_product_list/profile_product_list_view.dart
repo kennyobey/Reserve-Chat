@@ -31,7 +31,7 @@ class ProfileProductListView extends StatelessWidget {
                   ResavationButton(
                     width: 150,
                     title: 'Listings (8)',
-                    onTap: () {},
+                    onTap: model.showComingSoon,
                   ),
                   Text.rich(
                     TextSpan(
@@ -56,16 +56,19 @@ class ProfileProductListView extends StatelessWidget {
                   child: Column(
                     children: [
                       for (final property in model.properties) ...[
-                        PropertyCard(
-                          image: property.image,
-                          amountPerYear: property.amountPerYear,
-                          location: property.location,
-                          address: property.address,
-                          numberOfBathrooms: property.numberOfBedrooms,
-                          numberOfBedrooms: property.numberOfBathrooms,
-                          squareFeet: property.squareFeet,
-                          // isFavoriteTap: property.isFavoriteTap,
-                          onFavoriteTap: () {},
+                        GestureDetector(
+                          onTap: model.goToPropertyDetails,
+                          child: PropertyCard(
+                            image: property.image,
+                            amountPerYear: property.amountPerYear,
+                            location: property.location,
+                            address: property.address,
+                            numberOfBathrooms: property.numberOfBedrooms,
+                            numberOfBedrooms: property.numberOfBathrooms,
+                            squareFeet: property.squareFeet,
+                            // isFavoriteTap: property.isFavoriteTap,
+                            onFavoriteTap: () {},
+                          ),
                         ),
                         verticalSpaceSmall
                       ]

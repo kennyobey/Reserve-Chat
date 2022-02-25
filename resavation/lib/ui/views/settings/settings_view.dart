@@ -28,27 +28,26 @@ class SettingsView extends StatelessWidget {
                     style: AppStyle.kHeading1,
                   ),
                 ),
-                verticalSpaceMedium,
-                SettingsRow(
+                SettingsListTile(
+                  onTap: model.showComingSoon,
                   icon: Icons.people,
                   title: 'Account',
                 ),
-                verticalSpaceMedium,
-                Text(
-                  'Edit Profile',
-                  style: AppStyle.kBodyRegular,
+                SettingsListTile(
+                  title: 'Edit Profile',
+                  onTap: model.goToEditProfileView,
                 ),
-                verticalSpaceSmall,
-                Text(
-                  'Change Password',
-                  style: AppStyle.kBodyRegular,
+                SettingsListTile(
+                  title: 'Change Password',
+                  onTap: model.goToResetPasswordView,
                 ),
-                verticalSpaceMedium,
-                SettingsRow(
+                SettingsListTile(
+                  onTap: model.showComingSoon,
                   icon: Icons.notifications,
                   title: 'Notification',
                 ),
                 SwitchListTile(
+                  dense: true,
                   value: model.notificationSwitchValue,
                   onChanged: model.onNotificationSwitchChanged,
                   title: Text(
@@ -57,6 +56,7 @@ class SettingsView extends StatelessWidget {
                   ),
                 ),
                 SwitchListTile(
+                  dense: true,
                   value: model.appNotificationSwitchValue,
                   onChanged: model.onAppNotificationSwitchValue,
                   title: Text(
@@ -64,43 +64,43 @@ class SettingsView extends StatelessWidget {
                     style: AppStyle.kBodyRegular,
                   ),
                 ),
-                verticalSpaceSmall,
-                SettingsRow(
+                SettingsListTile(
+                  onTap: model.showComingSoon,
                   icon: Icons.more_rounded,
                   title: 'More',
                 ),
-                verticalSpaceMedium,
-                Text(
-                  'Language',
-                  style: AppStyle.kBodyRegular,
+                SettingsListTile(
+                  title: 'Language',
+                  onTap: model.showComingSoon,
                 ),
-                verticalSpaceSmall,
-                Text(
-                  'Country',
-                  style: AppStyle.kBodyRegular,
+                SettingsListTile(
+                  title: 'Country',
+                  onTap: model.showComingSoon,
                 ),
                 verticalSpaceMedium,
-                ResavationButton(
-                  title: 'Switch to Property Owner',
-                ),
-                horizontalSpaceSmall,
-                verticalSpaceMedium,
-                GestureDetector(
+                ListTile(
+                  minLeadingWidth: 0,
+                  horizontalTitleGap: 5,
                   onTap: model.logout,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.logout,
-                        color: kRed,
-                        // onTap: model.goToOff(),
-                      ),
-                      Text(
-                        'Logout',
-                        style: AppStyle.kBodyBold.copyWith(color: kRed),
-                      ),
-                    ],
+                  leading: Icon(
+                    Icons.logout,
+                    color: kRed,
+                    // onTap: model.goToOff(),
+                  ),
+                  title: Text(
+                    'Logout',
+                    style: AppStyle.kBodyBold.copyWith(color: kRed),
                   ),
                 ),
+                Spacer(),
+                ResavationButton(
+                  onTap: model.showComingSoon,
+                  title: 'Switch to Property Owner',
+                  titleColor: kPrimaryColor,
+                  buttonColor: kWhite.withOpacity(0.9),
+                  //  borderColor: kp,
+                ),
+                Spacer(),
               ],
             ),
           ),
@@ -111,27 +111,29 @@ class SettingsView extends StatelessWidget {
   }
 }
 
-class SettingsRow extends StatelessWidget {
-  const SettingsRow({
+class SettingsListTile extends StatelessWidget {
+  const SettingsListTile({
     Key? key,
-    required this.icon,
+    this.icon,
     required this.title,
+    this.onTap,
   }) : super(key: key);
 
-  final IconData icon;
+  final IconData? icon;
   final String title;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon),
-        horizontalSpaceSmall,
-        Text(
-          title,
-          style: AppStyle.kBodyBold,
-        ),
-      ],
+    bool hasIcon = icon != null;
+    return ListTile(
+      onTap: hasIcon ? null : onTap,
+      dense: true,
+      leading: hasIcon ? Icon(icon) : null,
+      title: Text(
+        title,
+        style: hasIcon ? AppStyle.kBodyBold : AppStyle.kBodyRegular,
+      ),
     );
   }
 }

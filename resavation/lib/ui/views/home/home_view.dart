@@ -23,9 +23,12 @@ class HomeView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      radius: 20, // Image radius
-                      backgroundImage: AssetImage(Assets.profile_image),
+                    GestureDetector(
+                      onTap: model.goToPropertyOwnerProfileView,
+                      child: CircleAvatar(
+                        radius: 20, // Image radius
+                        backgroundImage: AssetImage(Assets.profile_image),
+                      ),
                     ),
                     horizontalSpaceSmall,
                     Text(
@@ -58,6 +61,7 @@ class HomeView extends StatelessWidget {
                       ),
                       verticalSpaceMedium,
                       TitleListTile(
+                        onTap: model.goToProfileProductListView,
                         title: 'Categories',
                       ),
                       verticalSpaceMedium,
@@ -77,6 +81,7 @@ class HomeView extends StatelessWidget {
                       ),
                       verticalSpaceMedium,
                       TitleListTile(
+                        onTap: model.goToProfileProductListView,
                         title: 'Top Cities',
                       ),
                       verticalSpaceSmall,

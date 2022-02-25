@@ -19,6 +19,6 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   void goToMainView() {
-    _navigationService.clearStackAndShow(Routes.mainView);
+    _navigationService.navigateTo(Routes.mainView);
   }
 }
