@@ -13,8 +13,14 @@ import 'package:resavation/ui/views/onboarding/onboarding_view.dart';
 import 'package:resavation/ui/views/payment/payment_view.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_view.dart';
 import 'package:resavation/ui/views/property_details/property_details_view.dart';
+import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
+import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
+import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
+import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_view.dart';
-import 'package:resavation/ui/views/property_owner_step1/property_owner_step1_view.dart';
+import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
+import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationView.dart';
 import 'package:resavation/ui/views/rest_password/reset_password_view.dart';
 import 'package:resavation/ui/views/search/search_view.dart';
 import 'package:resavation/ui/views/settings/settings_view.dart';
@@ -45,6 +51,15 @@ import 'package:stacked_services/stacked_services.dart';
     AdaptiveRoute(page: SearchView),
     AdaptiveRoute(page: EditProfileView),
     AdaptiveRoute(page: MessagesView),
+
+    AdaptiveRoute(page: PropertyOwnerSpacetypeView),
+    AdaptiveRoute(page: PropertyOwnerDetailsView),
+    AdaptiveRoute(page: PropertyOwnerPaymentView),
+    AdaptiveRoute(page: PropertyOwnerAmenitiesView),
+    AdaptiveRoute(page: PropertyOwnerIdentificationView),
+    AdaptiveRoute(page: PropertyOwnerVerificationView),
+    AdaptiveRoute(page: PropertyOwnerSettingsView),
+
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
