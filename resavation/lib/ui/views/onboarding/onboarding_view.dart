@@ -43,7 +43,7 @@ class OnboardingView extends HookWidget {
               ],
             ),
             Positioned(
-              bottom: 120,
+              bottom: MediaQuery.of(context).size.height * 0.06  ,
               child: model.pagePosition == 2
                   ? ResavationButton(
                       title: "Get Started",
@@ -78,20 +78,21 @@ class Pages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        verticalSpaceMassive,
+        verticalSpaceExtraLarge,
         SvgPicture.asset(
           asset,
         ),
-        verticalSpaceMassive,
+        verticalSpaceLarge,
         Text(
           title,
-          style: AppStyle.kBodyBold,
+          style: AppStyle.kHeading4,
         ),
         verticalSpaceMedium,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
             subTitle,
+            style: AppStyle.kBodyRegularBlack14,
             textAlign: TextAlign.center,
             softWrap: true,
           ),

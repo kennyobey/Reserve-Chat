@@ -149,6 +149,17 @@ class PropertyOwnerStep1View extends StatelessWidget {
               ),
             ),
           ),
+          bottomSheet: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, right: 35),
+                child: ElevatedButton(
+                    onPressed: (){},
+                    child: Text("Next")),
+              )
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => PropertyOwnerStep1ViewModel(),

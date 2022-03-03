@@ -26,8 +26,10 @@ dependencies:
   dots_indicator: ^2.0.0
   cached_network_image: ^3.2.0
   shimmer: ^2.0.0
-  agora_rtc_engine: ^5.0.0
+  # agora_rtc_engine: ^5.0.0
   permission_handler: ^8.3.0
+  flutter_paystack: ^1.0.5+1
+  iconsax: ^0.0.8
 
 dev_dependencies:
   stacked_generator: ^0.5.6
@@ -36,6 +38,20 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Bold.ttf
+        - asset: fonts/Montserrat-ExtraBold.ttf
+        - asset: fonts/Montserrat-Light.ttf
+        - asset: fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: fonts/Montserrat-Regular.ttf
+          weight: 400
+        - asset: fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Montserrat-Thin.ttf
+
   uses-material-design: true
   assets:
     - assets/icons/

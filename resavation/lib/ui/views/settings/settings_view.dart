@@ -25,7 +25,7 @@ class SettingsView extends StatelessWidget {
                 Center(
                   child: Text(
                     'Settings',
-                    style: AppStyle.kHeading1,
+                    style: AppStyle.kHeading0,
                   ),
                 ),
                 SettingsListTile(
@@ -78,6 +78,14 @@ class SettingsView extends StatelessWidget {
                   onTap: model.showComingSoon,
                 ),
                 verticalSpaceMedium,
+                ResavationButton(
+                  onTap: model.goToPropertyOwner,
+                  title: 'Switch to Property Owner',
+                  titleColor: kPrimaryColor,
+                  buttonColor: kWhite.withOpacity(0.9),
+                  //  borderColor: kp,
+                ),
+                Spacer(),
                 ListTile(
                   minLeadingWidth: 0,
                   horizontalTitleGap: 5,
@@ -91,14 +99,6 @@ class SettingsView extends StatelessWidget {
                     'Logout',
                     style: AppStyle.kBodyBold.copyWith(color: kRed),
                   ),
-                ),
-                Spacer(),
-                ResavationButton(
-                  onTap: model.showComingSoon,
-                  title: 'Switch to Property Owner',
-                  titleColor: kPrimaryColor,
-                  buttonColor: kWhite.withOpacity(0.9),
-                  //  borderColor: kp,
                 ),
                 Spacer(),
               ],
@@ -132,7 +132,7 @@ class SettingsListTile extends StatelessWidget {
       leading: hasIcon ? Icon(icon) : null,
       title: Text(
         title,
-        style: hasIcon ? AppStyle.kBodyBold : AppStyle.kBodyRegular,
+        style: hasIcon ? AppStyle.kBodySmallRegular12W500 : AppStyle.kBodyRegularBlack14,
       ),
     );
   }

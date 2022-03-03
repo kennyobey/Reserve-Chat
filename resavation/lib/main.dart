@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Resavation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Montserrat'
       ),
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,

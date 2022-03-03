@@ -98,21 +98,6 @@ class PropertyDetailsView extends StatelessWidget {
                         verticalSpaceSmall,
                         Text(
                             'injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l'),
-                        verticalSpaceSmall,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '#2,326,363',
-                              style: AppStyle.kBodySmallBold,
-                            ),
-                            ResavationButton(
-                              width: 150,
-                              title: 'Rent Now',
-                              onTap: model.goToDatePickerView,
-                            ),
-                          ],
-                        ),
                         verticalSpaceMedium,
                         Text(
                           'Amenities',
@@ -200,6 +185,20 @@ class PropertyDetailsView extends StatelessWidget {
                 ),
               ),
             ]))
+          ],
+        ),
+        bottomSheet: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '#2,326,363',
+              style: AppStyle.kBodySmallBold,
+            ),
+            ResavationButton(
+              width: 150,
+              title: 'Rent Now',
+              onTap: model.goToDatePickerView,
+            ),
           ],
         ),
       ),

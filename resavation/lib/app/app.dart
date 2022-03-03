@@ -28,7 +28,7 @@ import 'package:stacked_services/stacked_services.dart';
     AdaptiveRoute(page: StartupView, initial: true),
     AdaptiveRoute(page: MainView),
     AdaptiveRoute(page: OnboardingView),
-    AdaptiveRoute(page: SignUpView),
+    AdaptiveRoute(page: SignUpView, ),
     AdaptiveRoute(page: LogInView),
     AdaptiveRoute(page: ResetPasswordView),
     AdaptiveRoute(page: FilterView),

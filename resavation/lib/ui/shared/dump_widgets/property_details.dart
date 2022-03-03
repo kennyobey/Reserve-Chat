@@ -22,16 +22,42 @@ class PropertyDetails extends StatelessWidget {
     return Row(
       mainAxisAlignment: mainAxisAlignment,
       children: [
+        PropertyDetailsIcon(
+          icon: Icons.bed,
+          numberOfBedrooms: numberOfBedrooms),
+
+        PropertyDetailsIcon(
+            icon: Icons.bathtub_outlined,
+            numberOfBedrooms: numberOfBathrooms),
+
+        PropertyDetailsIcon(
+            icon: Icons.border_horizontal_outlined,
+            numberOfBedrooms: squareFeet),
+
+
+
+      ],
+    );
+  }
+}
+
+class PropertyDetailsIcon extends StatelessWidget {
+  const PropertyDetailsIcon({
+    Key? key,
+    required this.numberOfBedrooms, required this.icon
+  }) : super(key: key);
+
+  final int numberOfBedrooms;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon),
+        SizedBox(width: 5,),
         Text(
-          numberOfBedrooms.toString() + ' Beds',
-          style: AppStyle.kBodySmallRegular,
-        ),
-        Text(
-          numberOfBathrooms.toString() + ' Baths',
-          style: AppStyle.kBodySmallRegular,
-        ),
-        Text(
-          squareFeet.toString() + ' Sqft',
+          numberOfBedrooms.toString() ,
           style: AppStyle.kBodySmallRegular,
         ),
       ],
