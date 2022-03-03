@@ -8,6 +8,14 @@ class SignUpViewModel extends BaseViewModel {
 
   bool _checkValue = false;
   bool get checkValue => _checkValue;
+  String userType = "Property Owner" ;
+
+
+  void onRadioChanged(String value ){
+    userType = value.toString();
+    print(userType);
+    notifyListeners();
+  }
 
   void onCheckChanged(bool? value) {
     _checkValue = value ?? false;
@@ -19,6 +27,11 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   void goToMainView() {
-    _navigationService.navigateTo(Routes.mainView);
+    if(userType == "Tenant") {
+      _navigationService.navigateTo(Routes.mainView);
+    }
+    else{
+      _navigationService.navigateTo(Routes.propertyOwnerProfileView);
+    }
   }
 }

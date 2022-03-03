@@ -33,19 +33,21 @@ class ProfileProductListView extends StatelessWidget {
                     title: 'Listings (8)',
                     onTap: model.showComingSoon,
                   ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Sort by: ',
-                          style: AppStyle.kBodyBold,
-                        ),
-                        TextSpan(
-                          text: 'Default Order',
-                          style: AppStyle.kBodyRegular,
-                          recognizer: TapGestureRecognizer()..onTap = onSortByTap,
-                        )
-                      ],
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Sort by: ',
+                            style: AppStyle.kBodyBold,
+                          ),
+                          TextSpan(
+                            text: 'Default Order',
+                            style: AppStyle.kBodyRegular,
+                            recognizer: TapGestureRecognizer()..onTap = onSortByTap,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

@@ -47,7 +47,7 @@ class FilterViewModel extends BaseViewModel {
     _navigationService.back();
   }
 
-  String _propertyValue = 'Flat';
+  String _propertyValue = 'Select Property';
   String get propertyValue => _propertyValue;
 
   void onDropdownButtonSelect(String? value) {

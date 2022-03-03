@@ -25,13 +25,13 @@ class ResavationTextSpan extends StatelessWidget {
           ),
           TextSpan(
             text: trailing,
-            style: AppStyle.kBodyBold.copyWith(
+            style: AppStyle.kBodyRegularBlack14.copyWith(
               color: kPrimaryColor,
             ),
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ]),
-        style: AppStyle.kBodyRegular,
+        style: AppStyle.kBodyRegularBlack14,
       ),
     );
   }

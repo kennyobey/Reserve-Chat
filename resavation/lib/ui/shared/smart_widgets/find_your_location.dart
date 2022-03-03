@@ -18,11 +18,11 @@ class FindYourLocation extends StatelessWidget {
         Expanded(
           flex: 5,
           child: ResavationTextField(
+            elevation: 15.0,
             showPrefix: true,
             hintText: 'Enter your location',
           ),
         ),
-        horizontalSpaceSmall,
         GestureDetector(
           onTap: onTap,
           child: Container(

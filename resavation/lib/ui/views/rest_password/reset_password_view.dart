@@ -26,18 +26,18 @@ class ResetPasswordView extends StatelessWidget {
                 Center(
                   child: Text(
                     'Reset Password ',
-                    style: AppStyle.kHeading1,
+                    style: AppStyle.kHeading0,
                   ),
                 ),
                 verticalSpaceMedium,
                 Text(
                   "Enter the e-mail address associated with the account. We’ll e-mail a link to reset your password.",
-                  style: AppStyle.kBodyRegular,
+                  style: AppStyle.kBodyRegularBlack14,
                 ),
                 verticalSpaceLarge,
                 Text(
                   'Email',
-                  style: AppStyle.kBodyRegular,
+                  style: AppStyle.kBodyRegularBlack14,
                 ),
                 ResavationTextField(
                   keyboardType: TextInputType.emailAddress,
@@ -53,6 +53,7 @@ class ResetPasswordView extends StatelessWidget {
                 verticalSpaceSmall,
                 ResavationButton(
                   title: 'Send Reset Link',
+                  width: MediaQuery.of(context).size.width,
                   onTap: model.goToLogin,
                 ),
                 verticalSpaceMassive,

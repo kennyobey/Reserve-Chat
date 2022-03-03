@@ -77,11 +77,11 @@ class PropertyCard extends StatelessWidget {
                       children: [
                         Text(
                           location,
-                          style: AppStyle.kBodyBold,
+                          style: AppStyle.kBodySmallRegular12W500,
                         ),
                         Text(
                           '\$ ' + amountPerYear.toString() + ' /year',
-                          style: AppStyle.kBodyBold.copyWith(
+                          style: AppStyle.kBodySmallRegular12.copyWith(
                             color: kPrimaryColor,
                           ),
                         ),
@@ -89,7 +89,7 @@ class PropertyCard extends StatelessWidget {
                     ),
                     Text(
                       address,
-                      style: AppStyle.kBodyRegular,
+                      style: AppStyle.kBodySmallRegular12W300,
                     ),
                   ],
                 ),

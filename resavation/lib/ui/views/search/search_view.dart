@@ -22,8 +22,8 @@ class SearchView extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    'search',
-                    style: AppStyle.kHeading1,
+                    'Search',
+                    style: AppStyle.kHeading0,
                   ),
                   verticalSpaceMedium,
                   FindYourLocation(

@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
                     horizontalSpaceSmall,
                     Text(
                       'Hello Steven',
-                      style: AppStyle.kBodyBold,
+                      style: AppStyle.kBodyRegularBlack14W600,
                     ),
                     Spacer(),
                     Icon(Icons.notifications_outlined),
@@ -49,11 +49,11 @@ class HomeView extends StatelessWidget {
                     children: [
                       Text(
                         'Find a',
-                        style: AppStyle.kBodyBold,
+                        style: AppStyle.kHeading0,
                       ),
                       Text(
                         'Suitable Apartment',
-                        style: AppStyle.kHeading1,
+                        style: AppStyle.kHeading2,
                       ),
                       verticalSpaceMedium,
                       FindYourLocation(
@@ -73,6 +73,9 @@ class HomeView extends StatelessWidget {
                               CategoryCard(
                                 image: category.image,
                                 category: category.category,
+                                onTap: (){
+                                  model.goToPropertySearch();
+                                },
                               ),
                               horizontalSpaceSmall,
                             ],
@@ -118,37 +121,42 @@ class CategoryCard extends StatelessWidget {
     Key? key,
     this.category = '',
     required this.image,
+    this.onTap
   }) : super(key: key);
 
   final String category;
   final String image;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      width: 180,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: ResavationImage(
-                image: image,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 150,
+        width: 180,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: ResavationImage(
+                  image: image,
+                ),
               ),
             ),
-          ),
-          Text(
-            category,
-            style: AppStyle.kBodyBold.copyWith(
-              color: kWhite,
+            Text(
+              category,
+              style: AppStyle.kBodyBold.copyWith(
+                color: kWhite,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -228,14 +236,14 @@ class TitleListTile extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppStyle.kBodyBold,
+          style: AppStyle.kSubHeading,
         ),
         Spacer(),
         GestureDetector(
           onTap: onTap,
           child: Text(
             'See All',
-            style: AppStyle.kBodySmallBold.copyWith(
+            style: AppStyle.kBodySmallRegular12.copyWith(
               color: kPrimaryColor,
             ),
           ),

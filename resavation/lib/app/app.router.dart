@@ -60,6 +60,7 @@ class Routes {
 
 
 
+
   static const all = <String>{
     startupView,
     mainView,
@@ -193,7 +194,7 @@ class StackedRouter extends RouterBase {
     },
     PaymentView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PaymentView(),
+        builder: (context) =>  PaymentView(),
         settings: data,
       );
     },

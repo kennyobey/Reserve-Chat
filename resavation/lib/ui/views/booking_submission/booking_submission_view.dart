@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resavation/services/core/paystack_payment.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -170,7 +171,13 @@ class BookingSubmissionView extends StatelessWidget {
             verticalSpaceMedium,
             ResavationButton(
               title: 'Continue',
-              onTap: model.goToPaymentView,
+              onTap: (){
+                String email = "ogundipeibukun51@gmail.com";
+                int price = 900;
+                MakePayment(ctx: context, email: email, price: price)
+                    .chargeCardAndMakePayment();
+                model.goToConfirmationView();
+              },
             ),
             verticalSpaceMedium,
           ],

@@ -17,6 +17,11 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
     _snackbarService.showComingSoon();
   }
 
+  void goToAudioCallView() {
+    _navigationService.navigateTo(Routes.audioCallView);
+  }
+
+
   void goToPropertyDetails() {
     _navigationService.navigateTo(Routes.propertyDetailsView);
   }

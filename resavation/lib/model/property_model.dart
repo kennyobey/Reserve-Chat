@@ -45,16 +45,7 @@ List<Property> ListOfProperties = [
       squareFeet: 200,
       isFavoriteTap: false,
       category: 'sitting Room'),
-  Property(
-      image: Assets.kitchen_placeholder,
-      amountPerYear: 10000,
-      location: 'Eleko Estate',
-      address: '57B lagos street',
-      numberOfBathrooms: 10,
-      numberOfBedrooms: 5,
-      squareFeet: 200,
-      isFavoriteTap: true,
-      category: 'Bedroom'),
+
   Property(
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,
