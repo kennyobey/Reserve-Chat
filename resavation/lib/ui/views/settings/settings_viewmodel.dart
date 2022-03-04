@@ -24,7 +24,7 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   void goToFilterView() {
-    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+    _navigationService.navigateTo(Routes.filterView);
   }
 
   void logout() async {
@@ -33,6 +33,10 @@ class SettingsViewModel extends BaseViewModel {
 
   void showComingSoon() {
     _snackbarService.showComingSoon();
+  }
+
+  void goToPropertyOwner() {
+    _navigationService.navigateTo(Routes.propertyOwnerStep1View);
   }
 
   void goToEditProfileView() {

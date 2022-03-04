@@ -8,6 +8,7 @@ class ResavationTextField extends StatefulWidget {
     this.onTap,
     this.label,
     this.icon,
+    this.elevation,
     this.hintText,
     this.color,
     this.labelText,
@@ -23,6 +24,7 @@ class ResavationTextField extends StatefulWidget {
   final Icon? icon;
   final String? hintText;
   final String? labelText;
+  final double? elevation;
   final Color? color;
   final bool obscureText;
   final bool showPrefix;
@@ -42,38 +44,41 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
     final style = AppStyle.kBodySmallRegular;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextFormField(
-        onChanged: widget.onChanged,
-        keyboardType: widget.keyboardType,
-        textInputAction: widget.textInputAction,
-        obscureText: _obscureText,
-        style: style,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
+      child: Material(
+        elevation: widget.elevation != null? widget.elevation! : 0.0 ,
+        child: TextFormField(
+          onChanged: widget.onChanged,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          obscureText: _obscureText,
+          style: style,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
+            ),
+            hintText: widget.hintText,
+            labelText: widget.labelText,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintStyle: style,
+            prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
+            suffixIcon: widget.obscureText
+                ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        print(true);
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    child: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: kPrimaryColor,
+                    ),
+                  )
+                : null,
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
-          ),
-          hintText: widget.hintText,
-          labelText: widget.labelText,
-          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          hintStyle: style,
-          prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
-          suffixIcon: widget.obscureText
-              ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      print(true);
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                  child: Icon(
-                    _obscureText ? Icons.visibility : Icons.visibility_off,
-                    color: kPrimaryColor,
-                  ),
-                )
-              : null,
         ),
       ),
     );

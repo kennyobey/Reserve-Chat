@@ -51,6 +51,7 @@ class PropertyOwnerProfileView extends StatelessWidget {
                             ResavationButton(
                               width: 150,
                               title: 'Message',
+                              icon: Icons.messenger_outline,
                               onTap: model.goToMessagesView,
                             ),
                             ResavationButton(
@@ -58,13 +59,16 @@ class PropertyOwnerProfileView extends StatelessWidget {
                               borderColor: kGreen,
                               width: 150,
                               title: 'Call',
-                              onTap: model.showComingSoon,
+                              icon: Icons.call_outlined,
+                              onTap: (){
+                                model.goToAudioCallView();
+                              },
                             ),
                           ],
                         ),
                         verticalSpaceMedium,
                         TitleListTile(
-                          title: 'Property Listing',
+                          title: "Stephen's Listing",
                           onTap: model.goToPropertyDetails,
                         ),
                         verticalSpaceMedium,

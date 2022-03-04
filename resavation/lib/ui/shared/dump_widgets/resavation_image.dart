@@ -11,7 +11,9 @@ class ResavationImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
+    //TODO change it to CachedNetwork after
+    return
+      CachedNetworkImage(
       imageUrl: image,
       fit: BoxFit.cover,
       placeholder: (context, url) => Container(

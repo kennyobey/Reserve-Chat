@@ -37,41 +37,32 @@ class FilterView extends StatelessWidget {
                           style: AppStyle.kBodyBold,
                         ),
                         verticalSpaceMedium,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Select Property',
-                                style: AppStyle.kBodyBold,
-                              ),
+                        Card(
+                          elevation: 5,
+                          child: DropdownButton<String>(
+                            value: model.propertyValue,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            elevation: 16,
+                            isExpanded: true,
+                            underline: Container(
+                              // height: 0,
+                              color: Colors.transparent,
                             ),
-                            Expanded(
-                              child: DropdownButton<String>(
-                                value: model.propertyValue,
-                                icon: const Icon(Icons.arrow_drop_down),
-                                elevation: 16,
-                                isExpanded: true,
-                                style: AppStyle.kBodyBold.copyWith(color: kBlack),
-                                underline: Container(
-                                  // height: 0,
-                                  color: Colors.transparent,
-                                ),
-                                onChanged: model.onDropdownButtonSelect,
-                                items: <String>[
-                                  'Flat',
-                                  'Bungalow',
-                                  'Self Contain',
-                                ].map<DropdownMenuItem<String>>((
-                                  String value,
-                                ) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
+                            onChanged: model.onDropdownButtonSelect,
+                            items: <String>[
+                              'Select Property',
+                              'Flat',
+                              'Bungalow',
+                              'Self Contain',
+                            ].map<DropdownMenuItem<String>>((
+                              String value,
+                            ) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                         verticalSpaceMedium,
                         Text(
@@ -113,13 +104,13 @@ class FilterView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             FacilityCard(
-                              icon: Icons.bedroom_parent,
+                              icon: Icons.bed_outlined,
                             ),
                             FacilityCard(
-                              icon: Icons.bathroom,
+                              icon: Icons.bathtub_outlined,
                             ),
                             FacilityCard(
-                              icon: Icons.toys,
+                              icon: Icons.car_rental,
                             ),
                           ],
                         ),

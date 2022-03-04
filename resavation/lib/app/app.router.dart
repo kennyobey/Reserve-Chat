@@ -6,20 +6,10 @@
 
 // ignore_for_file: public_member_api_docs
 
-
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
-
-import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
-import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
-import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
-import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
-import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
-import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
-import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationView.dart';
-
 import 'package:stacked/stacked.dart';
 
 import '../ui/views/booking_submission/booking_submission_view.dart';
@@ -36,7 +26,6 @@ import '../ui/views/payment/payment_view.dart';
 import '../ui/views/profile_product_list/profile_product_list_view.dart';
 import '../ui/views/property_details/property_details_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
-import '../ui/views/property_owner_step1/property_owner_step1_view.dart';
 import '../ui/views/rest_password/reset_password_view.dart';
 import '../ui/views/search/search_view.dart';
 import '../ui/views/settings/settings_view.dart';
@@ -59,7 +48,6 @@ class Routes {
   static const String paymentView = '/payment-view';
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String confirmationView = '/confirmation-view';
-
   static const String propertyOwnerStep1View = '/property-owner-step1-view';
   static const String profileProductListView = '/profile-product-list-view';
   static const String searchView = '/search-view';
@@ -70,19 +58,6 @@ class Routes {
   static const String audioCallView = '/audio-call-view';
 
 
-
-  static const String propertyOwnerSpaceTypeView =
-      '/property_owner_spacetype_view';
-  static const String propertyOwnerDetailsView = '/property_owner_details_view';
-  static const String propertyOwnerPaymentView = '/property_owner_payment_view';
-  static const String propertyOwnerAmenitiesView =
-      '/property_owner_amenities_view';
-  static const String propertyOwnerIdentificationView =
-      '/property_owner_identification_view';
-  static const String propertyOwnerVerificationView =
-      '/property_owner_verification_view';
-  static const String propertyOwnerSettingsView =
-      '/property_owner_settings_view';
 
 
   static const all = <String>{
@@ -101,7 +76,6 @@ class Routes {
     paymentView,
     propertyOwnerProfileView,
     confirmationView,
-
     propertyOwnerStep1View,
     profileProductListView,
     searchView,
@@ -110,15 +84,6 @@ class Routes {
     chatRoomView,
     videoCallView,
     audioCallView,
-
-    propertyOwnerSpaceTypeView,
-    propertyOwnerDetailsView,
-    propertyOwnerPaymentView,
-    propertyOwnerAmenitiesView,
-    propertyOwnerIdentificationView,
-    propertyOwnerVerificationView,
-    propertyOwnerSettingsView
-
   };
 }
 
@@ -141,8 +106,6 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
-
-    RouteDef(Routes.propertyOwnerStep1View, page: PropertyOwnerStep1View),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
@@ -150,19 +113,6 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.chatRoomView, page: ChatRoomView),
     RouteDef(Routes.videoCallView, page: VideoCallView),
     RouteDef(Routes.audioCallView, page: AudioCallView),
-
-
-    RouteDef(Routes.propertyOwnerSpaceTypeView,
-        page: PropertyOwnerSpacetypeView),
-    RouteDef(Routes.propertyOwnerDetailsView, page: PropertyOwnerDetailsView),
-    RouteDef(Routes.propertyOwnerPaymentView, page: PropertyOwnerPaymentView),
-    RouteDef(Routes.propertyOwnerAmenitiesView,
-        page: PropertyOwnerAmenitiesView),
-    RouteDef(Routes.propertyOwnerIdentificationView,
-        page: PropertyOwnerIdentificationView),
-    RouteDef(Routes.propertyOwnerVerificationView,
-        page: PropertyOwnerVerificationView),
-    RouteDef(Routes.propertyOwnerSettingsView, page: PropertyOwnerSettingsView),
 
   ];
   @override
@@ -242,7 +192,7 @@ class StackedRouter extends RouterBase {
     },
     PaymentView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PaymentView(),
+        builder: (context) =>  PaymentView(),
         settings: data,
       );
     },
@@ -255,48 +205,6 @@ class StackedRouter extends RouterBase {
     ConfirmationView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ConfirmationView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerDetailsView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerDetailsView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerSpacetypeView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerSpacetypeView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerPaymentView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerPaymentView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerAmenitiesView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerAmenitiesView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerIdentificationView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerIdentificationView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerVerificationView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerVerificationView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerSettingsView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerSettingsView(),
         settings: data,
       );
     },
@@ -355,14 +263,9 @@ class StackedRouter extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
-
 /// ProfileProductListView arguments holder class
 class ProfileProductListViewArguments {
   final Key? key;
   final void Function()? onSortByTap;
   ProfileProductListViewArguments({this.key, this.onSortByTap});
 }
-
-/// PropertyOwnerStep1View arguments holder class
-
-

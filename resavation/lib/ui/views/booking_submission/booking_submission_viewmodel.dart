@@ -5,7 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class BookingSubmissionViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  void goToPaymentView() {
-    _navigationService.navigateTo(Routes.paymentView);
+  void goToConfirmationView() {
+    _navigationService.navigateTo(Routes.confirmationView);
   }
 }

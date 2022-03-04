@@ -25,12 +25,12 @@ class LogInView extends StatelessWidget {
                   verticalSpaceMedium,
                   Text(
                     'Log In',
-                    style: AppStyle.kHeading1,
+                    style: AppStyle.kHeading3,
                   ),
                   verticalSpaceLarge,
                   Text(
                     'Email',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14,
                   ),
                   ResavationTextField(
                     textInputAction: TextInputAction.next,
@@ -40,7 +40,7 @@ class LogInView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(
                     'Password',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14,
                   ),
                   ResavationTextField(
                     textInputAction: TextInputAction.done,
@@ -49,6 +49,7 @@ class LogInView extends StatelessWidget {
                   ),
                   verticalSpaceMedium,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Checkbox(
                         activeColor: kPrimaryColor,
@@ -57,14 +58,14 @@ class LogInView extends StatelessWidget {
                       ),
                       Text(
                         'Remember me',
-                        style: AppStyle.kBodyRegular,
+                        style: AppStyle.kBodyRegularBlack14,
                       ),
                       Spacer(),
                       GestureDetector(
                         onTap: model.goToResetPasswordView,
                         child: Text(
-                          'Forget Password?',
-                          style: AppStyle.kBodyBold.copyWith(
+                          'Forgot Password?',
+                          style: AppStyle.kBodySmallRegular.copyWith(
                             color: kPrimaryColor,
                           ),
                         ),
@@ -74,6 +75,7 @@ class LogInView extends StatelessWidget {
                   verticalSpaceLarge,
                   ResavationButton(
                     title: 'Log In',
+                    width: MediaQuery.of(context).size.width,
                     onTap: model.goToMainView,
                   ),
                   verticalSpaceMassive,

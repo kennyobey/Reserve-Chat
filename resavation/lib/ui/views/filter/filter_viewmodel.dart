@@ -15,14 +15,17 @@ enum Availability {
 class FilterViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   RangeValues _rangeValues = const RangeValues(10000, 1000000);
+
   RangeValues get rangeValue => _rangeValues;
 
-  RangeLabels get rangeLabels => RangeLabels(
+  RangeLabels get rangeLabels =>
+      RangeLabels(
         _rangeValues.end.round().toString(),
         _rangeValues.start.round().toString(),
       );
 
   Availability _duration = Availability.Shortlet;
+
   Availability get duration => _duration;
 
   void onDurationChanged(Availability? value) {
@@ -31,6 +34,7 @@ class FilterViewModel extends BaseViewModel {
   }
 
   double _sliderValue = 0;
+
   double get sliderValue => _sliderValue;
 
   void onRangeSliderChanged(RangeValues value) {
@@ -46,17 +50,17 @@ class FilterViewModel extends BaseViewModel {
 
   void goToMainView() {
     _navigationService.back();
-
-  void goToSearchView() {
-    _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
-
   }
+    void goToSearchView() {
+      _navigationService.navigateTo(Routes.searchView);
+    }
 
-  String _propertyValue = 'Flat';
-  String get propertyValue => _propertyValue;
+    String _propertyValue = 'Select Property';
+    String get propertyValue =>
+    _propertyValue;
 
-  void onDropdownButtonSelect(String? value) {
-    _propertyValue = value!;
-    notifyListeners();
+    void onDropdownButtonSelect(String? value) {
+      _propertyValue = value!;
+      notifyListeners();
+    }
   }
-}

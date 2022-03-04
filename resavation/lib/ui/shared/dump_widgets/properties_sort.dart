@@ -4,7 +4,14 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
 class SortProperty extends StatelessWidget {
-  const SortProperty({Key? key, required this.noOfProperties, required this.sortByTitle, this.onSortByTap, s}) : super(key: key);
+
+  const SortProperty(
+      {Key? key,
+      required this.noOfProperties,
+      required this.sortByTitle,
+      this.onSortByTap,
+      s})
+      : super(key: key);
   final int noOfProperties;
   final String sortByTitle;
   final void Function()? onSortByTap;
@@ -15,30 +22,42 @@ class SortProperty extends StatelessWidget {
       children: [
         Text(
           noOfProperties.toString(),
-          style: AppStyle.kBodyBold.copyWith(
+          style: AppStyle.kBodySmallRegular.copyWith(
             color: kPrimaryColor,
           ),
         ),
         Text(
           ' Properties',
-          style: AppStyle.kBodyBold,
+          style: AppStyle.kBodySmallRegular,
         ),
         Spacer(),
         Text.rich(
           TextSpan(
             children: [
               TextSpan(
-                text: 'Sort by: ',
-                style: AppStyle.kBodyBold,
+                text: 'Sort by ',
+                style: AppStyle.kBodySmallRegular,
               ),
-              TextSpan(
-                text: sortByTitle,
-                style: AppStyle.kBodyRegular,
-                recognizer: TapGestureRecognizer()..onTap = onSortByTap,
-              )
+              // TextSpan(
+              //   text: sortByTitle,
+              //   style: AppStyle.kBodyRegular,
+              //   recognizer: TapGestureRecognizer()..onTap = onSortByTap,
+              // )
             ],
           ),
         ),
+        DropdownButton(
+          items: <String>['Category', 'City', 'Office Space', 'Apartment']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            //TODO add an action to change value
+          },
+        )
       ],
     );
   }

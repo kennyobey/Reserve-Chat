@@ -24,13 +24,11 @@ class HomeViewModel extends BaseViewModel {
   List<TopCity> topCities = [
     TopCity('Abuja', 50, Assets.abuja_location_placeholder),
     TopCity('Lagos', 20, Assets.lagos_location_placeholder),
-    TopCity('Kaduna', 100, Assets.kaduna_location_placeholder),
   ];
 
   List<Category> categories = [
     Category('Apartment', Assets.house_placeholder),
     Category('Office Space', Assets.office_placeholder),
-    Category('Kitchen', Assets.kitchen_placeholder),
   ];
 
   void goToFilterView() {
@@ -42,13 +40,16 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyDetailsView);
   }
 
+  void goToPropertySearch() {
+    _navigationService.navigateTo(Routes.searchView);
+  }
+
   void goToProfileProductListView() {
     _navigationService.navigateTo(Routes.profileProductListView);
   }
 
   void goToPropertyOwnerProfileView() {
     _navigationService.navigateTo(Routes.propertyOwnerProfileView);
-    _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
 
   }
 }
