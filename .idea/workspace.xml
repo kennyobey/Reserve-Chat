@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+    <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="Implemented payment feature">
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_amenities/property_owner_amenities_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_amenities/property_owner_amenities_viewModel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_identification/property_owner_identificationView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_identification/property_owner_identificationViewModel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_payment/property_owner_payment_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_payment/property_owner_payment_viewModel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_settings/property_owner_settingsView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_settings/property_owner_settingsViewModel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_verification/property_owner_verificationView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_verification/property_owner_verificationViewModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/app/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/app/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/app/app.router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/app/app.router.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/filter/filter_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/filter/filter_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_step1/property_owner_step1_view.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_step1/property_owner_step1_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_step2/property_owner_step2_view.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_step2/property_owner_step2_viewmodel.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/settings/settings_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/settings/settings_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,13 +103,22 @@
       <option name="project" value="LOCAL" />
       <updated>1646341989910</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="implemented payment feature">
+      <created>1646362923255</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1646362923255</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added chat-room" />
     <MESSAGE value="implemented payment feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented payment feature" />
+    <MESSAGE value="Merge branch 'main' of https://github.com/Resavation-Ng/resavation-flutter-ui&#10;&#10;# Conflicts:&#10;#&#9;resavation/lib/app/app.router.dart&#10;#&#9;resavation/lib/ui/views/property_owner_step1/property_owner_step1_view.dart&#10;#&#9;resavation/pubspec.lock&#10;#&#9;resavation/pubspec.yaml" />
+    <MESSAGE value="Implemented payment feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented payment feature" />
   </component>
   <component name="WindowStateProjectService">
     <state x="144" y="45" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1646337437510">
@@ -105,11 +138,11 @@
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="481" y="134" key="AndroidProcessChooserDialog/0.0.1303.768@0.0.1303.768" timestamp="1645929767922" />
-    <state x="232" y="0" key="CommitChangelistDialog2" timestamp="1646341829067">
+    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1646375184537">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="232" y="0" key="CommitChangelistDialog2/0.0.1303.768@0.0.1303.768" timestamp="1645785037261" />
-    <state x="232" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1646341829067" />
+    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1646375184537" />
     <state x="122" y="59" key="DiffContextDialog" timestamp="1645784838907">
       <screen x="0" y="0" width="1303" height="768" />
     </state>
@@ -142,5 +175,9 @@
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="191" y="35" key="SettingsEditor/0.0.1303.768@0.0.1303.768" timestamp="1645746006352" />
+    <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1646375215663">
+      <screen x="0" y="0" width="1304" height="768" />
+    </state>
+    <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1304.768@0.0.1304.768" timestamp="1646375215663" />
   </component>
 </project>

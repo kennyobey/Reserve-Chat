@@ -46,7 +46,6 @@ import 'package:stacked_services/stacked_services.dart';
     AdaptiveRoute(page: PaymentView),
     AdaptiveRoute(page: PropertyOwnerProfileView),
     AdaptiveRoute(page: ConfirmationView),
-    AdaptiveRoute(page: PropertyOwnerStep1View),
     AdaptiveRoute(page: ProfileProductListView),
     AdaptiveRoute(page: SearchView),
     AdaptiveRoute(page: EditProfileView),
