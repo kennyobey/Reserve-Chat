@@ -26,10 +26,11 @@ dependencies:
   dots_indicator: ^2.0.0
   cached_network_image: ^3.2.0
   shimmer: ^2.0.0
-  # agora_rtc_engine: ^5.0.0
+  agora_rtc_engine: ^5.0.0
   permission_handler: ^8.3.0
   flutter_paystack: ^1.0.5+1
   iconsax: ^0.0.8
+
 
 dev_dependencies:
   stacked_generator: ^0.5.6
