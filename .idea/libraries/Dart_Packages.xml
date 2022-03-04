@@ -184,6 +184,13 @@
             </list>
           </value>
         </entry>
+        <entry key="country_picker">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/country_picker-2.0.12/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="crypto">
           <value>
             <list>
@@ -202,6 +209,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dart_style-2.2.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="date_ranger">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/date_ranger-0.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -850,9 +864,11 @@
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-4.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/convert-3.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/country_picker-2.0.12/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dart_style-2.2.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/date_ranger-0.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dots_indicator-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-1.1.2/lib" />

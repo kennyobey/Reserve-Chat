@@ -26,7 +26,6 @@ import '../ui/views/payment/payment_view.dart';
 import '../ui/views/profile_product_list/profile_product_list_view.dart';
 import '../ui/views/property_details/property_details_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
-import '../ui/views/property_owner_step1/property_owner_step1_view.dart';
 import '../ui/views/rest_password/reset_password_view.dart';
 import '../ui/views/search/search_view.dart';
 import '../ui/views/settings/settings_view.dart';
@@ -107,7 +106,6 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
-    RouteDef(Routes.propertyOwnerStep1View, page: PropertyOwnerStep1View),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
@@ -207,12 +205,6 @@ class StackedRouter extends RouterBase {
     ConfirmationView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ConfirmationView(),
-        settings: data,
-      );
-    },
-    PropertyOwnerStep1View: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerStep1View(),
         settings: data,
       );
     },

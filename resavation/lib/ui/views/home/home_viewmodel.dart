@@ -50,7 +50,6 @@ class HomeViewModel extends BaseViewModel {
 
   void goToPropertyOwnerProfileView() {
     _navigationService.navigateTo(Routes.propertyOwnerProfileView);
-    _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
 
   }
 }
