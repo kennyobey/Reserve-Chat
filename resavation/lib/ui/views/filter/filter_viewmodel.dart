@@ -52,7 +52,7 @@ class FilterViewModel extends BaseViewModel {
     _navigationService.back();
   }
     void goToSearchView() {
-      _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
+      _navigationService.navigateTo(Routes.searchView);
     }
 
     String _propertyValue = 'Select Property';

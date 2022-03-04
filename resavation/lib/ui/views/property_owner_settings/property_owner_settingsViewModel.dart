@@ -22,7 +22,7 @@ class PropertyOwnerSettingsViewModel extends BaseViewModel {
   }
 
   void goToFilterView() {
-    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+    _navigationService.navigateTo(Routes.filterView);
   }
 
   void logout() async {

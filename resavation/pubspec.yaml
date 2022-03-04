@@ -30,6 +30,9 @@ dependencies:
   permission_handler: ^8.3.0
   flutter_paystack: ^1.0.5+1
   iconsax: ^0.0.8
+  country_picker: ^2.0.12
+  date_ranger: ^0.0.1
+
 
 
 dev_dependencies:
