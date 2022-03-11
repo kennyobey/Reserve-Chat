@@ -79,7 +79,9 @@ class SettingsView extends StatelessWidget {
                 ),
                 verticalSpaceMedium,
                 ResavationButton(
-                  onTap: model.goToPropertyOwner,
+                  onTap: () {
+                    model.goToPropertyOwnerVerificationView();
+                  },
                   title: 'Switch to Property Owner',
                   titleColor: kPrimaryColor,
                   buttonColor: kWhite.withOpacity(0.9),
@@ -132,7 +134,9 @@ class SettingsListTile extends StatelessWidget {
       leading: hasIcon ? Icon(icon) : null,
       title: Text(
         title,
-        style: hasIcon ? AppStyle.kBodySmallRegular12W500 : AppStyle.kBodyRegularBlack14,
+        style: hasIcon
+            ? AppStyle.kBodySmallRegular12W500
+            : AppStyle.kBodyRegularBlack14,
       ),
     );
   }

@@ -34,7 +34,9 @@ import 'package:stacked_services/stacked_services.dart';
     AdaptiveRoute(page: StartupView, initial: true),
     AdaptiveRoute(page: MainView),
     AdaptiveRoute(page: OnboardingView),
-    AdaptiveRoute(page: SignUpView, ),
+    AdaptiveRoute(
+      page: SignUpView,
+    ),
     AdaptiveRoute(page: LogInView),
     AdaptiveRoute(page: ResetPasswordView),
     AdaptiveRoute(page: FilterView),
@@ -50,15 +52,13 @@ import 'package:stacked_services/stacked_services.dart';
     AdaptiveRoute(page: SearchView),
     AdaptiveRoute(page: EditProfileView),
     AdaptiveRoute(page: MessagesView),
-
-    AdaptiveRoute(page: PropertyOwnerSpacetypeView),
+    AdaptiveRoute(page: PropertyOwnerSpaceTypeView),
     AdaptiveRoute(page: PropertyOwnerDetailsView),
     AdaptiveRoute(page: PropertyOwnerPaymentView),
     AdaptiveRoute(page: PropertyOwnerAmenitiesView),
     AdaptiveRoute(page: PropertyOwnerIdentificationView),
     AdaptiveRoute(page: PropertyOwnerVerificationView),
     AdaptiveRoute(page: PropertyOwnerSettingsView),
-
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

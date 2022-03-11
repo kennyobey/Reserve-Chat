@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -25,41 +26,45 @@ class PropertyOwnerVerificationView extends StatelessWidget {
               horizontal: 24,
               vertical: 15,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpaceMedium,
-                  Text(
-                    'Identification',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  Text(
-                    ' Verification',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Submit Documents',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Kindly Submit the documents below to process your application',
-                    style: AppStyle.kBodySmallRegular,
-                  ),
-                  verticalSpaceMedium,
-                  Column(
-                    children: [
-                      _buildTextField(''),
-                      verticalSpaceMedium,
-                      _buildTextField2(''),
-                    ],
-                  ),
-                  verticalSpaceMedium,
-                  Center(child: _buildmaterial()),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpaceMedium,
+                Text(
+                  'Identification',
+                  style: AppStyle.kBodyBold,
+                ),
+                Text(
+                  ' Verification',
+                  style: AppStyle.kBodyBold,
+                ),
+                verticalSpaceMedium,
+                Text(
+                  'Submit Documents',
+                  style: AppStyle.kBodyRegular,
+                ),
+                verticalSpaceMedium,
+                Text(
+                  'Kindly Submit the documents below to process your application',
+                  style: AppStyle.kBodySmallRegular,
+                ),
+                verticalSpaceMedium,
+                Column(
+                  children: [
+                    _buildTextField(''),
+                    verticalSpaceMedium,
+                    _buildTextField2(''),
+                  ],
+                ),
+                Spacer(),
+                ResavationButton(
+                  width: MediaQuery.of(context).size.width,
+                  title: 'Continue',
+                  onTap: () {
+                    model.goToPropertyOwnerSettingsView();
+                  },
+                ),
+              ],
             ),
           ),
         ),
