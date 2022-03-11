@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
+import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
 import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationView.dart';
@@ -57,6 +58,7 @@ class Routes {
       '/property-owner-verification-view';
   static const String propertyOwnerSettingsView =
       '/property-owner-settings-view';
+  static const String propertyOwnerDetailsView = '/property-owner-details-view';
   static const String confirmationView = '/confirmation-view';
   static const String propertyOwnerStep1View = '/property-owner-step1-view';
   static const String profileProductListView = '/profile-product-list-view';
@@ -93,7 +95,8 @@ class Routes {
     audioCallView,
     propertyOwnerSpaceTypeView,
     propertyOwnerVerificationView,
-    propertyOwnerSettingsView
+    propertyOwnerSettingsView,
+    propertyOwnerDetailsView,
   };
 }
 
@@ -120,6 +123,10 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerVerificationView,
         page: PropertyOwnerVerificationView),
     RouteDef(Routes.propertyOwnerSettingsView, page: PropertyOwnerSettingsView),
+    RouteDef(
+      Routes.propertyOwnerDetailsView,
+      page: PropertyOwnerDetailsView,
+    ),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
@@ -285,6 +292,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerSettingsView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerSettingsView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerDetailsView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerDetailsView(),
         settings: data,
       );
     },

@@ -186,7 +186,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                         color: kPrimaryColor,
                         textColor: Colors.white,
                         onPressed: () {
-                          model.goToPropertyOwnerVerificationView();
+                          model.goToPropertyOwnerDetailsView();
                         },
                       ),
                     ],

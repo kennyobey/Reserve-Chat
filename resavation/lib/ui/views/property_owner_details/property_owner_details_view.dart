@@ -30,12 +30,12 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   verticalSpaceMedium,
                   Text(
                     'Details',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceRegular,
                   Text(
                     'Property Name',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -43,12 +43,12 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   ),
                   Text(
                     'property Description',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   _buildTextField(''),
                   Text(
                     'Location',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
