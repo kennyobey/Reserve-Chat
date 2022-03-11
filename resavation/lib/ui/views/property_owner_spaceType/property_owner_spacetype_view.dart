@@ -185,7 +185,9 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                         ),
                         color: kPrimaryColor,
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          model.goToPropertyOwnerVerificationView();
+                        },
                       ),
                     ],
                   ),
@@ -195,9 +197,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => PropertyOwnerSpaceTypeViewViewModel(),
+      viewModelBuilder: () => PropertyOwnerSpaceTypeViewModel(),
     );
   }
 }
-
-PropertyOwnerSpaceTypeViewViewModel() {}

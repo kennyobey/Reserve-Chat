@@ -14,6 +14,10 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void goToPropertyOwnerVerificationView() {
+    _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
+  }
+
   bool _appNotificationSwitchValue = false;
   bool get appNotificationSwitchValue => _appNotificationSwitchValue;
 
