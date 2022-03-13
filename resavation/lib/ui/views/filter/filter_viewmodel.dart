@@ -37,6 +37,13 @@ class FilterViewModel extends BaseViewModel {
 
   double get sliderValue => _sliderValue;
 
+  bool selectFacility = false;
+
+  void onSelectFacilityTap(){
+    selectFacility = !selectFacility;
+    notifyListeners();
+  }
+
   void onRangeSliderChanged(RangeValues value) {
     _rangeValues = value;
     notifyListeners();

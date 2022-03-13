@@ -9,6 +9,7 @@ const Color kGreen = Color(0xFF28C16A);
 const Color kPurple = Color(0xFFAD33Ec);
 const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF000000);
+const Color kBlack10 = Colors.black12;
 const Color kGray = Color(0xFFC4C4C4);
 
 

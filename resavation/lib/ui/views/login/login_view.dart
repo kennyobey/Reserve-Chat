@@ -35,6 +35,12 @@ class LogInView extends StatelessWidget {
                   ResavationTextField(
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter a valid email';
+                      }
+                      return null;
+                    },
                     hintText: 'queenameh@gmail.com',
                   ),
                   verticalSpaceSmall,
@@ -45,6 +51,12 @@ class LogInView extends StatelessWidget {
                   ResavationTextField(
                     textInputAction: TextInputAction.done,
                     obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      }
+                      return null;
+                    },
                     hintText: 'password',
                   ),
                   verticalSpaceMedium,

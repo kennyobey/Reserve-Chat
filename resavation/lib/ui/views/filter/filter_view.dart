@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
@@ -34,40 +35,44 @@ class FilterView extends StatelessWidget {
                         verticalSpaceSmall,
                         Text(
                           'Property Type',
-                          style: AppStyle.kBodyBold,
+                          style: AppStyle.kHeading3,
                         ),
                         verticalSpaceMedium,
                         Card(
-                          elevation: 5,
-                          child: DropdownButton<String>(
-                            value: model.propertyValue,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            elevation: 16,
-                            isExpanded: true,
-                            underline: Container(
-                              // height: 0,
-                              color: Colors.transparent,
+                          elevation: 10,
+                          child: Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 20),
+                            child: DropdownButton<String>(
+                              value: model.propertyValue,
+                              style: AppStyle.kBodyRegular,
+                              icon: const Icon(Icons.arrow_drop_down),
+                              elevation: 16,
+                              isExpanded: true,
+                              underline: Container(
+                                // height: 0,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: model.onDropdownButtonSelect,
+                              items: <String>[
+                                'Select Property',
+                                'Flat',
+                                'Bungalow',
+                                'Self Contain',
+                              ].map<DropdownMenuItem<String>>((
+                                String value,
+                              ) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
-                            onChanged: model.onDropdownButtonSelect,
-                            items: <String>[
-                              'Select Property',
-                              'Flat',
-                              'Bungalow',
-                              'Self Contain',
-                            ].map<DropdownMenuItem<String>>((
-                              String value,
-                            ) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
                           ),
                         ),
                         verticalSpaceMedium,
                         Text(
                           'Price Range',
-                          style: AppStyle.kBodyBold,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         verticalSpaceMedium,
                         RangeSlider(
@@ -82,7 +87,7 @@ class FilterView extends StatelessWidget {
                         verticalSpaceMedium,
                         Text(
                           'Surface area',
-                          style: AppStyle.kBodyBold,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         verticalSpaceMedium,
                         Slider(
@@ -97,7 +102,7 @@ class FilterView extends StatelessWidget {
                         verticalSpaceMedium,
                         Text(
                           'Facilities',
-                          style: AppStyle.kBodyBold,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         verticalSpaceSmall,
                         Row(
@@ -105,6 +110,7 @@ class FilterView extends StatelessWidget {
                           children: [
                             FacilityCard(
                               icon: Icons.bed_outlined,
+                              onTap: ()=> model.onSelectFacilityTap()
                             ),
                             FacilityCard(
                               icon: Icons.bathtub_outlined,
@@ -115,9 +121,31 @@ class FilterView extends StatelessWidget {
                           ],
                         ),
                         verticalSpaceMedium,
+                        Visibility(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FacilityNumber(num: "1",
+                              ),
+                              FacilityNumber(num: "2",
+                              ),
+                              FacilityNumber(num: "3",
+                              ),
+                              FacilityNumber(num: "4",
+                              ),
+                              FacilityNumber(num: "5",
+                              ),
+                              FacilityNumber(num: "6",
+                              ),
+                              FacilityNumber(num: "+",
+                              )
+                            ],
+                          ),
+                        ),
+                        verticalSpaceMedium,
                         Text(
                           'Availability',
-                          style: AppStyle.kBodyBold,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         verticalSpaceSmall,
                         Column(
@@ -160,6 +188,27 @@ class FilterView extends StatelessWidget {
   }
 }
 
+class FacilityNumber extends StatelessWidget {
+  final String num;
+
+  FacilityNumber({required this.num});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: kBlack10,
+          width: 1.0
+        )
+      ),
+      width: 31,
+      height: 25,
+      child: Center(child: Text(num, style: AppStyle.kBodySmallRegular12W500,)),
+    );
+  }
+}
+
 class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
   const AvailabilityListTile({required this.title, required this.value});
   final String title;
@@ -168,7 +217,7 @@ class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
   @override
   Widget build(BuildContext context, model) {
     return ListTile(
-      title: Text(title),
+      title: Text(title, style: AppStyle.kBodyRegularBlack14,),
       trailing: Radio<Availability>(
         value: value,
         groupValue: model.duration,
@@ -197,11 +246,11 @@ class FacilityCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
           color: kPrimaryColor,
         ),
-        height: 60,
-        width: 70,
+        height: 45,
+        width: 65,
         child: Icon(
           icon,
-          size: 30,
+          size: 25,
           color: kWhite,
         ),
       ),

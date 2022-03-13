@@ -9,13 +9,6 @@
             </list>
           </value>
         </entry>
-        <entry key="agora_rtc_engine">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-5.0.0/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="analyzer">
           <value>
             <list>
@@ -307,13 +300,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/packages/flutter_test/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="flutter_web_plugins">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/packages/flutter_web_plugins/lib" />
             </list>
           </value>
         </entry>
@@ -839,7 +825,6 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-34.0.0/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-5.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/analyzer-3.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/animations-2.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.0/lib" />
@@ -956,7 +941,6 @@
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/packages/flutter/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/packages/flutter_test/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/packages/flutter_web_plugins/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

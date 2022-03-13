@@ -13,6 +13,10 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
   void goToProfileProductListView() {
     //_navigationService.navigateTo(Routes.profileProductListView);
   }
+
+  void goToPropertyOwnerIdentificationView() {
+    _navigationService.navigateTo(Routes.propertyOwnerIdentificationView);
+  }
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }

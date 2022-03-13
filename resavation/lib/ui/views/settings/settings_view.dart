@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -14,6 +15,9 @@ class SettingsView extends StatelessWidget {
     return ViewModelBuilder<SettingsViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          appBar: ResavationAppBar(
+            title: "Settings",
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 24,
@@ -22,12 +26,6 @@ class SettingsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: Text(
-                    'Settings',
-                    style: AppStyle.kHeading0,
-                  ),
-                ),
                 SettingsListTile(
                   onTap: model.showComingSoon,
                   icon: Icons.people,
@@ -97,7 +95,7 @@ class SettingsView extends StatelessWidget {
                   ),
                   title: Text(
                     'Logout',
-                    style: AppStyle.kBodyBold.copyWith(color: kRed),
+                    style: AppStyle.kBodyRegularBlack14.copyWith(color: kRed),
                   ),
                 ),
                 Spacer(),

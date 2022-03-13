@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
+import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked.dart';
 
@@ -47,6 +48,7 @@ class Routes {
   static const String mapView = '/map-view';
   static const String paymentView = '/payment-view';
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
+  static const String propertyOwnerIdentificationView = '/property-owner-identification-view';
   static const String confirmationView = '/confirmation-view';
   static const String propertyOwnerStep1View = '/property-owner-step1-view';
   static const String profileProductListView = '/profile-product-list-view';
@@ -75,6 +77,7 @@ class Routes {
     mapView,
     paymentView,
     propertyOwnerProfileView,
+    propertyOwnerIdentificationView,
     confirmationView,
     propertyOwnerStep1View,
     profileProductListView,
@@ -105,6 +108,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.mapView, page: MapView),
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
+    RouteDef(Routes.propertyOwnerIdentificationView, page: PropertyOwnerIdentificationView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
@@ -202,6 +206,14 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+
+    PropertyOwnerIdentificationView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerIdentificationView(),
+        settings: data,
+      );
+    },
+
     ConfirmationView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ConfirmationView(),
