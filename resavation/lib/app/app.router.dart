@@ -16,6 +16,7 @@ import 'package:resavation/ui/views/property_owner_payment/property_owner_paymen
 import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationView.dart';
+import 'package:resavation/ui/views/property_verification/property_verificationView.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked.dart';
 
@@ -57,7 +58,7 @@ class Routes {
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String propertyOwnerSpaceTypeView =
       '/property-owner-spaceType-view';
-
+  static const String propertyVerificationView = '/property-verification-view';
   static const String propertyOwnerVerificationView =
       '/property-owner-verification-view';
   static const String propertyOwnerSettingsView =
@@ -109,6 +110,7 @@ class Routes {
     propertyOwnerPaymentView,
     propertyOwnerAmenitiesView,
     propertyOwnerIdentificationView,
+    propertyVerificationView,
   };
 }
 
@@ -130,6 +132,10 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.mapView, page: MapView),
     RouteDef(Routes.paymentView, page: PaymentView),
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
+    RouteDef(
+      Routes.propertyVerificationView,
+      page: PropertyVerificationView,
+    ),
     RouteDef(
       Routes.propertyOwnerIdentificationView,
       page: PropertyOwnerIdentificationView,
@@ -340,6 +346,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerIdentificationView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerIdentificationView(),
+        settings: data,
+      );
+    },
+    PropertyVerificationView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyVerificationView(),
         settings: data,
       );
     },

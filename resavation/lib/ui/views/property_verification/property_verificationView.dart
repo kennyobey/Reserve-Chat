@@ -28,7 +28,7 @@ class PropertyVerificationView extends StatelessWidget {
               children: [
                 verticalSpaceMedium,
                 Text(
-                  'Identification',
+                  'Property',
                   style: AppStyle.kBodyBold,
                 ),
                 Text(
@@ -72,33 +72,47 @@ class PropertyVerificationView extends StatelessWidget {
 }
 
 Widget _buildTextField(String label) {
-  String? label;
   const maxLines = 5;
   return Container(
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(border: Border.all(color: kGray)),
     width: 360,
-    height: maxLines * 12.0,
+    height: maxLines * 14.0,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(""),
+        Text(
+          "Step 1",
+          style: TextStyle(color: kGray),
+        ),
+        Text(
+          "Choose Document",
+          style: AppStyle.kBodyBold,
+        ),
       ],
     ),
   );
 }
 
 Widget _buildTextField2(String label) {
-  String? label;
   const maxLines = 5;
   return Container(
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(border: Border.all(color: kGray)),
     width: 360,
-    height: maxLines * 12.0,
-    child: const TextField(
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: ("Take a Selfe"),
-        isDense: true, // Added this
-        //contentPadding: EdgeInsets.all(8), // Added this
-      ),
+    height: maxLines * 14.0,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Step 2",
+          style: TextStyle(color: kGray),
+        ),
+        Text(
+          "Take a Selfe",
+          style: AppStyle.kBodyBold,
+        ),
+      ],
     ),
   );
 }
