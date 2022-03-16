@@ -28,28 +28,18 @@ class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
               children: [
                 verticalSpaceMedium,
                 Text(
-                  'Property',
-                  style: AppStyle.kBodyBold,
-                ),
-                Text(
-                  ' Verification',
+                  'Your Appointment',
                   style: AppStyle.kBodyBold,
                 ),
                 verticalSpaceMedium,
-                Text(
-                  'Submit Documents',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                Text(
-                  'Kindly Submit the documents below to process your application',
-                  style: AppStyle.kBodySmallRegular,
+                Row(
+                  children: [
+                    _Upcoming(""),
+                  ],
                 ),
                 verticalSpaceMedium,
                 Column(
                   children: [
-                    _buildTextField(''),
-                    verticalSpaceMedium,
                     _buildTextField2(''),
                   ],
                 ),
@@ -75,8 +65,10 @@ Widget _buildTextField(String label) {
   const maxLines = 5;
   return Container(
     padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(border: Border.all(color: kGray)),
-    width: 360,
+    decoration: BoxDecoration(
+      border: Border.all(color: kGray),
+    ),
+    width: 60,
     height: maxLines * 14.0,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,10 +97,6 @@ Widget _buildTextField2(String label) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Step 2",
-          style: TextStyle(color: kGray),
-        ),
-        Text(
           "Take a Selfe",
           style: AppStyle.kBodyBold,
         ),
@@ -117,24 +105,33 @@ Widget _buildTextField2(String label) {
   );
 }
 
-Widget _buildmaterial() {
+Widget _Upcoming(String label) {
   return Container(
-    margin: EdgeInsets.symmetric(horizontal: 10),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: kPrimaryColor,
-        onPrimary: Colors.white,
-        shadowColor: Colors.greenAccent,
-        elevation: 0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
-        minimumSize: Size(100, 40), //////// HERE
-      ),
-      onPressed: () {},
-      child: Text(
-        'Continue',
-        style: AppStyle.kBodyRegular,
-      ),
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        borderRadius: BorderRadius.all(Radius.circular(5))),
+    width: 340,
+    height: 70.0,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          child: Center(child: Text("Hello")),
+        ),
+        Spacer(),
+        Container(
+          width: 130,
+          height: 70,
+          color: kBlack,
+          child: Center(
+            child: Text(
+              "Hello",
+              style: TextStyle(color: kWhite),
+            ),
+          ),
+        ),
+      ],
     ),
   );
 }
