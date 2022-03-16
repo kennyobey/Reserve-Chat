@@ -132,9 +132,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                         ),
                         color: kPrimaryColor,
                         textColor: Colors.white,
-                        onPressed: () {
-                          model.goToPropertyOwnerAmenitiesView();
-                        },
+                        onPressed: () {},
                       ),
                     ],
                   ),

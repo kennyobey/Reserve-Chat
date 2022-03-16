@@ -58,6 +58,10 @@ class Routes {
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String propertyOwnerSpaceTypeView =
       '/property-owner-spaceType-view';
+  static const String propertyOwnerAmenitiesView =
+      '/property-owner-amenities-view';
+  static const String propertyOwnerIdentificationView =
+      '/property-owner-identification-view';
   static const String propertyVerificationView = '/property-verification-view';
   static const String propertyOwnerVerificationView =
       '/property-owner-verification-view';
@@ -65,12 +69,8 @@ class Routes {
       '/property-owner-settings-view';
   static const String propertyOwnerDetailsView = '/property-owner-details-view';
   static const String propertyOwnerPaymentView = '/property-owner-payment-view';
-  static const String propertyOwnerAmenitiesView =
-      '/property-owner-amenities-view';
   static const String confirmationView = '/confirmation-view';
   static const String propertyOwnerStep1View = '/property-owner-step1-view';
-  static const String propertyOwnerIdentificationView =
-      '/property-owner-identification-view';
   static const String profileProductListView = '/profile-product-list-view';
   static const String searchView = '/search-view';
   static const String editProfileView = '/edit-profile-view';
@@ -152,10 +152,6 @@ class StackedRouter extends RouterBase {
     RouteDef(
       Routes.propertyOwnerDetailsView,
       page: PropertyOwnerDetailsView,
-    ),
-    RouteDef(
-      Routes.propertyOwnerAmenitiesView,
-      page: PropertyOwnerAmenitiesView,
     ),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
