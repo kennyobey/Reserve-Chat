@@ -112,7 +112,9 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       ),
                       color: kPrimaryColor,
                       textColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        model.goToPropertyOwnerAppointmentPageoneView();
+                      },
                     ),
                   ],
                 ),

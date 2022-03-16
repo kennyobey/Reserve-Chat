@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
+import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneView.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageView.dart';
 import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
@@ -70,6 +71,8 @@ class Routes {
       '/property-owner-settings-view';
   static const String propertyOwnerHomePageView =
       '/property-owner-Homepage-view';
+  static const String propertyOwnerAppointmentPageoneView =
+      '/property-owner-AppointmentPageone-view';
   static const String propertyOwnerDetailsView = '/property-owner-details-view';
   static const String propertyOwnerPaymentView = '/property-owner-payment-view';
   static const String confirmationView = '/confirmation-view';
@@ -114,7 +117,8 @@ class Routes {
     propertyOwnerAmenitiesView,
     propertyOwnerIdentificationView,
     propertyVerificationView,
-    propertyOwnerHomePageView
+    propertyOwnerHomePageView,
+    propertyOwnerAppointmentPageoneView
   };
 }
 
@@ -164,6 +168,10 @@ class StackedRouter extends RouterBase {
     RouteDef(
       Routes.propertyOwnerHomePageView,
       page: PropertyOwnerHomePageView,
+    ),
+    RouteDef(
+      Routes.propertyOwnerAppointmentPageoneView,
+      page: PropertyOwnerAppointmentPageoneView,
     ),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
@@ -366,6 +374,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerHomePageView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerHomePageView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerAppointmentPageoneView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerAppointmentPageoneView(),
         settings: data,
       );
     },
