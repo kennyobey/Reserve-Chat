@@ -153,6 +153,10 @@ class StackedRouter extends RouterBase {
       Routes.propertyOwnerDetailsView,
       page: PropertyOwnerDetailsView,
     ),
+    RouteDef(
+      Routes.propertyOwnerAmenitiesView,
+      page: PropertyOwnerAmenitiesView,
+    ),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
