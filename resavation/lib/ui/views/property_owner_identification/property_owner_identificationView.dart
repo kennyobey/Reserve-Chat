@@ -25,107 +25,105 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
               horizontal: 24,
               vertical: 15,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      'Identification',
-                      style: AppStyle.kBodyBold,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    'Identification',
+                    style: AppStyle.kBodyBold,
+                  ),
+                ),
+                verticalSpaceMedium,
+                Text(
+                  'Personal Details',
+                  style: AppStyle.kBodyBold,
+                ),
+                verticalSpaceSmall,
+                Text(
+                  'Complete your personal information',
+                  style: AppStyle.kBodyBold,
+                ),
+                verticalSpaceTiny,
+                ResavationTextField(
+                  hintText: 'First Name',
+                ),
+                verticalSpaceTiny,
+                ResavationTextField(
+                  hintText: 'Last Name',
+                ),
+                verticalSpaceTiny,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Date of Birth',
+                      style: AppStyle.kBodyRegular,
                     ),
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Personal Details',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceSmall,
-                  Text(
-                    'Complete your personal information',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'First Name',
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Last Name',
-                  ),
-                  verticalSpaceTiny,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Date of Birth',
+                  ],
+                ),
+                verticalSpaceTiny,
+                Row(
+                  children: [
+                    _buildTextField(''),
+                    horizontalSpaceMedium,
+                    _buildTextFieldDay(''),
+                    horizontalSpaceTiny,
+                    _buildTextFieldMonth(''),
+                    horizontalSpaceTiny,
+                    _buildTextFieldYear(''),
+                  ],
+                ),
+                verticalSpaceTiny,
+                Text(
+                  'Complete your address',
+                  style: AppStyle.kBodyRegular,
+                ),
+                verticalSpaceTiny,
+                ResavationTextField(
+                  hintText: 'Country',
+                ),
+                verticalSpaceTiny,
+                ResavationTextField(
+                  hintText: 'State',
+                ),
+                verticalSpaceTiny,
+                ResavationTextField(
+                  hintText: 'City',
+                ),
+                verticalSpaceTiny,
+                ResavationTextField(
+                  hintText: 'Enter the address of the space',
+                ),
+                Spacer(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FlatButton(
+                      child: Text(
+                        'Back',
                         style: AppStyle.kBodyRegular,
                       ),
-                    ],
-                  ),
-                  verticalSpaceTiny,
-                  Row(
-                    children: [
-                      _buildTextField(''),
-                      horizontalSpaceMedium,
-                      _buildTextFieldDay(''),
-                      horizontalSpaceTiny,
-                      _buildTextFieldMonth(''),
-                      horizontalSpaceTiny,
-                      _buildTextFieldYear(''),
-                    ],
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'Complete your address',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Country',
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'State',
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'City',
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Enter the address of the space',
-                  ),
-                  verticalSpaceTiny,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Back',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kWhite,
-                        textColor: kBlack,
-                        onPressed: () {},
+                      color: kWhite,
+                      textColor: kBlack,
+                      onPressed: () {},
+                    ),
+                    Spacer(),
+                    FlatButton(
+                      child: Text(
+                        'Next',
+                        style: AppStyle.kBodyRegular,
                       ),
-                      Spacer(),
-                      FlatButton(
-                        child: Text(
-                          'Next',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kPrimaryColor,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          model.goToPropertyOwnerVerificationView();
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                      color: kPrimaryColor,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        model.goToPropertyOwnerVerificationView();
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

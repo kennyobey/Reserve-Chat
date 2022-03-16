@@ -58,7 +58,7 @@ class PropertyVerificationView extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   title: 'Continue',
                   onTap: () {
-                    model.goToPropertyOwnerSettingsView();
+                    model.goToPropertyOwnerHomePageView();
                   },
                 ),
               ],
