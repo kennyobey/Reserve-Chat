@@ -60,24 +60,33 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                         style: AppStyle.kBodyBold,
                       ),
                       verticalSpaceTiny,
-                      Row(
-                        children: [
-                          Text(
-                            "Details",
-                            style: AppStyle.kBodyRegular,
-                          ),
-                          Spacer(),
-                          Text(
-                            "File",
-                            style: AppStyle.kBodyRegular,
-                          ),
-                          Spacer(),
-                          Text(
-                            "Actions",
-                            style: AppStyle.kBodyRegular,
-                          ),
-                        ],
-                      )
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Details",
+                              style: AppStyle.kBodyRegular,
+                            ),
+                            Spacer(),
+                            Text(
+                              "File",
+                              style: AppStyle.kBodyRegular,
+                            ),
+                            Spacer(),
+                            Text(
+                              "Actions",
+                              style: AppStyle.kBodyRegular,
+                            ),
+                          ],
+                        ),
+                      ),
+                      verticalSpaceRegular,
+                      _ListingCard(),
+                      verticalSpaceTiny,
+                      _ListingCard(),
+                      verticalSpaceTiny,
+                      _ListingCard(),
                     ],
                   ),
                 ),
@@ -164,14 +173,37 @@ Widget _listSpace() {
   );
 }
 
-Widget _buildTextField2(String label) {
+Widget _ListingCard() {
   const maxLines = 5;
   return Container(
-      padding: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(border: Border.all(color: kGray)),
+      padding: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        borderRadius: new BorderRadius.circular(5.0),
+      ),
       width: 360,
-      height: maxLines * 14.0,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [ListTile()]));
+      height: maxLines * 17.0,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ListTile(
+          leading: Icon(Icons.camera_rear, size: 20, color: Colors.black),
+          title: Text(
+            "Adeyemo Stephen",
+            style: AppStyle.kBodyBold,
+          ),
+          subtitle: Text("SeedBuilderHub"),
+          trailing: Container(
+            width: 80,
+            height: 30,
+            child: FlatButton(
+              child: Text(
+                'Accept',
+                style: TextStyle(fontSize: 12.0),
+              ),
+              color: Colors.blueAccent,
+              textColor: Colors.white,
+              onPressed: () {},
+            ),
+          ),
+        )
+      ]));
 }
