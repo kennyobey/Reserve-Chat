@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/dump_widgets/favorite_card.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/favorite/favorite_viewmodel.dart';
@@ -13,18 +14,13 @@ class FavoriteView extends StatelessWidget {
     return ViewModelBuilder<FavoriteViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          appBar: ResavationAppBar(
+            title: "Favourite",
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'Favorite',
-                      style: AppStyle.kHeading1,
-                    ),
-                  ],
-                ),
                 verticalSpaceMedium,
                 Expanded(
                   child: SingleChildScrollView(

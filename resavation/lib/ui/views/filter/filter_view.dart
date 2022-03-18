@@ -35,7 +35,7 @@ class FilterView extends StatelessWidget {
                         verticalSpaceSmall,
                         Text(
                           'Property Type',
-                          style: AppStyle.kHeading3,
+                          style: AppStyle.kBodyRegularW500,
                         ),
                         verticalSpaceMedium,
                         Card(
@@ -105,20 +105,23 @@ class FilterView extends StatelessWidget {
                           style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         verticalSpaceSmall,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FacilityCard(
-                              icon: Icons.bed_outlined,
-                              onTap: ()=> model.onSelectFacilityTap()
-                            ),
-                            FacilityCard(
-                              icon: Icons.bathtub_outlined,
-                            ),
-                            FacilityCard(
-                              icon: Icons.car_rental,
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FacilityCard(
+                                icon: Icons.bed_outlined,
+                                onTap: ()=> model.onSelectFacilityTap()
+                              ),
+                              FacilityCard(
+                                icon: Icons.bathtub_outlined,
+                              ),
+                              FacilityCard(
+                                icon: Icons.car_rental,
+                              ),
+                            ],
+                          ),
                         ),
                         verticalSpaceMedium,
                         Visibility(
@@ -227,7 +230,7 @@ class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
   }
 }
 
-class FacilityCard extends StatelessWidget {
+class FacilityCard extends ViewModelWidget<FilterViewModel> {
   const FacilityCard({
     Key? key,
     this.icon,
@@ -238,20 +241,20 @@ class FacilityCard extends StatelessWidget {
   final IconData? icon;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, model) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          color: kPrimaryColor,
+          borderRadius: BorderRadius.circular(3),
+          color: model.selectFacility? kPrimaryColor : kWhite,
         ),
         height: 45,
         width: 65,
         child: Icon(
           icon,
           size: 25,
-          color: kWhite,
+          color: model.selectFacility? kWhite : kBlack,
         ),
       ),
     );

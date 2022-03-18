@@ -10,6 +10,8 @@ MERGED from [:permission_handler] C:\Users\MICHEAL\AndroidStudioProjects\resavat
 MERGED from [:sqflite] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
 MERGED from [:path_provider_android] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\ad201fac15a88598107ec645f351f5b4\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:17:1-33:12
 MERGED from [com.github.agorabuilder:iris-rtc:3.5.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\55e0fee87cda87e580d76534efb5ca89\jetified-iris-rtc-3.5.2\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.material:material:1.4.0-alpha01] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\76712767db3651c6d4ffe404982e4a9a\material-1.4.0-alpha01\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\8a872343ad72e09c1db9590ff94dc0b1\jetified-viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
@@ -158,6 +160,8 @@ application
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:18:4-55:19
 MERGED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-13:19
 MERGED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-13:19
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
 MERGED from [com.google.android.material:material:1.4.0-alpha01] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\76712767db3651c6d4ffe404982e4a9a\material-1.4.0-alpha01\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.4.0-alpha01] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\76712767db3651c6d4ffe404982e4a9a\material-1.4.0-alpha01\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03117f7ba41de6a04a9f48ae55b48967\constraintlayout-2.0.1\AndroidManifest.xml:9:5-20
@@ -228,6 +232,10 @@ MERGED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavatio
 MERGED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
 MERGED from [:path_provider_android] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\ad201fac15a88598107ec645f351f5b4\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\ad201fac15a88598107ec645f351f5b4\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
 MERGED from [com.github.agorabuilder:iris-rtc:3.5.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\55e0fee87cda87e580d76534efb5ca89\jetified-iris-rtc-3.5.2\AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.agorabuilder:iris-rtc:3.5.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\55e0fee87cda87e580d76534efb5ca89\jetified-iris-rtc-3.5.2\AndroidManifest.xml:7:5-9:41
 MERGED from [com.google.android.material:material:1.4.0-alpha01] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\76712767db3651c6d4ffe404982e4a9a\material-1.4.0-alpha01\AndroidManifest.xml:20:5-44
@@ -312,3 +320,15 @@ ADDED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation
 		ADDED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-51
 	android:name
 		ADDED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-68
+uses-library#androidx.window.extensions
+ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+uses-library#androidx.window.sidecar
+ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\03c633e46d75bfb21f082f0417f55161\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51

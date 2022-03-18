@@ -90,7 +90,7 @@ class LogInView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     onTap: model.goToMainView,
                   ),
-                  verticalSpaceMassive,
+                  verticalSpaceSmall,
                   ResavationTextSpan(
                     leading: "Don't have an account? ",
                     trailing: 'Sign up',

@@ -14,9 +14,7 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
     //_navigationService.navigateTo(Routes.profileProductListView);
   }
 
-  void goToPropertyOwnerIdentificationView() {
-    _navigationService.navigateTo(Routes.propertyOwnerIdentificationView);
-  }
+
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }

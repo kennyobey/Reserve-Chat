@@ -35,7 +35,6 @@ class PropertyOwnerProfileView extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: (){
-                            model.goToPropertyOwnerIdentificationView();
                           },
                           child: Text(
                             'Ademoye Stephen',
