@@ -2,14 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
-import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
+
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart';
-import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationViewModel.dart';
-import 'package:country_picker/country_picker.dart';
+
 import 'package:resavation/utility/assets.dart';
 
 import 'package:stacked/stacked.dart';
@@ -53,7 +52,38 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                         ],
                       ),
                       verticalSpaceMedium,
-                      _blackcontainer(""),
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: kGray),
+                          borderRadius: new BorderRadius.circular(5.0),
+                          color: kBlack,
+                        ),
+                        width: 345,
+                        height: 125.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            verticalSpaceTiny,
+                            Text(
+                              "Connecting you to the best tenant in the world",
+                              style: TextStyle(color: kWhite),
+                            ),
+                            verticalSpaceSmall,
+                            ResavationButton(
+                              width: 153,
+                              height: 40,
+                              onTap: () {
+                                model.goToPropertyOwnerSpaceTypeView();
+                              },
+                              title: 'List Your Space',
+                              titleColor: kWhite,
+                              buttonColor: kPrimaryColor,
+                              //  borderColor: kp,
+                            ),
+                          ],
+                        ),
+                      ),
                       verticalSpaceMedium,
                       Text(
                         "Tenants request",
@@ -128,51 +158,88 @@ class PropertyOwnerHomePageView extends StatelessWidget {
   }
 }
 
-Widget _blackcontainer(String label) {
-  //const maxLines = 5;
-  return Container(
-    padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(
-      border: Border.all(color: kGray),
-      borderRadius: new BorderRadius.circular(5.0),
-      color: kBlack,
-    ),
-    width: 345,
-    height: 125.0,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        verticalSpaceTiny,
-        Text(
-          "Connecting you to the best tenant in the world",
-          style: TextStyle(color: kWhite),
-        ),
-        verticalSpaceSmall,
-        _listSpace()
-      ],
-    ),
-  );
-}
+// Widget _blackcontainer(String label) {
+//   //const maxLines = 5;
+//   return Container(
+//     padding: EdgeInsets.all(10.0),
+//     decoration: BoxDecoration(
+//       border: Border.all(color: kGray),
+//       borderRadius: new BorderRadius.circular(5.0),
+//       color: kBlack,
+//     ),
+//     width: 345,
+//     height: 125.0,
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         verticalSpaceTiny,
+//         Text(
+//           "Connecting you to the best tenant in the world",
+//           style: TextStyle(color: kWhite),
+//         ),
+//         verticalSpaceSmall,
+//         ResavationButton(
+//           width: 153,
+//           height: 40,
+//           onTap: () {
+//             var model;
+//             model.goToPropertyOwnerSpaceTypeView();
+//           },
+//           title: 'List Your Space',
+//           titleColor: kWhite,
+//           buttonColor: kPrimaryColor,
+//           //  borderColor: kp,
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
-Widget _listSpace() {
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 0),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: kPrimaryColor,
-        onPrimary: Colors.white,
-        shadowColor: Colors.greenAccent,
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-        //minimumSize: Size(100, 40), //////// HERE
+class ResavationListSpace extends StatelessWidget {
+  const ResavationListSpace({
+    Key? key,
+    this.onTap,
+    required this.title,
+    this.titleColor = kWhite,
+    this.buttonColor = kPrimaryColor,
+    this.height,
+    this.width,
+    this.borderColor = kPrimaryColor,
+    this.icon,
+    this.fontSize,
+  }) : super(key: key);
+  final void Function()? onTap;
+  final String title;
+  final Color titleColor;
+  final Color buttonColor;
+  final double? height;
+  final double? width;
+  final Color borderColor;
+  final IconData? icon;
+  final double? fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: kPrimaryColor,
+          onPrimary: Colors.white,
+          shadowColor: Colors.greenAccent,
+          elevation: 0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          //minimumSize: Size(100, 40), //////// HERE
+        ),
+        onPressed: () {},
+        child: Text(
+          'List your space',
+          style: AppStyle.kBodyRegular,
+        ),
       ),
-      onPressed: () {},
-      child: Text(
-        'List your space',
-        style: AppStyle.kBodyRegular,
-      ),
-    ),
-  );
+    );
+  }
 }
 
 Widget _ListingCard() {

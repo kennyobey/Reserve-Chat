@@ -39,8 +39,8 @@ class SettingsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
   }
 
-  void goToPropertyOwnerVerificationView() {
-    _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
+  void goToPropertyOwnerHomePageView() {
+    _navigationService.navigateTo(Routes.propertyOwnerHomePageView);
   }
 
   void goToEditProfileView() {

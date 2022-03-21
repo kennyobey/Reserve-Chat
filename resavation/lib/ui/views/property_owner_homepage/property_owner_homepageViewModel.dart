@@ -9,4 +9,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void goToPropertyOwnerAppointmentPageoneView() {
     _navigationService.navigateTo(Routes.propertyOwnerAppointmentPageoneView);
   }
+
+  void goToPropertyOwnerSpaceTypeView() {
+    _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
+  }
 }

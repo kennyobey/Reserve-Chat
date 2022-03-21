@@ -80,7 +80,7 @@ class SettingsView extends StatelessWidget {
                 verticalSpaceMedium,
                 ResavationButton(
                   onTap: () {
-                    model.goToPropertyOwnerSpacetypeView();
+                    model.goToPropertyOwnerHomePageView();
                   },
                   title: 'Switch to Property Owner',
                   titleColor: kPrimaryColor,
