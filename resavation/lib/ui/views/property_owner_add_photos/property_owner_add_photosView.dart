@@ -51,7 +51,9 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                 ResavationButton(
                   // width: 140,
                   // height: 40,
-                  onTap: () {},
+                  onTap: () {
+                    model.goToPropertyOwnerAddCoverPhotosView();
+                  },
                   title: 'Add photos',
                   titleColor: kWhite,
                   buttonColor: kPrimaryColor,

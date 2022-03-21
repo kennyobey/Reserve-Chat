@@ -56,11 +56,11 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                         padding: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                           border: Border.all(color: kGray),
-                          borderRadius: new BorderRadius.circular(5.0),
+                          borderRadius: BorderRadius.circular(5.0),
                           color: kBlack,
                         ),
                         width: 345,
-                        height: 125.0,
+                        height: 135.0,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -71,8 +71,8 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                             ),
                             verticalSpaceSmall,
                             ResavationButton(
-                              width: 153,
-                              height: 40,
+                              // width: 153,
+                              // height: 40,
                               onTap: () {
                                 model.goToPropertyOwnerSpaceTypeView();
                               },
@@ -119,34 +119,6 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       _ListingCard(),
                     ],
                   ),
-                ),
-                Spacer(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        'Back',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kWhite,
-                      textColor: kBlack,
-                      onPressed: () {},
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Next',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goToPropertyOwnerAppointmentPageoneView();
-                      },
-                    ),
-                  ],
                 ),
               ],
             ),

@@ -70,7 +70,6 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                     'Generate your address on google map',
                     style: AppStyle.kBodyRegular,
                   ),
-                  _buildTextField("Click to generate map"),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,

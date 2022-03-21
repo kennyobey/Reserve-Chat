@@ -3,10 +3,10 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
+class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void goToPropertyOwnerAddCoverPhotosView() {
-    _navigationService.navigateTo(Routes.propertyOwnerAddCoverPhotosView);
+  void goToPropertyOwnerPaymentView() {
+    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
   }
 }
