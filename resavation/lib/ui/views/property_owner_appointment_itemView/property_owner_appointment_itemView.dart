@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -62,7 +63,7 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
                       color: kPrimaryColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        model.goToPropertyOwnerAppointmentPageoneView();
+                        model.goPropertyOwnerProfileView();
                       },
                     ),
                   ],
@@ -80,6 +81,7 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
 Widget _blackcontainer(String label) {
   //const maxLines = 5;
   var model;
+  var image;
   return Container(
     padding: EdgeInsets.all(10.0),
     decoration: BoxDecoration(
@@ -94,7 +96,10 @@ Widget _blackcontainer(String label) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           verticalSpaceTiny,
-          Icon(Icons.receipt_sharp, size: 100, color: Colors.black),
+          ResavationImage(
+            image: image,
+          ),
+          // Icon(Icons.receipt_sharp, size: 100, color: Colors.black),
           Spacer(),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(

@@ -1,13 +1,17 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/property_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class PropertyOwnerAppointmentItemViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  List<Property> get properties => ListOfProperties;
 
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
+
+  get goToPropertyDetails => null;
 
   void onNotificationSwitchChanged(bool? value) {
     _notificationSwitchValue = value!;
@@ -18,8 +22,8 @@ class PropertyOwnerAppointmentItemViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
   }
 
-  void goToPropertyOwnerDetailsView() {
-    _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
+  void goPropertyOwnerProfileView() {
+    _navigationService.navigateTo(Routes.propertyOwnerProfileView);
   }
 
   bool _appNotificationSwitchValue = false;
