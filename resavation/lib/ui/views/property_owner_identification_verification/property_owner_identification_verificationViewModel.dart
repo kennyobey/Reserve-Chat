@@ -9,4 +9,8 @@ class PropertyOwnerIdentificationVerificationViewModel extends BaseViewModel {
   void goToPropertyVerificationView() {
     _navigationService.navigateTo(Routes.propertyVerificationView);
   }
+
+  void goToPropertyOwnerVerificationView() {
+    _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
+  }
 }

@@ -31,11 +31,11 @@ class PropertyOwnerVerificationView extends StatelessWidget {
               children: [
                 verticalSpaceMedium,
                 Text(
-                  'Identification',
+                  'Identity',
                   style: AppStyle.kBodyBold,
                 ),
                 Text(
-                  ' Verification',
+                  'Verification',
                   style: AppStyle.kBodyBold,
                 ),
                 verticalSpaceMedium,

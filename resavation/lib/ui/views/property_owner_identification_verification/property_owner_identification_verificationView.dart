@@ -73,10 +73,15 @@ class PropertyOwnerIdentificationVerificationView extends StatelessWidget {
                       style: AppStyle.kBodyRegularBlack14W600,
                     ),
                     Spacer(),
-                    Text(
-                      'Verify now',
-                      style: AppStyle.kBodySmallRegular12W500
-                          .copyWith(color: kPrimaryColor),
+                    InkWell(
+                      onTap: () {
+                        model.goToPropertyOwnerVerificationView();
+                      },
+                      child: Text(
+                        'Verify now',
+                        style: AppStyle.kBodySmallRegular12W500
+                            .copyWith(color: kPrimaryColor),
+                      ),
                     ),
                   ],
                 ),
