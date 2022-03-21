@@ -37,11 +37,15 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       Row(
                         children: [
                           GestureDetector(
-                            child: CircleAvatar(
-                              radius: 20, // Image radius
-                              backgroundImage: AssetImage(Assets.profile_image),
-                            ),
-                          ),
+                              child: CircleAvatar(
+                                radius: 20, // Image radius
+                                backgroundImage:
+                                    AssetImage(Assets.profile_image),
+                              ),
+                              onTap: () {
+                                model
+                                    .goToPropertyOwnerIdentificationVerificationView();
+                              }),
                           horizontalSpaceSmall,
                           Text(
                             'Welcome Steven',
