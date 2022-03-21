@@ -40,34 +40,6 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        'Back',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kWhite,
-                      textColor: kBlack,
-                      onPressed: () {},
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Next',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goPropertyOwnerProfileView();
-                      },
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

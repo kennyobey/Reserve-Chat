@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
+import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneView.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
@@ -60,6 +61,8 @@ class Routes {
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String propertyOwnerSpaceTypeView =
       '/property-owner-spaceType-view';
+  static const String propertyOwnerAddPhotosView =
+      '/property-owner-addphotos-view';
   static const String propertyOwnerAmenitiesView =
       '/property-owner-amenities-view';
   static const String propertyOwnerIdentificationView =
@@ -118,7 +121,8 @@ class Routes {
     propertyOwnerIdentificationView,
     propertyVerificationView,
     propertyOwnerHomePageView,
-    propertyOwnerAppointmentPageoneView
+    propertyOwnerAppointmentPageoneView,
+    propertyOwnerAddPhotosView
   };
 }
 
@@ -173,6 +177,8 @@ class StackedRouter extends RouterBase {
       Routes.propertyOwnerAppointmentPageoneView,
       page: PropertyOwnerAppointmentPageoneView,
     ),
+    RouteDef(Routes.propertyOwnerAddPhotosView,
+        page: PropertyOwnerAddPhotosView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
@@ -380,6 +386,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerAppointmentPageoneView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerAppointmentPageoneView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerAddPhotosView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerAddPhotosView(),
         settings: data,
       );
     },

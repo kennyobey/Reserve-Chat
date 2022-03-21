@@ -158,42 +158,42 @@ class PropertyOwnerHomePageView extends StatelessWidget {
   }
 }
 
-// Widget _blackcontainer(String label) {
-//   //const maxLines = 5;
-//   return Container(
-//     padding: EdgeInsets.all(10.0),
-//     decoration: BoxDecoration(
-//       border: Border.all(color: kGray),
-//       borderRadius: new BorderRadius.circular(5.0),
-//       color: kBlack,
-//     ),
-//     width: 345,
-//     height: 125.0,
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         verticalSpaceTiny,
-//         Text(
-//           "Connecting you to the best tenant in the world",
-//           style: TextStyle(color: kWhite),
-//         ),
-//         verticalSpaceSmall,
-//         ResavationButton(
-//           width: 153,
-//           height: 40,
-//           onTap: () {
-//             var model;
-//             model.goToPropertyOwnerSpaceTypeView();
-//           },
-//           title: 'List Your Space',
-//           titleColor: kWhite,
-//           buttonColor: kPrimaryColor,
-//           //  borderColor: kp,
-//         ),
-//       ],
-//     ),
-//   );
-// }
+Widget _blackcontainer(String label) {
+  //const maxLines = 5;
+  return Container(
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(
+      border: Border.all(color: kGray),
+      borderRadius: new BorderRadius.circular(5.0),
+      color: kBlack,
+    ),
+    width: 345,
+    height: 125.0,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        verticalSpaceTiny,
+        Text(
+          "Connecting you to the best tenant in the world",
+          style: TextStyle(color: kWhite),
+        ),
+        verticalSpaceSmall,
+        ResavationButton(
+          width: 153,
+          height: 40,
+          onTap: () {
+            var model;
+            model.goToPropertyOwnerSpaceTypeView();
+          },
+          title: 'List Your Space',
+          titleColor: kWhite,
+          buttonColor: kPrimaryColor,
+          //  borderColor: kp,
+        ),
+      ],
+    ),
+  );
+}
 
 class ResavationListSpace extends StatelessWidget {
   const ResavationListSpace({
