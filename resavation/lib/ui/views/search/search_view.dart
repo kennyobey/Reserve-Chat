@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/smart_widgets/find_your_location.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -15,55 +16,54 @@ class SearchView extends StatelessWidget {
     return ViewModelBuilder<SearchViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+            appBar: ResavationAppBar(
+              title: "Search",
+            ),
             body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              Column(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
                 children: [
-                  Text(
-                    'Search',
-                    style: AppStyle.kHeading0,
-                  ),
-                  verticalSpaceMedium,
-                  FindYourLocation(
-                    onTap: model.goToFilterView,
-                  ),
-                  verticalSpaceMedium,
-                  SortProperty(
-                    noOfProperties: 40,
-                    sortByTitle: 'Default Order',
-                  ),
-                ],
-              ),
-              verticalSpaceMedium,
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
+                  Column(
                     children: [
-                      for (final property in model.properties) ...[
-                        PropertyCard(
-                          onTap: model.goToPropertyDetails,
-                          image: property.image,
-                          amountPerYear: property.amountPerYear,
-                          location: property.location,
-                          address: property.address,
-                          numberOfBathrooms: property.numberOfBedrooms,
-                          numberOfBedrooms: property.numberOfBathrooms,
-                          squareFeet: property.squareFeet,
-                          isFavoriteTap: property.isFavoriteTap,
-                          onFavoriteTap: () => model.onFavoriteTap(property),
-                        ),
-                        verticalSpaceSmall
-                      ]
+                      verticalSpaceMedium,
+                      FindYourLocation(
+                        onTap: model.goToFilterView,
+                      ),
+                      verticalSpaceMedium,
+                      SortProperty(
+                        noOfProperties: 40,
+                        sortByTitle: 'Default Order',
+                      ),
                     ],
                   ),
-                ),
+                  verticalSpaceMedium,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (final property in model.properties) ...[
+                            PropertyCard(
+                              onTap: model.goToPropertyDetails,
+                              image: property.image,
+                              amountPerYear: property.amountPerYear,
+                              location: property.location,
+                              address: property.address,
+                              numberOfBathrooms: property.numberOfBedrooms,
+                              numberOfBedrooms: property.numberOfBathrooms,
+                              squareFeet: property.squareFeet,
+                              isFavoriteTap: property.isFavoriteTap,
+                              onFavoriteTap: () => model.onFavoriteTap(property),
+                            ),
+                            verticalSpaceSmall
+                          ]
+                        ],
+                      ),
+                    ),
+                  ),
+                  verticalSpaceMedium,
+                ],
               ),
-              verticalSpaceMedium,
-            ],
-          ),
-        )),
+            )),
       ),
       viewModelBuilder: () => SearchViewModel(),
     );

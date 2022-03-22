@@ -7,10 +7,10 @@ class SortProperty extends StatelessWidget {
 
   const SortProperty(
       {Key? key,
-      required this.noOfProperties,
-      required this.sortByTitle,
-      this.onSortByTap,
-      s})
+        required this.noOfProperties,
+        required this.sortByTitle,
+        this.onSortByTap,
+        s})
       : super(key: key);
   final int noOfProperties;
   final String sortByTitle;
@@ -31,33 +31,11 @@ class SortProperty extends StatelessWidget {
           style: AppStyle.kBodySmallRegular,
         ),
         Spacer(),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'Sort by ',
-                style: AppStyle.kBodySmallRegular,
-              ),
-              // TextSpan(
-              //   text: sortByTitle,
-              //   style: AppStyle.kBodyRegular,
-              //   recognizer: TapGestureRecognizer()..onTap = onSortByTap,
-              // )
-            ],
-          ),
+        Text(
+          "sort by",
+          style: AppStyle.kBodySmallRegular,
         ),
-        DropdownButton(
-          items: <String>['Category', 'City', 'Office Space', 'Apartment']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            //TODO add an action to change value
-          },
-        )
+        Icon(Icons.keyboard_arrow_down_outlined)
       ],
     );
   }

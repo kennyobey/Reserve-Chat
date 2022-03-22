@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppStyle {
-
   static TextStyle kHeading0 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
     fontSize: 18,
@@ -39,9 +38,14 @@ class AppStyle {
     height: 2,
   );
 
-
   static TextStyle kBodyRegular = GoogleFonts.montserrat(
     fontWeight: FontWeight.normal,
+    fontSize: 16,
+    height: 1.5,
+  );
+
+  static TextStyle kBodyRegularW500 = GoogleFonts.montserrat(
+    fontWeight: FontWeight.w500,
     fontSize: 16,
     height: 1.5,
   );
@@ -53,14 +57,23 @@ class AppStyle {
     color: Colors.black,
   );
 
+  static TextStyle kBodyRegularBlack14W500 = GoogleFonts.montserrat(
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    height: 1.5,
+    color: Colors.black,
+  );
+
   static TextStyle kBodyRegularBlack14W600 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w600,
     fontSize: 14,
     height: 1.5,
     color: Colors.black,
   );
-  static TextStyle kBodyBold = kBodyRegular.copyWith(fontWeight: FontWeight.bold );
-  static TextStyle kBodyBoldBlack = kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
+  static TextStyle kBodyBold =
+      kBodyRegular.copyWith(fontWeight: FontWeight.bold);
+  static TextStyle kBodyBoldBlack =
+      kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
 
   //static TextStyle kBodyBoldBlack = kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
 
@@ -94,7 +107,6 @@ class AppStyle {
     height: 1.5,
   );
 
-  static TextStyle kBodySmallBold = kBodyRegular.copyWith(fontWeight: FontWeight.bold);
-
-
+  static TextStyle kBodySmallBold =
+      kBodyRegular.copyWith(fontWeight: FontWeight.bold);
 }
