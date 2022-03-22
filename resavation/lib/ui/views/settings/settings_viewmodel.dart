@@ -35,8 +35,12 @@ class SettingsViewModel extends BaseViewModel {
     _snackbarService.showComingSoon();
   }
 
-  void goToPropertyOwner() {
-    _navigationService.navigateTo(Routes.propertyOwnerStep1View);
+  void goToPropertyOwnerSpacetypeView() {
+    _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
+  }
+
+  void goToPropertyOwnerHomePageView() {
+    _navigationService.navigateTo(Routes.propertyOwnerHomePageView);
   }
 
   void goToEditProfileView() {

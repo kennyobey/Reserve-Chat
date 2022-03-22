@@ -38,22 +38,25 @@ class SortProperty extends StatelessWidget {
                 text: 'Sort by ',
                 style: AppStyle.kBodySmallRegular,
               ),
+              // TextSpan(
+              //   text: sortByTitle,
+              //   style: AppStyle.kBodyRegular,
+              //   recognizer: TapGestureRecognizer()..onTap = onSortByTap,
+              // )
             ],
           ),
         ),
-        DropdownButtonHideUnderline(
-          child: DropdownButton(
-            items: <String>['Category', 'City', 'Office Space', 'Apartment']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              //TODO add an action to change value
-            },
-          ),
+        DropdownButton(
+          items: <String>['Category', 'City', 'Office Space', 'Apartment']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            //TODO add an action to change value
+          },
         )
       ],
     );

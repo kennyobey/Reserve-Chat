@@ -33,13 +33,9 @@ class PropertyOwnerProfileView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: (){
-                          },
-                          child: Text(
-                            'Ademoye Stephen',
-                            style: AppStyle.kBodyBold,
-                          ),
+                        Text(
+                          'Ademoye Stephen',
+                          style: AppStyle.kBodyBold,
                         ),
                         Text('Ibadan, Nigeria'),
                         verticalSpaceSmall,

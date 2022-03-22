@@ -14,7 +14,7 @@ class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: kWhite,
       title: Text(
         title ?? '',
-        style: AppStyle.kHeading0.copyWith(color: kBlack),
+        style: AppStyle.kBodyBold.copyWith(color: kDarkBlue),
       ),
       elevation: 0,
       centerTitle: true,

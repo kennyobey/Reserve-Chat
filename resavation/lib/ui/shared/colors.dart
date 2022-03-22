@@ -9,17 +9,14 @@ const Color kGreen = Color(0xFF28C16A);
 const Color kPurple = Color(0xFFAD33Ec);
 const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF000000);
-const Color kBlack10 = Colors.black12;
 const Color kGray = Color(0xFFC4C4C4);
-const Color kLightButtonColor = Color(0xFF407BFF);
-
 
 
 const Color kChatTextColor = Color(0xFF796E6E);
 const kSecondaryColor = Color(0xFFFE9901);
 const kContentColorLightTheme = Color(0xFF1D1D35);
 const kContentColorDarkTheme = Color(0xFFF5FCF9);
-const kWarningColor = Color(0xFFF3BB1C);
+const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 
 const kDefaultPadding = 20.0;

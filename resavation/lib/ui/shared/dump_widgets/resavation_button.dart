@@ -14,7 +14,6 @@ class ResavationButton extends StatelessWidget {
     this.borderColor = kPrimaryColor,
     this.icon,
     this.fontSize,
-    this.textStyle
   }) : super(key: key);
   final void Function()? onTap;
   final String title;
@@ -25,7 +24,7 @@ class ResavationButton extends StatelessWidget {
   final Color borderColor;
   final IconData? icon;
   final double? fontSize;
-  final TextStyle? textStyle;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -46,7 +45,7 @@ class ResavationButton extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: textStyle?.copyWith(color: titleColor) ?? AppStyle.kBodyRegular.copyWith(color: titleColor, fontSize: fontSize, ),
+                style: AppStyle.kBodyRegular.copyWith(color: titleColor, fontSize: fontSize, ),
               ),
               SizedBox(width: 5,),
               Icon(icon, color: kWhite,),

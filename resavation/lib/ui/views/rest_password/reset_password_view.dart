@@ -56,7 +56,7 @@ class ResetPasswordView extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   onTap: model.goToLogin,
                 ),
-                verticalSpaceRegular,
+                verticalSpaceMassive,
                 ResavationTextSpan(
                   leading: "Don't have an account? ",
                   trailing: 'Sign up',

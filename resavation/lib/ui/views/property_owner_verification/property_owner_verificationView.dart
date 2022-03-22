@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -25,41 +26,45 @@ class PropertyOwnerVerificationView extends StatelessWidget {
               horizontal: 24,
               vertical: 15,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpaceMedium,
-                  Text(
-                    'Identification',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  Text(
-                    ' Verification',
-                    style: AppStyle.kBodyBold,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Submit Documents',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Kindly Submit the documents below to process your application',
-                    style: AppStyle.kBodySmallRegular,
-                  ),
-                  verticalSpaceMedium,
-                  Column(
-                    children: [
-                      _buildTextField(''),
-                      verticalSpaceMedium,
-                      _buildTextField2(''),
-                    ],
-                  ),
-                  verticalSpaceMedium,
-                  Center(child: _buildmaterial()),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpaceMedium,
+                Text(
+                  'Identity',
+                  style: AppStyle.kBodyBold,
+                ),
+                Text(
+                  'Verification',
+                  style: AppStyle.kBodyBold,
+                ),
+                verticalSpaceMedium,
+                Text(
+                  'Submit Documents',
+                  style: AppStyle.kBodyBold,
+                ),
+                verticalSpaceMedium,
+                Text(
+                  'Kindly Submit the documents below to process your application',
+                  style: AppStyle.kBodySmallRegular,
+                ),
+                verticalSpaceMedium,
+                Column(
+                  children: [
+                    _buildTextField(''),
+                    verticalSpaceMedium,
+                    _buildTextField2(''),
+                  ],
+                ),
+                Spacer(),
+                ResavationButton(
+                  width: MediaQuery.of(context).size.width,
+                  title: 'Continue',
+                  onTap: () {
+                    model.goToPropertyVerificationView();
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -70,37 +75,47 @@ class PropertyOwnerVerificationView extends StatelessWidget {
 }
 
 Widget _buildTextField(String label) {
-  String? label;
   const maxLines = 5;
   return Container(
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(border: Border.all(color: kGray)),
     width: 360,
-    height: maxLines * 12.0,
-    child: const TextField(
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: ("Photo ID"),
-        isDense: true, // Added this
-        //contentPadding: EdgeInsets.all(8), // Added this
-      ),
+    height: maxLines * 14.0,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Step 1",
+          style: TextStyle(color: kGray),
+        ),
+        Text(
+          "Choose Document",
+          style: AppStyle.kBodyBold,
+        ),
+      ],
     ),
   );
 }
 
 Widget _buildTextField2(String label) {
-  String? label;
   const maxLines = 5;
   return Container(
+    padding: EdgeInsets.all(10.0),
+    decoration: BoxDecoration(border: Border.all(color: kGray)),
     width: 360,
-    height: maxLines * 12.0,
-    child: const TextField(
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: ("Take a Selfe"),
-        isDense: true, // Added this
-        //contentPadding: EdgeInsets.all(8), // Added this
-      ),
+    height: maxLines * 14.0,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Step 2",
+          style: TextStyle(color: kGray),
+        ),
+        Text(
+          "Take a Selfe",
+          style: AppStyle.kBodyBold,
+        ),
+      ],
     ),
   );
 }

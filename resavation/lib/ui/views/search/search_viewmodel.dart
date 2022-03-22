@@ -6,10 +6,6 @@ import 'package:stacked_services/stacked_services.dart';
 
 class SearchViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-
-  String dropdownValue = 'Sort by';
-
-
   void onFavoriteTap(Property property) {
     notifyListeners();
   }

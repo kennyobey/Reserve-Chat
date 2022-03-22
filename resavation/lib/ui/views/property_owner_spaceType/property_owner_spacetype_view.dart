@@ -10,8 +10,8 @@ import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spac
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerSpacetypeView extends StatelessWidget {
-  PropertyOwnerSpacetypeView({Key? key}) : super(key: key);
+class PropertyOwnerSpaceTypeView extends StatelessWidget {
+  PropertyOwnerSpaceTypeView({Key? key}) : super(key: key);
 
   get _radioValue1 => 1;
 
@@ -19,7 +19,7 @@ class PropertyOwnerSpacetypeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PropertyOwnerSpacetypeViewModel>.reactive(
+    return ViewModelBuilder<PropertyOwnerSpaceTypeViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
           body: Padding(
@@ -185,7 +185,9 @@ class PropertyOwnerSpacetypeView extends StatelessWidget {
                         ),
                         color: kPrimaryColor,
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          model.goToPropertyOwnerDetailsView();
+                        },
                       ),
                     ],
                   ),
@@ -195,9 +197,7 @@ class PropertyOwnerSpacetypeView extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => PropertyOwnerSpacetypeViewViewModel(),
+      viewModelBuilder: () => PropertyOwnerSpaceTypeViewModel(),
     );
   }
 }
-
-PropertyOwnerSpacetypeViewViewModel() {}

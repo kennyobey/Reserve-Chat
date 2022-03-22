@@ -54,7 +54,7 @@ class PropertyDetailsIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 12),
+        Icon(icon),
         SizedBox(width: 5,),
         Text(
           numberOfBedrooms.toString() ,

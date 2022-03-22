@@ -30,12 +30,12 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   verticalSpaceMedium,
                   Text(
                     'Details',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceRegular,
                   Text(
                     'Property Name',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -43,12 +43,12 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   ),
                   Text(
                     'property Description',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   _buildTextField(''),
                   Text(
                     'Location',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -70,7 +70,6 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                     'Generate your address on google map',
                     style: AppStyle.kBodyRegular,
                   ),
-                  _buildTextField("Click to generate map"),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -92,7 +91,9 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                         ),
                         color: kPrimaryColor,
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          model.goToPropertyOwnerAddPhotosView();
+                        },
                       ),
                     ],
                   ),

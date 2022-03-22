@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -8,9 +7,6 @@ import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:awesome_dropdown/awesome_dropdown.dart';
-
-import '../../shared/colors.dart';
 
 class ProfileProductListView extends StatelessWidget {
   const ProfileProductListView({Key? key, this.onSortByTap}) : super(key: key);
@@ -22,29 +18,38 @@ class ProfileProductListView extends StatelessWidget {
     return ViewModelBuilder<ProfileProductListViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: ResavationAppBar(
-          title: "Stephen's listings",
+          title: 'Property Listings',
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
               verticalSpaceRegular,
-
-
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  ResavationButton(
+                    width: 150,
+                    title: 'Listings (8)',
+                    onTap: model.showComingSoon,
+                  ),
                   Expanded(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(kLightButtonColor),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Sort by: ',
+                            style: AppStyle.kBodyBold,
+                          ),
+                          TextSpan(
+                            text: 'Default Order',
+                            style: AppStyle.kBodyRegular,
+                            recognizer: TapGestureRecognizer()..onTap = onSortByTap,
+                          )
+                        ],
                       ),
-                      child: Text('Listings (8)', style: AppStyle.kBodySmallRegular12W500,),
-                      onPressed: model.showComingSoon,
                     ),
                   ),
-                  SizedBox(width: 130),
-                  Text("sort by", style: AppStyle.kBodySmallRegular,),
-                  Icon(Icons.keyboard_arrow_down_outlined)
                 ],
               ),
               verticalSpaceMedium,

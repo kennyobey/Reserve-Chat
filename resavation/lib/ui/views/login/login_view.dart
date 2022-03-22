@@ -35,12 +35,6 @@ class LogInView extends StatelessWidget {
                   ResavationTextField(
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter a valid email';
-                      }
-                      return null;
-                    },
                     hintText: 'queenameh@gmail.com',
                   ),
                   verticalSpaceSmall,
@@ -51,12 +45,6 @@ class LogInView extends StatelessWidget {
                   ResavationTextField(
                     textInputAction: TextInputAction.done,
                     obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter password';
-                      }
-                      return null;
-                    },
                     hintText: 'password',
                   ),
                   verticalSpaceMedium,
@@ -90,7 +78,7 @@ class LogInView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     onTap: model.goToMainView,
                   ),
-                  verticalSpaceSmall,
+                  verticalSpaceMassive,
                   ResavationTextSpan(
                     leading: "Don't have an account? ",
                     trailing: 'Sign up',

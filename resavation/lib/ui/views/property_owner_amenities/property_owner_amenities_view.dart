@@ -211,7 +211,9 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                       ),
                       color: kPrimaryColor,
                       textColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        model.goToPropertyOwnerIdentificationView();
+                      },
                     ),
                   ],
                 ),

@@ -32,7 +32,6 @@ dependencies:
   iconsax: ^0.0.8
   country_picker: ^2.0.12
   date_ranger: ^0.0.1
-  awesome_dropdown: ^0.0.4
 
 
 

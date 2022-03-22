@@ -16,8 +16,6 @@ class ResavationTextField extends StatefulWidget {
     this.showPrefix = false,
     this.textInputAction,
     this.keyboardType,
-    this.controller,
-    this.validator,
     this.onChanged,
   }) : super(key: key);
 
@@ -32,8 +30,6 @@ class ResavationTextField extends StatefulWidget {
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
-  final TextEditingController? controller;
-  final String? Function(String?)? validator;
   final void Function(String)? onChanged;
 
   @override
@@ -54,8 +50,6 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
           onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
-          controller: widget.controller,
-          validator: widget.validator,
           obscureText: _obscureText,
           style: style,
           decoration: InputDecoration(

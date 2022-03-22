@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 
@@ -18,8 +17,8 @@ class FindYourLocation extends StatelessWidget {
       children: [
         Expanded(
           flex: 5,
-          child: ResavationSearchBar(
-            elevation: 0.0,
+          child: ResavationTextField(
+            elevation: 15.0,
             showPrefix: true,
             hintText: 'Enter your location',
           ),
@@ -27,14 +26,14 @@ class FindYourLocation extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            height: 48,
+            height: 45,
             width: 40,
             child: Icon(
               Icons.filter_list,
               color: kWhite,
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+              borderRadius: BorderRadius.circular(6),
               color: kPrimaryColor,
             ),
           ),
