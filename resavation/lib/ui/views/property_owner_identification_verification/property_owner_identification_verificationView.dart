@@ -33,10 +33,16 @@ class PropertyOwnerIdentificationVerificationView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Spacer(),
-                    Text(
-                      'Edit',
-                      style: AppStyle.kBodySmallRegular12W500
-                          .copyWith(color: kPrimaryColor),
+
+                    InkWell(
+                      onTap: () {
+                        model.goToPropertyOwnerEditProfileView();
+                      },
+                      child: Text(
+                        'Edit',
+                        style: AppStyle.kBodySmallRegular12W500
+                            .copyWith(color: kPrimaryColor),
+                      ),
                     ),
                   ],
                 ),

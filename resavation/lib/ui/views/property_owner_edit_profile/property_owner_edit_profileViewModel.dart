@@ -3,12 +3,11 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class PropertyOwnerIdentificationVerificationViewModel extends BaseViewModel {
+class PropertyOwnerEditProfileViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-
-  void goToPropertyOwnerEditProfileView() {
-    _navigationService.navigateTo(Routes.propertyOwnerEditProfileView);
+  void goToPropertyVerificationView() {
+    _navigationService.navigateTo(Routes.propertyVerificationView);
   }
 
   void goToPropertyOwnerVerificationView() {
