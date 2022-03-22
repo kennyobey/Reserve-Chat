@@ -33,7 +33,6 @@ class PropertyOwnerIdentificationVerificationView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Spacer(),
-
                     InkWell(
                       onTap: () {
                         model.goToPropertyOwnerEditProfileView();

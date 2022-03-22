@@ -16,6 +16,8 @@ class ResavationTextField extends StatefulWidget {
     this.showPrefix = false,
     this.textInputAction,
     this.keyboardType,
+    this.controller,
+    this.validator,
     this.onChanged,
   }) : super(key: key);
 
@@ -30,6 +32,8 @@ class ResavationTextField extends StatefulWidget {
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final void Function(String)? onChanged;
 
   @override
@@ -45,11 +49,13 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Material(
-        elevation: widget.elevation != null? widget.elevation! : 0.0 ,
+        elevation: widget.elevation != null ? widget.elevation! : 0.0,
         child: TextFormField(
           onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
+          controller: widget.controller,
+          validator: widget.validator,
           obscureText: _obscureText,
           style: style,
           decoration: InputDecoration(
@@ -66,17 +72,17 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
             prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
             suffixIcon: widget.obscureText
                 ? GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        print(true);
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                    child: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: kPrimaryColor,
-                    ),
-                  )
+              onTap: () {
+                setState(() {
+                  print(true);
+                  _obscureText = !_obscureText;
+                });
+              },
+              child: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                color: kPrimaryColor,
+              ),
+            )
                 : null,
           ),
         ),

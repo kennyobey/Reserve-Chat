@@ -14,20 +14,20 @@ class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: kWhite,
       title: Text(
         title ?? '',
-        style: AppStyle.kBodyBold.copyWith(color: kDarkBlue),
+        style: AppStyle.kHeading0.copyWith(color: kBlack),
       ),
       elevation: 0,
       centerTitle: true,
       // iconTheme: IconThemeData(color: ),
       leading: Navigator.canPop(context)
           ? IconButton(
-              onPressed: () => Navigator.maybePop(context),
-              icon: Icon(
-                CupertinoIcons.chevron_back,
-                color: kDarkBlue,
-                size: 24,
-              ),
-            )
+        onPressed: () => Navigator.maybePop(context),
+        icon: Icon(
+          CupertinoIcons.chevron_back,
+          color: kDarkBlue,
+          size: 24,
+        ),
+      )
           : null,
     );
   }
