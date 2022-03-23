@@ -18,7 +18,8 @@ class FilterViewModel extends BaseViewModel {
 
   RangeValues get rangeValue => _rangeValues;
 
-  RangeLabels get rangeLabels => RangeLabels(
+  RangeLabels get rangeLabels =>
+      RangeLabels(
         _rangeValues.end.round().toString(),
         _rangeValues.start.round().toString(),
       );
@@ -36,6 +37,13 @@ class FilterViewModel extends BaseViewModel {
 
   double get sliderValue => _sliderValue;
 
+  bool selectFacility = false;
+
+  void onSelectFacilityTap(){
+    selectFacility = !selectFacility;
+    notifyListeners();
+  }
+
   void onRangeSliderChanged(RangeValues value) {
     _rangeValues = value;
     notifyListeners();
@@ -46,16 +54,17 @@ class FilterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+
   void goToMainView() {
     _navigationService.back();
   }
-
   void goToSearchView() {
     _navigationService.navigateTo(Routes.searchView);
   }
 
   String _propertyValue = 'Select Property';
-  String get propertyValue => _propertyValue;
+  String get propertyValue =>
+      _propertyValue;
 
   void onDropdownButtonSelect(String? value) {
     _propertyValue = value!;
