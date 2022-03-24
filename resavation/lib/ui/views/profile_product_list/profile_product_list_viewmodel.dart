@@ -10,6 +10,21 @@ class ProfileProductListViewModel extends BaseViewModel {
   final _snackbarService = locator<CustomSnackbarService>();
   List<Property> get properties => ListOfProperties;
 
+  // drop-down button
+  String? selectedValue;
+  List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+  ];
+
+  void onSelectedValueChange(value){
+    selectedValue = value as String;
+
+    notifyListeners();
+  }
+
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }

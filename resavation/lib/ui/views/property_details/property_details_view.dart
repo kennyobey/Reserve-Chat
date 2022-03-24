@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -157,14 +158,11 @@ class PropertyDetailsView extends StatelessWidget {
                       ],
                     ),
                     verticalSpaceSmall,
-                    GestureDetector(
-                      onTap: model.showComingSoon,
-                      child: Image.asset(
-                        'assets/images/map_image.png',
-                        width: 600.0,
-                        height: 240.0,
-                        fit: BoxFit.cover,
-                      ),
+                    ResavationElevatedButton(
+                      child: Text("Go to Map"),
+                      onPressed: (){
+
+                      },
                     ),
                     verticalSpaceMedium,
                     Text(
@@ -189,7 +187,8 @@ class PropertyDetailsView extends StatelessWidget {
                   ],
                 ),
               ),
-            ]))
+            ])),
+
           ],
         ),
         bottomSheet: Row(

@@ -10,6 +10,8 @@ class FavoriteViewModel extends BaseViewModel {
 
   bool isFavorite = false;
 
+
+
   void changeFavoriteIcon() {
     isFavorite = !isFavorite ;
     notifyListeners();
