@@ -28,7 +28,7 @@ class ConfirmationView extends StatelessWidget {
               verticalSpaceSmall,
               Text(
                 'You have successfully rented your apartment',
-                style: AppStyle.kBodyBold,
+                style: AppStyle.kBodySmallRegular,
               ),
               verticalSpaceMedium,
               ResavationButton(

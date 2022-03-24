@@ -31,7 +31,7 @@ class DatePickerView extends StatelessWidget {
                     children: [
                       verticalSpaceMedium,
                       Text(
-                        'check in date',
+                        'Check in date',
                         style: AppStyle.kBodyBold,
                       ),
                       verticalSpaceMedium,
@@ -44,7 +44,7 @@ class DatePickerView extends StatelessWidget {
                       verticalSpaceMedium,
                       Text(
                         'Choose payment',
-                        style: AppStyle.kBodyBold,
+                        style: AppStyle.kBodyRegularBlack14Poppins,
                       ),
                       PaymentChoiceListTile(
                         title: 'Monthly',
@@ -58,10 +58,12 @@ class DatePickerView extends StatelessWidget {
                         subTitle: 'Every year you pay',
                         trailing: '\$ 120,000',
                       ),
+
                     ],
                   ),
                 ),
               ),
+
               ResavationButton(
                 title: 'Continue',
                 onTap: model.goToBookingSubmissiontView,
@@ -99,9 +101,9 @@ class PaymentChoiceListTile extends ViewModelWidget<DatePickerViewModel> {
             child: ListTile(
               title: Text(
                 title,
-                style: AppStyle.kBodyBold,
+                style: AppStyle.kBodyRegularBlack15Poppins,
               ),
-              subtitle: Text(subTitle),
+              subtitle: Text(subTitle, style: AppStyle.kBodySmallRegularPoppins,),
               leading: Radio<ChoiceOfPayment>(
                 groupValue: Model.paymentChoice,
                 value: value,
@@ -112,7 +114,7 @@ class PaymentChoiceListTile extends ViewModelWidget<DatePickerViewModel> {
           horizontalSpaceMedium,
           Text(
             trailing,
-            style: AppStyle.kBodyBold,
+            style: AppStyle.kBodyRegularBlack15Poppins,
           ),
         ],
       ),

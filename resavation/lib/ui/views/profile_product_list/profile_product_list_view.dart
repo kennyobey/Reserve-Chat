@@ -4,6 +4,7 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_viewmodel.dart';
@@ -31,11 +32,7 @@ class ProfileProductListView extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(kLightButtonColor),
-                      ),
+                    child: ResavationElevatedButton(
                       child: Text(
                         'Listings (8)',
                         style: AppStyle.kBodySmallRegular12W500,
@@ -86,3 +83,5 @@ class ProfileProductListView extends StatelessWidget {
     );
   }
 }
+
+

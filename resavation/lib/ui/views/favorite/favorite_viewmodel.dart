@@ -8,6 +8,12 @@ class FavoriteViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   List<Property> get properties => ListOfProperties;
 
+  bool isFavorite = false;
+
+  void changeFavoriteIcon() {
+    isFavorite = !isFavorite ;
+    notifyListeners();
+  }
   void goToPropertyDetails() {
     _navigationService.navigateTo(Routes.propertyDetailsView);
   }

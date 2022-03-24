@@ -57,6 +57,27 @@ class AppStyle {
     color: Colors.black,
   );
 
+  static TextStyle kBodyRegularBlack15Poppins = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 15,
+    height: 1.5,
+    color: Colors.black,
+  );
+
+  static TextStyle kBodyRegularBlack14Poppins = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 14,
+    height: 1.5,
+    color: Colors.black,
+  );
+
+  static TextStyle kBodyRegularBlack12Poppins = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 12,
+    height: 1.5,
+    color: Colors.black,
+  );
+
   static TextStyle kBodyRegularBlack14W500 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
     fontSize: 14,
@@ -82,6 +103,11 @@ class AppStyle {
     fontSize: 13,
     height: 1.5,
   );
+  static TextStyle kBodySmallRegularPoppins = GoogleFonts.poppins(
+    fontWeight: FontWeight.normal,
+    fontSize: 13,
+    height: 1.5,
+  );
 
   static TextStyle kBodySmallRegular12W500 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
@@ -103,6 +129,12 @@ class AppStyle {
 
   static TextStyle kBodySmallRegular11W300 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w300,
+    fontSize: 11,
+    height: 1.5,
+  );
+
+  static TextStyle kBodySmallRegular11W400 = GoogleFonts.montserrat(
+    fontWeight: FontWeight.w400,
     fontSize: 11,
     height: 1.5,
   );

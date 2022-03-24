@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';

@@ -4,8 +4,10 @@ import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+import 'package:resavation/ui/views/favorite/favorite_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
-class FavoriteCard extends StatelessWidget {
+class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
   const FavoriteCard({
     Key? key,
     required this.image,
@@ -34,7 +36,7 @@ class FavoriteCard extends StatelessWidget {
   final void Function()? onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, model) {
     return Card(
       elevation: 5,
       child: Padding(
@@ -65,32 +67,37 @@ class FavoriteCard extends StatelessWidget {
                     children: [
                       Text(
                         location,
-                        style: AppStyle.kBodySmallBold,
+                        style: AppStyle.kBodySmallRegular12W500,
                       ),
-                      Icon(
-                        Icons.favorite,
-                        color: kRed,
+                      InkWell(
+                        onTap: (){
+                          model.changeFavoriteIcon();
+                        },
+                        child: Icon(
+                          Icons.favorite,
+                          color: model.isFavorite? kRed : kTransparent,
+                        ),
                       ),
                     ],
                   ),
                   // verticalSpaceSmall,
                   Container(
-                    color: kPrimaryColor,
                     padding: EdgeInsets.all(3.0),
                     child: Text(
                       category ?? '',
-                      style: AppStyle.kBodySmallRegular.copyWith(
-                        color: kWhite,
+                      style: AppStyle.kBodySmallRegular12W300.copyWith(
+                        color: kBlack54,
                       ),
                     ),
                   ),
                   verticalSpaceSmall,
                   Text(
                     '\$ ' + amountPerYear.toString() + ' /year',
-                    style: AppStyle.kBodySmallBold.copyWith(
+                    style: AppStyle.kBodySmallRegular11W400.copyWith(
                       color: kPrimaryColor,
                     ),
                   ),
+                  verticalSpaceSmall,
                   PropertyDetails(
                     numberOfBedrooms: numberOfBedrooms,
                     numberOfBathrooms: numberOfBathrooms,

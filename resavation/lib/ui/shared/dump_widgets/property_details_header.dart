@@ -29,12 +29,13 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
           child: GestureDetector(
             onTap: onBackTap,
             child: Container(
+              width: 25,
+              height: 25,
               decoration: BoxDecoration(
                 color: Colors.grey[700],
-                borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
-              padding: EdgeInsets.all(6),
+              padding: EdgeInsets.only(left: 4),
               child: Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
@@ -46,15 +47,17 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
           right: 30,
           top: 50,
           child: Container(
+            width: 25,
+            height: 25,
             decoration: BoxDecoration(
               color: Colors.grey[700],
-              borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
-            padding: EdgeInsets.all(6),
+            padding: EdgeInsets.all(1),
             child: Icon(
               isFavoriteTap ? Icons.favorite_border : Icons.favorite_border,
               color: isFavoriteTap ? kRed : kWhite,
+
             ),
           ),
         ),
