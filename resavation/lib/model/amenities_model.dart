@@ -21,7 +21,7 @@ List<Amenity> ListOfAmenities = [
   ),
   Amenity(
     iconData: Icons.hvac,
-    title: 'Crentral Heating',
+    title: 'Central Heating',
   ),
   Amenity(
     iconData: Icons.dry,
