@@ -28,7 +28,7 @@ class PropertyVerificationView extends StatelessWidget {
               children: [
                 verticalSpaceMedium,
                 Text(
-                  'Property',
+                  'Identity',
                   style: AppStyle.kBodyBold,
                 ),
                 Text(
@@ -47,19 +47,46 @@ class PropertyVerificationView extends StatelessWidget {
                 ),
                 verticalSpaceMedium,
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      'Selected ID Number',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceSmall,
                     _buildTextField(''),
                     verticalSpaceMedium,
+                    Text(
+                      'Upload Document',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceSmall,
                     _buildTextField2(''),
                   ],
                 ),
                 Spacer(),
-                ResavationButton(
-                  width: MediaQuery.of(context).size.width,
-                  title: 'Continue',
-                  onTap: () {
-                    model.goToPropertyOwnerHomePageView();
-                  },
+                Row(
+                  children: [
+                    ResavationButton(
+                      buttonColor: kWhite,
+                      width: 145,
+                      height: 47,
+                      title: 'Back',
+                      titleColor: kBlack,
+                      onTap: () {
+                        model.goToPropertyOwnerHomePageView();
+                      },
+                    ),
+                    Spacer(),
+                    ResavationButton(
+                      width: 145,
+                      height: 47,
+                      title: 'Continue',
+                      onTap: () {
+                        model.goToPropertyOwnerHomePageView();
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -72,22 +99,19 @@ class PropertyVerificationView extends StatelessWidget {
 }
 
 Widget _buildTextField(String label) {
-  const maxLines = 5;
   return Container(
     padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(border: Border.all(color: kGray)),
-    width: 360,
-    height: maxLines * 14.0,
+    decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        borderRadius: BorderRadius.circular(4)),
+    width: 341,
+    height: 45,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Step 1",
-          style: TextStyle(color: kGray),
-        ),
-        Text(
-          "Choose Document",
-          style: AppStyle.kBodyBold,
+          "A124525BH",
+          style: AppStyle.kBodySmallRegular,
         ),
       ],
     ),
@@ -95,46 +119,35 @@ Widget _buildTextField(String label) {
 }
 
 Widget _buildTextField2(String label) {
-  const maxLines = 5;
+  ;
   return Container(
     padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(border: Border.all(color: kGray)),
+    decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        borderRadius: BorderRadius.circular(3)),
     width: 360,
-    height: maxLines * 14.0,
+    height: 52,
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          "Step 2",
-          style: TextStyle(color: kGray),
-        ),
-        Text(
-          "Take a Selfe",
-          style: AppStyle.kBodyBold,
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: kGray),
+              color: kBlack,
+              borderRadius: BorderRadius.circular(3)),
+          height: 30,
+          width: 98,
+          child: FlatButton(
+            child: Text(
+              'Choose file',
+              style: AppStyle.kBodySmallRegular11W300.copyWith(color: kWhite),
+            ),
+            color: kChatTextColor,
+            textColor: kBlack,
+            onPressed: () {},
+          ),
         ),
       ],
-    ),
-  );
-}
-
-Widget _buildmaterial() {
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 10),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: kPrimaryColor,
-        onPrimary: Colors.white,
-        shadowColor: Colors.greenAccent,
-        elevation: 0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
-        minimumSize: Size(100, 40), //////// HERE
-      ),
-      onPressed: () {},
-      child: Text(
-        'Continue',
-        style: AppStyle.kBodyRegular,
-      ),
     ),
   );
 }
