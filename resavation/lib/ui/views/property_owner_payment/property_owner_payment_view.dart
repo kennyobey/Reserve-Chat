@@ -1,8 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:js/js.dart';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:date_ranger/date_ranger.dart';
+
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -63,7 +66,18 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Row(
                     children: [
-                      _buildTextField(''),
+                      Container(
+                        margin: EdgeInsets.all(25),
+                        child: FlatButton(
+                          child: Text(
+                            'LogIn',
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                          color: Colors.blueAccent,
+                          textColor: Colors.white,
+                          onPressed: () {},
+                        ),
+                      ),
                       Spacer(),
                       _buildTextField(''),
                     ],
