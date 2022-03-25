@@ -31,8 +31,8 @@ dependencies:
   flutter_paystack: ^1.0.5+1
   iconsax: ^0.0.8
   country_picker: ^2.0.12
-  date_ranger: ^0.0.1
-
+  date_range_picker: ^1.0.7
+  
 
 
 dev_dependencies:
