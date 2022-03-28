@@ -61,26 +61,23 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                     style: AppStyle.kBodyBold,
                   ),
                   verticalSpaceTiny,
-                  Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(25),
-                        child: FlatButton(
-                          child: SfDateRangePicker(
-                            view: DateRangePickerView.month,
-                            onSelectionChanged: _onSelectionChanged,
-                            selectionMode: DateRangePickerSelectionMode.single,
-                            initialSelectedRange: PickerDateRange(
-                                DateTime.now()
-                                    .subtract(const Duration(days: 4)),
-                                DateTime.now().add(const Duration(days: 3))),
-                          ),
-                          color: Colors.blueAccent,
-                          textColor: Colors.white,
-                          onPressed: () {},
-                        ),
+                  Container(
+                    margin: EdgeInsets.all(25),
+                    child: FlatButton(
+                      child: SfDateRangePicker(
+                        backgroundColor: kWhite,
+                        toggleDaySelection: true,
+                        view: DateRangePickerView.year,
+                        onSelectionChanged: _onSelectionChanged,
+                        selectionMode: DateRangePickerSelectionMode.single,
+                        initialSelectedRange: PickerDateRange(
+                            DateTime.now().subtract(const Duration(days: 4)),
+                            DateTime.now().add(const Duration(days: 3))),
                       ),
-                    ],
+                      color: Colors.blueAccent,
+                      textColor: Colors.white,
+                      onPressed: () {},
+                    ),
                   ),
                   verticalSpaceTiny,
                   Text(
