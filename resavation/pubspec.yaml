@@ -32,7 +32,7 @@ dependencies:
   iconsax: ^0.0.8
   country_picker: ^2.0.12
   date_range_picker: ^1.0.7
-  js: ^0.6.2
+  syncfusion_flutter_datepicker: ^19.4.56
   
 
 

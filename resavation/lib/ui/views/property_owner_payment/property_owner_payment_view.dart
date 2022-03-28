@@ -1,16 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:js/js.dart';
-
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_viewModel.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -69,17 +66,20 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.all(25),
                         child: FlatButton(
-                          child: Text(
-                            'LogIn',
-                            style: TextStyle(fontSize: 20.0),
+                          child: SfDateRangePicker(
+                            view: DateRangePickerView.month,
+                            onSelectionChanged: _onSelectionChanged,
+                            selectionMode: DateRangePickerSelectionMode.single,
+                            initialSelectedRange: PickerDateRange(
+                                DateTime.now()
+                                    .subtract(const Duration(days: 4)),
+                                DateTime.now().add(const Duration(days: 3))),
                           ),
                           color: Colors.blueAccent,
                           textColor: Colors.white,
                           onPressed: () {},
                         ),
                       ),
-                      Spacer(),
-                      _buildTextField(''),
                     ],
                   ),
                   verticalSpaceTiny,
@@ -160,6 +160,11 @@ class PropertyOwnerPaymentView extends StatelessWidget {
       ),
       viewModelBuilder: () => PropertyOwnerPaymentViewModel(),
     );
+  }
+
+  void _onSelectionChanged(
+      DateRangePickerSelectionChangedArgs dateRangePickerSelectionChangedArgs) {
+    print(dateRangePickerSelectionChangedArgs.value);
   }
 }
 
