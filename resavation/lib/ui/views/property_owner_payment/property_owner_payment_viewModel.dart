@@ -10,4 +10,8 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   void goToPropertyOwnerAmenitiesView() {
     _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView);
   }
+
+  void goToPropertyOwnerDatePickerView() {
+    _navigationService.navigateTo(Routes.propertyOwnerDatePickerView);
+  }
 }
