@@ -72,17 +72,17 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
             prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
             suffixIcon: widget.obscureText
                 ? GestureDetector(
-              onTap: () {
-                setState(() {
-                  print(true);
-                  _obscureText = !_obscureText;
-                });
-              },
-              child: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
-                color: kPrimaryColor,
-              ),
-            )
+                    onTap: () {
+                      setState(() {
+                        print(true);
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    child: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: kPrimaryColor,
+                    ),
+                  )
                 : null,
           ),
         ),

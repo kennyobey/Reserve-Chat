@@ -75,12 +75,12 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                             ),
                             verticalSpaceSmall,
                             ResavationButton(
-                              // width: 153,
-                              // height: 40,
+                              width: 106,
+                              height: 34,
                               onTap: () {
                                 model.goToPropertyOwnerSpaceTypeView();
                               },
-                              title: 'List Your Space',
+                              title: 'List your',
                               titleColor: kWhite,
                               buttonColor: kPrimaryColor,
                               //  borderColor: kp,
@@ -155,13 +155,13 @@ Widget _blackcontainer(String label) {
         ),
         verticalSpaceSmall,
         ResavationButton(
-          width: 153,
-          height: 40,
+          width: 106,
+          height: 34,
           onTap: () {
             var model;
             model.goToPropertyOwnerSpaceTypeView();
           },
-          title: 'List Your Space',
+          title: 'Lis',
           titleColor: kWhite,
           buttonColor: kPrimaryColor,
           //  borderColor: kp,
@@ -221,7 +221,7 @@ class ResavationListSpace extends StatelessWidget {
 Widget _ListingCard() {
   const maxLines = 5;
   return Container(
-      padding: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(0.0),
       decoration: BoxDecoration(
         border: Border.all(color: kGray),
         borderRadius: new BorderRadius.circular(5.0),
@@ -230,7 +230,10 @@ Widget _ListingCard() {
       height: maxLines * 17.0,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ListTile(
-          leading: Icon(Icons.camera_rear, size: 20, color: Colors.black),
+          leading: CircleAvatar(
+            radius: 30, // Image radius
+            backgroundImage: AssetImage(Assets.profile_image3),
+          ),
           title: Text(
             "Adeyemo Stephen",
             style: AppStyle.kBodyBold,

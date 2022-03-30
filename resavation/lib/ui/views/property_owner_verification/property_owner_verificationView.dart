@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
-import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
-import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationViewModel.dart';
+
 import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationViewModel.dart';
 
 import 'package:stacked/stacked.dart';

@@ -1,15 +1,10 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_edit_profile/property_owner_edit_profileViewModel.dart';
-
 import 'package:resavation/utility/assets.dart';
-
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerEditProfileView extends StatelessWidget {
@@ -78,15 +73,18 @@ class PropertyOwnerEditProfileView extends StatelessWidget {
 
 Widget _buildTextField() {
   return Container(
-    padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(
-        border: Border.all(color: kGray),
-        borderRadius: BorderRadius.circular(5)),
-    width: 340,
-    height: 105.0,
-    child: Text(
-      'Am a social entreprenuer and am keenly intrested in solving renting accomadtion in Nigeria',
-      style: AppStyle.kBodySmallRegular12,
-    ),
+    height: 70,
+    width: 400,
+    child: TextFormField(
+        decoration: new InputDecoration(
+      hintText:
+          "I am a entrepenuer and keenly intrested in solving renting accomodation",
+      hintStyle: AppStyle.kBodySmallRegular12W500,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+        borderSide: BorderSide(width: 5, color: kGray),
+      ),
+    )),
   );
 }
