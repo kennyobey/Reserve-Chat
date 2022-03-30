@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
@@ -31,4 +35,8 @@ class PropertyDetailsViewModel extends BaseViewModel {
   void goToDatePickerView() {
     _navigationService.navigateTo(Routes.datePickerView);
   }
+
+  //Google Map
+
+
 }

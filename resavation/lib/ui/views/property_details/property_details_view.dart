@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_details/property_details_viewmodel.dart';
@@ -40,8 +42,12 @@ class PropertyDetailsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Eleko Estate',
-                          style: AppStyle.kBodyRegular,
+                          'Eleko Estate ',
+                          style: AppStyle.kBodyRegularBlack14,
+                        ),
+                        Text(
+                          '11 Chevron Drive, Lekki',
+                          style: AppStyle.kBodySmallRegular12W300,
                         ),
                         verticalSpaceSmall,
                         PropertyDetails(
@@ -64,11 +70,11 @@ class PropertyDetailsView extends StatelessWidget {
                               children: [
                                 Text(
                                   'Adeyemo Steven',
-                                  style: AppStyle.kBodySmallBold,
+                                  style: AppStyle.kBodySmallRegular12,
                                 ),
                                 Text(
                                   'Listing Agent',
-                                  style: AppStyle.kBodyRegular,
+                                  style: AppStyle.kBodySmallRegular11W400,
                                 ),
                               ],
                             ),
@@ -93,7 +99,7 @@ class PropertyDetailsView extends StatelessWidget {
                         verticalSpaceSmall,
                         Text(
                           'Description',
-                          style: AppStyle.kBodySmallBold,
+                          style: AppStyle.kBodyRegularBlack14Poppins,
                         ),
                         verticalSpaceSmall,
                         Text(
@@ -101,7 +107,7 @@ class PropertyDetailsView extends StatelessWidget {
                         verticalSpaceMedium,
                         Text(
                           'Amenities',
-                          style: AppStyle.kBodySmallBold,
+                          style: AppStyle.kBodyRegularBlack14Poppins,
                         ),
                       ],
                     ),
@@ -112,7 +118,7 @@ class PropertyDetailsView extends StatelessWidget {
             SliverGrid.count(
               crossAxisCount: 2,
               mainAxisSpacing: 0,
-              crossAxisSpacing: 10,
+              crossAxisSpacing: 4,
               childAspectRatio: 4,
               children: [
                 for (final amenity in model.amenities) ...[
@@ -136,7 +142,7 @@ class PropertyDetailsView extends StatelessWidget {
                     verticalSpaceSmall,
                     Text(
                       'Location',
-                      style: AppStyle.kBodySmallBold,
+                      style: AppStyle.kBodyRegularBlack14Poppins,
                     ),
                     verticalSpaceSmall,
                     Row(
@@ -152,52 +158,49 @@ class PropertyDetailsView extends StatelessWidget {
                       ],
                     ),
                     verticalSpaceSmall,
-                    GestureDetector(
-                      onTap: model.showComingSoon,
-                      child: Image.asset(
-                        'assets/images/map_image.png',
-                        width: 600.0,
-                        height: 240.0,
-                        fit: BoxFit.cover,
-                      ),
+                    ResavationElevatedButton(
+                      child: Text("Go to Map"),
+                      onPressed: (){
+
+                      },
                     ),
                     verticalSpaceMedium,
                     Text(
                       'House Rules',
-                      style: AppStyle.kBodySmallBold,
+                      style: AppStyle.kBodyRegularBlack14Poppins,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Party',
-                      style: AppStyle.kBodyRegular,
+                      style: AppStyle.kBodySmallRegularPoppins,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Pets',
-                      style: AppStyle.kBodyRegular,
+                      style: AppStyle.kBodySmallRegularPoppins,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Smoking',
-                      style: AppStyle.kBodyRegular,
+                      style: AppStyle.kBodySmallRegularPoppins,
                     ),
                   ],
                 ),
               ),
-            ]))
+            ])),
+
           ],
         ),
         bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               '#2,326,363',
-              style: AppStyle.kBodySmallBold,
+              style: AppStyle.kBodyRegularBlack14,
             ),
-            ResavationButton(
-              width: 150,
-              title: 'Rent Now',
-              onTap: model.goToDatePickerView,
+            ResavationElevatedButton(
+              child: Text('Rent Now'),
+              onPressed: model.goToDatePickerView,
             ),
           ],
         ),
@@ -219,14 +222,14 @@ class AmenitiesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, ),
       child: Row(
         children: [
           Icon(iconData),
           horizontalSpaceSmall,
           Text(
             title,
-            style: AppStyle.kBodySmallBold,
+            style: AppStyle.kBodyRegularBlack12Poppins,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),

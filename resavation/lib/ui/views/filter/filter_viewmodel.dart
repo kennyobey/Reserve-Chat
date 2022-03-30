@@ -39,6 +39,19 @@ class FilterViewModel extends BaseViewModel {
 
   bool selectFacility = false;
 
+  // drop-down button UI logic
+  String? selectedValue;
+  List<String> items = [
+    'Flat',
+    'Bungalow',
+    'Self Contain',
+  ];
+  void onSelectedValueChange(value){
+    selectedValue = value as String;
+
+    notifyListeners();
+  }
+
   void onSelectFacilityTap(){
     selectFacility = !selectFacility;
     notifyListeners();
@@ -62,12 +75,7 @@ class FilterViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.searchView);
   }
 
-  String _propertyValue = 'Select Property';
-  String get propertyValue =>
-      _propertyValue;
 
-  void onDropdownButtonSelect(String? value) {
-    _propertyValue = value!;
-    notifyListeners();
-  }
+
+
 }

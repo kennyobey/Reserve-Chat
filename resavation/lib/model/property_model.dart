@@ -44,7 +44,7 @@ List<Property> ListOfProperties = [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: false,
-      category: 'sitting Room'),
+      category: 'Sitting Room'),
 
   Property(
       image: Assets.sitting_room_placeholder,
@@ -55,7 +55,7 @@ List<Property> ListOfProperties = [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: true,
-      category: 'office Space'),
+      category: 'Office Space'),
   Property(
       image: Assets.lagos_location_placeholder,
       amountPerYear: 10000,

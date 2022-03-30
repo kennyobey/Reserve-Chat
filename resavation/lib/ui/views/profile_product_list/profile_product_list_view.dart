@@ -1,9 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_viewmodel.dart';
@@ -31,11 +33,7 @@ class ProfileProductListView extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(kLightButtonColor),
-                      ),
+                    child: ResavationElevatedButton(
                       child: Text(
                         'Listings (8)',
                         style: AppStyle.kBodySmallRegular12W500,
@@ -43,12 +41,33 @@ class ProfileProductListView extends StatelessWidget {
                       onPressed: model.showComingSoon,
                     ),
                   ),
-                  SizedBox(width: 130),
-                  Text(
-                    "sort by",
-                    style: AppStyle.kBodySmallRegular,
-                  ),
-                  Icon(Icons.keyboard_arrow_down_outlined)
+                  SizedBox(width: 120),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                      hint: Text(
+                        "sort by",
+                        style: AppStyle.kBodySmallRegular,
+                      ),
+                      items: model.items
+                          .map((item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ))
+                          .toList(),
+                      value: model.selectedValue,
+                      onChanged: (value) {
+                        model.onSelectedValueChange(value);
+                      },
+                      icon: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                      ),
+                    ),
+                  )
                 ],
               ),
               verticalSpaceMedium,
@@ -86,3 +105,5 @@ class ProfileProductListView extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,10 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/utility/assets.dart';
 
 class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
-  const PropertyDetailsHeader({
+   PropertyDetailsHeader({
     Key? key,
     this.onBackTap,
     this.onFavoriteTap,
@@ -15,26 +16,34 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
   final void Function()? onFavoriteTap;
   final bool isFavoriteTap;
 
+
+
   @override
   Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ResavationImage(
-          image: Assets.sitting_room_placeholder,
-        ),
+        CarouselSlider(
+          options: CarouselOptions(
+            autoPlay: true,
+          ),
+          items: Assets.imgList
+              .map((item) => ResavationImage(image: item))
+              .toList(),),
+
         Positioned(
           left: 30,
           top: 50,
           child: GestureDetector(
             onTap: onBackTap,
             child: Container(
+              width: 25,
+              height: 25,
               decoration: BoxDecoration(
                 color: Colors.grey[700],
-                borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
-              padding: EdgeInsets.all(6),
+              padding: EdgeInsets.only(left: 4),
               child: Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
@@ -46,15 +55,17 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
           right: 30,
           top: 50,
           child: Container(
+            width: 25,
+            height: 25,
             decoration: BoxDecoration(
               color: Colors.grey[700],
-              borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
-            padding: EdgeInsets.all(6),
+            padding: EdgeInsets.all(1),
             child: Icon(
               isFavoriteTap ? Icons.favorite_border : Icons.favorite_border,
               color: isFavoriteTap ? kRed : kWhite,
+
             ),
           ),
         ),

@@ -49,7 +49,7 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Material(
-        elevation: widget.elevation != null? widget.elevation! : 0.0 ,
+        elevation: widget.elevation != null ? widget.elevation! : 0.0,
         child: TextFormField(
           onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
@@ -60,7 +60,8 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
           style: style,
           decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
               borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
             ),
             focusedBorder: OutlineInputBorder(
@@ -73,17 +74,17 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
             prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
             suffixIcon: widget.obscureText
                 ? GestureDetector(
-              onTap: () {
-                setState(() {
-                  print(true);
-                  _obscureText = !_obscureText;
-                });
-              },
-              child: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
-                color: kPrimaryColor,
-              ),
-            )
+                    onTap: () {
+                      setState(() {
+                        print(true);
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    child: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: kPrimaryColor,
+                    ),
+                  )
                 : null,
           ),
         ),

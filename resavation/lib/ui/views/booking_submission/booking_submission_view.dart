@@ -3,6 +3,7 @@ import 'package:resavation/services/core/paystack_payment.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -35,11 +36,11 @@ class BookingSubmissionView extends StatelessWidget {
                             children: [
                               Text(
                                 'Eleko Estate',
-                                style: AppStyle.kBodyBold,
+                                style: AppStyle.kBodyRegularBlack14,
                               ),
                               Text(
                                 'Lekki, Lagos',
-                                style: AppStyle.kBodyRegular,
+                                style: AppStyle.kBodySmallRegular,
                               ),
                             ],
                           ),
@@ -47,7 +48,8 @@ class BookingSubmissionView extends StatelessWidget {
                           Container(
                             height: 150,
                             width: 150,
-                            decoration: BoxDecoration(shape: BoxShape.rectangle, color: kGray),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle, color: kGray),
                           ),
                         ],
                       ),
@@ -63,12 +65,12 @@ class BookingSubmissionView extends StatelessWidget {
                             children: [
                               Text(
                                 'Name',
-                                style: AppStyle.kBodyBold,
+                                style: AppStyle.kBodyRegularBlack14,
                               ),
                               Spacer(),
                               Text(
                                 'Eleko Estate',
-                                style: AppStyle.kBodyRegular,
+                                style: AppStyle.kBodyRegularBlack14,
                               ),
                             ],
                           ),
@@ -76,19 +78,20 @@ class BookingSubmissionView extends StatelessWidget {
                             children: [
                               Text(
                                 'Date',
-                                style: AppStyle.kBodyBold,
+                                style: AppStyle.kBodyRegularBlack14,
                               ),
                               Spacer(),
                               Text(
                                 '15/12/2021 - 15/12/2022',
-                                style: AppStyle.kBodyRegular,
+                                style: AppStyle.kBodyRegularBlack14,
                               ),
                               horizontalSpaceSmall,
                               GestureDetector(
                                 onTap: () {},
                                 child: Text(
                                   'Edit',
-                                  style: AppStyle.kBodyRegular.copyWith(color: kPrimaryColor),
+                                  style: AppStyle.kBodyRegularBlack14
+                                      .copyWith(color: kPrimaryColor),
                                 ),
                               ),
                             ],
@@ -98,10 +101,11 @@ class BookingSubmissionView extends StatelessWidget {
                             alignment: Alignment.center,
                             height: 50,
                             width: double.infinity,
-                            decoration: BoxDecoration(shape: BoxShape.rectangle, color: kGray),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle, color: kGray),
                             child: Text(
                               'Number of Day: 365',
-                              style: AppStyle.kBodyRegular,
+                              style: AppStyle.kBodyRegularBlack14,
                             ),
                           ),
                         ],
@@ -117,17 +121,31 @@ class BookingSubmissionView extends StatelessWidget {
                         children: [
                           Text(
                             'Coupon Code',
-                            style: AppStyle.kBodyBold,
+                            style: AppStyle.kBodyRegularBlack14,
                           ),
                           Row(
                             children: [
-                              Expanded(flex: 3, child: ResavationTextField()),
+                              Expanded(flex: 3, child: ResavationSearchBar()),
                               Expanded(
-                                child: ResavationButton(
-                                  title: 'APPLY',
-                                  onTap: () {},
+                                  child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  height: 48,
+                                  width: 40,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "APPLY",
+                                    style: AppStyle.kBodyRegularBlack14
+                                        .copyWith(color: kWhite),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(5),
+                                        bottomRight: Radius.circular(5)),
+                                    color: kPrimaryColor,
+                                  ),
                                 ),
-                              ),
+                              )),
                             ],
                           )
                         ],
@@ -171,7 +189,7 @@ class BookingSubmissionView extends StatelessWidget {
             verticalSpaceMedium,
             ResavationButton(
               title: 'Continue',
-              onTap: (){
+              onTap: () {
                 String email = "ogundipeibukun51@gmail.com";
                 int price = 900;
                 MakePayment(ctx: context, email: email, price: price)
@@ -204,12 +222,12 @@ class PaymentDetails extends StatelessWidget {
       children: [
         Text(
           tiltle,
-          style: AppStyle.kBodyBold,
+          style: AppStyle.kBodyRegularBlack14,
         ),
         Spacer(),
         Text(
           percentage,
-          style: AppStyle.kBodyRegular,
+          style: AppStyle.kBodyRegularBlack14,
         ),
       ],
     );
