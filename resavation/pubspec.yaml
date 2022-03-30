@@ -36,6 +36,8 @@ dependencies:
   dropdown_button2: ^1.2.2
   location: ^4.3.0
   emoji_picker_flutter: ^1.1.2
+  carousel_slider: ^4.0.0
+  unicons: ^2.1.0
 
 
 

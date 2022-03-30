@@ -118,7 +118,7 @@ class PropertyDetailsView extends StatelessWidget {
             SliverGrid.count(
               crossAxisCount: 2,
               mainAxisSpacing: 0,
-              crossAxisSpacing: 10,
+              crossAxisSpacing: 4,
               childAspectRatio: 4,
               children: [
                 for (final amenity in model.amenities) ...[
@@ -222,7 +222,7 @@ class AmenitiesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, ),
       child: Row(
         children: [
           Icon(iconData),
