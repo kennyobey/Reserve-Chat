@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:Feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/AssetManifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/AssetManifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/FontManifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/FontManifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/NOTICES.Z" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/AssetManifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/AssetManifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/FontManifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/FontManifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/NOTICES.Z" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/property_details_header.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/property_details_header.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/chat_room/widgets/chat_input_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/chat_room/widgets/chat_input_field.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_details/property_details_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_details/property_details_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/utility/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/utility/assets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,8 +137,38 @@
       <option name="project" value="LOCAL" />
       <updated>1648158777207</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="perfecting UI">
+      <created>1648610430731</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1648610430766</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added chat-room" />
@@ -133,6 +180,7 @@
     <MESSAGE value="updated commit" />
     <MESSAGE value="perfecting UI" />
     <option name="LAST_COMMIT_MESSAGE" value="perfecting UI" />
+    <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="144" y="45" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1648149740710">
@@ -140,10 +188,10 @@
     </state>
     <state x="144" y="45" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1303.768@0.0.1303.768" timestamp="1645746014385" />
     <state x="144" y="45" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1304.768@0.0.1304.768" timestamp="1648149740710" />
-    <state x="390" y="186" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1647949464268">
+    <state x="490" y="196" width="739" height="397" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1648614388773">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
-    <state x="390" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1304.768@0.0.1304.768" timestamp="1647949464268" />
+    <state x="490" y="196" width="739" height="397" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1304.768@0.0.1304.768" timestamp="1648614388773" />
     <state x="419" y="180" key="#com.intellij.ide.util.TreeFileChooserDialog" timestamp="1645745835853">
       <screen x="0" y="0" width="1303" height="768" />
     </state>
@@ -156,48 +204,57 @@
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="481" y="134" key="AndroidProcessChooserDialog/0.0.1303.768@0.0.1303.768" timestamp="1645929767922" />
-    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1648158751210">
+    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1648610386432">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="232" y="0" key="CommitChangelistDialog2/0.0.1303.768@0.0.1303.768" timestamp="1645785037261" />
-    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1648158751210" />
-    <state x="122" y="59" key="DiffContextDialog" timestamp="1645784838907">
-      <screen x="0" y="0" width="1303" height="768" />
+    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1648610386432" />
+    <state x="122" y="59" width="1043" height="642" key="DiffContextDialog" timestamp="1648614040729">
+      <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="122" y="59" key="DiffContextDialog/0.0.1303.768@0.0.1303.768" timestamp="1645784838907" />
+    <state x="122" y="59" width="1043" height="642" key="DiffContextDialog/0.0.1304.768@0.0.1304.768" timestamp="1648614040729" />
     <state x="431" y="139" key="FileChooserDialogImpl" timestamp="1645776290765">
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="431" y="139" key="FileChooserDialogImpl/0.0.1303.768@0.0.1303.768" timestamp="1645776290765" />
-    <state width="1261" height="161" key="GridCell.Tab.0.bottom" timestamp="1648502656105">
+    <state width="1261" height="161" key="GridCell.Tab.0.bottom" timestamp="1648616589469">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.bottom/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1648502656105" />
-    <state width="1261" height="161" key="GridCell.Tab.0.center" timestamp="1648502656104">
+    <state width="1261" height="161" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1648616589469" />
+    <state width="1261" height="161" key="GridCell.Tab.0.center" timestamp="1648616589468">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.center/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1648502656104" />
-    <state width="1261" height="161" key="GridCell.Tab.0.left" timestamp="1648502656104">
+    <state width="1261" height="161" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1648616589468" />
+    <state width="1261" height="161" key="GridCell.Tab.0.left" timestamp="1648616589468">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.left/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1648502656104" />
-    <state width="1261" height="161" key="GridCell.Tab.0.right" timestamp="1648502656105">
+    <state width="1261" height="161" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1648616589468" />
+    <state width="1261" height="161" key="GridCell.Tab.0.right" timestamp="1648616589469">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.right/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1648502656105" />
-    <state x="300" y="149" key="MultipleFileMergeDialog" timestamp="1646377867527">
+    <state width="1261" height="161" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1648616589469" />
+    <state x="139" y="63" key="MergeDialog" timestamp="1648615273215">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
-    <state x="300" y="149" key="MultipleFileMergeDialog/0.0.1304.768@0.0.1304.768" timestamp="1646377867527" />
+    <state x="139" y="63" key="MergeDialog/0.0.1304.768@0.0.1304.768" timestamp="1648615273215" />
+    <state x="300" y="149" key="MultipleFileMergeDialog" timestamp="1648615289905">
+      <screen x="0" y="0" width="1304" height="768" />
+    </state>
+    <state x="300" y="149" key="MultipleFileMergeDialog/0.0.1304.768@0.0.1304.768" timestamp="1648615289905" />
     <state x="191" y="35" key="SettingsEditor" timestamp="1648036681607">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="191" y="35" key="SettingsEditor/0.0.1303.768@0.0.1303.768" timestamp="1645746006352" />
     <state x="191" y="35" key="SettingsEditor/0.0.1304.768@0.0.1304.768" timestamp="1648036681607" />
+    <state x="244" y="117" key="Vcs.Push.Dialog.v2" timestamp="1648615546193">
+      <screen x="0" y="0" width="1304" height="768" />
+    </state>
+    <state x="244" y="117" key="Vcs.Push.Dialog.v2/0.0.1304.768@0.0.1304.768" timestamp="1648615546193" />
     <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1648159028207">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
