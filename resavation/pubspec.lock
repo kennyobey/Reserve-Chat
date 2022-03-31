@@ -218,13 +218,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-  date_range_picker:
+  date_ranger:
     dependency: "direct main"
     description:
-      name: date_range_picker
+      name: date_ranger
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.7"
+    version: "0.0.1"
   dots_indicator:
     dependency: "direct main"
     description:
