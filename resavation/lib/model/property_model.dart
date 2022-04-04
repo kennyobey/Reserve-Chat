@@ -24,7 +24,7 @@ class Property {
   });
 }
 
-List<Property> ListOfProperties = [
+final listOfProperties = <Property> [
   Property(
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,

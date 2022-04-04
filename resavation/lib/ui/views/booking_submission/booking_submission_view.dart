@@ -125,7 +125,7 @@ class BookingSubmissionView extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Expanded(flex: 3, child: ResavationSearchBar()),
+                              Expanded(flex: 3, child: ResavationSearchBar(text: '',)),
                               Expanded(
                                   child: GestureDetector(
                                 onTap: () {},

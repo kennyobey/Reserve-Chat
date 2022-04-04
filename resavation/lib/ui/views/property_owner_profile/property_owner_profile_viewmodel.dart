@@ -8,7 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 class PropertyOwnerProfileViewModel extends BaseViewModel {
   final _snackbarService = locator<CustomSnackbarService>();
   final _navigationService = locator<NavigationService>();
-  List<Property> get properties => ListOfProperties;
+  List<Property> get properties => listOfProperties;
 
   void goToProfileProductListView() {
     //_navigationService.navigateTo(Routes.profileProductListView);

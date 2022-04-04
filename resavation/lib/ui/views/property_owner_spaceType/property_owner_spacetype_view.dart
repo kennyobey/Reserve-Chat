@@ -34,15 +34,19 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   Center(
                     child: Text(
                       'Space Type',
-                      style: AppStyle.kHeading1,
+                      style: AppStyle.kBodyRegularW500,
                     ),
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Tell us about your property',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14W500,
                   ),
                   verticalSpaceMedium,
+                  Text(
+                    'Property Type',
+                    style: AppStyle.kBodyRegularW500,
+                  ),
                   Text(
                     'Narrow down your space type',
                     style: AppStyle.kBodyRegular,

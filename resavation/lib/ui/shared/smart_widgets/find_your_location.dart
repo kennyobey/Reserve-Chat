@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 
 class FindYourLocation extends StatelessWidget {
@@ -18,7 +17,8 @@ class FindYourLocation extends StatelessWidget {
       children: [
         Expanded(
           flex: 5,
-          child: ResavationSearchBar(
+          child:  ResavationSearchBar(
+            text: "",
             elevation: 0.0,
             showPrefix: true,
             hintText: 'Enter your location',
