@@ -35,21 +35,10 @@
     <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/model/property_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/model/property_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/resavation_searchbar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/resavation_searchbar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/smart_widgets/find_your_location.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/smart_widgets/find_your_location.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/colors.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/colors.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/text_styles.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/text_styles.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/booking_submission/booking_submission_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/booking_submission/booking_submission_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/favorite/favorite_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/favorite/favorite_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/profile_product_list/profile_product_list_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/profile_product_list/profile_product_list_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_details/property_details_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_details/property_details_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_appointment_itemView/property_owner_appointment_itemViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_appointment_itemView/property_owner_appointment_itemViewModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_profile/property_owner_profile_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_profile/property_owner_profile_viewmodel.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/search/search_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/search/search_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/search/search_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/search/search_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649076921823</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Updating Property Owner's View">
+      <created>1649092146179</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1649092146179</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -212,7 +208,8 @@
     <MESSAGE value="perfecting UI" />
     <MESSAGE value="Merged from Latest-Develop" />
     <MESSAGE value="Implemented Google Map" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Google Map" />
+    <MESSAGE value="Updating Property Owner's View" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating Property Owner's View" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -237,11 +234,11 @@
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="481" y="134" key="AndroidProcessChooserDialog/0.0.1303.768@0.0.1303.768" timestamp="1645929767922" />
-    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1649076892702">
+    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1649092126199">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="232" y="0" key="CommitChangelistDialog2/0.0.1303.768@0.0.1303.768" timestamp="1645785037261" />
-    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1649076892702" />
+    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1649092126199" />
     <state x="122" y="59" width="1043" height="642" key="DiffContextDialog" timestamp="1649076813630">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
@@ -251,26 +248,26 @@
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="431" y="139" key="FileChooserDialogImpl/0.0.1303.768@0.0.1303.768" timestamp="1645776290765" />
-    <state width="1261" height="161" key="GridCell.Tab.0.bottom" timestamp="1649091205981">
+    <state width="1261" height="161" key="GridCell.Tab.0.bottom" timestamp="1649114276302">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.bottom/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1649091205981" />
-    <state width="1261" height="161" key="GridCell.Tab.0.center" timestamp="1649091205981">
+    <state width="1261" height="161" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1649114276302" />
+    <state width="1261" height="161" key="GridCell.Tab.0.center" timestamp="1649114276302">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.center/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1649091205981" />
-    <state width="1261" height="161" key="GridCell.Tab.0.left" timestamp="1649091205981">
+    <state width="1261" height="161" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1649114276302" />
+    <state width="1261" height="161" key="GridCell.Tab.0.left" timestamp="1649114276302">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.left/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1649091205979" />
-    <state width="1261" height="161" key="GridCell.Tab.0.right" timestamp="1649091205981">
+    <state width="1261" height="161" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1649114276302" />
+    <state width="1261" height="161" key="GridCell.Tab.0.right" timestamp="1649114276302">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.right/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1261" height="161" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1649091205981" />
+    <state width="1261" height="161" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1649114276302" />
     <state x="139" y="63" key="MergeDialog" timestamp="1648615273215">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
