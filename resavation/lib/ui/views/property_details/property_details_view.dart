@@ -161,7 +161,7 @@ class PropertyDetailsView extends StatelessWidget {
                     ResavationElevatedButton(
                       child: Text("Go to Map"),
                       onPressed: (){
-
+                        model.goToMapView();
                       },
                     ),
                     verticalSpaceMedium,

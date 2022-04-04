@@ -37,6 +37,9 @@ class PropertyDetailsViewModel extends BaseViewModel {
   }
 
   //Google Map
+  void goToMapView() {
+    _navigationService.navigateTo(Routes.mapView);
+  }
 
 
 }

@@ -226,6 +226,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dio">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.5/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="dots_indicator">
           <value>
             <list>
@@ -321,6 +328,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.5/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_polyline_points">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_polyline_points-1.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -863,6 +877,20 @@
             </list>
           </value>
         </entry>
+        <entry key="syncfusion_flutter_core">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-19.4.56/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="syncfusion_flutter_datepicker">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_datepicker-19.4.56/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="synchronized">
           <value>
             <list>
@@ -1003,6 +1031,7 @@
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dart_style-2.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/date_ranger-0.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.5/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dots_indicator-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/dropdown_button2-1.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/emoji_picker_flutter-1.1.2/lib" />
@@ -1016,6 +1045,7 @@
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_hooks-0.18.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_paystack-1.0.5+1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.5/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_polyline_points-1.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/frontend_server_client-2.1.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/get-4.6.1/lib" />
@@ -1090,6 +1120,8 @@
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-19.4.56/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_datepicker-19.4.56/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.8/lib" />
