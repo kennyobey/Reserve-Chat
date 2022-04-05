@@ -10,6 +10,7 @@ import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add
 
 import 'package:stacked/stacked.dart';
 
+
 class PropertyOwnerAddPhotosView extends StatelessWidget {
   const PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
 
@@ -30,29 +31,29 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                 Center(
                   child: Text(
                     'Add Photos',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kHeading0,
                   ),
                 ),
                 verticalSpaceMedium,
                 Text(
                   'Add photo to your listings',
-                  style: AppStyle.kBodyBold,
+                  style: AppStyle.kHeading0,
                 ),
                 verticalSpaceMedium,
                 Text(
                   'Photos help prospective tenant imagine staying in your place',
-                  style: AppStyle.kBodySmallRegular,
+                  style: AppStyle.kBodyRegularBlack14,
                 ),
                 Text(
                   'You can add as many photo as you want',
-                  style: AppStyle.kBodySmallRegular,
+                  style: AppStyle.kBodyRegularBlack14,
                 ),
                 verticalSpaceMedium,
                 ResavationButton(
                   // width: 140,
                   // height: 40,
                   onTap: () {
-                    model.goToPropertyOwnerAddCoverPhotosView();
+                    //model.goToPropertyOwnerAddCoverPhotosView();
                   },
                   title: 'Add photos',
                   titleColor: kWhite,

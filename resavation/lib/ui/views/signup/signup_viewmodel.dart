@@ -65,7 +65,6 @@ class SignUpViewModel extends BaseViewModel {
   // To select the userType
   void onRadioChanged(String value) {
     userType = value.toString();
-    print(userType);
     notifyListeners();
   }
 

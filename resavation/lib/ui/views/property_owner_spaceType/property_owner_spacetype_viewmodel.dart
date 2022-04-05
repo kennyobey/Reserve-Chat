@@ -10,45 +10,42 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
 
-  String IsServiced = "Serviced";
+  // drop-down button UI logic
+  String? selectedValue;
+  List<String> items = [
+    'Flat',
+    'Bungalow',
+    'Self Contain',
+  ];
+  void onSelectedValueChange(value){
+    selectedValue = value as String;
 
-  String IsFurnished = "Funrnished";
-
-  String IsLiveSpace = "IsLiveSpace";
-
-  void onRadioChanged(String value) {
-    IsServiced = value.toString();
-    print(IsServiced);
     notifyListeners();
   }
 
-  void onRadioChanged2(String value) {
-    IsFurnished = value.toString();
-    print(IsFurnished);
+  //is your space serviced UI logic
+  String isServiced = "";
+
+  void onSpaceServicedRadioChange(String value) {
+    isServiced = value.toString();
     notifyListeners();
   }
 
-  void onRadioChanged3(String value) {
-    IsLiveSpace = value.toString();
-    print(IsLiveSpace);
+  // is your furnished  UI logic
+  String isFurnished = "";
+
+  void onSpaceFurnishedRadioChange(String value) {
+    isFurnished = value.toString();
     notifyListeners();
   }
 
-  void onNotificationSwitchChanged(bool? value) {
-    _notificationSwitchValue = value!;
-    // drop-down button UI logic
-    String? selectedValue;
-    List<String> items = [
-      'Flat',
-      'Bungalow',
-      'Self Contain',
-    ];
+  // do you leave in this space  UI logic
+  String leaveHere = "";
 
-    void onSelectedValueChange(value) {
-      selectedValue = value as String;
+  void onLeaveHereRadioChange(String value) {
+    leaveHere = value.toString();
+    notifyListeners();
 
-      notifyListeners();
-    }
   }
 
   // Amenities selection logic

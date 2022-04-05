@@ -73,13 +73,13 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
             // logic behind the cancel icon in search bar
             suffixIcon: widget.text.isNotEmpty
                 ? GestureDetector(
-              child: Icon(Icons.close, color: style.color),
-              onTap: () {
-                widget.controller!.clear();
-                widget.onChanged!('');
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-            )
+                    child: Icon(Icons.close, color: style.color),
+                    onTap: () {
+                      widget.controller!.clear();
+                      widget.onChanged!('');
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                  )
                 : null,
           ),
         ),
