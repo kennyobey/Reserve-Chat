@@ -11,10 +11,6 @@ import 'package:stacked/stacked.dart';
 class PropertyOwnerAmenitiesView extends StatelessWidget {
   PropertyOwnerAmenitiesView({Key? key}) : super(key: key);
 
-  get _radioValue1 => 1;
-  bool isChecked = false;
-  get _handleRadioValueChange1 => null;
-
   MaterialPropertyResolver<Color?>? get getColor => null;
 
   @override
@@ -52,8 +48,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue1,
+                              onChanged: model.onCheckChanged1,
                             ),
                             Text(
                               "Wifi",
@@ -65,8 +61,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue2,
+                              onChanged: model.onCheckChanged2,
                             ),
                             Text(
                               "Washing Machine",
@@ -78,8 +74,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue3,
+                              onChanged: model.onCheckChanged3,
                             ),
                             Text(
                               "Air Conditioning",
@@ -98,8 +94,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue4,
+                              onChanged: model.onCheckChanged4,
                             ),
                             Text(
                               "TV",
@@ -111,8 +107,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue5,
+                              onChanged: model.onCheckChanged5,
                             ),
                             Text(
                               "Hair Dryer",
@@ -124,8 +120,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue6,
+                              onChanged: model.onCheckChanged6,
                             ),
                             Text(
                               "Fire Alarm",
@@ -152,8 +148,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue7,
+                              onChanged: model.onCheckChanged7,
                             ),
                             Text(
                               "No Smoking",
@@ -162,8 +158,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                             horizontalSpaceLarge,
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue8,
+                              onChanged: model.onCheckChanged8,
                             ),
                             Text(
                               "No Pet",
@@ -175,8 +171,8 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              value: isChecked,
-                              onChanged: (bool? value) {},
+                              value: model.checkValue9,
+                              onChanged: model.onCheckChanged9,
                             ),
                             Text(
                               "No House party",
