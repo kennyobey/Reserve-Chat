@@ -158,7 +158,6 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     onChanged: (String? radioValue) {
                       model.onLeaveHereRadioChange(radioValue.toString()) ; },
                   ),
-                  verticalSpaceSmall,
 
                   //Select the number of bedrooms
                   AmenitiesSelection(
