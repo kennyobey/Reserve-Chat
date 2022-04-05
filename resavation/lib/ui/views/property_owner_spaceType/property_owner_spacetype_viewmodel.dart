@@ -36,6 +36,59 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
 
   void onNotificationSwitchChanged(bool? value) {
     _notificationSwitchValue = value!;
+  // drop-down button UI logic
+  String? selectedValue;
+  List<String> items = [
+    'Flat',
+    'Bungalow',
+    'Self Contain',
+  ];
+  void onSelectedValueChange(value){
+    selectedValue = value as String;
+
+    notifyListeners();
+  }
+
+  // Amenities selection logic
+  int numberOfBedrooms = 0;
+  int numberOfBathrooms = 0;
+  int numberOfCarSlot = 0;
+
+  // method for each amenities tap
+  void onPositiveBedRoomTap() {
+    numberOfBedrooms++;
+    notifyListeners();
+  }
+
+  void onNegativeBedRoomTap() {
+    if (numberOfBedrooms != 0) {
+      numberOfBedrooms--;
+    }
+    notifyListeners();
+  }
+
+  void onPositiveBathRoomTap() {
+    numberOfBathrooms++;
+    notifyListeners();
+  }
+
+  void onNegativeBathRoomTap() {
+    if (numberOfBathrooms != 0) {
+      numberOfBathrooms--;
+    }
+    notifyListeners();
+  }
+
+  void onPositiveCarSlotTap() {
+    numberOfCarSlot++;
+    notifyListeners();
+  }
+
+  void onNegativeCarSlotTap() {
+    if (numberOfCarSlot != 0) {
+      numberOfCarSlot--;
+    }
+
     notifyListeners();
   }
 
@@ -47,11 +100,7 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
   }
 
-  bool _appNotificationSwitchValue = false;
-  bool get appNotificationSwitchValue => _appNotificationSwitchValue;
 
-  void onAppNotificationSwitchValue(bool? value) {
-    _appNotificationSwitchValue = value!;
-    notifyListeners();
-  }
+
+
 }

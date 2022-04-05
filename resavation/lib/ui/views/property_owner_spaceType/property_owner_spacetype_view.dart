@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 
@@ -34,23 +35,61 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   Center(
                     child: Text(
                       'Space Type',
-                      style: AppStyle.kHeading1,
+                      style: AppStyle.kBodyRegularW500,
                     ),
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Tell us about your property',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14W500,
+                  ),
+                  verticalSpaceMedium,
+                  Text(
+                    'Property Type',
+                    style: AppStyle.kBodyRegularBlack14,
+                  ),
+                  verticalSpaceSmall,
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        hint: Text(
+                          "Select Property ",
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        items: model.items
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: AppStyle.kBodyRegular,
+                                  ),
+                                ))
+                            .toList(),
+                        value: model.selectedValue,
+                        onChanged: (value) {
+                          model.onSelectedValueChange(value);
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                        ),
+                        buttonWidth: 330,
+                        buttonPadding:
+                            const EdgeInsets.only(left: 18, right: 20),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                        )),
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Narrow down your space type',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Is your space serviced',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14,
                   ),
                   Row(
                     children: [
@@ -87,7 +126,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(
                     'Is your space furnished',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14,
                   ),
                   Row(
                     children: [
@@ -124,7 +163,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(
                     'Listing Options',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
 
@@ -134,7 +173,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   ),
                   Text(
                     'Do you leave in this space',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   Row(
                     children: [
@@ -169,6 +208,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     ],
                   ),
                   verticalSpaceMedium,
+
 
                   //Number of Bathroom and Bedroom
                   Row(
@@ -216,7 +256,32 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                         size: 20.0,
                       ),
                     ],
+
+                  //Select the number of bedrooms
+                  AmenitiesSelection(
+                    title: "Number Of bedrooms",
+                    value: model.numberOfBedrooms,
+                    onPositiveTap: ()=> model.onPositiveBedRoomTap(),
+                    onNegativeTap: ()=> model.onNegativeBedRoomTap(),
                   ),
+
+                  //Select the number of bathrooms
+                  AmenitiesSelection(
+                    title: "Number of bathrooms",
+                    value: model.numberOfBathrooms,
+                    onPositiveTap: ()=> model.onPositiveBathRoomTap(),
+                    onNegativeTap: ()=> model.onNegativeBathRoomTap(),
+
+                  ),
+
+                  //Select the number of car slots
+                  AmenitiesSelection(
+                    title: "Number of car slots",
+                    value: model.numberOfCarSlot,
+                    onPositiveTap: ()=> model.onPositiveCarSlotTap(),
+                    onNegativeTap: ()=> model.onNegativeCarSlotTap(),
+                  ),
+
                   Row(
                     children: [
                       Text(
@@ -265,6 +330,68 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
         ),
       ),
       viewModelBuilder: () => PropertyOwnerSpaceTypeViewModel(),
+    );
+  }
+}
+
+class AmenitiesSelection extends ViewModelWidget<PropertyOwnerSpaceTypeViewModel> {
+  const AmenitiesSelection({
+    Key? key, this.title, this.onNegativeTap, this.onPositiveTap, this.value
+  }) : super(key: key);
+  final String? title;
+  final int? value;
+  final Function()? onNegativeTap;
+  final Function()? onPositiveTap;
+
+  @override
+  Widget build(BuildContext context, model) {
+    return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title!, style: AppStyle.kBodySmallRegular12,),
+                    Row(
+                      children: [
+                        IncrementAmenities(
+                          icon: Icons.remove,
+                          onTap: onNegativeTap,
+                        ),
+                        Text(value.toString()),
+                        IncrementAmenities(
+                          icon: Icons.add,
+                          onTap: onPositiveTap,
+                        ),
+                      ],
+                    )
+                  ],
+                );
+  }
+}
+
+// widget used to increase/decrease the amenities value
+class IncrementAmenities extends StatelessWidget {
+  const IncrementAmenities({
+    Key? key, this.icon, this.onTap
+  }) : super(key: key);
+
+  final IconData? icon;
+  final Function()? onTap;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: kInactiveColor ),
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+          child: Icon(icon,
+            color: kInactiveColor,
+            size: 12,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -48,7 +49,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                               }),
                           horizontalSpaceSmall,
                           Text(
-                            'Welcome Steven',
+                            'Welcome Steven!',
                             style: AppStyle.kBodyRegularBlack14W600,
                           ),
                           Spacer(),
@@ -74,15 +75,11 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                               style: TextStyle(color: kWhite),
                             ),
                             verticalSpaceSmall,
-                            ResavationButton(
-                              width: 106,
-                              height: 34,
-                              onTap: () {
+                            ResavationElevatedButton(
+                              child: Text("List your space"),
+                              onPressed: () {
                                 model.goToPropertyOwnerSpaceTypeView();
                               },
-                              title: 'List your',
-                              titleColor: kWhite,
-                              buttonColor: kPrimaryColor,
                               //  borderColor: kp,
                             ),
                           ],
@@ -91,7 +88,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       verticalSpaceMedium,
                       Text(
                         "Tenants request",
-                        style: AppStyle.kBodyBold,
+                        style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       verticalSpaceTiny,
                       Padding(
@@ -100,17 +97,17 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                           children: [
                             Text(
                               "Details",
-                              style: AppStyle.kBodyRegular,
+                              style: AppStyle.kBodyRegularBlack14,
                             ),
                             Spacer(),
                             Text(
                               "File",
-                              style: AppStyle.kBodyRegular,
+                              style: AppStyle.kBodyRegularBlack14,
                             ),
                             Spacer(),
                             Text(
                               "Actions",
-                              style: AppStyle.kBodyRegular,
+                              style: AppStyle.kBodyRegularBlack14,
                             ),
                           ],
                         ),
@@ -236,9 +233,9 @@ Widget _ListingCard() {
           ),
           title: Text(
             "Adeyemo Stephen",
-            style: AppStyle.kBodyBold,
+            style: AppStyle.kBodySmallRegular11W500,
           ),
-          subtitle: Text("SeedBuilderHub"),
+          subtitle: Text("SeedBuilderHub", style: AppStyle.kBodySmallRegular10W400,),
           trailing: Container(
             width: 80,
             height: 30,

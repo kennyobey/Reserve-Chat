@@ -27,6 +27,7 @@ class SearchView extends StatelessWidget {
                     children: [
                       verticalSpaceMedium,
                       FindYourLocation(
+
                         onTap: model.goToFilterView,
                       ),
                       verticalSpaceMedium,
@@ -68,4 +69,6 @@ class SearchView extends StatelessWidget {
       viewModelBuilder: () => SearchViewModel(),
     );
   }
+
+
 }

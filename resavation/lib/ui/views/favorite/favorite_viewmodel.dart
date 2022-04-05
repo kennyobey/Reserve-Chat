@@ -6,7 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class FavoriteViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  List<Property> get properties => ListOfProperties;
+  List<Property> get properties => listOfProperties;
 
   bool isFavorite = false;
 

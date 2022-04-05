@@ -8,7 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 class ProfileProductListViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<CustomSnackbarService>();
-  List<Property> get properties => ListOfProperties;
+  List<Property> get properties => listOfProperties;
 
   // drop-down button
   String? selectedValue;

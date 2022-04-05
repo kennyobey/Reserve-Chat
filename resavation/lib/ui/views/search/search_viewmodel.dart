@@ -1,13 +1,44 @@
+import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/property_model.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SearchViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  // drop-down button
+  // search bar searching logic
+  late List<Property> property;
+  String query = '';
+
+  Widget buildSearch() =>
+      ResavationSearchBar(
+        text: query,
+        hintText: 'Product Name',
+        onChanged: searchProperty,
+      );
+
+  // method behind searching
+  void searchProperty(String query) {
+    final property = listOfProperties.where((property) {
+      final propertyLocation = property.location.toLowerCase();
+      final propertyAddress = property.address.toLowerCase();
+      final propertyCategory = property.category!.toLowerCase();
+
+      final searchLower = query.toLowerCase();
+
+      return propertyLocation.contains(searchLower) ||
+          propertyAddress.contains(searchLower) || propertyCategory.contains(searchLower);
+    }).toList();
+
+      this.query = query;
+      this.property = property;
+      notifyListeners();
+  }
+
+  // drop-down button logic
   String? selectedValue;
   List<String> items = [
     'Item1',
@@ -26,7 +57,7 @@ class SearchViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List<Property> get properties => ListOfProperties;
+  List<Property> get properties => listOfProperties;
 
   void goToPropertyDetails() {
     _navigationService.navigateTo(Routes.propertyDetailsView);
@@ -34,5 +65,10 @@ class SearchViewModel extends BaseViewModel {
 
   void goToFilterView() {
     _navigationService.navigateTo(Routes.filterView);
+  }
+
+  @override
+  void initState() {
+    property = listOfProperties;
   }
 }

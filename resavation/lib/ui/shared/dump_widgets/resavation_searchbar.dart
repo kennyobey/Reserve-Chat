@@ -5,6 +5,8 @@ import 'package:resavation/ui/shared/text_styles.dart';
 class ResavationSearchBar extends StatefulWidget {
   const ResavationSearchBar({
     Key? key,
+    required this.text,
+    this.onChanged,
     this.onTap,
     this.label,
     this.icon,
@@ -12,15 +14,15 @@ class ResavationSearchBar extends StatefulWidget {
     this.hintText,
     this.color,
     this.labelText,
-    this.obscureText = false,
     this.showPrefix = false,
     this.textInputAction,
     this.keyboardType,
     this.controller,
     this.validator,
-    this.onChanged,
   }) : super(key: key);
 
+  final String text;
+  final ValueChanged<String>? onChanged;
   final void Function()? onTap;
   final String? label;
   final Icon? icon;
@@ -28,20 +30,18 @@ class ResavationSearchBar extends StatefulWidget {
   final String? labelText;
   final double? elevation;
   final Color? color;
-  final bool obscureText;
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
 
   @override
   _ResavationSearchBarState createState() => _ResavationSearchBarState();
 }
 
 class _ResavationSearchBarState extends State<ResavationSearchBar> {
-  late bool _obscureText = widget.obscureText;
+  late String _text = widget.controller!.text;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +51,10 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
       child: Material(
         elevation: widget.elevation != null ? widget.elevation! : 0.0,
         child: TextFormField(
-          onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
           controller: widget.controller,
           validator: widget.validator,
-          obscureText: _obscureText,
           style: style,
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -72,19 +70,16 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             hintStyle: style,
             prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
-            suffixIcon: widget.obscureText
+            // logic behind the cancel icon in search bar
+            suffixIcon: widget.text.isNotEmpty
                 ? GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        print(true);
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                    child: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: kPrimaryColor,
-                    ),
-                  )
+              child: Icon(Icons.close, color: style.color),
+              onTap: () {
+                widget.controller!.clear();
+                widget.onChanged!('');
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+            )
                 : null,
           ),
         ),

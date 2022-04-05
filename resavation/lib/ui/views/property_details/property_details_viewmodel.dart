@@ -21,7 +21,7 @@ class PropertyDetailsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List<Property> get properties => ListOfProperties;
+  List<Property> get properties => listOfProperties;
   List<Amenity> get amenities => ListOfAmenities;
 
   void navigateBack() {
@@ -37,6 +37,9 @@ class PropertyDetailsViewModel extends BaseViewModel {
   }
 
   //Google Map
+  void goToMapView() {
+    _navigationService.navigateTo(Routes.mapView);
+  }
 
 
 }
