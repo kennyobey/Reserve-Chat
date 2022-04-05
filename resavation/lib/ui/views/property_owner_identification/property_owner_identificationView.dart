@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+//import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -31,18 +32,18 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                 Center(
                   child: Text(
                     'Identification',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodyRegularBlack14W500,
                   ),
                 ),
                 verticalSpaceMedium,
                 Text(
                   'Personal Details',
-                  style: AppStyle.kBodyBold,
+                  style: AppStyle.kBodyRegularBlack14W500,
                 ),
                 verticalSpaceSmall,
                 Text(
                   'Complete your personal information',
-                  style: AppStyle.kBodyBold,
+                  style: AppStyle.kBodySmallRegular12W500,
                 ),
                 verticalSpaceTiny,
                 ResavationTextField(
@@ -58,7 +59,7 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                   children: [
                     Text(
                       'Date of Birth',
-                      style: AppStyle.kBodyRegular,
+                      style: AppStyle.kBodySmallRegular12,
                     ),
                   ],
                 ),

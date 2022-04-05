@@ -36,17 +36,19 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
 
   void onNotificationSwitchChanged(bool? value) {
     _notificationSwitchValue = value!;
-  // drop-down button UI logic
-  String? selectedValue;
-  List<String> items = [
-    'Flat',
-    'Bungalow',
-    'Self Contain',
-  ];
-  void onSelectedValueChange(value){
-    selectedValue = value as String;
+    // drop-down button UI logic
+    String? selectedValue;
+    List<String> items = [
+      'Flat',
+      'Bungalow',
+      'Self Contain',
+    ];
 
-    notifyListeners();
+    void onSelectedValueChange(value) {
+      selectedValue = value as String;
+
+      notifyListeners();
+    }
   }
 
   // Amenities selection logic
@@ -99,8 +101,4 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   void goToPropertyOwnerDetailsView() {
     _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
   }
-
-
-
-
 }
