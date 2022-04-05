@@ -6,6 +6,9 @@ import 'package:stacked_services/stacked_services.dart';
 class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
+  //
+
+
   void goToPropertyOwnerAddCoverPhotosView() {
     _navigationService.navigateTo(Routes.propertyOwnerAddCoverPhotosView);
   }

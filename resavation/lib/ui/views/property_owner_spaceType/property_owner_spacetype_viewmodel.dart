@@ -23,6 +23,30 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  //is your space serviced UI logic
+  String isServiced = "";
+
+  void onSpaceServicedRadioChange(String value) {
+    isServiced = value.toString();
+    notifyListeners();
+  }
+
+  // is your furnished  UI logic
+  String isFurnished = "";
+
+  void onSpaceFurnishedRadioChange(String value) {
+    isFurnished = value.toString();
+    notifyListeners();
+  }
+
+  // do you leave in this space  UI logic
+  String leaveHere = "";
+
+  void onLeaveHereRadioChange(String value) {
+    leaveHere = value.toString();
+    notifyListeners();
+  }
+
   // Amenities selection logic
   int numberOfBedrooms = 0;
   int numberOfBathrooms = 0;

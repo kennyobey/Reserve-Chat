@@ -3,6 +3,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_radio_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -14,9 +16,6 @@ import 'package:stacked/stacked.dart';
 class PropertyOwnerSpaceTypeView extends StatelessWidget {
   PropertyOwnerSpaceTypeView({Key? key}) : super(key: key);
 
-  get _radioValue1 => 1;
-
-  get _handleRadioValueChange1 => null;
 
   @override
   Widget build(BuildContext context) {
@@ -91,66 +90,42 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     'Is your space serviced',
                     style: AppStyle.kBodyRegularBlack14,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Yes',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      Spacer(),
-                      Radio(
-                        value: 1,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
-                      ),
-                    ],
+
+                  // is your space serviced Yes/No
+                  ResavationRadioButton(
+                    title: 'Yes',
+                    radioValue: "Yes",
+                    groupValue: model.isServiced,
+                    onChanged:  (String? radioValue) {
+                      model.onSpaceServicedRadioChange(radioValue.toString()) ; },
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'No',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      Spacer(),
-                      Radio(
-                        value: 2,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
-                      ),
-                    ],
+                  ResavationRadioButton(
+                    title: 'No',
+                    radioValue: "No",
+                    groupValue: model.isServiced,
+                    onChanged: (String? radioValue) {
+                      model.onSpaceServicedRadioChange(radioValue.toString()) ; },
                   ),
                   verticalSpaceSmall,
                   Text(
                     'Is your space furnished',
                     style: AppStyle.kBodyRegularBlack14,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Yes',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      Spacer(),
-                      Radio(
-                        value: 3,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
-                      ),
-                    ],
+
+                  // Is your space furnished Yes/No
+                  ResavationRadioButton(
+                    title: 'Yes',
+                    radioValue: "Yes",
+                    groupValue: model.isFurnished,
+                    onChanged:  (String? radioValue) {
+                      model.onSpaceFurnishedRadioChange(radioValue.toString()) ; },
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'No',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      Spacer(),
-                      Radio(
-                        value: 4,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
-                      ),
-                    ],
+                  ResavationRadioButton(
+                    title: 'No',
+                    radioValue: "No",
+                    groupValue: model.isFurnished,
+                    onChanged: (String? radioValue) {
+                      model.onSpaceFurnishedRadioChange(radioValue.toString()) ; },
                   ),
                   verticalSpaceSmall,
                   Text(
@@ -159,137 +134,130 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   ),
                   verticalSpaceTiny,
 
-                  verticalSpaceTiny,
                   ResavationTextField(
                     hintText: 'Choose your listing option',
                   ),
+                  verticalSpaceSmall,
                   Text(
                     'Do you leave in this space',
                     style: AppStyle.kBodySmallRegular12W500,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Yes',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      Spacer(),
-                      Radio(
-                        value: 5,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
-                      ),
-                    ],
+
+                  // do you leave in this space Yes/No
+                  ResavationRadioButton(
+                    title: 'Yes',
+                    radioValue: "Yes",
+                    groupValue: model.leaveHere,
+                    onChanged:  (String? radioValue) {
+                      model.onLeaveHereRadioChange(radioValue.toString()) ; },
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'No',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      Spacer(),
-                      Radio(
-                        value: 6,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
-                      ),
-                    ],
+                  ResavationRadioButton(
+                    title: 'No',
+                    radioValue: "No",
+                    groupValue: model.leaveHere,
+                    onChanged: (String? radioValue) {
+                      model.onLeaveHereRadioChange(radioValue.toString()) ; },
                   ),
+                  verticalSpaceSmall,
 
                   //Select the number of bedrooms
                   AmenitiesSelection(
                     title: "Number Of bedrooms",
                     value: model.numberOfBedrooms,
-                    onPositiveTap: ()=> model.onPositiveBedRoomTap(),
-                    onNegativeTap: ()=> model.onNegativeBedRoomTap(),
+                    onPositiveTap: () => model.onPositiveBedRoomTap(),
+                    onNegativeTap: () => model.onNegativeBedRoomTap(),
                   ),
 
                   //Select the number of bathrooms
                   AmenitiesSelection(
                     title: "Number of bathrooms",
                     value: model.numberOfBathrooms,
-                    onPositiveTap: ()=> model.onPositiveBathRoomTap(),
-                    onNegativeTap: ()=> model.onNegativeBathRoomTap(),
-
+                    onPositiveTap: () => model.onPositiveBathRoomTap(),
+                    onNegativeTap: () => model.onNegativeBathRoomTap(),
                   ),
 
                   //Select the number of car slots
                   AmenitiesSelection(
                     title: "Number of car slots",
                     value: model.numberOfCarSlot,
-                    onPositiveTap: ()=> model.onPositiveCarSlotTap(),
-                    onNegativeTap: ()=> model.onNegativeCarSlotTap(),
+                    onPositiveTap: () => model.onPositiveCarSlotTap(),
+                    onNegativeTap: () => model.onNegativeCarSlotTap(),
                   ),
+                  verticalSpaceLarge,
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Next',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kPrimaryColor,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          model.goToPropertyOwnerDetailsView();
-                        },
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
+          ),
+          bottomSheet: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 35.0),
+                child: ResavationElevatedButton(
+                  child: Text("Next", style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kWhite),),
+                  onPressed: ()=> model.goToPropertyOwnerDetailsView(),
+                ),
+              )
+            ],
           ),
         ),
       ),
       viewModelBuilder: () => PropertyOwnerSpaceTypeViewModel(),
     );
   }
+
 }
 
-class AmenitiesSelection extends ViewModelWidget<PropertyOwnerSpaceTypeViewModel> {
-  const AmenitiesSelection({
-    Key? key, this.title, this.onNegativeTap, this.onPositiveTap, this.value
-  }) : super(key: key);
+
+
+class AmenitiesSelection extends StatelessWidget {
+  const AmenitiesSelection(
+      {Key? key,
+      this.title,
+      this.onNegativeTap,
+      this.onPositiveTap,
+      this.value})
+      : super(key: key);
   final String? title;
   final int? value;
   final Function()? onNegativeTap;
   final Function()? onPositiveTap;
 
   @override
-  Widget build(BuildContext context, model) {
+  Widget build(BuildContext context) {
     return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(title!, style: AppStyle.kBodySmallRegular12,),
-                    Row(
-                      children: [
-                        IncrementAmenities(
-                          icon: Icons.remove,
-                          onTap: onNegativeTap,
-                        ),
-                        Text(value.toString()),
-                        IncrementAmenities(
-                          icon: Icons.add,
-                          onTap: onPositiveTap,
-                        ),
-                      ],
-                    )
-                  ],
-                );
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title!,
+          style: AppStyle.kBodySmallRegular12,
+        ),
+        Row(
+          children: [
+            IncrementAmenities(
+              icon: Icons.remove,
+              onTap: onNegativeTap,
+            ),
+            Text(value.toString()),
+            IncrementAmenities(
+              icon: Icons.add,
+              onTap: onPositiveTap,
+            ),
+          ],
+        )
+      ],
+    );
   }
 }
 
 // widget used to increase/decrease the amenities value
 class IncrementAmenities extends StatelessWidget {
-  const IncrementAmenities({
-    Key? key, this.icon, this.onTap
-  }) : super(key: key);
+  const IncrementAmenities({Key? key, this.icon, this.onTap}) : super(key: key);
 
   final IconData? icon;
   final Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -298,11 +266,11 @@ class IncrementAmenities extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: kInactiveColor ),
-            borderRadius: BorderRadius.circular(10.0)
-          ),
-          child: Icon(icon,
-            color: kInactiveColor,
+              border: Border.all(color: kGray),
+              borderRadius: BorderRadius.circular(10.0)),
+          child: Icon(
+            icon,
+            color: kGray,
             size: 12,
           ),
         ),

@@ -1,9 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:country_picker/country_picker.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_textspan.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
@@ -30,29 +35,57 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   verticalSpaceMedium,
                   Text(
                     'Details',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodyRegularBlack14W500,
                   ),
                   verticalSpaceRegular,
                   Text(
                     'Property Name',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
                     hintText: '',
                   ),
                   Text(
-                    'property Description',
-                    style: AppStyle.kBodyBold,
+                    'Property Description',
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
+                  verticalSpaceTiny,
                   _buildTextField(''),
                   Text(
                     'Location',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Country',
+
+                  InkWell(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                          border:  Border.all(color: kBlack54, width: 1.0)
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      height: 42,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(model.selectedCountry),
+                            Icon(Icons.keyboard_arrow_down_sharp)
+                          ],
+                        ),
+                      )
+                    ),
+                    onTap: (){
+                      showCountryPicker(
+                        context: context,
+                        showPhoneCode: true, // optional. Shows phone code before the country name.
+                        onSelect: (Country country) {
+                          model.onSelectCountryTap(country);
+                        },
+                      );
+                    },
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -67,38 +100,36 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                     hintText: 'Enter the address of this space',
                   ),
                   Text(
-                    'Generate your address on google map',
-                    style: AppStyle.kBodyRegular,
+                    'Generate your address on Google map',
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Back',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kWhite,
-                        textColor: kBlack,
-                        onPressed: () {},
-                      ),
-                      Spacer(),
-                      FlatButton(
-                        child: Text(
-                          'Next',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kPrimaryColor,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          model.goToPropertyOwnerAddPhotosView();
-                        },
-                      ),
-                    ],
+                  ResavationElevatedButton(
+                    child: Text("Go to Map"),
+                    onPressed: (){
+                      model.goToMapView();
+                    },
                   ),
+                  verticalSpaceLarge,
                 ],
               ),
+            ),
+          ),
+          bottomSheet: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ResavationElevatedButton(
+                  child: Text("Back"),
+                  onPressed: ()=> Navigator.pop(context),
+
+                ),
+                ResavationElevatedButton(
+                  child: Text("Next"),
+                  onPressed: ()=> model.goToPropertyOwnerAddPhotosView(),
+
+                )
+              ],
             ),
           ),
         ),
