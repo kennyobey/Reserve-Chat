@@ -99,9 +99,11 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       ),
                       Spacer(),
                       Radio(
-                        value: 1,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
+                        value: "Serviced Yes",
+                        groupValue: model.IsServiced,
+                        onChanged: (value) {
+                          model.onRadioChanged(value.toString());
+                        },
                       ),
                     ],
                   ),
@@ -113,9 +115,11 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       ),
                       Spacer(),
                       Radio(
-                        value: 2,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
+                        value: "No Serviced",
+                        groupValue: model.IsServiced,
+                        onChanged: (value) {
+                          model.onRadioChanged(value.toString());
+                        },
                       ),
                     ],
                   ),
@@ -132,9 +136,11 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       ),
                       Spacer(),
                       Radio(
-                        value: 3,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
+                        value: "Furnished Yes",
+                        groupValue: model.IsFurnished,
+                        onChanged: (value) {
+                          model.onRadioChanged2(value.toString());
+                        },
                       ),
                     ],
                   ),
@@ -146,9 +152,11 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       ),
                       Spacer(),
                       Radio(
-                        value: 4,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
+                        value: "Furnished No",
+                        groupValue: model.IsFurnished,
+                        onChanged: (value) {
+                          model.onRadioChanged2(value.toString());
+                        },
                       ),
                     ],
                   ),
@@ -175,9 +183,11 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       ),
                       Spacer(),
                       Radio(
-                        value: 5,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
+                        value: "Property Owner Live in the space Yes",
+                        groupValue: model.IsLiveSpace,
+                        onChanged: (value) {
+                          model.onRadioChanged3(value.toString());
+                        },
                       ),
                     ],
                   ),
@@ -189,12 +199,63 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       ),
                       Spacer(),
                       Radio(
-                        value: 6,
-                        groupValue: _radioValue1,
-                        onChanged: _handleRadioValueChange1,
+                        value: "Property Owner Live in the space No",
+                        groupValue: model.IsLiveSpace,
+                        onChanged: (value) {
+                          model.onRadioChanged3(value.toString());
+                        },
                       ),
                     ],
                   ),
+                  verticalSpaceMedium,
+
+
+                  //Number of Bathroom and Bedroom
+                  Row(
+                    children: [
+                      Text(
+                        'Number of Bedrooms',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.exposure_minus_1,
+                        color: kGray,
+                        size: 20.0,
+                      ),
+                      Text(
+                        '0',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Icon(
+                        Icons.exposure_minus_1,
+                        color: kGray,
+                        size: 20.0,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Number of Bathrooms',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.exposure_minus_1,
+                        color: kGray,
+                        size: 20.0,
+                      ),
+                      Text(
+                        '0',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Icon(
+                        Icons.exposure_minus_1,
+                        color: kGray,
+                        size: 20.0,
+                      ),
+                    ],
 
                   //Select the number of bedrooms
                   AmenitiesSelection(
@@ -219,6 +280,30 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     value: model.numberOfCarSlot,
                     onPositiveTap: ()=> model.onPositiveCarSlotTap(),
                     onNegativeTap: ()=> model.onNegativeCarSlotTap(),
+                  ),
+
+                  Row(
+                    children: [
+                      Text(
+                        'Number of Car park Slot',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.exposure_minus_1,
+                        color: kGray,
+                        size: 20.0,
+                      ),
+                      Text(
+                        '0',
+                        style: AppStyle.kBodyRegular,
+                      ),
+                      Icon(
+                        Icons.exposure_minus_1,
+                        color: kGray,
+                        size: 20.0,
+                      ),
+                    ],
                   ),
 
                   Row(

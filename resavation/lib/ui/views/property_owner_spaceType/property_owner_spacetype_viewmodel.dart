@@ -10,6 +10,32 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
 
+  String IsServiced = "Serviced";
+
+  String IsFurnished = "Funrnished";
+
+  String IsLiveSpace = "IsLiveSpace";
+
+  void onRadioChanged(String value) {
+    IsServiced = value.toString();
+    print(IsServiced);
+    notifyListeners();
+  }
+
+  void onRadioChanged2(String value) {
+    IsFurnished = value.toString();
+    print(IsFurnished);
+    notifyListeners();
+  }
+
+  void onRadioChanged3(String value) {
+    IsLiveSpace = value.toString();
+    print(IsLiveSpace);
+    notifyListeners();
+  }
+
+  void onNotificationSwitchChanged(bool? value) {
+    _notificationSwitchValue = value!;
   // drop-down button UI logic
   String? selectedValue;
   List<String> items = [
@@ -62,6 +88,7 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     if (numberOfCarSlot != 0) {
       numberOfCarSlot--;
     }
+
     notifyListeners();
   }
 

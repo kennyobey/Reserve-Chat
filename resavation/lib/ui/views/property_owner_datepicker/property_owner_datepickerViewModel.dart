@@ -9,4 +9,8 @@ class PropertyOwnerDatePickerViewModel extends BaseViewModel {
   void goToPropertyVerificationView() {
     _navigationService.navigateTo(Routes.propertyVerificationView);
   }
+
+  void goToPropertyOwnerPaymentView() {
+    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+  }
 }

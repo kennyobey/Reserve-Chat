@@ -65,13 +65,60 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Row(
                     children: [
-                      InkWell(
-                          child: _buildTextField("From", "Jan 1 2021"),
-                          onTap: () {
-                            model.goToPropertyOwnerAmenitiesView();
-                          }),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kGray),
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 160,
+                        height: 60,
+                        child: FlatButton(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "From",
+                                  style: TextStyle(color: kGray),
+                                ),
+                                Spacer(),
+                                Text("Jan 1 2021",
+                                    style: AppStyle.kBodyRegular
+                                        .copyWith(color: kBlack)),
+                              ],
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0)),
+                            onPressed: () {
+                              model.goToPropertyOwnerDatePickerView();
+                            }),
+                      ),
                       Spacer(),
-                      _buildTextField("To", "Jan 1 2022"),
+                      Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: kGray),
+                              borderRadius: BorderRadius.circular(5)),
+                          width: 160,
+                          height: 60,
+                          child: FlatButton(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "To",
+                                    style: TextStyle(color: kGray),
+                                  ),
+                                  Spacer(),
+                                  Text("Jan 1 2022",
+                                      style: AppStyle.kBodyRegular
+                                          .copyWith(color: kBlack)),
+                                ],
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              onPressed: () {
+                                model.goToPropertyOwnerDatePickerView();
+                              })),
                     ],
                   ),
                   verticalSpaceTiny,
@@ -128,7 +175,9 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                         ),
                         color: kWhite,
                         textColor: kBlack,
-                        onPressed: () {},
+                        onPressed: () {
+                          model.goToPropertyOwnerDatePickerView();
+                        },
                       ),
                       Spacer(),
                       FlatButton(
