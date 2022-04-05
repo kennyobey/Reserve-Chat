@@ -34,61 +34,23 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   Center(
                     child: Text(
                       'Space Type',
-                      style: AppStyle.kBodyRegularW500,
+                      style: AppStyle.kHeading4,
                     ),
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Tell us about your property',
-                    style: AppStyle.kBodyRegularBlack14W500,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Property Type',
-                    style: AppStyle.kBodyRegularBlack14,
-                  ),
-                  verticalSpaceSmall,
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                        hint: Text(
-                          "Select Property ",
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        items: model.items
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: AppStyle.kBodyRegular,
-                                  ),
-                                ))
-                            .toList(),
-                        value: model.selectedValue,
-                        onChanged: (value) {
-                          model.onSelectedValueChange(value);
-                        },
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                        ),
-                        buttonWidth: 330,
-                        buttonPadding:
-                            const EdgeInsets.only(left: 18, right: 20),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.black26,
-                          ),
-                        )),
+                    style: AppStyle.kBodyRegular,
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Narrow down your space type',
-                    style: AppStyle.kBodySmallRegular12W500,
+                    style: AppStyle.kBodyRegular,
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Is your space serviced',
-                    style: AppStyle.kBodyRegularBlack14,
+                    style: AppStyle.kBodyRegular,
                   ),
 
                   // is your space serviced Yes/No
@@ -109,7 +71,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(
                     'Is your space furnished',
-                    style: AppStyle.kBodyRegularBlack14,
+                    style: AppStyle.kBodyRegular,
                   ),
 
                   // Is your space furnished Yes/No
@@ -130,7 +92,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(
                     'Listing Options',
-                    style: AppStyle.kBodySmallRegular12W500,
+                    style: AppStyle.kBodyRegular,
                   ),
                   verticalSpaceTiny,
 
@@ -140,7 +102,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(
                     'Do you leave in this space',
-                    style: AppStyle.kBodySmallRegular12W500,
+                    style: AppStyle.kBodyRegular,
                   ),
 
                   // do you leave in this space Yes/No
@@ -207,7 +169,6 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
   }
 
 }
-
 
 
 class AmenitiesSelection extends StatelessWidget {
@@ -277,3 +238,4 @@ class IncrementAmenities extends StatelessWidget {
     );
   }
 }
+

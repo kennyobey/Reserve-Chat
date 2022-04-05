@@ -33,13 +33,13 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   Center(
                     child: Text(
                       'Step 2',
-                      style: AppStyle.kBodyBold,
+                      style: AppStyle.kHeading0,
                     ),
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Payment Type',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -47,11 +47,11 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   ),
                   Text(
                     'Choose your ease subscription type',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12,
                   ),
                   Text(
                     '(You can select more than one)',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -60,7 +60,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Text(
                     'Avalability Period',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
                   Row(
@@ -71,18 +71,19 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                             border: Border.all(color: kGray),
                             borderRadius: BorderRadius.circular(5)),
                         width: 160,
-                        height: 60,
+                        height: 65,
                         child: FlatButton(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "From",
-                                  style: TextStyle(color: kGray),
+                                  style: AppStyle.kBodyRegularBlack14Poppins
+                                      .copyWith(color: kGray),
                                 ),
                                 Spacer(),
                                 Text("Jan 1 2021",
-                                    style: AppStyle.kBodyRegular
+                                    style: AppStyle.kBodySmallRegular12
                                         .copyWith(color: kBlack)),
                               ],
                             ),
@@ -99,18 +100,19 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                               border: Border.all(color: kGray),
                               borderRadius: BorderRadius.circular(5)),
                           width: 160,
-                          height: 60,
+                          height: 65,
                           child: FlatButton(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "To",
-                                    style: TextStyle(color: kGray),
+                                    style: AppStyle.kBodyRegularBlack14Poppins
+                                        .copyWith(color: kGray),
                                   ),
                                   Spacer(),
                                   Text("Jan 1 2022",
-                                      style: AppStyle.kBodyRegular
+                                      style: AppStyle.kBodySmallRegular12
                                           .copyWith(color: kBlack)),
                                 ],
                               ),
@@ -124,12 +126,12 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Text(
                     'Space Price',
-                    style: AppStyle.kBodyBold,
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
                   Text(
                     'What is the monthly rent of this unit?',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -138,7 +140,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Text(
                     'What is the quarterlet rent of this unit?',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -147,7 +149,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Text(
                     'What is the biannual rent of this unit?',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -157,7 +159,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   verticalSpaceTiny,
                   Text(
                     'What is the annual rent of this unit?',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodySmallRegular12,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -171,7 +173,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                       FlatButton(
                         child: Text(
                           'Back',
-                          style: AppStyle.kBodyRegular,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         color: kWhite,
                         textColor: kBlack,

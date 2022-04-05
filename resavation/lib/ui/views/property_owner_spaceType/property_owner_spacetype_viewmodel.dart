@@ -45,6 +45,7 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   void onLeaveHereRadioChange(String value) {
     leaveHere = value.toString();
     notifyListeners();
+
   }
 
   // Amenities selection logic
@@ -97,8 +98,4 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   void goToPropertyOwnerDetailsView() {
     _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
   }
-
-
-
-
 }
