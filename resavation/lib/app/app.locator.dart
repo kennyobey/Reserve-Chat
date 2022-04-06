@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -25,4 +26,6 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => HttpService());
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => CustomSnackbarService());
+  locator.registerLazySingleton(() => UserTypeService());
+
 }

@@ -53,7 +53,7 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   // width: 140,
                   // height: 40,
                   onTap: () {
-                    //model.goToPropertyOwnerAddCoverPhotosView();
+                    model.goToPropertyOwnerAddCoverPhotosView();
                   },
                   title: 'Add photos',
                   titleColor: kWhite,

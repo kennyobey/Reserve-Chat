@@ -4,6 +4,11 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/favorite/favorite_view.dart';
 import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/main/main_viewmodel.dart';
+import 'package:resavation/ui/views/property_owner_appointment_itemView/property_owner_appointment_itemView.dart';
+import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneView.dart';
+import 'package:resavation/ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
+import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageView.dart';
+import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/search/search_view.dart';
 import 'package:resavation/ui/views/settings/settings_view.dart';
 import 'package:stacked/stacked.dart';
@@ -30,7 +35,7 @@ class MainView extends StatelessWidget {
                 transitionType: SharedAxisTransitionType.horizontal,
               );
             },
-            child: getViewForIndex(model.currentIndex)),
+            child: getViewForIndex(model.currentIndex, model.returnUserType())),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: kPrimaryColor,
           iconSize: 28,
@@ -44,12 +49,15 @@ class MainView extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.favorite_border,
+                model.returnUserType()
+                    ? Icons.favorite_border
+                    : Icons.calendar_month_outlined,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              icon:
+                  Icon(model.returnUserType() ? Icons.search : Icons.analytics),
               label: '',
             ),
             BottomNavigationBarItem(
@@ -64,17 +72,17 @@ class MainView extends StatelessWidget {
   }
 }
 
-Widget getViewForIndex(int index) {
+Widget getViewForIndex(int index, bool isTenant) {
   switch (index) {
     case 0:
-      return HomeView();
+      return isTenant ? HomeView() : PropertyOwnerHomePageView();
     case 1:
-      return FavoriteView();
+      return isTenant ? FavoriteView() : PropertyOwnerAppointmentPageoneView();
     case 2:
-      return SearchView();
+      return isTenant ? SearchView() : PropertyOwnerDatePickerView();
     case 3:
       return SettingsView();
     default:
-      return HomeView();
+      return isTenant ? HomeView() : PropertyOwnerHomePageView();
   }
 }

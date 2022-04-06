@@ -81,8 +81,9 @@ class SettingsView extends StatelessWidget {
                 ResavationButton(
                   onTap: () {
                     model.goToPropertyOwnerHomePageView();
+                    model.updateUserType();
                   },
-                  title: 'Switch to Property Owner',
+                  title: model.returnUserType()? 'Switch to Property Owner' : 'Switch to User',
                   titleColor: kPrimaryColor,
                   buttonColor: kWhite.withOpacity(0.9),
                   //  borderColor: kp,

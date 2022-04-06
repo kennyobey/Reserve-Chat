@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/registration_model.dart';
+import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'dart:async';
@@ -77,12 +78,17 @@ class SignUpViewModel extends BaseViewModel {
     _navigationService.replaceWith(Routes.logInView);
   }
 
+
   void goToMainView() {
-    if (userType == "Tenant") {
       _navigationService.navigateTo(Routes.mainView);
-    } else {
-      _navigationService.navigateTo(Routes.propertyOwnerProfileView);
-    }
+  }
+
+  //  User type UI Logic
+  final _userTypeService = locator<UserTypeService>();
+  updateUserType(){
+    _userTypeService.userType();
+    print(_userTypeService.isTenant);
+    notifyListeners();
   }
 
   @override

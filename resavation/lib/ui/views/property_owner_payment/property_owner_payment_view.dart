@@ -59,7 +59,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   ),
                   verticalSpaceTiny,
                   Text(
-                    'Avalability Period',
+                    'Availability Period',
                     style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
