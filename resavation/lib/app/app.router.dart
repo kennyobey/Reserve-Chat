@@ -12,6 +12,7 @@ import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
 import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoView.dart';
 import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
+import 'package:resavation/ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
 import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneView.dart';
 import 'package:resavation/ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
@@ -90,6 +91,8 @@ class Routes {
   static const String propertyOwnerDatePickerView =
       '/property-owner-date-picker-view';
   static const String propertyOwnerPaymentView = '/property-owner-payment-view';
+  static const String propertyOwnerAnalyticView =
+      '/property-owner-analytic-view';
   static const String confirmationView = '/confirmation-view';
   static const String propertyOwnerStep1View = '/property-owner-step1-view';
   static const String profileProductListView = '/profile-product-list-view';
@@ -138,7 +141,8 @@ class Routes {
     propertyOwnerAddCoverPhotosView,
     propertyOwnerIdentificationVerificationView,
     propertyOwnerEditProfileView,
-    propertyOwnerDatePickerView
+    propertyOwnerDatePickerView,
+    propertyOwnerAnalyticView
   };
 }
 
@@ -204,6 +208,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.propertyOwnerDatePickerView,
         page: PropertyOwnerDatePickerView),
+    RouteDef(Routes.propertyOwnerAnalyticView, page: PropertyOwnerAnalyticView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
     RouteDef(Routes.searchView, page: SearchView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
@@ -440,6 +445,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerDatePickerView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerDatePickerView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerAnalyticView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerAnalyticView(),
         settings: data,
       );
     },

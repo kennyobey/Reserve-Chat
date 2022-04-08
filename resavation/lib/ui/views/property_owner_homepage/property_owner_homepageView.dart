@@ -1,9 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -113,11 +116,11 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                         ),
                       ),
                       verticalSpaceRegular,
-                      _ListingCard(),
+                      ListingCard(),
                       verticalSpaceTiny,
-                      _ListingCard(),
+                      ListingCard(),
                       verticalSpaceTiny,
-                      _ListingCard(),
+                      ListingCard(),
                     ],
                   ),
                 ),
@@ -129,43 +132,6 @@ class PropertyOwnerHomePageView extends StatelessWidget {
       viewModelBuilder: () => PropertyOwnerHomePageViewModel(),
     );
   }
-}
-
-Widget _blackcontainer(String label) {
-  //const maxLines = 5;
-  return Container(
-    padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(
-      border: Border.all(color: kGray),
-      borderRadius: new BorderRadius.circular(5.0),
-      color: kBlack,
-    ),
-    width: 345,
-    height: 125.0,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        verticalSpaceTiny,
-        Text(
-          "Connecting you to the best tenant in the world",
-          style: TextStyle(color: kWhite),
-        ),
-        verticalSpaceSmall,
-        ResavationButton(
-          width: 106,
-          height: 34,
-          onTap: () {
-            var model;
-            model.goToPropertyOwnerSpaceTypeView();
-          },
-          title: 'Lis',
-          titleColor: kWhite,
-          buttonColor: kPrimaryColor,
-          //  borderColor: kp,
-        ),
-      ],
-    ),
-  );
 }
 
 class ResavationListSpace extends StatelessWidget {
@@ -215,40 +181,161 @@ class ResavationListSpace extends StatelessWidget {
   }
 }
 
-Widget _ListingCard() {
-  const maxLines = 5;
-  return Container(
-      padding: EdgeInsets.all(0.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: kGray),
-        borderRadius: new BorderRadius.circular(5.0),
-      ),
-      width: 360,
-      height: maxLines * 17.0,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        ListTile(
-          leading: CircleAvatar(
-            radius: 30, // Image radius
-            backgroundImage: AssetImage(Assets.profile_image3),
-          ),
-          title: Text(
-            "Adeyemo Stephen",
-            style: AppStyle.kBodySmallRegular11W500,
-          ),
-          subtitle: Text("SeedBuilderHub", style: AppStyle.kBodySmallRegular10W400,),
-          trailing: Container(
-            width: 80,
-            height: 30,
-            child: FlatButton(
-              child: Text(
-                'Accept',
-                style: TextStyle(fontSize: 12.0),
-              ),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
-              onPressed: () {},
+class ListingCard extends StatelessWidget {
+  get image => null;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.all(0.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: kGray),
+          borderRadius: new BorderRadius.circular(5.0),
+        ),
+        width: 360,
+        height: 85,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          ListTile(
+            leading: CircleAvatar(
+              radius: 30, // Image radius
+              backgroundImage: AssetImage(Assets.profile_image3),
             ),
-          ),
-        )
-      ]));
+            title: Text(
+              "Adeyemo Stephen",
+              style: AppStyle.kBodySmallRegular11W500,
+            ),
+            subtitle: Text(
+              "SeedBuilderHub",
+              style: AppStyle.kBodySmallRegular10W400,
+            ),
+            trailing: Container(
+              width: 80,
+              height: 30,
+              child: FlatButton(
+                child: Text(
+                  'Accept',
+                  style: TextStyle(fontSize: 12.0),
+                ),
+                color: Colors.blueAccent,
+                textColor: Colors.white,
+                onPressed: () {
+                  bookApartment(context);
+                },
+              ),
+            ),
+          )
+        ]));
+  }
+
+  void bookApartment(BuildContext context) {
+    var alertdialog = AlertDialog(
+      content: Container(
+        padding: EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        width: 400,
+        height: 250,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30, // Image radius
+                      backgroundImage: AssetImage(Assets.profile_image3),
+                    ),
+                    horizontalSpaceSmall,
+                    Text(
+                      "Queen Ameh",
+                      style: AppStyle.kBodyRegularBlack14W500,
+                    ),
+                    Spacer(),
+                    Text("Exit"),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Apartment",
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        horizontalSpaceSmall,
+                        Text(
+                          "SeedBuilders Hub",
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Apartment",
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        horizontalSpaceSmall,
+                        Text(
+                          "SeedBuilders Hub",
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+            verticalSpaceSmall,
+            ResavationButton(
+              title: "Identity Document",
+              buttonColor: kWhite,
+              titleColor: kBlack,
+              borderColor: kGray,
+            ),
+            verticalSpaceSmall,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FlatButton(
+                  child: Text(
+                    'Cancel',
+                    style:
+                        AppStyle.kBodyRegularBlack14W500.copyWith(color: kRed),
+                  ),
+                  color: kWhite,
+                  textColor: kRed,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                horizontalSpaceSmall,
+                FlatButton(
+                  child: Text(
+                    'Next',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  color: kPrimaryColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    //model.goToPropertyOwnerAmenitiesView();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertdialog;
+        });
+  }
 }
