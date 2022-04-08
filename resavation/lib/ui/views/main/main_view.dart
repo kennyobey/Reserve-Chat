@@ -51,7 +51,7 @@ class MainView extends StatelessWidget {
               icon: Icon(
                 model.returnUserType()
                     ? Icons.favorite_border
-                    : Icons.calendar_month_outlined,
+                    : Icons.calendar_today_outlined,
               ),
               label: '',
             ),

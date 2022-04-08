@@ -9,7 +9,7 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_appointment_itemView/property_owner_appointment_itemView.dart';
-import 'package:resavation/ui/views/property_owner_appointment_page1/appointment_pageoneViewModel.dart';
+import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneViewModel.dart';
 
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart';
 
@@ -40,24 +40,24 @@ class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
                       ),
 
                       //Tool tip
-                      Tooltip(
-                        triggerMode: TooltipTriggerMode.tap,
-                        padding: EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: kWhite,
-                            boxShadow: [
-                              BoxShadow(color: kGray, blurRadius: 10)
-                            ]),
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'InterRegular',
-                            fontSize: 10,
-                            color: Colors.black),
-                        preferBelow: false,
-                        message:
-                            'Your customers are the\npeople you sell products\nor services to',
-                      ),
+                      // Tooltip(
+                      //   triggerMode: TooltipTriggerMode.tap,
+                      //   padding: EdgeInsets.all(6),
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(0),
+                      //       color: kWhite,
+                      //       boxShadow: [
+                      //         BoxShadow(color: kGray, blurRadius: 10)
+                      //       ]),
+                      //   textStyle: TextStyle(
+                      //       fontWeight: FontWeight.w500,
+                      //       fontFamily: 'InterRegular',
+                      //       fontSize: 10,
+                      //       color: Colors.black),
+                      //   preferBelow: false,
+                      //   message:
+                      //       'Your customers are the\npeople you sell products\nor services to',
+                      // ),
                     ],
                   ),
                   bottom: PreferredSize(

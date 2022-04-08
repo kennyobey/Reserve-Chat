@@ -14,4 +14,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void goToPropertyOwnerSpaceTypeView() {
     _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
   }
+
+  void goToPropertyOwnerAnalyticView() {
+    _navigationService.navigateTo(Routes.propertyOwnerAnalyticView);
+  }
 }
