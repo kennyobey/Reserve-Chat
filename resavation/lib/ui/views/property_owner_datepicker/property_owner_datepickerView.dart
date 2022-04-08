@@ -10,7 +10,6 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_datepicker/property_owner_datepickerViewModel.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PropertyOwnerDatePickerView extends StatelessWidget {
   const PropertyOwnerDatePickerView({Key? key}) : super(key: key);
@@ -41,7 +40,10 @@ class PropertyOwnerDatePickerView extends StatelessWidget {
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2025),
-                  onDateChanged: (_) {},
+                  onDateChanged: (DateTime) {
+                    String date = DateTime.toString();
+                    print("The picked date is $date");
+                  },
                 ),
                 verticalSpaceRegular,
                 Row(

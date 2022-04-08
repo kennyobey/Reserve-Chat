@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 //import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
+import 'package:resavation/ui/shared/dump_widgets/select_country.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
@@ -68,21 +70,22 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                   children: [
                     _buildTextField(''),
                     horizontalSpaceMedium,
-                    _buildTextFieldDay(''),
+                    Expanded(child: _buildTextFieldDay('')),
                     horizontalSpaceTiny,
-                    _buildTextFieldMonth(''),
+                    Expanded(child: _buildTextFieldMonth('')),
                     horizontalSpaceTiny,
-                    _buildTextFieldYear(''),
+                    Expanded(child: _buildTextFieldYear('')),
                   ],
                 ),
-                verticalSpaceTiny,
+                verticalSpaceSmall,
                 Text(
                   'Complete your address',
                   style: AppStyle.kBodyRegular,
                 ),
                 verticalSpaceTiny,
-                ResavationTextField(
-                  hintText: 'Country',
+                SelectCountry(
+                  label: model.selectedCountry,
+                  onSelected: model.onSelectCountryTap(Country.worldWide),
                 ),
                 verticalSpaceTiny,
                 ResavationTextField(
@@ -96,34 +99,25 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                 ResavationTextField(
                   hintText: 'Enter the address of the space',
                 ),
-                Spacer(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        'Back',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kWhite,
-                      textColor: kBlack,
-                      onPressed: () {},
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Next',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goToPropertyOwnerVerificationView();
-                      },
-                    ),
-                  ],
+
+              ],
+            ),
+          ),
+          bottomSheet: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ResavationElevatedButton(
+                  child: Text("Back"),
+                  onPressed: ()=> Navigator.pop(context),
+
                 ),
+                ResavationElevatedButton(
+                  child: Text("Next"),
+                  onPressed: ()=> model.goToPropertyOwnerVerificationView(),
+
+                )
               ],
             ),
           ),

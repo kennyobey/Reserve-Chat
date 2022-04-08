@@ -30,21 +30,21 @@ class PropertyOwnerVerificationView extends StatelessWidget {
                 verticalSpaceMedium,
                 Text(
                   'Identity',
-                  style: AppStyle.kBodyBold,
+                  style: AppStyle.kBodyRegularW500,
                 ),
                 Text(
                   'Verification',
-                  style: AppStyle.kBodyBold,
+                  style: AppStyle.kBodyRegularW500,
                 ),
                 verticalSpaceMedium,
                 Text(
                   'Submit Documents',
-                  style: AppStyle.kBodyBold,
+                  style: AppStyle.kBodyRegularBlack14W500,
                 ),
                 verticalSpaceMedium,
                 Text(
                   'Kindly Submit the documents below to process your application',
-                  style: AppStyle.kBodySmallRegular,
+                  style: AppStyle.kBodySmallRegular12,
                 ),
                 verticalSpaceMedium,
                 Column(
@@ -59,7 +59,7 @@ class PropertyOwnerVerificationView extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   title: 'Continue',
                   onTap: () {
-                    model.goToPropertyVerificationView();
+                    model.goToPropertyOwnerMainView();
                   },
                 ),
               ],
@@ -84,11 +84,11 @@ Widget _buildTextField(String label) {
       children: [
         Text(
           "Step 1",
-          style: TextStyle(color: kGray),
+          style:  AppStyle.kBodySmallRegular12.copyWith(color: kGray),
         ),
         Text(
           "Choose Document",
-          style: AppStyle.kBodyBold,
+          style: AppStyle.kBodySmallRegular12W500,
         ),
       ],
     ),
@@ -107,11 +107,11 @@ Widget _buildTextField2(String label) {
       children: [
         Text(
           "Step 2",
-          style: TextStyle(color: kGray),
+          style: AppStyle.kBodySmallRegular12.copyWith(color: kGray),
         ),
         Text(
-          "Take a Selfe",
-          style: AppStyle.kBodyBold,
+          "Take a Selfie",
+          style: AppStyle.kBodySmallRegular12W500,
         ),
       ],
     ),
@@ -134,7 +134,7 @@ Widget _buildmaterial() {
       onPressed: () {},
       child: Text(
         'Continue',
-        style: AppStyle.kBodyRegular,
+        style: AppStyle.kBodyRegularBlack14W500,
       ),
     ),
   );

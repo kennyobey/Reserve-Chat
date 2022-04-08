@@ -6,8 +6,11 @@ import 'package:stacked_services/stacked_services.dart';
 class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  bool _checkValue1 = false;
-  bool get checkValue1 => _checkValue1;
+  /// Checkboxes are named to fit their corresponding value
+  /// To enable for easy recognition and usage
+
+  bool hasWifi = false;
+  //bool get hasWifi => _hasWifi;
 
   bool _checkValue2 = false;
   bool get checkValue2 => _checkValue2;
@@ -33,8 +36,8 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   bool _checkValue9 = false;
   bool get checkValue9 => _checkValue9;
 
-  void onCheckChanged1(bool? value) {
-    _checkValue1 = value ?? false;
+  void onHasWifiChange(bool? value) {
+    hasWifi = value!;
     notifyListeners();
   }
 
@@ -46,6 +49,7 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   void onCheckChanged3(bool? value) {
     _checkValue3 = value ?? false;
     notifyListeners();
+
   }
 
   void onCheckChanged4(bool? value) {

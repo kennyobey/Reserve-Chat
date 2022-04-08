@@ -1,6 +1,9 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, must_be_immutable
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
@@ -12,7 +15,8 @@ import 'package:stacked/stacked.dart';
 
 
 class PropertyOwnerAddPhotosView extends StatelessWidget {
-  const PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
+   PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,7 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   // width: 140,
                   // height: 40,
                   onTap: () {
+                    model.addPhoto();
                     model.goToPropertyOwnerAddCoverPhotosView();
                   },
                   title: 'Add photos',
@@ -60,7 +65,9 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   buttonColor: kPrimaryColor,
                   //  borderColor: kp,
                 ),
-                Spacer(),
+
+
+
               ],
             ),
           ),
@@ -70,3 +77,4 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
     );
   }
 }
+

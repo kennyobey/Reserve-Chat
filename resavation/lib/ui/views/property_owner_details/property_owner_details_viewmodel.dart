@@ -13,10 +13,11 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
 
   // country picker UI logic
   String selectedCountry = "Country";
-
-  void onSelectCountryTap(Country country ){
-    selectedCountry = country.name.toString();
-    notifyListeners();
+  Function(Country) onSelectCountryTap(Country country){
+      return   (Country country){
+      selectedCountry = country.name.toString();
+      notifyListeners();
+    };
   }
 
   //Google Map
