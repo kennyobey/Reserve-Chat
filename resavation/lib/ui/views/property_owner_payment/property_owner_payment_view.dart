@@ -59,71 +59,31 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                   ),
                   verticalSpaceTiny,
                   Text(
-                    'Avalability Period',
+                    'Availability Period',
                     style: AppStyle.kBodySmallRegular12W500,
                   ),
-                  verticalSpaceTiny,
+                  verticalSpaceRegular,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: kGray),
-                            borderRadius: BorderRadius.circular(5)),
-                        width: 160,
-                        height: 65,
-                        child: FlatButton(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "From",
-                                  style: AppStyle.kBodyRegularBlack14Poppins
-                                      .copyWith(color: kGray),
-                                ),
-                                Spacer(),
-                                Text("Jan 1 2021",
-                                    style: AppStyle.kBodySmallRegular12
-                                        .copyWith(color: kBlack)),
-                              ],
-                            ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0)),
-                            onPressed: () {
-                              model.goToPropertyOwnerDatePickerView();
-                            }),
+                      DateContainer(
+                        label: 'From',
+                        date: 'Jan 1, 2022',
+                        onTap: () {
+                          model.goToPropertyOwnerDatePickerView();
+                        },
                       ),
-                      Spacer(),
-                      Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kGray),
-                              borderRadius: BorderRadius.circular(5)),
-                          width: 160,
-                          height: 65,
-                          child: FlatButton(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "To",
-                                    style: AppStyle.kBodyRegularBlack14Poppins
-                                        .copyWith(color: kGray),
-                                  ),
-                                  Spacer(),
-                                  Text("Jan 1 2022",
-                                      style: AppStyle.kBodySmallRegular12
-                                          .copyWith(color: kBlack)),
-                                ],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              onPressed: () {
-                                model.goToPropertyOwnerDatePickerView();
-                              })),
+                      horizontalSpaceRegular,
+                      DateContainer(
+                        label: 'To',
+                        date: 'Jan 1, 2023',
+                        onTap: () {
+                          model.goToPropertyOwnerDatePickerView();
+                        },
+                      ),
                     ],
                   ),
-                  verticalSpaceTiny,
+                  verticalSpaceMedium,
                   Text(
                     'Space Price',
                     style: AppStyle.kBodySmallRegular12W500,
@@ -178,7 +138,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                         color: kWhite,
                         textColor: kBlack,
                         onPressed: () {
-                          model.goToPropertyOwnerDatePickerView();
+                          Navigator.pop(context);
                         },
                       ),
                       Spacer(),
@@ -217,6 +177,46 @@ class PropertyOwnerPaymentView extends StatelessWidget {
           content: Text("My name"),
         ),
       );
+}
+
+class DateContainer extends StatelessWidget {
+  const DateContainer({
+    Key? key, required this.label, required this.date, required this.onTap,
+  }) : super(key: key);
+
+  final String label;
+  final String date;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.only(top: 2, left: 20),
+          decoration: BoxDecoration(
+              border: Border.all(color: kGray),
+              borderRadius: BorderRadius.circular(5)),
+          width: 138,
+          height: 53,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: AppStyle.kBodyRegularBlack14Poppins
+                    .copyWith(color: kGray),
+              ),
+              Text(date,
+                  style: AppStyle.kBodySmallRegular12
+                      .copyWith(color: kBlack)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 Widget _buildTextField(String label1, String labe2) {

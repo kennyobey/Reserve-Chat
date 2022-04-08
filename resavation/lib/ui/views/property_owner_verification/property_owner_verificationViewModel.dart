@@ -6,7 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 class PropertyOwnerVerificationViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-  void goToPropertyVerificationView() {
-    _navigationService.navigateTo(Routes.propertyVerificationView);
+  void goToPropertyOwnerMainView() {
+    _navigationService.navigateTo(Routes.mainView);
   }
 }

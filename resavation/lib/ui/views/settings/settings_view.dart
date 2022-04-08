@@ -48,20 +48,22 @@ class SettingsView extends StatelessWidget {
                 ),
                 SwitchListTile(
                   dense: true,
+                  contentPadding: EdgeInsets.all(0),
                   value: model.notificationSwitchValue,
                   onChanged: model.onNotificationSwitchChanged,
                   title: Text(
                     'Notifications',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14,
                   ),
                 ),
                 SwitchListTile(
                   dense: true,
+                  contentPadding: EdgeInsets.all(0),
                   value: model.appNotificationSwitchValue,
                   onChanged: model.onAppNotificationSwitchValue,
                   title: Text(
                     'App Notifications',
-                    style: AppStyle.kBodyRegular,
+                    style: AppStyle.kBodyRegularBlack14,
                   ),
                 ),
                 SettingsListTile(
@@ -81,8 +83,9 @@ class SettingsView extends StatelessWidget {
                 ResavationButton(
                   onTap: () {
                     model.goToPropertyOwnerHomePageView();
+                    model.updateUserType();
                   },
-                  title: 'Switch to Property Owner',
+                  title: model.returnUserType()? 'Switch to Property Owner' : 'Switch to User',
                   titleColor: kPrimaryColor,
                   buttonColor: kWhite.withOpacity(0.9),
                   //  borderColor: kp,
@@ -130,7 +133,8 @@ class SettingsListTile extends StatelessWidget {
     bool hasIcon = icon != null;
     return ListTile(
       onTap: hasIcon ? null : onTap,
-      dense: true,
+      dense:true,
+      contentPadding: EdgeInsets.all(0),
       leading: hasIcon ? Icon(icon) : null,
       title: Text(
         title,

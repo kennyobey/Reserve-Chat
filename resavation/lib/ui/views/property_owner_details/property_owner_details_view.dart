@@ -9,6 +9,7 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dar
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textspan.dart';
+import 'package:resavation/ui/shared/dump_widgets/select_country.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
@@ -58,34 +59,9 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   ),
                   verticalSpaceTiny,
 
-                  InkWell(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                          border:  Border.all(color: kBlack54, width: 1.0)
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      height: 42,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(model.selectedCountry),
-                            Icon(Icons.keyboard_arrow_down_sharp)
-                          ],
-                        ),
-                      )
-                    ),
-                    onTap: (){
-                      showCountryPicker(
-                        context: context,
-                        showPhoneCode: true, // optional. Shows phone code before the country name.
-                        onSelect: (Country country) {
-                          model.onSelectCountryTap(country);
-                        },
-                      );
-                    },
+                  SelectCountry(
+                    label: model.selectedCountry,
+                    onSelected: model.onSelectCountryTap(Country.worldWide),
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
@@ -138,6 +114,8 @@ class PropertyOwnerDetailsView extends StatelessWidget {
     );
   }
 }
+
+
 
 Widget _buildTextField(String label) {
   const maxLines = 5;

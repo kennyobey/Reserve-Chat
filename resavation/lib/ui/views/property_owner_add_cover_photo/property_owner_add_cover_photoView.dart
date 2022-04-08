@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 
@@ -8,6 +10,8 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart';
 
 import 'package:stacked/stacked.dart';
+
+
 
 class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
   const PropertyOwnerAddCoverPhotosView({Key? key}) : super(key: key);
@@ -33,13 +37,23 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
                   ),
                 ),
                 verticalSpaceMedium,
-                Center(
-                  child: Row(
-                    children: [_coverPhoto(), horizontalSpaceTiny, _Photo()],
-                  ),
-                ),
-                verticalSpaceTiny,
-                _Photo(),
+                model.showAddedPhoto() != null?Wrap(
+                  children: model.showAddedPhoto().value!.map((imageOne){
+                    return Container(
+                        child:Container(
+                          height: 96, width:169,
+                          child: Image.file(File(imageOne.path)),
+                        )
+                    );
+                  }).toList(),
+                ):Container(),
+                // Center(
+                //   child: Row(
+                //     children: [_coverPhoto(), horizontalSpaceTiny, _Photo()],
+                //   ),
+                // ),
+                // verticalSpaceTiny,
+                // _Photo(),
                 Spacer(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,7 +66,9 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
                       ),
                       color: kWhite,
                       textColor: kBlack,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     Spacer(),
                     FlatButton(

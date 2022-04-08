@@ -17,6 +17,7 @@ dependencies:
   stacked: ^2.2.7+1
   stacked_services: ^0.8.16
   flutter_hooks: ^0.18.2
+  observable_ish: ^3.0.1
 
   # network
   permission_handler: ^8.3.0

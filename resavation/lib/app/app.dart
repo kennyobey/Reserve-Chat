@@ -1,5 +1,7 @@
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/http_service.dart';
+import 'package:resavation/services/core/image_picker_service.dart';
+import 'package:resavation/services/core/user_type_service.dart';
 import 'package:resavation/ui/views/booking_submission/booking_submission_view.dart';
 import 'package:resavation/ui/views/confirmation/confirmation_view.dart';
 import 'package:resavation/ui/views/date_picker/date_picker_view.dart';
@@ -65,6 +67,8 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: HttpService),
     LazySingleton(classType: SnackbarService),
     LazySingleton(classType: CustomSnackbarService),
+    LazySingleton(classType: UserTypeService),
+    LazySingleton(classType: ImagePickerService),
   ],
   logger: StackedLogger(),
 )

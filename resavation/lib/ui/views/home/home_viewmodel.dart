@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,20 +16,27 @@ class TopCity {
 class Category {
   final String category;
   final String image;
+  final bool featureReady;
 
-  Category(this.category, this.image);
+  Category(this.category, this.image, this.featureReady);
 }
 
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _snackbarService = locator<CustomSnackbarService>();
+
+  void showComingSoon() {
+    _snackbarService.showComingSoon();
+  }
+
   List<TopCity> topCities = [
     TopCity('Abuja', 50, Assets.abuja_location_placeholder),
     TopCity('Lagos', 20, Assets.lagos_location_placeholder),
   ];
 
   List<Category> categories = [
-    Category('Apartment', Assets.house_placeholder),
-    Category('Office Space', Assets.office_placeholder),
+    Category('Apartment', Assets.house_placeholder, true),
+    Category('Office Space', Assets.office_placeholder, false),
   ];
 
   void goToFilterView() {

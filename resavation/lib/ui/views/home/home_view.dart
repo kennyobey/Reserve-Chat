@@ -74,7 +74,7 @@ class HomeView extends StatelessWidget {
                                 image: category.image,
                                 category: category.category,
                                 onTap: (){
-                                  model.goToPropertySearch();
+                                  category.featureReady? model.goToPropertySearch() : model.showComingSoon();
                                 },
                               ),
                               horizontalSpaceSmall,

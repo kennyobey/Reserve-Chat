@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_viewModel.dart';
+import 'package:resavation/ui/views/property_owner_amenities/widgets/amenities_item_widget.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerAmenitiesView extends StatelessWidget {
@@ -44,44 +46,20 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue1,
-                              onChanged: model.onCheckChanged1,
-                            ),
-                            Text(
-                              "Wifi",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "Wifi",
+                          checkboxValue: model.hasWifi,
+                          onChanged: model.onHasWifiChange,
                         ),
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue2,
-                              onChanged: model.onCheckChanged2,
-                            ),
-                            Text(
-                              "Washing Machine",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "Washing Machine",
+                          checkboxValue: model.checkValue2,
+                          onChanged: model.onCheckChanged2,
                         ),
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue3,
-                              onChanged: model.onCheckChanged3,
-                            ),
-                            Text(
-                              "Air Conditioning",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "Air Conditioning",
+                          checkboxValue: model.checkValue3,
+                          onChanged: model.onCheckChanged3,
                         ),
                       ],
                     ),
@@ -90,49 +68,26 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue4,
-                              onChanged: model.onCheckChanged4,
-                            ),
-                            Text(
-                              "TV",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "TV",
+                          checkboxValue: model.checkValue4,
+                          onChanged: model.onCheckChanged4,
                         ),
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue5,
-                              onChanged: model.onCheckChanged5,
-                            ),
-                            Text(
-                              "Hair Dryer",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "Hair Dryer",
+                          checkboxValue: model.checkValue5,
+                          onChanged: model.onCheckChanged5,
                         ),
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue6,
-                              onChanged: model.onCheckChanged6,
-                            ),
-                            Text(
-                              "Fire Alarm",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "Fire Alarm",
+                          checkboxValue: model.checkValue6,
+                          onChanged: model.onCheckChanged6,
                         ),
                       ],
                     ),
                   ],
                 ),
+                verticalSpaceTiny,
                 Text(
                   'House Rule',
                   style: AppStyle.kBodyBold,
@@ -146,72 +101,54 @@ class PropertyOwnerAmenitiesView extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue7,
+                            AmenitiesItem(
+                              label: "No Smoking",
+                              checkboxValue: model.checkValue7,
                               onChanged: model.onCheckChanged7,
                             ),
-                            Text(
-                              "No Smoking",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
                             horizontalSpaceLarge,
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue8,
+                            AmenitiesItem(
+                              label: "No Pets",
+                              checkboxValue: model.checkValue8,
                               onChanged: model.onCheckChanged8,
-                            ),
-                            Text(
-                              "No Pet",
-                              style: AppStyle.kBodySmallRegular,
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              value: model.checkValue9,
-                              onChanged: model.onCheckChanged9,
-                            ),
-                            Text(
-                              "No House party",
-                              style: AppStyle.kBodySmallRegular,
-                            ),
-                          ],
+                        AmenitiesItem(
+                          label: "No House Party",
+                          checkboxValue: model.checkValue9,
+                          onChanged: model.onCheckChanged9,
                         ),
                       ],
                     ),
                     horizontalSpaceRegular,
                   ],
                 ),
-                Spacer(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        'Back',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kWhite,
-                      textColor: kBlack,
-                      onPressed: () {},
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Next',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goToPropertyOwnerIdentificationView();
-                      },
-                    ),
-                  ],
+              ],
+            ),
+          ),
+          bottomSheet: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ResavationElevatedButton(
+                  child: Text(
+                    "Back",
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                ResavationElevatedButton(
+                  child: Text(
+                    "Next",
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  onPressed: () {
+                    model.goToPropertyOwnerIdentificationView();
+                  },
                 ),
               ],
             ),

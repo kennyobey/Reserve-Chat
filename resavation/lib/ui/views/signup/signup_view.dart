@@ -134,6 +134,7 @@ class _SignUpViewState extends State<SignUpView> {
                               groupValue: model.userType,
                               onChanged: (value) {
                                 model.onRadioChanged(value.toString());
+                                model.updateUserType();
                               },
                             ),
                             Text(
@@ -149,6 +150,7 @@ class _SignUpViewState extends State<SignUpView> {
                               groupValue: model.userType,
                               onChanged: (value) {
                                 model.onRadioChanged(value.toString());
+                                model.updateUserType();
                               },
                             ),
                             Text(
