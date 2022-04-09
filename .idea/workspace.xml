@@ -33,27 +33,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_assets/NOTICES.Z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/app/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/app/app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/app/app.locator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/app/app.locator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_photos/property_owner_add_photosView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_photos/property_owner_add_photosView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_photos/property_owner_add_photosViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_add_photos/property_owner_add_photosViewModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_amenities/property_owner_amenities_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_amenities/property_owner_amenities_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_amenities/property_owner_amenities_viewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_amenities/property_owner_amenities_viewModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_datepicker/property_owner_datepickerView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_datepicker/property_owner_datepickerView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_identification/property_owner_identificationView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_identification/property_owner_identificationView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_identification/property_owner_identificationViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_identification/property_owner_identificationViewModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/NOTICES.Z" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/model/property_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/model/property_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/services/core/image_picker_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/services/core/image_picker_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/favorite_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/favorite_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/properties_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/dump_widgets/properties_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/shared/text_styles.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/shared/text_styles.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/date_picker/date_picker_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/date_picker/date_picker_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/favorite/favorite_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/favorite/favorite_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/favorite/favorite_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/favorite/favorite_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/login/login_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/login/login_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/login/login_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/login/login_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_details/property_details_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_details/property_details_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageView.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_payment/property_owner_payment_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_payment/property_owner_payment_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_verification/property_owner_verificationView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_verification/property_owner_verificationView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_verification/property_owner_verificationViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_verification/property_owner_verificationViewModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/search/search_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/search/search_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/settings/settings_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/settings/settings_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/utility/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/utility/assets.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649277108316</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Perfecting UI">
+      <created>1649376869852</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1649376869852</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -255,7 +265,8 @@
     <MESSAGE value="Implemented Amenities Selection" />
     <MESSAGE value="Updated property space type" />
     <MESSAGE value="Implemented Property owner mainView" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Property owner mainView" />
+    <MESSAGE value="Perfecting UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Perfecting UI" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -281,11 +292,11 @@
     </state>
     <state x="481" y="134" key="AndroidProcessChooserDialog/0.0.1303.768@0.0.1303.768" timestamp="1645929767922" />
     <state x="481" y="134" key="AndroidProcessChooserDialog/0.0.1304.768@0.0.1304.768" timestamp="1649158094623" />
-    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1649277085133">
+    <state x="100" y="0" key="CommitChangelistDialog2" timestamp="1649376857949">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="232" y="0" key="CommitChangelistDialog2/0.0.1303.768@0.0.1303.768" timestamp="1645785037261" />
-    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1649277085133" />
+    <state x="100" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1649376857949" />
     <state x="122" y="59" width="1043" height="642" key="DiffContextDialog" timestamp="1649159136961">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
@@ -295,26 +306,26 @@
       <screen x="0" y="0" width="1303" height="768" />
     </state>
     <state x="431" y="139" key="FileChooserDialogImpl/0.0.1303.768@0.0.1303.768" timestamp="1645776290765" />
-    <state width="1305" height="161" key="GridCell.Tab.0.bottom" timestamp="1649374724862">
+    <state width="1305" height="193" key="GridCell.Tab.0.bottom" timestamp="1649478627293">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.bottom/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1305" height="161" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1649374724862" />
-    <state width="1305" height="161" key="GridCell.Tab.0.center" timestamp="1649374724862">
+    <state width="1305" height="193" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1649478627293" />
+    <state width="1305" height="193" key="GridCell.Tab.0.center" timestamp="1649478627288">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.center/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1305" height="161" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1649374724862" />
-    <state width="1305" height="161" key="GridCell.Tab.0.left" timestamp="1649374724862">
+    <state width="1305" height="193" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1649478627288" />
+    <state width="1305" height="193" key="GridCell.Tab.0.left" timestamp="1649478627288">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.left/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1305" height="161" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1649374724862" />
-    <state width="1305" height="161" key="GridCell.Tab.0.right" timestamp="1649374724862">
+    <state width="1305" height="193" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1649478627288" />
+    <state width="1305" height="193" key="GridCell.Tab.0.right" timestamp="1649478627293">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state width="1260" height="172" key="GridCell.Tab.0.right/0.0.1303.768@0.0.1303.768" timestamp="1645982765656" />
-    <state width="1305" height="161" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1649374724862" />
+    <state width="1305" height="193" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1649478627293" />
     <state x="139" y="63" key="MergeDialog" timestamp="1649157096074">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
@@ -332,18 +343,18 @@
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="244" y="117" key="Vcs.Push.Dialog.v2/0.0.1304.768@0.0.1304.768" timestamp="1648616790284" />
-    <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1649225161881">
+    <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1649444075232">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
-    <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1304.768@0.0.1304.768" timestamp="1649225161881" />
+    <state x="461" y="298" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1304.768@0.0.1304.768" timestamp="1649444075232" />
     <state x="308" y="172" key="run.anything.popup" timestamp="1648646405044">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="308" y="172" key="run.anything.popup/0.0.1304.768@0.0.1304.768" timestamp="1648646405044" />
-    <state x="315" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1649139583552">
+    <state x="315" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1649451830557">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
-    <state x="315" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1304.768@0.0.1304.768" timestamp="1649139583552" />
+    <state x="315" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1304.768@0.0.1304.768" timestamp="1649451830557" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

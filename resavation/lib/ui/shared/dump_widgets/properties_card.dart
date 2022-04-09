@@ -37,6 +37,7 @@ class PropertyCard extends StatelessWidget {
       onTap: onTap,
       child: Card(
         elevation: 5,
+        shadowColor: kBlack54,
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 400),
           child: Column(

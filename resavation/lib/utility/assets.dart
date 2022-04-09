@@ -23,6 +23,7 @@ class Assets {
   static const map_image = 'assets/images/map_image.png';
   static const profile_image2 = 'assets/images/profile_image2.png';
   static const profile_image3 = 'assets/images/profile_image3.png';
+  static const profile_image4 = 'assets/images/client1.png';
 
   // Slider Image List
   static const List<String> imgList = ['https://image.shutterstock.com/image-photo/white-designed-living-room-modern-600w-295930376.jpg',

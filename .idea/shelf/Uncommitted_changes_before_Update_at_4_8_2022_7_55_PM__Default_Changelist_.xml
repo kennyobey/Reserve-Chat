@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_4_8_2022_7_55_PM_[Default_Changelist]" date="1649444190933" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2022_7_55_PM_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 4/8/2022 7:55 PM [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="resavation/android/app/build/intermediates/flutter/debug/flutter_assets/NOTICES.Z" />
+    <option name="AFTER_PATH" value="resavation/android/app/build/intermediates/flutter/debug/flutter_assets/NOTICES.Z" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2022_7_55_PM_[Default_Changelist]/NOTICES.Z" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/NOTICES.Z" />
+    <option name="AFTER_PATH" value="resavation/android/app/build/intermediates/merged_assets/debug/out/flutter_assets/NOTICES.Z" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2022_7_55_PM_[Default_Changelist]/NOTICES1.Z" />
+  </binary>
+</changelist>

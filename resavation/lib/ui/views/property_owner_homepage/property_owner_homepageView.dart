@@ -228,13 +228,14 @@ class ListingCard extends StatelessWidget {
   }
 
   void bookApartment(BuildContext context) {
-    var alertdialog = AlertDialog(
-      content: Container(
+
+    var alertdialog = Dialog(
+      child: Container(
         padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
         ),
-        width: 400,
+        width: double.infinity,
         height: 250,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,9 +244,9 @@ class ListingCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 30, // Image radius
-                      backgroundImage: AssetImage(Assets.profile_image3),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),//or 15.0
+                      child: Image.asset(Assets.profile_image4, width: 90,height: 90,),
                     ),
                     horizontalSpaceSmall,
                     Text(

@@ -205,7 +205,7 @@ class DateContainer extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppStyle.kBodyRegularBlack14Poppins
+                style: AppStyle.kBodyRegularBlack14
                     .copyWith(color: kGray),
               ),
               Text(date,

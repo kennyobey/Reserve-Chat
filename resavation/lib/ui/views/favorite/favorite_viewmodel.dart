@@ -9,12 +9,16 @@ class FavoriteViewModel extends BaseViewModel {
   List<Property> get properties => listOfProperties;
 
   bool isFavorite = false;
+  int _id = 0;
 
 
+  void changeFavoriteIcon(int id) {
 
-  void changeFavoriteIcon() {
-    isFavorite = !isFavorite ;
-    notifyListeners();
+    print(id);
+    if (id == 1 ) {
+      isFavorite = !isFavorite;
+      notifyListeners();
+    }
   }
   void goToPropertyDetails() {
     _navigationService.navigateTo(Routes.propertyDetailsView);

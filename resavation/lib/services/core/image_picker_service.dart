@@ -3,6 +3,7 @@ import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
 
+
 class ImagePickerService  with ReactiveServiceMixin{
 
   /// Image picker UI logic
@@ -17,6 +18,7 @@ class ImagePickerService  with ReactiveServiceMixin{
       var pickedFiles = await imgPicker.pickMultiImage();
       if(pickedFiles != null){
         imageFiles = RxValue<List<XFile>?>(pickedFiles);
+
         notifyListeners();
       }else{
         print("No image is selected.");

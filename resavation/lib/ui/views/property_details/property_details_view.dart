@@ -99,7 +99,7 @@ class PropertyDetailsView extends StatelessWidget {
                         verticalSpaceSmall,
                         Text(
                           'Description',
-                          style: AppStyle.kBodyRegularBlack14Poppins,
+                          style: AppStyle.kBodyRegularBlack14,
                         ),
                         verticalSpaceSmall,
                         Text(
@@ -107,7 +107,7 @@ class PropertyDetailsView extends StatelessWidget {
                         verticalSpaceMedium,
                         Text(
                           'Amenities',
-                          style: AppStyle.kBodyRegularBlack14Poppins,
+                          style: AppStyle.kBodyRegularBlack14,
                         ),
                       ],
                     ),
@@ -142,7 +142,7 @@ class PropertyDetailsView extends StatelessWidget {
                     verticalSpaceSmall,
                     Text(
                       'Location',
-                      style: AppStyle.kBodyRegularBlack14Poppins,
+                      style: AppStyle.kBodyRegularBlack14,
                     ),
                     verticalSpaceSmall,
                     Row(
@@ -167,22 +167,22 @@ class PropertyDetailsView extends StatelessWidget {
                     verticalSpaceMedium,
                     Text(
                       'House Rules',
-                      style: AppStyle.kBodyRegularBlack14Poppins,
+                      style: AppStyle.kBodyRegularBlack14,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Party',
-                      style: AppStyle.kBodySmallRegularPoppins,
+                      style: AppStyle.kBodySmallRegular,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Pets',
-                      style: AppStyle.kBodySmallRegularPoppins,
+                      style: AppStyle.kBodySmallRegular,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Smoking',
-                      style: AppStyle.kBodySmallRegularPoppins,
+                      style: AppStyle.kBodySmallRegular,
                     ),
                   ],
                 ),
@@ -229,7 +229,7 @@ class AmenitiesItem extends StatelessWidget {
           horizontalSpaceSmall,
           Text(
             title,
-            style: AppStyle.kBodyRegularBlack12Poppins,
+            style: AppStyle.kBodySmallRegular12,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),

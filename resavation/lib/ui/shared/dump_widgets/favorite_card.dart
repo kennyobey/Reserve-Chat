@@ -10,6 +10,7 @@ import 'package:stacked/stacked.dart';
 class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
   const FavoriteCard({
     Key? key,
+    required this.id,
     required this.image,
     this.onFavoriteTap,
     this.amountPerYear,
@@ -24,6 +25,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
   }) : super(key: key);
 
   final void Function()? onFavoriteTap;
+  final int id;
   final String image;
   final int? amountPerYear;
   final String location;
@@ -39,6 +41,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
   Widget build(BuildContext context, model) {
     return Card(
       elevation: 5,
+      shadowColor: kBlack54,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -71,7 +74,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
                       ),
                       InkWell(
                         onTap: (){
-                          model.changeFavoriteIcon();
+                          model.changeFavoriteIcon(id);
                         },
                         child: Icon(
                           Icons.favorite,
