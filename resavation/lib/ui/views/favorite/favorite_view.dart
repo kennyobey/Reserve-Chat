@@ -28,8 +28,10 @@ class FavoriteView extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
+
                         for (final property in model.properties) ...[
                           FavoriteCard(
+                            id: property.id!,
                             onTap: model.goToPropertyDetails,
                             image: property.image,
                             amountPerYear: property.amountPerYear,

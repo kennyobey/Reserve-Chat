@@ -11,10 +11,11 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _imagePickerService = locator<ImagePickerService>();
 
 
-  RxValue<List<XFile>?> showAddedPhoto (){
-    return _imagePickerService.imageFiles;
-
-  }
+  // RxValue<List<XFile>?> showAddedPhoto (){
+  //   notifyListeners();
+  //   return _imagePickerService.imageFiles;
+  //
+  // }
 
   void goToPropertyOwnerPaymentView() {
     _navigationService.navigateTo(Routes.propertyOwnerPaymentView);

@@ -8,8 +8,15 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/search/search_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-class SearchView extends StatelessWidget {
+class SearchView extends StatefulWidget {
   const SearchView({Key? key}) : super(key: key);
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +27,20 @@ class SearchView extends StatelessWidget {
               title: "Search",
             ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
               child: Column(
                 children: [
                   Column(
                     children: [
                       verticalSpaceMedium,
+                      //model.buildSearch(),
                       FindYourLocation(
 
                         onTap: model.goToFilterView,
                       ),
                       verticalSpaceMedium,
                       SortProperty(
-                        noOfProperties: 40,
+                        noOfProperties: 7,
                         sortByTitle: 'Default Order',
                       ),
                     ],
@@ -69,6 +77,4 @@ class SearchView extends StatelessWidget {
       viewModelBuilder: () => SearchViewModel(),
     );
   }
-
-
 }

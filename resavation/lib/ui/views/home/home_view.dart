@@ -36,7 +36,7 @@ class HomeView extends StatelessWidget {
                       style: AppStyle.kBodyRegularBlack14W600,
                     ),
                     Spacer(),
-                    Icon(Icons.notifications_outlined),
+                    Icon(Icons.notifications_none_outlined),
                   ],
                 ),
               ),

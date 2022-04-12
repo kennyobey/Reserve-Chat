@@ -1,6 +1,7 @@
 import 'package:resavation/utility/assets.dart';
 
 class Property {
+  final int? id;
   final String image;
   final int? amountPerYear;
   final String location;
@@ -12,6 +13,7 @@ class Property {
   final String? category;
 
   Property({
+    this.id,
     required this.image,
     this.amountPerYear,
     required this.location,
@@ -26,6 +28,7 @@ class Property {
 
 final listOfProperties = <Property> [
   Property(
+      id: 1,
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',
@@ -34,8 +37,9 @@ final listOfProperties = <Property> [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: true,
-      category: 'Apartment'),
+      category: 'Apartment',),
   Property(
+      id: 2,
       image: Assets.house_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',
@@ -47,6 +51,7 @@ final listOfProperties = <Property> [
       category: 'Sitting Room'),
 
   Property(
+      id: 3,
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',
@@ -57,6 +62,7 @@ final listOfProperties = <Property> [
       isFavoriteTap: true,
       category: 'Office Space'),
   Property(
+      id: 4,
       image: Assets.lagos_location_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',
@@ -67,6 +73,7 @@ final listOfProperties = <Property> [
       isFavoriteTap: true,
       category: 'Bathroom'),
   Property(
+      id: 5,
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',
@@ -77,6 +84,7 @@ final listOfProperties = <Property> [
       isFavoriteTap: true,
       category: 'Kitchen'),
   Property(
+      id: 6,
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',
@@ -87,6 +95,7 @@ final listOfProperties = <Property> [
       isFavoriteTap: true,
       category: 'Nursery'),
   Property(
+      id: 7,
       image: Assets.sitting_room_placeholder,
       amountPerYear: 10000,
       location: 'Eleko Estate',

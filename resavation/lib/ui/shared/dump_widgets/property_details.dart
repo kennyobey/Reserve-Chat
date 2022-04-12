@@ -27,7 +27,7 @@ class PropertyDetails extends StatelessWidget {
           numberOfBedrooms: numberOfBedrooms),
 
         PropertyDetailsIcon(
-            icon: Icons.bathtub_outlined,
+            icon: Icons.bathroom,
             numberOfBedrooms: numberOfBathrooms),
 
         PropertyDetailsIcon(

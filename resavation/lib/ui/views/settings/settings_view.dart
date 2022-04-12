@@ -85,8 +85,11 @@ class SettingsView extends StatelessWidget {
                     model.goToPropertyOwnerHomePageView();
                     model.updateUserType();
                   },
-                  title: model.returnUserType()? 'Switch to Property Owner' : 'Switch to User',
-                  titleColor: kPrimaryColor,
+                  title: model.returnUserType()
+                      ? 'Switch to Property Owner'
+                      : 'Switch to User',
+                  borderColor: kBlack,
+                  titleColor: kBlack,
                   buttonColor: kWhite.withOpacity(0.9),
                   //  borderColor: kp,
                 ),
@@ -95,6 +98,8 @@ class SettingsView extends StatelessWidget {
                   minLeadingWidth: 0,
                   horizontalTitleGap: 5,
                   onTap: model.logout,
+                  dense: true,
+                  contentPadding: EdgeInsets.all(0),
                   leading: Icon(
                     Icons.logout,
                     color: kRed,
@@ -133,14 +138,17 @@ class SettingsListTile extends StatelessWidget {
     bool hasIcon = icon != null;
     return ListTile(
       onTap: hasIcon ? null : onTap,
-      dense:true,
+      dense: true,
       contentPadding: EdgeInsets.all(0),
       leading: hasIcon ? Icon(icon) : null,
-      title: Text(
-        title,
-        style: hasIcon
-            ? AppStyle.kBodySmallRegular12W500
-            : AppStyle.kBodyRegularBlack14,
+      title: Transform.translate(
+        offset: hasIcon ? Offset(-22, 0) : Offset(0, 0),
+        child: Text(
+          title,
+          style: hasIcon
+              ? AppStyle.kBodySmallRegular12W500
+              : AppStyle.kBodyRegularBlack14,
+        ),
       ),
     );
   }

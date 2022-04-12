@@ -99,15 +99,17 @@ class PropertyDetailsView extends StatelessWidget {
                         verticalSpaceSmall,
                         Text(
                           'Description',
-                          style: AppStyle.kBodyRegularBlack14Poppins,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                         verticalSpaceSmall,
                         Text(
-                            'injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l'),
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu risus quam eros placerat nullam enim rhoncus. Id odio velit nibh risus praesent suscipit ut convallis orci. Hendrerit in nulla non quis magna et at. Non faucibus fermentum pellentesque ipsum nullam faucibus. In consequat suscipit leo amet, diam facilisi facilisis nunc eu. In ultrices mi integer ut mauris eget. Diam adipiscing integer mauris sociis. Ultricies mi, mus nunc, praesent. Hendrerit metus, libero aenean dignissim euismod condimentum porta mus' +
+                          'Nunc, amet gravida morbi lacus. Id ullamcorper mauris faucibus malesuada semper sagittis, libero donec egestas. Eget pharetra, in in hendrerit cursus nibh.',
+                            style: AppStyle.kBodySmallRegular12W500),
                         verticalSpaceMedium,
                         Text(
                           'Amenities',
-                          style: AppStyle.kBodyRegularBlack14Poppins,
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
                       ],
                     ),
@@ -142,7 +144,7 @@ class PropertyDetailsView extends StatelessWidget {
                     verticalSpaceSmall,
                     Text(
                       'Location',
-                      style: AppStyle.kBodyRegularBlack14Poppins,
+                      style: AppStyle.kBodyRegularBlack14W500,
                     ),
                     verticalSpaceSmall,
                     Row(
@@ -167,22 +169,22 @@ class PropertyDetailsView extends StatelessWidget {
                     verticalSpaceMedium,
                     Text(
                       'House Rules',
-                      style: AppStyle.kBodyRegularBlack14Poppins,
+                      style: AppStyle.kBodyRegularBlack14W500,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Party',
-                      style: AppStyle.kBodySmallRegularPoppins,
+                      style: AppStyle.kBodySmallRegular,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Pets',
-                      style: AppStyle.kBodySmallRegularPoppins,
+                      style: AppStyle.kBodySmallRegular,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Smoking',
-                      style: AppStyle.kBodySmallRegularPoppins,
+                      style: AppStyle.kBodySmallRegular,
                     ),
                   ],
                 ),
@@ -229,7 +231,7 @@ class AmenitiesItem extends StatelessWidget {
           horizontalSpaceSmall,
           Text(
             title,
-            style: AppStyle.kBodyRegularBlack12Poppins,
+            style: AppStyle.kBodySmallRegular12,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),

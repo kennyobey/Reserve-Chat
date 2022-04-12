@@ -49,7 +49,7 @@ class AppStyle {
   );
 
   // text style with 15px font size
-  static TextStyle kBodyRegularBlack15Poppins = GoogleFonts.poppins(
+  static TextStyle kBodyRegularBlack15 = GoogleFonts.montserrat(
     fontWeight: FontWeight.normal,
     fontSize: 15,
     height: 1.5,
@@ -77,13 +77,6 @@ class AppStyle {
     height: 1.5,
     color: Colors.black,
   );
-  // text style with 14px font size poppins
-  static TextStyle kBodyRegularBlack14Poppins = GoogleFonts.poppins(
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-    height: 1.5,
-    color: Colors.black,
-  );
 
   // text style with 13px font size
   static TextStyle kSubHeading = GoogleFonts.montserrat(
@@ -93,12 +86,6 @@ class AppStyle {
   );
 
   static TextStyle kBodySmallRegular = GoogleFonts.montserrat(
-    fontWeight: FontWeight.normal,
-    fontSize: 13,
-    height: 1.5,
-  );
-  // text style with 13px font size poppins
-  static TextStyle kBodySmallRegularPoppins = GoogleFonts.poppins(
     fontWeight: FontWeight.normal,
     fontSize: 13,
     height: 1.5,
@@ -121,13 +108,6 @@ class AppStyle {
     fontWeight: FontWeight.w300,
     fontSize: 12,
     height: 1.5,
-  );
-  // text style with 12px font size poppins
-  static TextStyle kBodyRegularBlack12Poppins = GoogleFonts.poppins(
-    fontWeight: FontWeight.normal,
-    fontSize: 12,
-    height: 1.5,
-    color: Colors.black,
   );
 
   // text style with 11px font size

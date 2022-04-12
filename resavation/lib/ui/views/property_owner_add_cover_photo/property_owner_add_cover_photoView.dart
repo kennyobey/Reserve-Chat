@@ -37,23 +37,26 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
                   ),
                 ),
                 verticalSpaceMedium,
-                model.showAddedPhoto() != null?Wrap(
-                  children: model.showAddedPhoto().value!.map((imageOne){
-                    return Container(
-                        child:Container(
-                          height: 96, width:169,
-                          child: Image.file(File(imageOne.path)),
-                        )
-                    );
-                  }).toList(),
-                ):Container(),
-                // Center(
-                //   child: Row(
-                //     children: [_coverPhoto(), horizontalSpaceTiny, _Photo()],
-                //   ),
-                // ),
-                // verticalSpaceTiny,
-                // _Photo(),
+                // model.showAddedPhoto() != null?Wrap(
+                //   children: model.showAddedPhoto().value!.map((imageOne){
+                //     return Container(
+                //         child:Container(
+                //           height: 96, width:169,
+                //           child: Image.file(File(imageOne.path)),
+                //         )
+                //     );
+                //   }).toList(),
+                // ):Container(),
+                Center(
+                  child: Row(
+                    children: [
+                      Expanded(child: _coverPhoto()),
+                      horizontalSpaceTiny,
+                      Expanded(child: _Photo())],
+                  ),
+                ),
+                verticalSpaceTiny,
+                _Photo(),
                 Spacer(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -99,23 +102,25 @@ Widget _coverPhoto() {
     padding: EdgeInsets.all(10.0),
     decoration: BoxDecoration(border: Border.all(color: kGray), color: kGray),
     width: 169,
-    height: 96.0,
+    height: 86.0,
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          decoration:
-              BoxDecoration(border: Border.all(color: kGray), color: kBlack),
-          height: 26,
-          width: 83,
-          child: FlatButton(
-            child: Text(
-              'Cover',
-              style: AppStyle.kBodySmallRegular11W300.copyWith(color: kWhite),
+        Expanded(
+          child: Container(
+            decoration:
+                BoxDecoration(border: Border.all(color: kGray), color: kBlack),
+            height: 26,
+            width: 83,
+            child: FlatButton(
+              child: Text(
+                'Cover',
+                style: AppStyle.kBodySmallRegular11W300.copyWith(color: kWhite),
+              ),
+              color: kChatTextColor,
+              textColor: kBlack,
+              onPressed: () {},
             ),
-            color: kChatTextColor,
-            textColor: kBlack,
-            onPressed: () {},
           ),
         ),
         Spacer(),
@@ -143,7 +148,7 @@ Widget _Photo() {
     padding: EdgeInsets.all(10.0),
     decoration: BoxDecoration(border: Border.all(color: kGray), color: kGray),
     width: 169,
-    height: 96.0,
+    height: 86.0,
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

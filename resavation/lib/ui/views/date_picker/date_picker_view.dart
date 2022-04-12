@@ -44,7 +44,7 @@ class DatePickerView extends StatelessWidget {
                       verticalSpaceMedium,
                       Text(
                         'Choose payment',
-                        style: AppStyle.kBodyRegularBlack14Poppins,
+                        style: AppStyle.kBodyRegularBlack14,
                       ),
                       PaymentChoiceListTile(
                         title: 'Monthly',
@@ -101,9 +101,9 @@ class PaymentChoiceListTile extends ViewModelWidget<DatePickerViewModel> {
             child: ListTile(
               title: Text(
                 title,
-                style: AppStyle.kBodyRegularBlack15Poppins,
+                style: AppStyle.kBodyRegularBlack15,
               ),
-              subtitle: Text(subTitle, style: AppStyle.kBodySmallRegularPoppins,),
+              subtitle: Text(subTitle, style: AppStyle.kBodySmallRegular,),
               leading: Radio<ChoiceOfPayment>(
                 groupValue: Model.paymentChoice,
                 value: value,
@@ -114,7 +114,7 @@ class PaymentChoiceListTile extends ViewModelWidget<DatePickerViewModel> {
           horizontalSpaceMedium,
           Text(
             trailing,
-            style: AppStyle.kBodyRegularBlack15Poppins,
+            style: AppStyle.kBodyRegularBlack15,
           ),
         ],
       ),
