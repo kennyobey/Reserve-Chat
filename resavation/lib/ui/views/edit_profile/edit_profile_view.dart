@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
@@ -33,33 +34,41 @@ class EditProfileView extends StatelessWidget {
                     children: [
                       verticalSpaceMedium,
                       Center(
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundImage: AssetImage(Assets.profile_image),
+                        child: Badge(
+                          badgeColor: kWhite,
+                          position: BadgePosition.bottomEnd(),
+                          badgeContent: Icon(Icons.camera_alt_sharp),
+                          child: CircleAvatar(
+                            radius: 70,
+                            backgroundImage: AssetImage(Assets.profile_image),
+                          ),
                         ),
                       ),
                       verticalSpaceMedium,
                       Text(
                         'Last Name',
-                        style: AppStyle.kBodyRegular,
+                        style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       ResavationTextField(
                         textInputAction: TextInputAction.next,
                         hintText: 'Ameh',
+                        hintTextStyle: AppStyle.kSubHeading,
                       ),
                       verticalSpaceSmall,
                       Text(
                         'First Name',
-                        style: AppStyle.kBodyRegular,
+                        style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       ResavationTextField(
                         textInputAction: TextInputAction.next,
                         hintText: 'Queen',
+                        hintTextStyle: AppStyle.kSubHeading,
+
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Email',
-                        style: AppStyle.kBodyRegular,
+                        style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       Row(
                         children: [
@@ -68,6 +77,8 @@ class EditProfileView extends StatelessWidget {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.emailAddress,
                               hintText: 'queenameh@gmail.com',
+                              hintTextStyle: AppStyle.kSubHeading,
+
                             ),
                           ),
                           horizontalSpaceSmall,
@@ -85,12 +96,13 @@ class EditProfileView extends StatelessWidget {
                       verticalSpaceSmall,
                       Text(
                         'Password',
-                        style: AppStyle.kBodyRegular,
+                        style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       ResavationTextField(
                         textInputAction: TextInputAction.done,
                         obscureText: true,
                         hintText: 'password',
+                        hintTextStyle: AppStyle.kSubHeading,
                       ),
                       horizontalSpaceMedium,
                     ],

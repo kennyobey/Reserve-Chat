@@ -239,7 +239,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\MI
 	android:label
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:23:9-35
 	android:icon
-		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:24:9-43
+		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:24:9-45
 activity#com.resavation.resavation.MainActivity
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:25:9-54:20
 	android:launchMode

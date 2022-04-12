@@ -10,6 +10,7 @@ class ResavationTextField extends StatefulWidget {
     this.icon,
     this.elevation,
     this.hintText,
+    this.hintTextStyle,
     this.color,
     this.labelText,
     this.obscureText = false,
@@ -25,6 +26,7 @@ class ResavationTextField extends StatefulWidget {
   final String? label;
   final Icon? icon;
   final String? hintText;
+  final TextStyle? hintTextStyle;
   final String? labelText;
   final double? elevation;
   final Color? color;
@@ -60,7 +62,7 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
           style: style,
           decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
+              borderSide: const BorderSide(color: kGray, width: 0.5),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
@@ -68,7 +70,7 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
             hintText: widget.hintText,
             labelText: widget.labelText,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintStyle: style,
+            hintStyle: widget.hintTextStyle != null? widget.hintTextStyle : style,
             prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
             suffixIcon: widget.obscureText
                 ? GestureDetector(
@@ -80,7 +82,7 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
                     },
                     child: Icon(
                       _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: kPrimaryColor,
+                      color: kGray,
                     ),
                   )
                 : null,

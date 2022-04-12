@@ -15,6 +15,7 @@ import 'package:resavation/ui/views/onboarding/onboarding_view.dart';
 import 'package:resavation/ui/views/payment/payment_view.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_view.dart';
 import 'package:resavation/ui/views/property_details/property_details_view.dart';
+import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
 import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
@@ -69,6 +70,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: CustomSnackbarService),
     LazySingleton(classType: UserTypeService),
     LazySingleton(classType: ImagePickerService),
+
   ],
   logger: StackedLogger(),
 )

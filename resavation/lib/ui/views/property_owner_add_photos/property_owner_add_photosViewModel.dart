@@ -11,6 +11,7 @@ class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
 
   void addPhoto() {
     _imagePickerService.openImages();
+    notifyListeners();
   }
 
 

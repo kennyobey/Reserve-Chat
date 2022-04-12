@@ -33,7 +33,7 @@ class _SearchViewState extends State<SearchView> {
                   Column(
                     children: [
                       verticalSpaceMedium,
-                      model.buildSearch(),
+                      //model.buildSearch(),
                       FindYourLocation(
 
                         onTap: model.goToFilterView,
