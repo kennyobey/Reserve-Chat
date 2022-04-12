@@ -29,7 +29,8 @@ class PropertyOwnerProfileView extends StatelessWidget {
               delegate: SliverChildListDelegate(
                 [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0, vertical: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -60,7 +61,7 @@ class PropertyOwnerProfileView extends StatelessWidget {
                               width: 150,
                               title: 'Call',
                               icon: Icons.call_outlined,
-                              onTap: (){
+                              onTap: () {
                                 model.goToAudioCallView();
                               },
                             ),
@@ -83,8 +84,10 @@ class PropertyOwnerProfileView extends StatelessWidget {
                                       amountPerYear: property.amountPerYear,
                                       location: property.location,
                                       address: property.address,
-                                      numberOfBathrooms: property.numberOfBedrooms,
-                                      numberOfBedrooms: property.numberOfBathrooms,
+                                      numberOfBathrooms:
+                                          property.numberOfBedrooms,
+                                      numberOfBedrooms:
+                                          property.numberOfBathrooms,
                                       squareFeet: property.squareFeet,
                                       // isFavoriteTap: property.isFavoriteTap,
                                       onFavoriteTap: () {},

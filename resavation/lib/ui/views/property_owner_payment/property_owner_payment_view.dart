@@ -181,7 +181,10 @@ class PropertyOwnerPaymentView extends StatelessWidget {
 
 class DateContainer extends StatelessWidget {
   const DateContainer({
-    Key? key, required this.label, required this.date, required this.onTap,
+    Key? key,
+    required this.label,
+    required this.date,
+    required this.onTap,
   }) : super(key: key);
 
   final String label;
@@ -205,12 +208,10 @@ class DateContainer extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppStyle.kBodyRegularBlack14
-                    .copyWith(color: kGray),
+                style: AppStyle.kBodyRegularBlack14.copyWith(color: kGray),
               ),
               Text(date,
-                  style: AppStyle.kBodySmallRegular12
-                      .copyWith(color: kBlack)),
+                  style: AppStyle.kBodySmallRegular12.copyWith(color: kBlack)),
             ],
           ),
         ),

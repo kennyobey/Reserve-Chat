@@ -4,6 +4,7 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/favorite/favorite_view.dart';
 import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/main/main_viewmodel.dart';
+import 'package:resavation/ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
 import 'package:resavation/ui/views/property_owner_appointment_itemView/property_owner_appointment_itemView.dart';
 import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneView.dart';
 import 'package:resavation/ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
@@ -51,7 +52,7 @@ class MainView extends StatelessWidget {
               icon: Icon(
                 model.returnUserType()
                     ? Icons.favorite_border
-                    : Icons.calendar_month_outlined,
+                    : Icons.calendar_view_month_outlined,
               ),
               label: '',
             ),
@@ -79,7 +80,7 @@ Widget getViewForIndex(int index, bool isTenant) {
     case 1:
       return isTenant ? FavoriteView() : PropertyOwnerAppointmentPageoneView();
     case 2:
-      return isTenant ? SearchView() : PropertyOwnerDatePickerView();
+      return isTenant ? SearchView() : PropertyOwnerAnalyticView();
     case 3:
       return SettingsView();
     default:

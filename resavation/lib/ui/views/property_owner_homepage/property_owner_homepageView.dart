@@ -33,6 +33,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                verticalSpaceMedium,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
@@ -67,7 +68,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                           color: kBlack,
                         ),
-                        width: 345,
+                        width: MediaQuery.of(context).size.width,
                         height: 135.0,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +193,7 @@ class ListingCard extends StatelessWidget {
           border: Border.all(color: kGray),
           borderRadius: new BorderRadius.circular(5.0),
         ),
-        width: 360,
+        width: MediaQuery.of(context).size.width,
         height: 85,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           ListTile(
@@ -228,7 +229,6 @@ class ListingCard extends StatelessWidget {
   }
 
   void bookApartment(BuildContext context) {
-
     var alertdialog = Dialog(
       child: Container(
         padding: EdgeInsets.all(5.0),
@@ -245,8 +245,12 @@ class ListingCard extends StatelessWidget {
                 Row(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(6),//or 15.0
-                      child: Image.asset(Assets.profile_image4, width: 90,height: 90,),
+                      borderRadius: BorderRadius.circular(6), //or 15.0
+                      child: Image.asset(
+                        Assets.profile_image4,
+                        width: 90,
+                        height: 90,
+                      ),
                     ),
                     horizontalSpaceSmall,
                     Text(

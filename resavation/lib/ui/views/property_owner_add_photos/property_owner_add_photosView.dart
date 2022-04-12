@@ -13,10 +13,8 @@ import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add
 
 import 'package:stacked/stacked.dart';
 
-
 class PropertyOwnerAddPhotosView extends StatelessWidget {
-   PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
-
+  PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +63,6 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   buttonColor: kPrimaryColor,
                   //  borderColor: kp,
                 ),
-
-
-
               ],
             ),
           ),
@@ -77,4 +72,3 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
     );
   }
 }
-

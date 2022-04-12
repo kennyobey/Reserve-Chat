@@ -40,7 +40,8 @@ class ResavationButton extends StatelessWidget {
           ),
           duration: const Duration(milliseconds: 300),
           height: height ?? 50,
-          width: width ?? 350,
+          // width: width ?? 350,
+          width: MediaQuery.of(context).size.width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

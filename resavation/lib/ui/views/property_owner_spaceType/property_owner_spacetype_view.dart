@@ -3,6 +3,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_radio_button.dart';
 
@@ -15,7 +16,6 @@ import 'package:stacked/stacked.dart';
 
 class PropertyOwnerSpaceTypeView extends StatelessWidget {
   PropertyOwnerSpaceTypeView({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +58,17 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     title: 'Yes',
                     radioValue: "Yes",
                     groupValue: model.isServiced,
-                    onChanged:  (String? radioValue) {
-                      model.onSpaceServicedRadioChange(radioValue.toString()) ; },
+                    onChanged: (String? radioValue) {
+                      model.onSpaceServicedRadioChange(radioValue.toString());
+                    },
                   ),
                   ResavationRadioButton(
                     title: 'No',
                     radioValue: "No",
                     groupValue: model.isServiced,
                     onChanged: (String? radioValue) {
-                      model.onSpaceServicedRadioChange(radioValue.toString()) ; },
+                      model.onSpaceServicedRadioChange(radioValue.toString());
+                    },
                   ),
                   verticalSpaceSmall,
                   Text(
@@ -79,15 +81,17 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     title: 'Yes',
                     radioValue: "Yes",
                     groupValue: model.isFurnished,
-                    onChanged:  (String? radioValue) {
-                      model.onSpaceFurnishedRadioChange(radioValue.toString()) ; },
+                    onChanged: (String? radioValue) {
+                      model.onSpaceFurnishedRadioChange(radioValue.toString());
+                    },
                   ),
                   ResavationRadioButton(
                     title: 'No',
                     radioValue: "No",
                     groupValue: model.isFurnished,
                     onChanged: (String? radioValue) {
-                      model.onSpaceFurnishedRadioChange(radioValue.toString()) ; },
+                      model.onSpaceFurnishedRadioChange(radioValue.toString());
+                    },
                   ),
                   verticalSpaceSmall,
                   Text(
@@ -95,9 +99,36 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     style: AppStyle.kBodyRegular,
                   ),
                   verticalSpaceTiny,
-
-                  ResavationTextField(
-                    hintText: 'Choose your listing option',
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        hint: Text(
+                          "Select Property ",
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        items: model.items
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: AppStyle.kBodyRegular,
+                                  ),
+                                ))
+                            .toList(),
+                        value: model.selectedValue,
+                        onChanged: (value) {
+                          model.onSelectedValueChange(value);
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                        ),
+                        buttonWidth: 330,
+                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                        )),
                   ),
                   verticalSpaceSmall,
                   Text(
@@ -110,17 +141,20 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     title: 'Yes',
                     radioValue: "Yes",
                     groupValue: model.leaveHere,
-                    onChanged:  (String? radioValue) {
-                      model.onLeaveHereRadioChange(radioValue.toString()) ; },
+                    onChanged: (String? radioValue) {
+                      model.onLeaveHereRadioChange(radioValue.toString());
+                    },
                   ),
+                  verticalSpaceSmall,
                   ResavationRadioButton(
                     title: 'No',
                     radioValue: "No",
                     groupValue: model.leaveHere,
                     onChanged: (String? radioValue) {
-                      model.onLeaveHereRadioChange(radioValue.toString()) ; },
+                      model.onLeaveHereRadioChange(radioValue.toString());
+                    },
                   ),
-
+                  verticalSpaceSmall,
                   //Select the number of bedrooms
                   AmenitiesSelection(
                     title: "Number Of bedrooms",
@@ -128,7 +162,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     onPositiveTap: () => model.onPositiveBedRoomTap(),
                     onNegativeTap: () => model.onNegativeBedRoomTap(),
                   ),
-
+                  verticalSpaceSmall,
                   //Select the number of bathrooms
                   AmenitiesSelection(
                     title: "Number of bathrooms",
@@ -136,7 +170,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                     onPositiveTap: () => model.onPositiveBathRoomTap(),
                     onNegativeTap: () => model.onNegativeBathRoomTap(),
                   ),
-
+                  verticalSpaceSmall,
                   //Select the number of car slots
                   AmenitiesSelection(
                     title: "Number of car slots",
@@ -146,30 +180,68 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   ),
                   verticalSpaceLarge,
 
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text(
+                          'Back',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        color: kWhite,
+                        textColor: kBlack,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Spacer(),
+                      FlatButton(
+                        child: Text(
+                          'Next',
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        color: kPrimaryColor,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          model.goToPropertyOwnerDetailsView();
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
           ),
-          bottomSheet: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 35.0),
-                child: ResavationElevatedButton(
-                  child: Text("Next", style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kWhite),),
-                  onPressed: ()=> model.goToPropertyOwnerDetailsView(),
-                ),
-              )
-            ],
-          ),
+          // bottomSheet: Row(
+          //   children: [
+          //     ResavationButton(
+          //       buttonColor: kWhite,
+          //       width: 50,
+          //       height: 47,
+          //       title: 'Back',
+          //       titleColor: kBlack,
+          //       onTap: () {
+          //         model.goToPropertyOwnerHomePageView();
+          //       },
+          //     ),
+          //     Spacer(),
+          //     ResavationButton(
+          //       width: 50,
+          //       height: 47,
+          //       title: 'Continue',
+          //       onTap: () {
+          //         model.goToPropertyOwnerDetailsView();
+          //       },
+          //     ),
+          //   ],
+          // ),
         ),
       ),
       viewModelBuilder: () => PropertyOwnerSpaceTypeViewModel(),
     );
   }
-
 }
-
 
 class AmenitiesSelection extends StatelessWidget {
   const AmenitiesSelection(
@@ -238,4 +310,3 @@ class IncrementAmenities extends StatelessWidget {
     );
   }
 }
-
