@@ -84,7 +84,7 @@ Widget _buildTextField(String label) {
       children: [
         Text(
           "Step 1",
-          style:  AppStyle.kBodySmallRegular12.copyWith(color: kGray),
+          style: AppStyle.kBodySmallRegular12.copyWith(color: kGray),
         ),
         Text(
           "Choose Document",

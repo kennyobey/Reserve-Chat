@@ -1,18 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
-
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_appointment_itemView/property_owner_appointment_itemView.dart';
 import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneViewModel.dart';
-
-import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart';
-
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
@@ -38,31 +31,12 @@ class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
                         'Your Appointment',
                         style: AppStyle.kBodyRegular.copyWith(color: kBlack),
                       ),
-
-                      //Tool tip
-                      // Tooltip(
-                      //   triggerMode: TooltipTriggerMode.tap,
-                      //   padding: EdgeInsets.all(6),
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(0),
-                      //       color: kWhite,
-                      //       boxShadow: [
-                      //         BoxShadow(color: kGray, blurRadius: 10)
-                      //       ]),
-                      //   textStyle: TextStyle(
-                      //       fontWeight: FontWeight.w500,
-                      //       fontFamily: 'InterRegular',
-                      //       fontSize: 10,
-                      //       color: Colors.black),
-                      //   preferBelow: false,
-                      //   message:
-                      //       'Your customers are the\npeople you sell products\nor services to',
-                      // ),
                     ],
                   ),
                   bottom: PreferredSize(
                     preferredSize: Size.fromHeight(55),
                     child: Container(
+                      color: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                       ),
@@ -74,19 +48,19 @@ class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
                           labelStyle:
                               Theme.of(context).textTheme.headline2!.copyWith(
                                     color: kBlack,
-                                    fontFamily: "InterRegular",
+                                    fontFamily: "Montserrat",
                                     fontStyle: FontStyle.normal,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
                                   ),
                           unselectedLabelColor: kBlack,
                           unselectedLabelStyle:
                               Theme.of(context).textTheme.headline2!.copyWith(
                                     color: kBlack,
-                                    fontFamily: "InterRegular",
+                                    fontFamily: "Montserrat",
                                     fontStyle: FontStyle.normal,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
                                   ),
                           indicatorSize: TabBarIndicatorSize.tab,
                           // indicatorColor: Colors.white,

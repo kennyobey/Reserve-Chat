@@ -11,8 +11,6 @@ import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owne
 
 import 'package:stacked/stacked.dart';
 
-
-
 class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
   const PropertyOwnerAddCoverPhotosView({Key? key}) : super(key: key);
 
@@ -52,7 +50,8 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
                     children: [
                       Expanded(child: _coverPhoto()),
                       horizontalSpaceTiny,
-                      Expanded(child: _Photo())],
+                      Expanded(child: _Photo())
+                    ],
                   ),
                 ),
                 verticalSpaceTiny,

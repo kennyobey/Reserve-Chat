@@ -21,6 +21,7 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
     return ViewModelBuilder<PropertyOwnerAppointmentItemViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8,
@@ -68,9 +69,9 @@ Widget _blackcontainer(String label) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           verticalSpaceTiny,
-          ResavationImage(
-            image: image,
-          ),
+          // ResavationImage(
+          //   image: image,
+          // ),
           // Icon(Icons.receipt_sharp, size: 100, color: Colors.black),
           Spacer(),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

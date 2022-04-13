@@ -54,13 +54,13 @@ class PropertyOwnerAnalyticView extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: kWhite,
                         border: Border.all(color: kWhite),
-                        borderRadius: new BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(4.0),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.6),
-                            spreadRadius: 5,
-                            blurRadius: 6,
-                            offset: Offset(0, 4),
+                            spreadRadius: 3,
+                            blurRadius: 3,
+                            offset: Offset(0, 3),
                           ),
                         ],
                       ),

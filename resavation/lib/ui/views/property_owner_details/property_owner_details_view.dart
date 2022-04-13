@@ -24,6 +24,7 @@ class PropertyOwnerDetailsView extends StatelessWidget {
     return ViewModelBuilder<PropertyOwnerDetailsViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 24,
@@ -46,6 +47,7 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   verticalSpaceTiny,
                   ResavationTextField(
                     hintText: '',
+                    fillColors: Colors.white,
                   ),
                   Text(
                     'Property Description',
@@ -58,7 +60,6 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                     style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceTiny,
-
                   SelectCountry(
                     label: model.selectedCountry,
                     onSelected: model.onSelectCountryTap(Country.worldWide),
@@ -66,14 +67,17 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   verticalSpaceTiny,
                   ResavationTextField(
                     hintText: 'State',
+                    fillColors: Colors.white,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
                     hintText: 'City',
+                    fillColors: Colors.white,
                   ),
                   verticalSpaceTiny,
                   ResavationTextField(
                     hintText: 'Enter the address of this space',
+                    fillColors: Colors.white,
                   ),
                   Text(
                     'Generate your address on Google map',
@@ -81,7 +85,7 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   ),
                   ResavationElevatedButton(
                     child: Text("Go to Map"),
-                    onPressed: (){
+                    onPressed: () {
                       model.goToMapView();
                     },
                   ),
@@ -97,13 +101,11 @@ class PropertyOwnerDetailsView extends StatelessWidget {
               children: [
                 ResavationElevatedButton(
                   child: Text("Back"),
-                  onPressed: ()=> Navigator.pop(context),
-
+                  onPressed: () => Navigator.pop(context),
                 ),
                 ResavationElevatedButton(
                   child: Text("Next"),
-                  onPressed: ()=> model.goToPropertyOwnerAddPhotosView(),
-
+                  onPressed: () => model.goToPropertyOwnerAddPhotosView(),
                 )
               ],
             ),
@@ -114,8 +116,6 @@ class PropertyOwnerDetailsView extends StatelessWidget {
     );
   }
 }
-
-
 
 Widget _buildTextField(String label) {
   const maxLines = 5;

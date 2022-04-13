@@ -15,6 +15,7 @@ class PropertyOwnerEditProfileView extends StatelessWidget {
     return ViewModelBuilder<PropertyOwnerEditProfileViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 25,
@@ -51,7 +52,7 @@ class PropertyOwnerEditProfileView extends StatelessWidget {
                   style: AppStyle.kBodyRegularBlack14W600,
                 ),
                 verticalSpaceMedium,
-                _buildTextField(),
+                _buildTextField(context),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -71,20 +72,21 @@ class PropertyOwnerEditProfileView extends StatelessWidget {
   }
 }
 
-Widget _buildTextField() {
+Widget _buildTextField(context) {
   return Container(
-    height: 70,
-    width: 400,
+    // height: 70,
+    width: MediaQuery.of(context).size.width,
     child: TextFormField(
+        maxLines: 3,
         decoration: new InputDecoration(
-      hintText:
-          "I am a entrepenuer and keenly intrested in solving renting accomodation",
-      hintStyle: AppStyle.kBodySmallRegular12W500,
-      fillColor: Colors.white,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5.0),
-        borderSide: BorderSide(width: 5, color: kGray),
-      ),
-    )),
+          hintText:
+              "I am a entrepenuer and keenly intrested in solving renting accomodation",
+          hintStyle: AppStyle.kBodySmallRegular12W500,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+            borderSide: BorderSide(width: 5, color: kGray),
+          ),
+        )),
   );
 }

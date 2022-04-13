@@ -12,6 +12,7 @@ class ResavationTextField extends StatefulWidget {
     this.hintText,
     this.hintTextStyle,
     this.color,
+    this.fillColors,
     this.labelText,
     this.obscureText = false,
     this.showPrefix = false,
@@ -30,6 +31,7 @@ class ResavationTextField extends StatefulWidget {
   final String? labelText;
   final double? elevation;
   final Color? color;
+  final Color? fillColors;
   final bool obscureText;
   final bool showPrefix;
   final TextInputAction? textInputAction;
@@ -64,13 +66,16 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
             border: OutlineInputBorder(
               borderSide: const BorderSide(color: kGray, width: 0.5),
             ),
+            fillColor: widget.fillColors ?? null,
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
             ),
+            filled: true,
             hintText: widget.hintText,
             labelText: widget.labelText,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintStyle: widget.hintTextStyle != null? widget.hintTextStyle : style,
+            hintStyle:
+                widget.hintTextStyle != null ? widget.hintTextStyle : style,
             prefixIcon: widget.showPrefix ? Icon(Icons.search) : null,
             suffixIcon: widget.obscureText
                 ? GestureDetector(

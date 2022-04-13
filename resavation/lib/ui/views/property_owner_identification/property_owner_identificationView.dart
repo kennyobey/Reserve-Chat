@@ -99,7 +99,6 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                 ResavationTextField(
                   hintText: 'Enter the address of the space',
                 ),
-
               ],
             ),
           ),
@@ -110,13 +109,11 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
               children: [
                 ResavationElevatedButton(
                   child: Text("Back"),
-                  onPressed: ()=> Navigator.pop(context),
-
+                  onPressed: () => Navigator.pop(context),
                 ),
                 ResavationElevatedButton(
                   child: Text("Next"),
-                  onPressed: ()=> model.goToPropertyOwnerVerificationView(),
-
+                  onPressed: () => model.goToPropertyOwnerVerificationView(),
                 )
               ],
             ),
