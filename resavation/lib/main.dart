@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Resavation',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Montserrat'
-      ),
+          primarySwatch: Colors.blue,
+          fontFamily: 'Montserrat',
+          scaffoldBackgroundColor: Colors.white),
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
     );

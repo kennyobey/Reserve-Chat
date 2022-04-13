@@ -1,14 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:country_picker/country_picker.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:resavation/ui/shared/colors.dart';
+
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_textspan.dart';
+
 import 'package:resavation/ui/shared/dump_widgets/select_country.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
