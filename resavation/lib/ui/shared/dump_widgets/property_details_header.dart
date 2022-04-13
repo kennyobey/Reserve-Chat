@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/utility/assets.dart';
+import 'package:stacked/stacked.dart';
 
 class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
    PropertyDetailsHeader({
@@ -16,7 +17,8 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
   final void Function()? onFavoriteTap;
   final bool isFavoriteTap;
 
-
+   int _current = 0;
+   final CarouselController _controller = CarouselController();
 
   @override
   Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
@@ -25,11 +27,34 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
       children: [
         CarouselSlider(
           options: CarouselOptions(
+            onPageChanged: (index, reason){
+              _current = index;
+            },
             autoPlay: true,
           ),
           items: Assets.imgList
               .map((item) => ResavationImage(image: item))
               .toList(),),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: Assets.imgList.asMap().entries.map((entry) {
+            return GestureDetector(
+              onTap: () => _controller.animateToPage(entry.key),
+              child: Container(
+                width: 12.0,
+                height: 12.0,
+                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black)
+                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+              ),
+            );
+          }).toList(),
+        ),
 
         Positioned(
           left: 30,

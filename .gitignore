@@ -2,3 +2,5 @@ pubspec.lock
 !resavation/pubspec.lock
 resavation/android/app/upload-keystore.jks
 resavation/android/app/build/
+key.properties
+app/upload-keystore.jks
