@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -70,15 +72,16 @@ class PropertyDetailsView extends StatelessWidget {
                               children: [
                                 Text(
                                   'Adeyemo Steven',
-                                  style: AppStyle.kBodySmallRegular12,
+                                  style: AppStyle.kBodyRegularBlack14W500,
                                 ),
                                 Text(
                                   'Listing Agent',
-                                  style: AppStyle.kBodySmallRegular11W400,
+                                  style: AppStyle.kSubHeading,
                                 ),
                               ],
                             ),
-                            Spacer(),
+                            horizontalSpaceSmall,
+                            horizontalSpaceMedium,
                             GestureDetector(
                               onTap: model.showComingSoon,
                               child: Icon(
@@ -86,7 +89,7 @@ class PropertyDetailsView extends StatelessWidget {
                                 color: Colors.black38,
                               ),
                             ),
-                            Spacer(),
+                            horizontalSpaceSmall,
                             GestureDetector(
                               onTap: model.showComingSoon,
                               child: Icon(
@@ -155,7 +158,7 @@ class PropertyDetailsView extends StatelessWidget {
                         ),
                         Text(
                           '11, Chevron Lekki',
-                          style: AppStyle.kBodyRegular,
+                          style: AppStyle.kBodySmallRegular12W500,
                         ),
                       ],
                     ),
@@ -174,18 +177,20 @@ class PropertyDetailsView extends StatelessWidget {
                     verticalSpaceSmall,
                     Text(
                       'No Party',
-                      style: AppStyle.kBodySmallRegular,
+                      style: AppStyle.kBodySmallRegular12W500,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Pets',
-                      style: AppStyle.kBodySmallRegular,
+                      style: AppStyle.kBodySmallRegular12W500,
                     ),
                     verticalSpaceSmall,
                     Text(
                       'No Smoking',
-                      style: AppStyle.kBodySmallRegular,
+                      style: AppStyle.kBodySmallRegular12W500,
                     ),
+                    verticalSpaceRegular,
+                    verticalSpaceLarge
                   ],
                 ),
               ),
@@ -193,18 +198,29 @@ class PropertyDetailsView extends StatelessWidget {
 
           ],
         ),
-        bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              '#2,326,363',
-              style: AppStyle.kBodyRegularBlack14,
-            ),
-            ResavationElevatedButton(
-              child: Text('Rent Now'),
-              onPressed: model.goToDatePickerView,
-            ),
-          ],
+        bottomSheet: Container(
+          height: 75,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Starting at", style: AppStyle.kBodySmallRegular12W500),
+                  Text(
+                    '₦ 2,326,363',
+                    style: AppStyle.kBodyRegularBlack14,
+                  )
+                ],
+              ),
+              ResavationElevatedButton(
+                child: Text('Rent Now'),
+                onPressed: model.goToDatePickerView,
+              ),
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => PropertyDetailsViewModel(),
@@ -227,11 +243,11 @@ class AmenitiesItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, ),
       child: Row(
         children: [
-          Icon(iconData),
+          Icon(iconData, color: kGray,),
           horizontalSpaceSmall,
           Text(
             title,
-            style: AppStyle.kBodySmallRegular12,
+            style: AppStyle.kBodySmallRegular12W500,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),

@@ -12,7 +12,7 @@ class Amenity {
 
 List<Amenity> ListOfAmenities = [
   Amenity(
-    iconData: Icons.air,
+    iconData: Icons.ac_unit_outlined,
     title: 'Air Conditional',
   ),
   Amenity(
