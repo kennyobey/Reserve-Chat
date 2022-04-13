@@ -5,7 +5,7 @@ class Assets {
   static const onboarding3 = 'assets/placeholders/onboarding3.svg';
   static const profile_image = 'assets/images/profile_image.png';
   static const house_placeholder = 'https://drive.google.com/uc?export=view&id=1Aeas6unQkz_qEDDHkKHYrgbcyzQZOIWi';
-  static const office_placeholder = 'https://drive.google.com/uc?export=view&id=d/1oJ-MsNm1kMcNq5DxJ6kh0PkEK3MsT1SW';
+  static const office_placeholder = 'https://drive.google.com/uc?export=view&id=18YEEyru6jbxDTP3GfukFsPVbPZPdOmzt';
   static const kitchen_placeholder = 'https://image.shutterstock.com/image-photo/kitchen-interior-island-sink-cabinets-600w-325910156.jpg';
   static const lagos_location_placeholder = 'https://drive.google.com/uc?export=view&id=1oIElQxNt4xasgsS52lQ5w_GF0ec_2arU';
   static const abuja_location_placeholder = 'https://drive.google.com/uc?export=view&id=1oAlgE_RVDS99aslaGkiY9WLlK-SUygq2';
