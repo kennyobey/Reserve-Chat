@@ -19,6 +19,8 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+
+  late RegistrationModel registration;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignUpViewModel>.reactive(
@@ -212,6 +214,20 @@ class _SignUpViewState extends State<SignUpView> {
                             model.verifyPasswordFieldController.text;
                         final bool termAndCondition = true;
 
+                        final String accountType = model.userType;
+
+                        RegistrationModel _registration =
+                        await model.registerUser(accountType, email, firstname, lastname,
+                            password, termAndCondition, verifyPassword);
+
+                        print(_registration.lastname);
+
+                        @override
+                        void initState() {
+                          registration = _registration;
+                          super.initState();
+                        }
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Registration in progress')),
                         );
@@ -221,11 +237,7 @@ class _SignUpViewState extends State<SignUpView> {
                           model.goToMainView();
                         });
 
-                        RegistrationModel _registration =
-                        await model.registerUser(email, firstname, lastname,
-                            password, termAndCondition, verifyPassword);
 
-                        print(_registration.lastname);
                       }
                     },
                   ),

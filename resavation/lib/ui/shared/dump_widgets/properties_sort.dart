@@ -23,13 +23,13 @@ class SortProperty extends ViewModelWidget<SearchViewModel> {
       children: [
         Text(
           noOfProperties.toString(),
-          style: AppStyle.kBodySmallRegular.copyWith(
+          style: AppStyle.kSubHeading.copyWith(
             color: kPrimaryColor,
           ),
         ),
         Text(
           ' Properties',
-          style: AppStyle.kBodySmallRegular,
+          style: AppStyle.kSubHeading,
         ),
         Spacer(),
         DropdownButtonHideUnderline(

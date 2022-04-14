@@ -40,6 +40,7 @@ class ChatRoomView extends StatelessWidget {
   AppBar buildAppBar(ChatRoomViewModel model) {
     return AppBar(
       automaticallyImplyLeading: false,
+      elevation: 0.0,
       iconTheme: IconThemeData(
         color: Colors.black, //change your color here
       ),
@@ -47,7 +48,10 @@ class ChatRoomView extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(Icons.arrow_back),
+          InkWell(
+            onTap: (){
+            },
+            child: Icon(Icons.arrow_back)),
           Expanded(
             child: AvatarCard(
               name: "Adeyemo Stephen",

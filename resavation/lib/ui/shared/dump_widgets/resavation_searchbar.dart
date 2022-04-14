@@ -60,7 +60,7 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
-              borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
+              borderSide: const BorderSide(color: kGray, width: 0.0),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),

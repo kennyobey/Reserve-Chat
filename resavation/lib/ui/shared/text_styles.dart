@@ -79,6 +79,12 @@ class AppStyle {
   );
 
   // text style with 13px font size
+  static TextStyle kSubHeadingW600 = GoogleFonts.montserrat(
+    fontWeight: FontWeight.w600,
+    fontSize: 13,
+    height: 2,
+  );
+
   static TextStyle kSubHeading = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
     fontSize: 13,

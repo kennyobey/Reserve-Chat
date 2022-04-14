@@ -81,8 +81,8 @@ class PropertyCard extends StatelessWidget {
                           style: AppStyle.kBodySmallRegular12W500,
                         ),
                         Text(
-                          '\$ ' + amountPerYear.toString() + ' /year',
-                          style: AppStyle.kBodySmallRegular12.copyWith(
+                          '\$ ' + amountPerYear.toString() + '/ year',
+                          style: AppStyle.kBodySmallRegular12W500.copyWith(
                             color: kPrimaryColor,
                           ),
                         ),
@@ -96,10 +96,13 @@ class PropertyCard extends StatelessWidget {
                 ),
               ),
               verticalSpaceSmall,
-              PropertyDetails(
-                numberOfBedrooms: numberOfBedrooms,
-                numberOfBathrooms: numberOfBathrooms,
-                squareFeet: squareFeet,
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: PropertyDetails(
+                  numberOfBedrooms: numberOfBedrooms,
+                  numberOfBathrooms: numberOfBathrooms,
+                  squareFeet: squareFeet,
+                ),
               ),
               verticalSpaceSmall,
             ],

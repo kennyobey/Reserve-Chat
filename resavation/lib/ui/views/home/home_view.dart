@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: model.goToPropertyOwnerProfileView,
+                      onTap: model.goToEditProfileView,
                       child: CircleAvatar(
                         radius: 20, // Image radius
                         backgroundImage: AssetImage(Assets.profile_image),
@@ -47,13 +47,17 @@ class HomeView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Find a',
-                        style: AppStyle.kHeading0,
-                      ),
-                      Text(
-                        'Suitable Apartment',
-                        style: AppStyle.kHeading2,
+                      RichText(
+                        text: TextSpan(
+                          text: 'Find a \n',
+                          style: AppStyle.kHeading0.copyWith(color: kBlack, height: 1.5),
+                          children: [
+                            TextSpan(
+                              text: 'Suitable Apartment',
+                              style: AppStyle.kHeading2.copyWith(color: kBlack, height: 1.5),
+                            ),
+                          ],
+                        ),
                       ),
                       verticalSpaceMedium,
                       FindYourLocation(
@@ -62,6 +66,7 @@ class HomeView extends StatelessWidget {
                       verticalSpaceMedium,
                       TitleListTile(
                         onTap: model.goToProfileProductListView,
+                        visibility: true,
                         title: 'Categories',
                       ),
                       verticalSpaceMedium,
@@ -85,6 +90,7 @@ class HomeView extends StatelessWidget {
                       verticalSpaceMedium,
                       TitleListTile(
                         onTap: model.goToProfileProductListView,
+                        visibility: true,
                         title: 'Top Cities',
                       ),
                       verticalSpaceSmall,
@@ -224,11 +230,13 @@ class TitleListTile extends StatelessWidget {
   const TitleListTile({
     Key? key,
     this.title = '',
+    required this.visibility,
     this.onTap,
   }) : super(key: key);
 
   final String title;
   final void Function()? onTap;
+  final bool visibility;
 
   @override
   Widget build(BuildContext context) {
@@ -236,15 +244,18 @@ class TitleListTile extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppStyle.kSubHeading,
+          style: AppStyle.kSubHeadingW600,
         ),
         Spacer(),
         GestureDetector(
           onTap: onTap,
-          child: Text(
-            'See All',
-            style: AppStyle.kBodySmallRegular12.copyWith(
-              color: kPrimaryColor,
+          child: Visibility(
+            visible: visibility,
+            child: Text(
+              'See All',
+              style: AppStyle.kBodySmallRegular12W500.copyWith(
+                color: kPrimaryColor,
+              ),
             ),
           ),
         ),

@@ -39,9 +39,9 @@ class PropertyOwnerProfileView extends StatelessWidget {
                           style: AppStyle.kBodyBold,
                         ),
                         Text('Ibadan, Nigeria'),
-                        verticalSpaceSmall,
                         Divider(),
-                        verticalSpaceSmall,
+                        Text('About', style: AppStyle.kSubHeadingW600),
+                        verticalSpaceTiny,
                         Text(
                             'injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l'),
                         Divider(),
@@ -49,27 +49,33 @@ class PropertyOwnerProfileView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ResavationButton(
-                              width: 150,
-                              title: 'Message',
-                              icon: Icons.messenger_outline,
-                              onTap: model.goToMessagesView,
+                            Expanded(
+                              child: ResavationButton(
+                                width: 92,
+                                title: 'Message',
+                                icon: Icons.messenger_outline,
+                                onTap: model.goToMessagesView,
+                              ),
                             ),
-                            ResavationButton(
-                              buttonColor: kGreen,
-                              borderColor: kGreen,
-                              width: 150,
-                              title: 'Call',
-                              icon: Icons.call_outlined,
-                              onTap: () {
-                                model.goToAudioCallView();
-                              },
+                            horizontalSpaceMedium,
+                            Expanded(
+                              child: ResavationButton(
+                                buttonColor: kGreen,
+                                borderColor: kGreen,
+                                width: 56,
+                                title: 'Call',
+                                icon: Icons.call_outlined,
+                                onTap: () {
+                                  model.goToAudioCallView();
+                                },
+                              ),
                             ),
                           ],
                         ),
                         verticalSpaceMedium,
                         TitleListTile(
                           title: "Stephen's Listing",
+                          visibility: false,
                           onTap: model.goToPropertyDetails,
                         ),
                         verticalSpaceMedium,

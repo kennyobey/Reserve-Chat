@@ -48,7 +48,7 @@ final listOfProperties = <Property> [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: false,
-      category: 'Sitting Room'),
+      category: 'Apartment'),
 
   Property(
       id: 3,
@@ -71,7 +71,7 @@ final listOfProperties = <Property> [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: true,
-      category: 'Bathroom'),
+      category: 'Apartment'),
   Property(
       id: 5,
       image: Assets.sitting_room_placeholder,
@@ -93,7 +93,7 @@ final listOfProperties = <Property> [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: true,
-      category: 'Nursery'),
+      category: 'Apartment'),
   Property(
       id: 7,
       image: Assets.sitting_room_placeholder,
@@ -104,5 +104,5 @@ final listOfProperties = <Property> [
       numberOfBedrooms: 5,
       squareFeet: 200,
       isFavoriteTap: true,
-      category: "Visitor's Room"),
+      category: "Apartment"),
 ];

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+
+import '../spacing.dart';
 
 class PropertyDetails extends StatelessWidget {
   const PropertyDetails({
@@ -7,7 +10,7 @@ class PropertyDetails extends StatelessWidget {
     required this.numberOfBedrooms,
     required this.numberOfBathrooms,
     required this.squareFeet,
-    this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     this.title,
   }) : super(key: key);
 
@@ -23,15 +26,15 @@ class PropertyDetails extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       children: [
         PropertyDetailsIcon(
-          icon: Icons.bed,
+          icon: Icons.king_bed_outlined,
           numberOfBedrooms: numberOfBedrooms),
-
+        horizontalSpaceSmall,
         PropertyDetailsIcon(
-            icon: Icons.bathroom,
+            icon: Icons.shower_outlined,
             numberOfBedrooms: numberOfBathrooms),
-
+        horizontalSpaceSmall,
         PropertyDetailsIcon(
-            icon: Icons.border_horizontal_outlined,
+            icon: Icons.square_foot_outlined,
             numberOfBedrooms: squareFeet),
 
 
@@ -54,8 +57,8 @@ class PropertyDetailsIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon),
-        SizedBox(width: 5,),
+        Icon(icon, color: kBlack54, size: 20,),
+        SizedBox(width: 4,),
         Text(
           numberOfBedrooms.toString() ,
           style: AppStyle.kBodySmallRegular,
