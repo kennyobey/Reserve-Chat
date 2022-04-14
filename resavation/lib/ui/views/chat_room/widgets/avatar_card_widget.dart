@@ -25,21 +25,24 @@ class AvatarCard extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: onTap,
-                child: Text(
-                  name,
-                  style: AppStyle.kBodyBoldBlack,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: onTap,
+                  child: Text(
+                    name,
+                    style: AppStyle.kBodyBoldBlack,
+                  ),
                 ),
-              ),
-              Text(
-                'Online',
-                style: AppStyle.kBodyRegularBlack14,
-              ),
-            ],
+                Text(
+                  'Online',
+                  style: AppStyle.kBodyRegularBlack14,
+                ),
+              ],
+            ),
           ),
         ),
       ],

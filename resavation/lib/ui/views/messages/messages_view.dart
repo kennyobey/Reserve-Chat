@@ -111,7 +111,7 @@ class MessagesCard extends StatelessWidget {
               style: AppStyle.kBodySmallRegular,
             ),
             Container(
-              height: 20,
+              height: 18,
               width: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -121,7 +121,7 @@ class MessagesCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   '1',
-                  style: AppStyle.kBodySmallRegular.copyWith(color: kWhite),
+                  style: AppStyle.kBodySmallRegular11W400.copyWith(color: kWhite),
                 ),
               ),
             ),

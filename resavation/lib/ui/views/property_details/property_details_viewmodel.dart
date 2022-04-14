@@ -36,6 +36,10 @@ class PropertyDetailsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.datePickerView);
   }
 
+  void goToPropertyOwnersProfileView(){
+    _navigationService.navigateTo(Routes.propertyOwnerProfileView);
+  }
+
   //Google Map
   void goToMapView() {
     _navigationService.navigateTo(Routes.mapView);

@@ -62,9 +62,12 @@ class PropertyDetailsView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CircleAvatar(
-                              radius: 30, // Image radius
-                              backgroundImage: AssetImage(Assets.profile_image),
+                            InkWell(
+                              child: CircleAvatar(
+                                radius: 30, // Image radius
+                                backgroundImage: AssetImage(Assets.profile_image),
+                              ),
+                              onTap: ()=> model.goToPropertyOwnersProfileView(),
                             ),
                             horizontalSpaceSmall,
                             Column(

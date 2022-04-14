@@ -43,18 +43,22 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
       elevation: 5,
       shadowColor: kBlack54,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(5.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
             Expanded(
               flex: 2,
               child: GestureDetector(
                 onTap: onTap,
                 child: Container(
-                  height: 100,
-                  child: ResavationImage(
-                    image: image,
+                  height: 110,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: ResavationImage(
+                      image: image,
+                    ),
                   ),
                 ),
               ),
@@ -64,6 +68,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
               flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

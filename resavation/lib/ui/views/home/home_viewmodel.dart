@@ -56,8 +56,8 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.profileProductListView);
   }
 
-  void goToPropertyOwnerProfileView() {
-    _navigationService.navigateTo(Routes.propertyOwnerProfileView);
+  void goToEditProfileView() {
+    _navigationService.navigateTo(Routes.editProfileView);
 
   }
 }

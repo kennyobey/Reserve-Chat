@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
@@ -24,6 +27,7 @@ class SignUpViewModel extends BaseViewModel {
   final verifyPasswordFieldController = TextEditingController();
 
   Future<RegistrationModel> registerUser(
+      String accountType,
       String email,
       String firstname,
       String lastname,
@@ -32,17 +36,24 @@ class SignUpViewModel extends BaseViewModel {
       String verifyPassword) async {
     final String apiUrl =
         "https://resavation-backend.herokuapp.com/api/v1/auth/register";
-    final response = await http.post(Uri.parse(apiUrl), body: {
+
+    final response = await http.post(Uri.parse(apiUrl),
+        headers: <String, String>{
+      'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: jsonEncode(<String, dynamic> {
+      "accountType": accountType,
       "email": email,
       "firstname": firstname,
       "lastname": lastname,
       "password": password,
-      termAndCondition: termAndCondition,
+      "termAndCondition": termAndCondition,
       "verifyPassword": verifyPassword,
-    });
+    }));
 
     if (response.statusCode == 200) {
       final dynamic registrationResponse = response.body;
+      print("The Result${response.body}");
       return registrationModelFromJson(registrationResponse);
     } else {
       throw Exception('Failed to create registration.');
@@ -52,7 +63,7 @@ class SignUpViewModel extends BaseViewModel {
   bool _checkValue = false;
 
   bool get checkValue => _checkValue;
-  String userType = "Property Owner";
+  String userType = "PROPERTY_OWNER";
 
 
   // To send details to the server
