@@ -12,6 +12,7 @@ class ResavationSearchBar extends StatefulWidget {
     this.icon,
     this.elevation,
     this.hintText,
+    this.fillColors,
     this.color,
     this.labelText,
     this.showPrefix = false,
@@ -30,6 +31,7 @@ class ResavationSearchBar extends StatefulWidget {
   final String? labelText;
   final double? elevation;
   final Color? color;
+  final Color? fillColors;
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
@@ -62,6 +64,7 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
                   topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
               borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
             ),
+            fillColor: widget.fillColors ?? null,
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
             ),

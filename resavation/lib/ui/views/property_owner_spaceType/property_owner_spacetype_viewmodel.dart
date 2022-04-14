@@ -10,15 +10,28 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
 
-  // drop-down button UI logic
-  String? selectedValue;
-  List<String> items = [
-    'Flat',
-    'Bungalow',
-    'Self Contain',
+  // drop-down button UI logic for spaceType
+  String? selectedValue1;
+  List<String> spaceType = [
+    'Office Space',
+    'Appartment',
   ];
-  void onSelectedValueChange(value) {
-    selectedValue = value as String;
+
+// drop-down button UI logic for Listing Option
+  String? selectedValue2;
+  List<String> listingOption = [
+    'Shared Space',
+    'Entire Space',
+  ];
+
+  void onSelectedValueChange1(value) {
+    selectedValue1 = value as String;
+
+    notifyListeners();
+  }
+
+  void onSelectedValueChange2(value) {
+    selectedValue2 = value as String;
 
     notifyListeners();
   }

@@ -1,9 +1,7 @@
 // ignore_for_file: deprecated_member_use, must_be_immutable
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
@@ -51,11 +49,9 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   style: AppStyle.kBodyRegularBlack14,
                 ),
                 verticalSpaceMedium,
+                verticalSpaceRegular,
                 ResavationButton(
-                  // width: 140,
-                  // height: 40,
                   onTap: () {
-                    //model.addPhoto();
                     model.goToPropertyOwnerAddCoverPhotosView();
                   },
                   title: 'Add photos',

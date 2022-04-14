@@ -49,9 +49,9 @@ class PropertyOwnerEditProfileView extends StatelessWidget {
                 verticalSpaceMedium,
                 Text(
                   'About me',
-                  style: AppStyle.kBodyRegularBlack14W600,
+                  style: AppStyle.kBodySmallRegular12W500,
                 ),
-                verticalSpaceMedium,
+                verticalSpaceSmall,
                 _buildTextField(context),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,

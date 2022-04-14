@@ -31,6 +31,7 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                verticalSpaceMedium,
                 Center(
                   child: Text(
                     'Identification',

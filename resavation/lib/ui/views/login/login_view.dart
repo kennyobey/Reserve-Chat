@@ -9,23 +9,15 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-
 class LogInView extends StatefulWidget {
-   const LogInView({Key? key}) : super(key: key);
-
-
-
+  const LogInView({Key? key}) : super(key: key);
 
   @override
   State<LogInView> createState() => _LogInViewState();
 }
 
-
 class _LogInViewState extends State<LogInView> {
-
   late LoginModel logIn;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,15 +94,13 @@ class _LogInViewState extends State<LogInView> {
                       print(password);
                       model.goToMainView();
 
-                       LoginModel login = await model.loginUser(email, password);
-
+                      LoginModel login = await model.loginUser(email, password);
 
                       @override
                       void initState() {
                         logIn = login;
                         super.initState();
                       }
-
                     },
                   ),
                   verticalSpaceMassive,
@@ -129,6 +119,4 @@ class _LogInViewState extends State<LogInView> {
       viewModelBuilder: () => LogInViewModel(),
     );
   }
-
-
 }
