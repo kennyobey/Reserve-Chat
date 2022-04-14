@@ -30,102 +30,104 @@ class PropertyOwnerHomePageView extends StatelessWidget {
               horizontal: 8,
               vertical: 15,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpaceMedium,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                              child: CircleAvatar(
-                                radius: 20, // Image radius
-                                backgroundImage:
-                                    AssetImage(Assets.profile_image),
-                              ),
-                              onTap: () {
-                                model
-                                    .goToPropertyOwnerIdentificationVerificationView();
-                              }),
-                          horizontalSpaceSmall,
-                          Text(
-                            'Welcome Steven!',
-                            style: AppStyle.kBodyRegularBlack14W600,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  verticalSpaceMedium,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                                child: CircleAvatar(
+                                  radius: 20, // Image radius
+                                  backgroundImage:
+                                      AssetImage(Assets.profile_image),
+                                ),
+                                onTap: () {
+                                  model
+                                      .goToPropertyOwnerIdentificationVerificationView();
+                                }),
+                            horizontalSpaceSmall,
+                            Text(
+                              'Welcome Steven!',
+                              style: AppStyle.kBodyRegularBlack14W600,
+                            ),
+                            Spacer(),
+                            Icon(Icons.notifications_outlined),
+                          ],
+                        ),
+                        verticalSpaceMedium,
+                        Container(
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: kGray),
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: kBlack,
                           ),
-                          Spacer(),
-                          Icon(Icons.notifications_outlined),
-                        ],
-                      ),
-                      verticalSpaceMedium,
-                      Container(
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: kGray),
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: kBlack,
+                          width: MediaQuery.of(context).size.width,
+                          height: 135.0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              verticalSpaceTiny,
+                              Text(
+                                "Connecting you to the best tenant in the world",
+                                style: TextStyle(color: kWhite),
+                              ),
+                              verticalSpaceSmall,
+                              ResavationElevatedButton(
+                                child: Text("List your space"),
+                                onPressed: () {
+                                  model.goToPropertyOwnerSpaceTypeView();
+                                },
+                                //  borderColor: kp,
+                              ),
+                            ],
+                          ),
                         ),
-                        width: MediaQuery.of(context).size.width,
-                        height: 135.0,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            verticalSpaceTiny,
-                            Text(
-                              "Connecting you to the best tenant in the world",
-                              style: TextStyle(color: kWhite),
-                            ),
-                            verticalSpaceSmall,
-                            ResavationElevatedButton(
-                              child: Text("List your space"),
-                              onPressed: () {
-                                model.goToPropertyOwnerSpaceTypeView();
-                              },
-                              //  borderColor: kp,
-                            ),
-                          ],
+                        verticalSpaceMedium,
+                        Text(
+                          "Tenants request",
+                          style: AppStyle.kBodyRegularBlack14W500,
                         ),
-                      ),
-                      verticalSpaceMedium,
-                      Text(
-                        "Tenants request",
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceTiny,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Details",
-                              style: AppStyle.kBodyRegularBlack14,
-                            ),
-                            Spacer(),
-                            Text(
-                              "File",
-                              style: AppStyle.kBodyRegularBlack14,
-                            ),
-                            Spacer(),
-                            Text(
-                              "Actions",
-                              style: AppStyle.kBodyRegularBlack14,
-                            ),
-                          ],
+                        verticalSpaceTiny,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Details",
+                                style: AppStyle.kBodyRegularBlack14,
+                              ),
+                              Spacer(),
+                              Text(
+                                "File",
+                                style: AppStyle.kBodyRegularBlack14,
+                              ),
+                              Spacer(),
+                              Text(
+                                "Actions",
+                                style: AppStyle.kBodyRegularBlack14,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      verticalSpaceRegular,
-                      ListingCard(),
-                      verticalSpaceTiny,
-                      ListingCard(),
-                      verticalSpaceTiny,
-                      ListingCard(),
-                    ],
+                        verticalSpaceRegular,
+                        ListingCard(),
+                        verticalSpaceTiny,
+                        ListingCard(),
+                        verticalSpaceTiny,
+                        ListingCard(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

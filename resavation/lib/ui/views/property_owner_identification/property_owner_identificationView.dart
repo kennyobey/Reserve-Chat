@@ -2,16 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
-//import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/dump_widgets/select_country.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
+
 import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationViewModel.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -55,6 +56,33 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                 verticalSpaceTiny,
                 ResavationTextField(
                   hintText: 'Last Name',
+                ),
+                Row(
+                  children: [
+                    Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: kGray),
+                          borderRadius: BorderRadius.circular(3.0)),
+                      child: CountryCodePicker(
+                        initialSelection: "US",
+                        showCountryOnly: false,
+                        showFlag: true,
+                        showDropDownButton: true,
+                        showOnlyCountryWhenClosed: false,
+                        favorite: ['+234', 'NIG'],
+                        enabled: true,
+                        showFlagMain: true,
+                        hideMainText: false,
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      "Veryfy Now",
+                      style: AppStyle.kBodySmallRegular12
+                          .copyWith(color: kPrimaryColor),
+                    ),
+                  ],
                 ),
                 verticalSpaceTiny,
                 Row(
