@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final registrationModel = registrationModelFromJson(jsonString);
+
 import 'dart:convert';
 
 RegistrationModel registrationModelFromJson(String str) => RegistrationModel.fromJson(json.decode(str));
@@ -6,17 +10,17 @@ String registrationModelToJson(RegistrationModel data) => json.encode(data.toJso
 
 class RegistrationModel {
   RegistrationModel({
-    required this.email,
-    required this.firstname,
-    required this.lastname,
-    required this.message,
+    this.email,
+    this.firstname,
+    this.lastname,
+    this.message,
     required this.roles,
   });
 
-  String email;
-  String firstname;
-  String lastname;
-  String message;
+  String? email;
+  String? firstname;
+  String? lastname;
+  String? message;
   List<Role> roles;
 
   factory RegistrationModel.fromJson(Map<String, dynamic> json) => RegistrationModel(
@@ -43,15 +47,15 @@ class Role {
   });
 
   int id;
-  List<String> name;
+  String name;
 
   factory Role.fromJson(Map<String, dynamic> json) => Role(
     id: json["id"],
-    name: List<String>.from(json["name"].map((x) => x)),
+    name: json["name"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": List<dynamic>.from(name.map((x) => x)),
+    "name": name,
   };
 }

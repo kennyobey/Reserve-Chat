@@ -21,6 +21,7 @@ class SignUpView extends StatefulWidget {
 class _SignUpViewState extends State<SignUpView> {
 
   late RegistrationModel registration;
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignUpViewModel>.reactive(
@@ -132,7 +133,7 @@ class _SignUpViewState extends State<SignUpView> {
                         Row(
                           children: [
                             Radio(
-                              value: "Property Owner",
+                              value: "PROPERTY_OWNER",
                               groupValue: model.userType,
                               onChanged: (value) {
                                 model.onRadioChanged(value.toString());
@@ -148,7 +149,7 @@ class _SignUpViewState extends State<SignUpView> {
                         Row(
                           children: [
                             Radio(
-                              value: "Tenant",
+                              value: "USER",
                               groupValue: model.userType,
                               onChanged: (value) {
                                 model.onRadioChanged(value.toString());
@@ -216,17 +217,20 @@ class _SignUpViewState extends State<SignUpView> {
 
                         final String accountType = model.userType;
 
-                        RegistrationModel _registration =
-                        await model.registerUser(accountType, email, firstname, lastname,
-                            password, termAndCondition, verifyPassword);
 
-                        print(_registration.lastname);
+                        RegistrationModel register = await model.registerUser(
+                          accountType, email, firstname, lastname, password, verifyPassword,
+                          termAndCondition,
+                        );
 
                         @override
                         void initState() {
-                          registration = _registration;
+                          registration = register;
                           super.initState();
                         }
+
+
+
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Registration in progress')),
@@ -234,10 +238,8 @@ class _SignUpViewState extends State<SignUpView> {
 
                         // waits for 3 seconds before proceeding to main view
                         model.timer = new Timer(const Duration(seconds: 3), () {
-                          model.goToMainView();
+                          // model.goToMainView();
                         });
-
-
                       }
                     },
                   ),

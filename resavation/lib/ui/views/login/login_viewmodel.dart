@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
@@ -16,10 +18,13 @@ class LogInViewModel extends BaseViewModel {
   Future<LoginModel> loginUser(String email, String password) async {
     var response = await http.post(
         Uri.http("resavation-backend.herokuapp.com", "api/v1/auth/login"),
-        body: {
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: jsonEncode(<String, String>{
           "email": email,
           "password": password,
-        });
+        }));
     var data = response.body;
     print(data);
 
