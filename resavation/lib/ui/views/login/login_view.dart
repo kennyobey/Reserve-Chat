@@ -91,7 +91,7 @@ class _LogInViewState extends State<LogInView> {
                       final String password = model.passwordController.text;
 
                       LoginModel login = await model.loginUser(email, password);
-                      //model.goToMainView();
+                      model.goToMainView();
 
                       @override
                       void initState() {
