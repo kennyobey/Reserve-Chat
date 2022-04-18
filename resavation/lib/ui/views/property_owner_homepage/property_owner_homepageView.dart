@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
-
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
@@ -190,7 +188,7 @@ class ListingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           border: Border.all(color: kGray),
           borderRadius: new BorderRadius.circular(5.0),
@@ -199,9 +197,17 @@ class ListingCard extends StatelessWidget {
         height: 85,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           ListTile(
-            leading: CircleAvatar(
-              radius: 30, // Image radius
-              backgroundImage: AssetImage(Assets.profile_image3),
+            leading: Container(
+              height: 100,
+              width: 100,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6), //or 15.0
+                child: Image.asset(
+                  Assets.profile_image4,
+                  width: 60,
+                  height: 60,
+                ),
+              ),
             ),
             title: Text(
               "Adeyemo Stephen",
@@ -233,108 +239,120 @@ class ListingCard extends StatelessWidget {
   void bookApartment(BuildContext context) {
     var alertdialog = Dialog(
       child: Container(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         width: double.infinity,
-        height: 250,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(6), //or 15.0
-                      child: Image.asset(
-                        Assets.profile_image4,
-                        width: 90,
-                        height: 90,
+        height: 240,
+        child: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6), //or 15.0
+                          child: Image.asset(
+                            Assets.profile_image4,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
                       ),
-                    ),
-                    horizontalSpaceSmall,
-                    Text(
-                      "Queen Ameh",
-                      style: AppStyle.kBodyRegularBlack14W500,
-                    ),
-                    Spacer(),
-                    Text("Exit"),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Apartment",
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        horizontalSpaceSmall,
-                        Text(
-                          "SeedBuilders Hub",
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Apartment",
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        horizontalSpaceSmall,
-                        Text(
-                          "SeedBuilders Hub",
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-            verticalSpaceSmall,
-            ResavationButton(
-              title: "Identity Document",
-              buttonColor: kWhite,
-              titleColor: kBlack,
-              borderColor: kGray,
-            ),
-            verticalSpaceSmall,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FlatButton(
-                  child: Text(
-                    'Cancel',
-                    style:
-                        AppStyle.kBodyRegularBlack14W500.copyWith(color: kRed),
+                    ],
                   ),
-                  color: kWhite,
-                  textColor: kRed,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                horizontalSpaceSmall,
-                FlatButton(
-                  child: Text(
-                    'Next',
-                    style: AppStyle.kBodyRegular,
+                  horizontalSpaceSmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Queen Ameh",
+                        style: AppStyle.kBodyRegularBlack14W500,
+                      ),
+                      verticalSpaceTiny,
+                      Text(
+                        "Apartment",
+                        style: AppStyle.kBodyRegularBlack14W500,
+                      ),
+                      horizontalSpaceSmall,
+                      Text(
+                        "SeedBuilders",
+                        style: AppStyle.kBodyRegularBlack14W500,
+                      ),
+                    ],
                   ),
-                  color: kPrimaryColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    //model.goToPropertyOwnerAmenitiesView();
-                  },
-                ),
-              ],
-            ),
-          ],
+                  horizontalSpaceSmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Queen",
+                            style: AppStyle.kBodyRegularBlack14W500,
+                          ),
+                        ],
+                      ),
+                      verticalSpaceTiny,
+                      Text(
+                        "Apart",
+                        style: AppStyle.kBodyRegularBlack14W500,
+                      ),
+                      horizontalSpaceSmall,
+                      Text(
+                        "Seed",
+                        style: AppStyle.kBodyRegularBlack14W500,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              verticalSpaceSmall,
+              ResavationButton(
+                title: "Identity Document",
+                buttonColor: kWhite,
+                titleColor: kBlack,
+                borderColor: kGray,
+              ),
+              verticalSpaceSmall,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FlatButton(
+                    child: Text(
+                      'Cancel',
+                      style: AppStyle.kBodyRegularBlack14W500
+                          .copyWith(color: kRed),
+                    ),
+                    color: kWhite,
+                    textColor: kRed,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  horizontalSpaceSmall,
+                  FlatButton(
+                    child: Text(
+                      'Accept',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    color: kPrimaryColor,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      //model.goToPropertyOwnerAmenitiesView();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

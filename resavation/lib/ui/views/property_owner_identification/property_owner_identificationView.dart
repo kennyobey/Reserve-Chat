@@ -61,19 +61,24 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
                   children: [
                     Container(
                       height: 55,
+                      width: 250,
                       decoration: BoxDecoration(
                           border: Border.all(color: kGray),
                           borderRadius: BorderRadius.circular(3.0)),
-                      child: CountryCodePicker(
-                        initialSelection: "US",
-                        showCountryOnly: false,
-                        showFlag: true,
-                        showDropDownButton: true,
-                        showOnlyCountryWhenClosed: false,
-                        favorite: ['+234', 'NIG'],
-                        enabled: true,
-                        showFlagMain: true,
-                        hideMainText: false,
+                      child: Row(
+                        children: [
+                          CountryCodePicker(
+                            initialSelection: "US",
+                            showCountryOnly: false,
+                            showFlag: true,
+                            showDropDownButton: true,
+                            showOnlyCountryWhenClosed: false,
+                            favorite: ['+234', 'NIG'],
+                            enabled: true,
+                            showFlagMain: true,
+                            hideMainText: false,
+                          ),
+                        ],
                       ),
                     ),
                     Spacer(),
