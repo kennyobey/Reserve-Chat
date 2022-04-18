@@ -161,7 +161,7 @@ class ResavationListSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 0),
+      margin: EdgeInsets.symmetric(horizontal: 8),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: kPrimaryColor,
@@ -239,7 +239,7 @@ class ListingCard extends StatelessWidget {
   void bookApartment(BuildContext context) {
     var alertdialog = Dialog(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -277,12 +277,12 @@ class ListingCard extends StatelessWidget {
                       verticalSpaceTiny,
                       Text(
                         "Apartment",
-                        style: AppStyle.kBodyRegularBlack14W500,
+                        style: AppStyle.kBodySmallRegular12W500,
                       ),
                       horizontalSpaceSmall,
                       Text(
-                        "SeedBuilders",
-                        style: AppStyle.kBodyRegularBlack14W500,
+                        "Requested",
+                        style: AppStyle.kBodySmallRegular12W500,
                       ),
                     ],
                   ),
@@ -291,23 +291,23 @@ class ListingCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "Queen",
-                            style: AppStyle.kBodyRegularBlack14W500,
+                            "Exit",
+                            style: AppStyle.kBodySmallRegular10W400,
                           ),
                         ],
                       ),
                       verticalSpaceTiny,
                       Text(
-                        "Apart",
-                        style: AppStyle.kBodyRegularBlack14W500,
+                        "SeedBuilders",
+                        style: AppStyle.kBodySmallRegular12W500,
                       ),
                       horizontalSpaceSmall,
                       Text(
-                        "Seed",
-                        style: AppStyle.kBodyRegularBlack14W500,
+                        "Jan 10, 2022",
+                        style: AppStyle.kBodySmallRegular12W500,
                       ),
                     ],
                   ),

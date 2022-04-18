@@ -68,7 +68,18 @@ Widget _blackcontainer(String label) {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          verticalSpaceTiny,
+          Container(
+            height: 150,
+            width: 150,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6), //or 15.0
+              child: Image.asset(
+                Assets.profile_image4,
+                width: 60,
+                height: 60,
+              ),
+            ),
+          ),
           // ResavationImage(
           //   image: image,
           // ),
