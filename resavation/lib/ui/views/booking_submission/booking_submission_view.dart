@@ -3,11 +3,13 @@ import 'package:resavation/services/core/paystack_payment.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/booking_submission/booking_submission_viewmodel.dart';
+import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 
 class BookingSubmissionView extends StatelessWidget {
@@ -46,6 +48,9 @@ class BookingSubmissionView extends StatelessWidget {
                           ),
                           Spacer(),
                           Container(
+                            child: ResavationImage(
+                              image: Assets.office_placeholder,
+                            ),
                             height: 150,
                             width: 150,
                             decoration: BoxDecoration(
@@ -190,8 +195,8 @@ class BookingSubmissionView extends StatelessWidget {
             ResavationButton(
               title: 'Continue',
               onTap: () {
-                String email = "ogundipeibukun51@gmail.com";
-                int price = 900;
+                String email = "usersemail@gmail.com";
+                int price = 1000;
                 MakePayment(ctx: context, email: email, price: price)
                     .chargeCardAndMakePayment();
                 model.goToConfirmationView();

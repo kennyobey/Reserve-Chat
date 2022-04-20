@@ -70,7 +70,7 @@ Widget _blackcontainer(String label) {
         children: [
           Container(
             height: 150,
-            width: 150,
+            width: 140,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6), //or 15.0
               child: Image.asset(

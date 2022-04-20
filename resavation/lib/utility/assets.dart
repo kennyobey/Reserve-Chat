@@ -28,5 +28,6 @@ class Assets {
   // Slider Image List
   static const List<String> imgList = ['https://drive.google.com/uc?export=view&id=1Aeas6unQkz_qEDDHkKHYrgbcyzQZOIWi',
     'https://drive.google.com/uc?export=view&id=1A5INnXxilqqT4jBK8_CsO7gZHmkPIDVy',
-    'https://drive.google.com/uc?export=view&id=1CoELJmrxld0DCJPiOEOhKucE1GfbjGCt'];
+    'https://drive.google.com/uc?export=view&id=1Cqu4hIPy1Z2NeX42u3GxD9OeiwV-ryF_'];
+
 }

@@ -43,7 +43,8 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   void logout() async {
-    await _navigationService.clearStackAndShow(Routes.onboardingView);
+    _userTypeService.error.value = "";
+    await _navigationService.clearStackAndShow(Routes.logInView);
   }
 
   void showComingSoon() {
