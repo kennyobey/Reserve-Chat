@@ -38,7 +38,6 @@ class PropertyDetailsView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24.0,
-                      vertical: 15,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +191,7 @@ class PropertyDetailsView extends StatelessWidget {
                       'No Smoking',
                       style: AppStyle.kBodySmallRegular12W500,
                     ),
-                    verticalSpaceRegular,
+                    verticalSpaceLarge,
                     verticalSpaceLarge
                   ],
                 ),

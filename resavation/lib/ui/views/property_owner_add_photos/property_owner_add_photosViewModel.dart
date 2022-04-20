@@ -32,12 +32,12 @@ class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
     );
     if (result == null) return;
 
-    PlatformFile? file = result!.files.first;
+    PlatformFile? file = result.files.first;
 
-    print('File Name: ${file?.name}');
-    print('File Size: ${file?.size}');
-    print('File Extension: ${file?.extension}');
-    print('File Path: ${file?.path}');
+    print('File Name: ${file.name}');
+    print('File Size: ${file.size}');
+    print('File Extension: ${file.extension}');
+    print('File Path: ${file.path}');
   }
 
   void viewFile(PlatformFile file) {

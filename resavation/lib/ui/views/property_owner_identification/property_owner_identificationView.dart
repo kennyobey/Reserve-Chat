@@ -29,111 +29,115 @@ class PropertyOwnerIdentificationView extends StatelessWidget {
               horizontal: 24,
               vertical: 15,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpaceMedium,
-                Center(
-                  child: Text(
-                    'Identification',
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  verticalSpaceMedium,
+                  Center(
+                    child: Text(
+                      'Identification',
+                      style: AppStyle.kBodyRegularBlack14W500,
+                    ),
+                  ),
+                  verticalSpaceMedium,
+                  Text(
+                    'Personal Details',
                     style: AppStyle.kBodyRegularBlack14W500,
                   ),
-                ),
-                verticalSpaceMedium,
-                Text(
-                  'Personal Details',
-                  style: AppStyle.kBodyRegularBlack14W500,
-                ),
-                verticalSpaceSmall,
-                Text(
-                  'Complete your personal information',
-                  style: AppStyle.kBodySmallRegular12W500,
-                ),
-                verticalSpaceTiny,
-                ResavationTextField(
-                  hintText: 'First Name',
-                ),
-                verticalSpaceTiny,
-                ResavationTextField(
-                  hintText: 'Last Name',
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 55,
-                      width: 250,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: kGray),
-                          borderRadius: BorderRadius.circular(3.0)),
-                      child: Row(
-                        children: [
-                          CountryCodePicker(
-                            initialSelection: "US",
-                            showCountryOnly: false,
-                            showFlag: true,
-                            showDropDownButton: true,
-                            showOnlyCountryWhenClosed: false,
-                            favorite: ['+234', 'NIG'],
-                            enabled: true,
-                            showFlagMain: true,
-                            hideMainText: false,
-                          ),
-                        ],
+                  verticalSpaceSmall,
+                  Text(
+                    'Complete your personal information',
+                    style: AppStyle.kBodySmallRegular12W500,
+                  ),
+                  verticalSpaceTiny,
+                  ResavationTextField(
+                    hintText: 'First Name',
+                  ),
+                  verticalSpaceTiny,
+                  ResavationTextField(
+                    hintText: 'Last Name',
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        height: 55,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kGray),
+                            borderRadius: BorderRadius.circular(3.0)),
+                        child: Row(
+                          children: [
+                            CountryCodePicker(
+                              initialSelection: "US",
+                              showCountryOnly: false,
+                              showFlag: true,
+                              showDropDownButton: true,
+                              showOnlyCountryWhenClosed: false,
+                              favorite: ['+234', 'NIG'],
+                              enabled: true,
+                              showFlagMain: true,
+                              hideMainText: false,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "Veryfy Now",
-                      style: AppStyle.kBodySmallRegular12
-                          .copyWith(color: kPrimaryColor),
-                    ),
-                  ],
-                ),
-                verticalSpaceTiny,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Date of Birth',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                  ],
-                ),
-                verticalSpaceTiny,
-                Row(
-                  children: [
-                    _buildTextField(''),
-                    horizontalSpaceMedium,
-                    Expanded(child: _buildTextFieldDay('')),
-                    horizontalSpaceTiny,
-                    Expanded(child: _buildTextFieldMonth('')),
-                    horizontalSpaceTiny,
-                    Expanded(child: _buildTextFieldYear('')),
-                  ],
-                ),
-                verticalSpaceSmall,
-                Text(
-                  'Complete your address',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceTiny,
-                SelectCountry(
-                  label: model.selectedCountry,
-                  onSelected: model.onSelectCountryTap(Country.worldWide),
-                ),
-                verticalSpaceTiny,
-                ResavationTextField(
-                  hintText: 'State',
-                ),
-                verticalSpaceTiny,
-                ResavationTextField(
-                  hintText: 'City',
-                ),
-                verticalSpaceTiny,
-                ResavationTextField(
-                  hintText: 'Enter the address of the space',
-                ),
-              ],
+                      Spacer(),
+                      Expanded(
+                        child: Text(
+                          "Verify Now",
+                          style: AppStyle.kBodySmallRegular12
+                              .copyWith(color: kPrimaryColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                  verticalSpaceTiny,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Date of Birth',
+                        style: AppStyle.kBodySmallRegular12,
+                      ),
+                    ],
+                  ),
+                  verticalSpaceTiny,
+                  Row(
+                    children: [
+                      _buildTextField(''),
+                      horizontalSpaceMedium,
+                      Expanded(child: _buildTextFieldDay('')),
+                      horizontalSpaceTiny,
+                      Expanded(child: _buildTextFieldMonth('')),
+                      horizontalSpaceTiny,
+                      Expanded(child: _buildTextFieldYear('')),
+                    ],
+                  ),
+                  verticalSpaceSmall,
+                  Text(
+                    'Complete your address',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceTiny,
+                  SelectCountry(
+                    label: model.selectedCountry,
+                    onSelected: model.onSelectCountryTap(Country.worldWide),
+                  ),
+                  verticalSpaceTiny,
+                  ResavationTextField(
+                    hintText: 'State',
+                  ),
+                  verticalSpaceTiny,
+                  ResavationTextField(
+                    hintText: 'City',
+                  ),
+                  verticalSpaceTiny,
+                  ResavationTextField(
+                    hintText: 'Enter the address of the space',
+                  ),
+                ],
+              ),
             ),
           ),
           bottomSheet: Padding(
