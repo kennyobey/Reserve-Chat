@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppStyle {
-
   // text style with 24px font size
   static TextStyle kHeading1 = GoogleFonts.montserrat(
     fontWeight: FontWeight.bold,
@@ -142,13 +141,12 @@ class AppStyle {
     height: 1.5,
   );
 
-
   static TextStyle kBodyBold =
-  kBodyRegular.copyWith(fontWeight: FontWeight.bold);
+      kBodyRegular.copyWith(fontWeight: FontWeight.bold);
   static TextStyle kBodyBoldBlack =
-  kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
+      kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
 
   //static TextStyle kBodyBoldBlack = kBodyRegular.copyWith(fontWeight: FontWeight.bold, color: Colors.black);
   static TextStyle kBodySmallBold =
-  kBodyRegular.copyWith(fontWeight: FontWeight.bold);
+      kBodyRegular.copyWith(fontWeight: FontWeight.bold);
 }

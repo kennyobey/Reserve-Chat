@@ -29,7 +29,7 @@ class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
                       verticalSpaceExtraLarge,
                       Text(
                         'Your Appointment',
-                        style: AppStyle.kBodyRegular.copyWith(color: kBlack),
+                        style: AppStyle.kHeading0.copyWith(color: kBlack),
                       ),
                     ],
                   ),

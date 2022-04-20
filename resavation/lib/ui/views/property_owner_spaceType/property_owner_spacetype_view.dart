@@ -34,13 +34,50 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   Center(
                     child: Text(
                       'Space Type',
-                      style: AppStyle.kHeading4,
+                      style: AppStyle.kHeading0,
                     ),
                   ),
                   verticalSpaceMedium,
                   Text(
                     'Tell us about your property',
                     style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceMedium,
+                  Text(
+                    'Property Type',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceTiny,
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        hint: Text(
+                          "Select Property ",
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        items: model.spaceType
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: AppStyle.kBodyRegular,
+                                  ),
+                                ))
+                            .toList(),
+                        value: model.selectedValue1,
+                        onChanged: (value) {
+                          model.onSelectedValueChange1(value);
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                        ),
+                        buttonWidth: 330,
+                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                        )),
                   ),
                   verticalSpaceMedium,
                   Text(
@@ -102,10 +139,10 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                   DropdownButtonHideUnderline(
                     child: DropdownButton2(
                         hint: Text(
-                          "Select Property ",
+                          "Select Listing Option",
                           style: AppStyle.kBodyRegular,
                         ),
-                        items: model.items
+                        items: model.listingOption
                             .map((item) => DropdownMenuItem<String>(
                                   value: item,
                                   child: Text(
@@ -114,9 +151,9 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                                   ),
                                 ))
                             .toList(),
-                        value: model.selectedValue,
+                        value: model.selectedValue2,
                         onChanged: (value) {
-                          model.onSelectedValueChange(value);
+                          model.onSelectedValueChange2(value);
                         },
                         icon: const Icon(
                           Icons.keyboard_arrow_down_rounded,
@@ -145,7 +182,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                       model.onLeaveHereRadioChange(radioValue.toString());
                     },
                   ),
-                  verticalSpaceSmall,
+
                   ResavationRadioButton(
                     title: 'No',
                     radioValue: "No",

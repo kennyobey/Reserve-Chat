@@ -17,11 +17,12 @@ class FindYourLocation extends StatelessWidget {
       children: [
         Expanded(
           flex: 5,
-          child:  ResavationSearchBar(
+          child: ResavationSearchBar(
             text: "",
             elevation: 0.0,
             showPrefix: true,
             hintText: 'Enter your location',
+            fillColors: kWhite,
           ),
         ),
         GestureDetector(
@@ -34,7 +35,9 @@ class FindYourLocation extends StatelessWidget {
               color: kWhite,
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(5),
+                  bottomRight: Radius.circular(5)),
               color: kPrimaryColor,
             ),
           ),

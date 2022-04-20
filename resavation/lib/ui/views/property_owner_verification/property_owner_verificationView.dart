@@ -28,6 +28,7 @@ class PropertyOwnerVerificationView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 verticalSpaceMedium,
+                verticalSpaceMedium,
                 Text(
                   'Identity',
                   style: AppStyle.kBodyRegularW500,
@@ -62,6 +63,7 @@ class PropertyOwnerVerificationView extends StatelessWidget {
                     model.goToPropertyOwnerMainView();
                   },
                 ),
+                verticalSpaceMedium,
               ],
             ),
           ),

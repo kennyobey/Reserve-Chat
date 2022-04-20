@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_radio_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -54,8 +56,45 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                     style: AppStyle.kBodySmallRegular12,
                   ),
                   verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Select',
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        hint: Text(
+                          "Select Property ",
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        items: model.spaceType
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Column(
+                                    children: [
+                                      ResavationRadioButton(
+                                        title: 'No',
+                                        radioValue: "Yes",
+                                        groupValue: model.isServiced,
+                                        onChanged: (String? radioValue) {
+                                          model.onSpaceServicedRadioChange(
+                                              radioValue.toString());
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                            .toList(),
+                        value: model.selectedValue1,
+                        onChanged: (value) {
+                          model.onSelectedValueChange1(value);
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                        ),
+                        buttonWidth: 330,
+                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                        )),
                   ),
                   verticalSpaceTiny,
                   Text(
