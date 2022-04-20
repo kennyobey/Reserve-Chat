@@ -46,6 +46,7 @@ class OnboardingView extends HookWidget {
               bottom: MediaQuery.of(context).size.height * 0.06  ,
               child: model.pagePosition == 2
                   ? ResavationButton(
+                      width: MediaQuery.of(context).size.width * 0.85,
                       title: "Get Started",
                       onTap: model.goToSignUpView,
                     )

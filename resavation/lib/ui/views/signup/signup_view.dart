@@ -20,8 +20,6 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
 
-  late RegistrationModel registration;
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignUpViewModel>.reactive(
@@ -81,7 +79,7 @@ class _SignUpViewState extends State<SignUpView> {
                     controller: model.emailFieldController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null || value.isEmpty || !value.contains('@')) {
                         return 'Enter a valid email';
                       }
                       return null;
@@ -97,10 +95,14 @@ class _SignUpViewState extends State<SignUpView> {
                     textInputAction: TextInputAction.next,
                     controller: model.passwordFieldController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter password';
+                      model.userTypeService.confirmPass = value.toString();
+                      if (value!.isEmpty) {
+                        return "Please enter password";
+                      } else if (value.length < 8) {
+                        return "Password must be atleast 8 characters long";
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                     obscureText: true,
                     hintText: 'password',
@@ -116,10 +118,15 @@ class _SignUpViewState extends State<SignUpView> {
                     textInputAction: TextInputAction.done,
                     controller: model.verifyPasswordFieldController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter re-enter password';
+                      if (value!.isEmpty) {
+                        return "Please re-enter password";
+                      } else if (value.length < 8) {
+                        return "Password must be atleast 8 characters long";
+                      } else if (value != model.userTypeService.confirmPass) {
+                        return "Password mismatch";
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                   ),
                   verticalSpaceSmall,
@@ -204,41 +211,13 @@ class _SignUpViewState extends State<SignUpView> {
                     title: 'Sign Up',
                     onTap: () async {
                       if (model.registrationFormKey.currentState!.validate()) {
-                        final String email = model.emailFieldController.text;
-                        final String firstname =
-                            model.firstNameFieldController.text;
-                        final String lastname =
-                            model.lastNameFieldController.text;
-                        final String password =
-                            model.passwordFieldController.text;
-                        final String verifyPassword =
-                            model.verifyPasswordFieldController.text;
-                        final bool termAndCondition = true;
-
-                        final String accountType = model.userType;
-
-
-                        RegistrationModel register = await model.registerUser(
-                          accountType, email, firstname, lastname, password, verifyPassword,
-                          termAndCondition,
-                        );
-
-                        @override
-                        void initState() {
-                          registration = register;
-                          super.initState();
-                        }
-
-
-
+                        model.sendDetailsToServer();
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Registration in progress')),
-                        );
-
+                          SnackBar(content: Text('Registration in progress')),);
                         // waits for 3 seconds before proceeding to main view
                         model.timer = new Timer(const Duration(seconds: 3), () {
-                          // model.goToMainView();
+                           model.goToMainView();
                         });
                       }
                     },

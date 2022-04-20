@@ -31,8 +31,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     horizontalSpaceSmall,
-                    Text(
-                      'Hello Steven',
+                    Text( "Hi there!",
                       style: AppStyle.kBodyRegularBlack14W600,
                     ),
                     Spacer(),

@@ -9,7 +9,7 @@ MERGED from [:sqflite] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter
 MERGED from [:google_maps_flutter] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:image_picker] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-19:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-23:12
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-21:12
 MERGED from [:libphonenumber_plugin] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\libphonenumber_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:emoji_picker_flutter] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\emoji_picker_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_paystack] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_paystack\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
@@ -61,7 +61,7 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\MICHEAL\.gradle\
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\cf2c99aa287de2f08f087dc1237c8793\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\81577b20856de3173b99a652d8df052c\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\9ed314abc3df537a2d48c1cb6d65998e\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
-MERGED from [com.github.agorabuilder:iris-rtc:3.5.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\55e0fee87cda87e580d76534efb5ca89\jetified-iris-rtc-3.5.2\AndroidManifest.xml:2:1-11:12
+MERGED from [io.agora.rtc:iris-rtc:3.6.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\7a6fa972753fe0c09990d7814629d1c6\jetified-iris-rtc-3.6.2\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\5bfc0955e244073bdc8cc139cda5e092\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:17:1-24:12
 INJECTED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\debug\AndroidManifest.xml:1:1-24:12
 INJECTED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\debug\AndroidManifest.xml:1:1-24:12
@@ -88,8 +88,8 @@ MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavat
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:5:5-66
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:7:5-67
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:7:5-67
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-67
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-67
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\6f3daa1ca7d5f0cb334e07491a88b930\jetified-play-services-maps-17.0.0\AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\6f3daa1ca7d5f0cb334e07491a88b930\jetified-play-services-maps-17.0.0\AndroidManifest.xml:24:5-67
 	android:name
@@ -98,40 +98,40 @@ uses-permission#android.permission.READ_PHONE_STATE
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:6:5-75
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:6:5-75
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:6:5-75
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-75
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-75
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:8:5-75
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:8:5-75
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:6:22-72
 uses-permission#android.permission.RECORD_AUDIO
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:8:5-71
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:8:5-71
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:8:5-71
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-71
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-71
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-71
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:10:5-71
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:8:22-68
 uses-permission#android.permission.CAMERA
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:9:5-65
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:9:5-65
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:9:5-65
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-65
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-65
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-65
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-65
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:9:22-62
 uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:10:5-80
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:10:5-80
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:10:5-80
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-80
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-80
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-80
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-80
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:10:22-77
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:11:5-79
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:11:5-79
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:11:5-79
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-79
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-79
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-79
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-79
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\6f3daa1ca7d5f0cb334e07491a88b930\jetified-play-services-maps-17.0.0\AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\6f3daa1ca7d5f0cb334e07491a88b930\jetified-play-services-maps-17.0.0\AndroidManifest.xml:23:5-79
 	android:name
@@ -140,24 +140,24 @@ uses-permission#android.permission.BLUETOOTH
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:12:5-68
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:12:5-68
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:12:5-68
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:16:5-68
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:16:5-68
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-68
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-68
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:12:22-65
 uses-permission#android.permission.ACCESS_WIFI_STATE
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:13:5-76
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:13:5-76
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:13:5-76
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-76
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-76
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-76
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-76
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:13:22-73
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:14:5-80
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:14:5-80
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:14:5-80
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:18:5-80
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:18:5-80
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:16:5-80
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:16:5-80
 	android:name
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:14:22-77
 uses-permission#android.permission.ACCESS_FINE_LOCATION
@@ -198,8 +198,8 @@ uses-permission#android.permission.READ_PRIVILEGED_PHONE_STATE
 ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:20:5-21:47
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:20:5-21:47
 MERGED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:20:5-21:47
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:19:5-21:47
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:19:5-21:47
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-19:47
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-19:47
 	tools:ignore
 		ADDED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\main\AndroidManifest.xml:21:9-44
 	android:name
@@ -300,8 +300,8 @@ MERGED from [:image_picker] C:\Users\MICHEAL\AndroidStudioProjects\resavation-fl
 MERGED from [:image_picker] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:6:5-8:41
-MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:6:5-8:41
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:6:5-44
+MERGED from [:agora_rtc_engine] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\agora_rtc_engine\intermediates\library_manifest\debug\AndroidManifest.xml:6:5-44
 MERGED from [:libphonenumber_plugin] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\libphonenumber_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:libphonenumber_plugin] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\libphonenumber_plugin\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:emoji_picker_flutter] C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\build\emoji_picker_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
@@ -404,8 +404,8 @@ MERGED from [androidx.print:print:1.0.0] C:\Users\MICHEAL\.gradle\caches\transfo
 MERGED from [androidx.print:print:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\81577b20856de3173b99a652d8df052c\print-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\9ed314abc3df537a2d48c1cb6d65998e\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\9ed314abc3df537a2d48c1cb6d65998e\interpolator-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [com.github.agorabuilder:iris-rtc:3.5.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\55e0fee87cda87e580d76534efb5ca89\jetified-iris-rtc-3.5.2\AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.agorabuilder:iris-rtc:3.5.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\55e0fee87cda87e580d76534efb5ca89\jetified-iris-rtc-3.5.2\AndroidManifest.xml:7:5-9:41
+MERGED from [io.agora.rtc:iris-rtc:3.6.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\7a6fa972753fe0c09990d7814629d1c6\jetified-iris-rtc-3.6.2\AndroidManifest.xml:7:5-9:41
+MERGED from [io.agora.rtc:iris-rtc:3.6.2] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\7a6fa972753fe0c09990d7814629d1c6\jetified-iris-rtc-3.6.2\AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\5bfc0955e244073bdc8cc139cda5e092\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\MICHEAL\.gradle\caches\transforms-2\files-2.1\5bfc0955e244073bdc8cc139cda5e092\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:20:5-22:41
 INJECTED from C:\Users\MICHEAL\AndroidStudioProjects\resavation-flutter-ui\resavation\android\app\src\debug\AndroidManifest.xml
