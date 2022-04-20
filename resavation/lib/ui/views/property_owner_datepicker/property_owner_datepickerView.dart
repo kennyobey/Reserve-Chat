@@ -46,31 +46,34 @@ class PropertyOwnerDatePickerView extends StatelessWidget {
                   },
                 ),
                 verticalSpaceRegular,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        'Cancel',
-                        style: AppStyle.kBodyRegular,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FlatButton(
+                        child: Text(
+                          'Cancel',
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        color: kPrimaryColor,
+                        textColor: Colors.white,
+                        onPressed: () {},
                       ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {},
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Ok',
-                        style: AppStyle.kBodyRegular,
+                      Spacer(),
+                      FlatButton(
+                        child: Text(
+                          'Ok',
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        color: kPrimaryColor,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          model.goToPropertyOwnerPaymentView();
+                        },
                       ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goToPropertyOwnerPaymentView();
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 )
               ],
             ),

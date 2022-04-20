@@ -54,10 +54,8 @@ dependencies:
   badges: ^2.0.2
   dependencies:
   country_code_picker: ^2.0.2
-  open_file: ^3.2.1
   file_picker: ^4.5.1
-file_picker: ^4.5.1
-open_file: ^3.2.1
+  open_file: ^3.2.1
 
 
 
