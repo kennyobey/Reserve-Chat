@@ -97,7 +97,7 @@ class HttpService {
   }
 
   //Property Upload Logic
-  Future<UploadPropertyModel?> uploadProperty(
+  Future<UploadProperty?> uploadProperty(
       String address,
       String amenities,
       String availability,
@@ -123,7 +123,7 @@ class HttpService {
     var response =
         await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
             headers: <String, String>{'Content-Type': 'application/json'},
-            body: jsonEncode(<String, dynamic>{
+            body: jsonEncode({
               "address": address,
               "amenities": amenities,
               "availability": availability,
@@ -147,10 +147,10 @@ class HttpService {
               "subscription": subscription,
               "surfaceArea": surfaceArea
             }));
-
+           print('From the uploading session: ${response.body}');
     if (response.statusCode == 200) {
       String responseString = response.body;
-      return uploadPropertyModelFromJson(responseString);
+      return uploadPropertyFromJson(responseString);
     } else if (response.statusCode == 400) {
       String responseString = response.body;
       userTypeService.error.value = "";
