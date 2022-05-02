@@ -36,7 +36,7 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       verticalSpaceMedium,
-                      _blackcontainer(""),
+                      AppointmentView(),
                       verticalSpaceMedium,
                     ],
                   ),
@@ -51,22 +51,24 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
   }
 }
 
-Widget _blackcontainer(String label) {
+class AppointmentView extends StatelessWidget {
+@override
+  Widget build(BuildContext context)  {
   //const maxLines = 5;
   var model;
   var image;
   return Container(
-    padding: EdgeInsets.all(10.0),
+    padding: EdgeInsets.all(12.0),
     decoration: BoxDecoration(
       border: Border.all(color: kGray),
       borderRadius: new BorderRadius.circular(5.0),
       //color: kBlack,
     ),
-    width: 345,
-    height: 150.0,
+    width: MediaQuery.of(context).size.width,
+    height: 146.0,
     child: Center(
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: 150,
@@ -75,8 +77,8 @@ Widget _blackcontainer(String label) {
               borderRadius: BorderRadius.circular(6), //or 15.0
               child: Image.asset(
                 Assets.profile_image4,
-                width: 60,
-                height: 60,
+                // width: 60,
+                // height: 60,
               ),
             ),
           ),
@@ -101,11 +103,11 @@ Widget _blackcontainer(String label) {
             FlatButton(
               height: 5,
               child: Text(
-                'Next',
+                'Cancel',
                 style: AppStyle.kBodyRegular,
               ),
-              color: kPrimaryColor,
-              textColor: Colors.white,
+              color: kWhite,
+              textColor: kBlack,
               onPressed: () {},
             ),
           ])
@@ -113,4 +115,5 @@ Widget _blackcontainer(String label) {
       ),
     ),
   );
+  }
 }

@@ -3,11 +3,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
+
 import 'package:resavation/ui/shared/dump_widgets/resavation_radio_button.dart';
 
-import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
@@ -166,6 +164,44 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                             color: Colors.black26,
                           ),
                         )),
+                  ),
+
+                      verticalSpaceSmall,
+                      Text(
+                    'Property Status',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceTiny,
+                   DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        hint: Text(
+                          "Select Property Status",
+                          style: AppStyle.kBodyRegular,
+                        ),
+                        items: model.listingOption
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: AppStyle.kBodyRegular,
+                                  ),
+                                ))
+                            .toList(),
+                        value: model.selectedValue3,
+                        onChanged: (value) {
+                          model.onSelectedValueChange3(value);
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                        ),
+                        buttonWidth: 330,
+                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                        )),   
                   ),
                   verticalSpaceSmall,
                   Text(

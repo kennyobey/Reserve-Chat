@@ -13,8 +13,17 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   // drop-down button UI logic for spaceType
   String? selectedValue1;
   List<String> spaceType = [
-    'Office Space',
-    'Appartment',
+    'Town House',
+    'Plot of Land',
+    'Detached Duplex',
+    'Terace',
+    'Flat',
+    'Semi Detached Duplex',
+    'Bungalow',
+    'Luxury Apartent',
+    'PentHouse',
+    'Maisoneet',
+    'Short-Let'
   ];
 
 // drop-down button UI logic for Listing Option
@@ -22,6 +31,19 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   List<String> listingOption = [
     'Shared Space',
     'Entire Space',
+    'Serviced',
+    'Self Servced',
+    'Shared',
+    'Short Let'
+  ];
+
+
+  // drop-down button UI logic for property status
+  String? selectedValue3;
+  List<String> propertyStatus = [
+    
+    'For Sale',
+    'For Rent'
   ];
 
   void onSelectedValueChange1(value) {
@@ -32,6 +54,12 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
 
   void onSelectedValueChange2(value) {
     selectedValue2 = value as String;
+
+    notifyListeners();
+  }
+
+  void onSelectedValueChange3(value) {
+    selectedValue3 = value as String;
 
     notifyListeners();
   }

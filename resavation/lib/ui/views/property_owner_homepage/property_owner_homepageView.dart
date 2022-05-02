@@ -74,7 +74,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                             children: [
                               verticalSpaceTiny,
                               Text(
-                                "Connecting you to the best tenant in the world",
+                                "Connecting you to the best tenant all over the world",
                                 style: TextStyle(color: kWhite),
                               ),
                               verticalSpaceSmall,
@@ -188,29 +188,28 @@ class ListingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(0.0),
         decoration: BoxDecoration(
           border: Border.all(color: kGray),
           borderRadius: new BorderRadius.circular(5.0),
         ),
         width: MediaQuery.of(context).size.width,
-        height: 85,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        height: 80,
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
           ListTile(
             leading: Container(
-              height: 100,
-              width: 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6), //or 15.0
                 child: Image.asset(
                   Assets.profile_image4,
-                  width: 60,
-                  height: 60,
+                  width: 80,
+                  height: 80,
                 ),
               ),
             ),
             title: Text(
-              "Adeyemo Stephen",
+              "Adeyemo Stphen",
               style: AppStyle.kBodySmallRegular11W500,
             ),
             subtitle: Text(
