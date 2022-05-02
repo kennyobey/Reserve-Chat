@@ -18,6 +18,10 @@ class PropertyOwnerPaymentView extends StatelessWidget {
 
   get context => null;
 
+  get date => null;
+
+  get selectedDate => null;
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerPaymentViewModel>.reactive(
@@ -62,21 +66,12 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                           "Select Property ",
                           style: AppStyle.kBodyRegular,
                         ),
-                        items: model.spaceType
+                        items: model.subscriptionType
                             .map((item) => DropdownMenuItem<String>(
                                   value: item,
-                                  child: Column(
-                                    children: [
-                                      ResavationRadioButton(
-                                        title: 'No',
-                                        radioValue: "Yes",
-                                        groupValue: model.isServiced,
-                                        onChanged: (String? radioValue) {
-                                          model.onSpaceServicedRadioChange(
-                                              radioValue.toString());
-                                        },
-                                      ),
-                                    ],
+                                  child: Text(
+                                    item,
+                                    style: AppStyle.kBodyRegular,
                                   ),
                                 ))
                             .toList(),
@@ -92,7 +87,7 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                         buttonDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: Colors.black26,
+                            //color: Colors.black26,
                           ),
                         )),
                   ),
@@ -102,22 +97,27 @@ class PropertyOwnerPaymentView extends StatelessWidget {
                     style: AppStyle.kBodySmallRegular12W500,
                   ),
                   verticalSpaceRegular,
+    //               Text(
+    //   "${selectedDate.toString()}".split(' ')[0],
+    //   style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+    // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DateContainer(
                         label: 'From',
-                        date: 'Jan 1, 2022',
-                        onTap: () {
-                          model.goToPropertyOwnerDatePickerView();
+                        date: "${selectedDate.toString()}",
+    
+                        onPressed: () {
+                       model.selectDate(context);
                         },
                       ),
                       horizontalSpaceRegular,
                       DateContainer(
                         label: 'To',
                         date: 'Jan 1, 2023',
-                        onTap: () {
-                          model.goToPropertyOwnerDatePickerView();
+                        onPressed: () {
+                          model.selectDate(context);
                         },
                       ),
                     ],
@@ -218,23 +218,26 @@ class PropertyOwnerPaymentView extends StatelessWidget {
       );
 }
 
+class Date {
+}
+
 class DateContainer extends StatelessWidget {
   const DateContainer({
     Key? key,
     required this.label,
     required this.date,
-    required this.onTap,
+    required this.onPressed,
   }) : super(key: key);
 
   final String label;
   final String date;
-  final Function() onTap;
+  final Function()onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: onTap,
+        onTap: onPressed,
         child: Container(
           padding: EdgeInsets.only(top: 2, left: 20),
           decoration: BoxDecoration(
@@ -259,66 +262,8 @@ class DateContainer extends StatelessWidget {
   }
 }
 
-Widget _buildTextField(String label1, String labe2) {
-  return Container(
-    padding: EdgeInsets.all(8),
-    decoration: BoxDecoration(
-        border: Border.all(color: kGray),
-        borderRadius: BorderRadius.circular(5)),
-    width: 160,
-    height: 60,
-    child: FlatButton(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label1,
-              style: TextStyle(color: kGray),
-            ),
-            Spacer(),
-            Text(labe2, style: AppStyle.kBodyRegular.copyWith(color: kBlack)),
-          ],
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        onPressed: () {}),
-  );
-}
 
-_displayDialog(BuildContext context) async {
-  return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('TextField AlertDemo'),
-          content: Container(
-            margin: EdgeInsets.all(25),
-            child: FlatButton(
-              child: SfDateRangePicker(
-                backgroundColor: kWhite,
-                toggleDaySelection: true,
-                view: DateRangePickerView.year,
-                // onSelectionChanged: _onSelectionChanged,
-                selectionMode: DateRangePickerSelectionMode.single,
-                initialSelectedRange: PickerDateRange(
-                    DateTime.now().subtract(const Duration(days: 4)),
-                    DateTime.now().add(const Duration(days: 3))),
-              ),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
-              onPressed: () {},
-            ),
-          ),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      });
-}
+
 
 showAlertDialog(BuildContext context) {
   // set up the button
@@ -344,3 +289,70 @@ showAlertDialog(BuildContext context) {
     },
   );
 }
+
+
+void pickDate(BuildContext context) {
+    var alertdialog = Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        width: double.infinity,
+        height: 420,
+        child: Center(
+          child:
+           Column(
+             children: [
+               CalendarDatePicker(
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2025),
+                      onDateChanged: (DateTime) {
+                        String date = DateTime.toString();
+                        print("The picked date is $date");
+                      },
+                    ),
+                     Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Row(
+                   // crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text(
+                          'Cancel',
+                          style: AppStyle.kBodySmallRegular12W500,
+                        ),
+                        color: kWhite,
+                        textColor: kPrimaryColor,
+                        onPressed: () {},
+                      ),
+                      horizontalSpaceTiny,
+                      FlatButton(
+                        child: Text(
+                          'Ok',
+                          style: AppStyle.kBodySmallRegular12W500,
+                        ),
+                        color: kWhite,
+                        textColor: kPrimaryColor,
+                        onPressed: () {
+                         
+                        },
+                      ),
+                    ],
+                  ),
+                )
+             ],
+           ),
+      ),
+    ));
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertdialog;
+        });
+  
+}
+
