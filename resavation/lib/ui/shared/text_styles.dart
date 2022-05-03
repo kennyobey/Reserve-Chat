@@ -11,7 +11,7 @@ class AppStyle {
 
   // text style with 18px font size
   static TextStyle kHeading4 = GoogleFonts.philosopher(
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
     fontSize: 18,
     height: 2,
   );
@@ -19,7 +19,7 @@ class AppStyle {
   static TextStyle kHeading0 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
     fontSize: 18,
-    height: 2,
+    color: Colors.black,
   );
 
   static TextStyle kHeading2 = GoogleFonts.montserrat(
@@ -69,6 +69,11 @@ class AppStyle {
     height: 1.5,
     color: Colors.black,
   );
+  static TextStyle kBodyRegularBlack16W600 = GoogleFonts.montserrat(
+      height: 1.5,
+      color: Colors.black,
+      fontSize: 16,
+      fontWeight: FontWeight.w600);
 
   static TextStyle kBodyRegularBlack14 = GoogleFonts.montserrat(
     fontWeight: FontWeight.normal,
@@ -100,6 +105,11 @@ class AppStyle {
   static TextStyle kBodySmallRegular12W500 = GoogleFonts.montserrat(
     fontWeight: FontWeight.w500,
     fontSize: 12,
+    height: 1.5,
+  );
+  static TextStyle kBodyRegular18W500 = GoogleFonts.montserrat(
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
     height: 1.5,
   );
 

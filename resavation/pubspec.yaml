@@ -19,7 +19,6 @@ dependencies:
   stacked_services: ^0.8.16
   flutter_hooks: ^0.18.2
   observable_ish: ^3.0.1
-
   # network
   permission_handler: ^8.3.0
   location: ^4.3.0
@@ -52,7 +51,10 @@ dependencies:
   badges: ^2.0.2
   file_picker: ^4.5.1
   open_file: ^3.2.1
-
+  pinput: ^2.2.7
+  firebase_core: ^1.10.0
+  firebase_storage: ^10.2.10
+  jwt_decoder: ^2.0.1
 
 
 dev_dependencies:

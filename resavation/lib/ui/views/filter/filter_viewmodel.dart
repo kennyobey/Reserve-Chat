@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/property_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,15 +13,15 @@ enum Availability {
 }
 
 class FilterViewModel extends BaseViewModel {
+  final oCcy = NumberFormat("#,##0.00", "en_US");
   final _navigationService = locator<NavigationService>();
   RangeValues _rangeValues = const RangeValues(10000, 1000000);
 
   RangeValues get rangeValue => _rangeValues;
 
-  RangeLabels get rangeLabels =>
-      RangeLabels(
-        _rangeValues.end.round().toString(),
-        _rangeValues.start.round().toString(),
+  RangeLabels get rangeLabels => RangeLabels(
+        '${String.fromCharCode(8358)}${oCcy.format(_rangeValues.start.round())}',
+        '${String.fromCharCode(8358)}${oCcy.format(_rangeValues.end.round())}',
       );
 
   Availability _duration = Availability.Shortlet;
@@ -37,7 +37,7 @@ class FilterViewModel extends BaseViewModel {
 
   double get sliderValue => _sliderValue;
 
-  bool selectFacility = false;
+  List<int> selectFacilityIndex = [];
 
   // drop-down button UI logic
   String? selectedValue;
@@ -46,14 +46,20 @@ class FilterViewModel extends BaseViewModel {
     'Bungalow',
     'Self Contain',
   ];
-  void onSelectedValueChange(value){
+  void onSelectedValueChange(value) {
     selectedValue = value as String;
 
     notifyListeners();
   }
 
-  void onSelectFacilityTap(){
-    selectFacility = !selectFacility;
+  bool isFacilitySelected(int index) => selectFacilityIndex.contains(index);
+
+  void onSelectFacilityTap(int index) {
+    if (selectFacilityIndex.contains(index)) {
+      selectFacilityIndex.remove(index);
+    } else {
+      selectFacilityIndex.add(index);
+    }
     notifyListeners();
   }
 
@@ -67,15 +73,11 @@ class FilterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-
   void goToMainView() {
     _navigationService.back();
   }
+
   void goToSearchView() {
     _navigationService.navigateTo(Routes.searchView);
   }
-
-
-
-
 }

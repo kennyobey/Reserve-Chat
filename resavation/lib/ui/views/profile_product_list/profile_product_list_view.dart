@@ -1,11 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_viewmodel.dart';
@@ -21,89 +17,91 @@ class ProfileProductListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileProductListViewModel>.reactive(
-      builder: (context, model, child) => Scaffold(
-        appBar: ResavationAppBar(
-          title: "Stephen's listings",
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              verticalSpaceRegular,
-              Row(
-                children: [
-                  Expanded(
-                    child: ResavationElevatedButton(
-                      child: Text(
-                        'Listings (8)',
-                        style: AppStyle.kBodySmallRegular12W500,
-                      ),
-                      onPressed: model.showComingSoon,
-                    ),
-                  ),
-                  SizedBox(width: 120),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                      hint: Text(
-                        "sort by",
-                        style: AppStyle.kBodySmallRegular,
-                      ),
-                      items: model.items
-                          .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ))
-                          .toList(),
-                      value: model.selectedValue,
-                      onChanged: (value) {
-                        model.onSelectedValueChange(value);
-                      },
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
+      builder: (context, model, child) {
+        var properties = model.properties;
+        return Scaffold(
+          appBar: ResavationAppBar(
+            title: "${model.userData.firstName} listings",
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                verticalSpaceTiny,
+                const Divider(),
+                Row(
+                  children: [
+                    Text(
+                      properties.length.toString(),
+                      style: AppStyle.kSubHeading.copyWith(
+                        color: kPrimaryColor,
                       ),
                     ),
-                  )
-                ],
-              ),
-              verticalSpaceMedium,
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for (final property in model.properties) ...[
-                        GestureDetector(
-                          onTap: model.goToPropertyDetails,
-                          child: PropertyCard(
-                            image: property.image,
-                            amountPerYear: property.amountPerYear,
-                            location: property.location,
-                            address: property.address,
-                            numberOfBathrooms: property.numberOfBedrooms,
-                            numberOfBedrooms: property.numberOfBathrooms,
-                            squareFeet: property.squareFeet,
-                            // isFavoriteTap: property.isFavoriteTap,
-                            onFavoriteTap: () {},
-                          ),
+                    Text(
+                      ' Properties',
+                      style: AppStyle.kSubHeading,
+                    ),
+                    Spacer(),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        hint: Text(
+                          "sort by",
+                          style: AppStyle.kBodySmallRegular,
                         ),
-                        verticalSpaceSmall
-                      ]
-                    ],
+                        items: model.items
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        value: model.selectedValue,
+                        onChanged: (value) {
+                          model.onSelectedValueChange(value);
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const Divider(),
+                verticalSpaceSmall,
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (ctx, index) {
+                      final property = properties[index];
+                      return PropertyCard(
+                        id: property.id,
+                        onTap: () => model.goToPropertyDetails(property),
+                        image: property.image,
+                        amountPerYear: property.amountPerYear,
+                        location: property.location,
+                        address: property.address,
+                        numberOfBathrooms: property.numberOfBedrooms,
+                        numberOfBedrooms: property.numberOfBathrooms,
+                        squareFeet: property.squareFeet,
+                        isFavoriteTap: property.isFavoriteTap,
+                        onFavoriteTap: () {},
+                      );
+                    },
+                    padding: const EdgeInsets.all(0),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: properties.length,
                   ),
                 ),
-              ),
-              verticalSpaceMedium,
-            ],
+                verticalSpaceMedium,
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
       viewModelBuilder: () => ProfileProductListViewModel(),
     );
   }
 }
-
-

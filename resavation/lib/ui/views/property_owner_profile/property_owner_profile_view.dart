@@ -8,7 +8,6 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class PropertyOwnerProfileView extends StatelessWidget {
   const PropertyOwnerProfileView({Key? key}) : super(key: key);
@@ -29,82 +28,101 @@ class PropertyOwnerProfileView extends StatelessWidget {
               delegate: SliverChildListDelegate(
                 [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 15),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Ademoye Stephen',
-                          style: AppStyle.kBodyBold,
-                        ),
-                        Text('Ibadan, Nigeria'),
-                        Divider(),
-                        Text('About', style: AppStyle.kSubHeadingW600),
-                        verticalSpaceTiny,
-                        Text(
-                            'injvjernknljfncfdkjvnlkjrnvl icklemcvekrnmx,cn kjnwxmecnrfkj nw,mcnewnxence,fnk,wnf,c,lern lknmkcrkgm .kgrmklmdktmk.vmxdmre;ltm;lkvm;l'),
-                        Divider(),
-                        verticalSpaceRegular,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: ResavationButton(
-                                width: 92,
-                                title: 'Message',
-                                icon: Icons.messenger_outline,
-                                onTap: model.goToMessagesView,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Ademoye Stephen',
+                                style: AppStyle.kBodyRegularBlack16W600,
                               ),
-                            ),
-                            horizontalSpaceMedium,
-                            Expanded(
-                              child: ResavationButton(
-                                buttonColor: kGreen,
-                                borderColor: kGreen,
-                                width: 56,
-                                title: 'Call',
-                                icon: Icons.call_outlined,
-                                onTap: () {
-                                  model.goToAudioCallView();
-                                },
+                              Text(
+                                'Ibadan, Nigeria',
                               ),
-                            ),
-                          ],
-                        ),
-                        verticalSpaceMedium,
-                        TitleListTile(
-                          title: "Stephen's Listing",
-                          visibility: false,
-                          onTap: model.goToPropertyDetails,
-                        ),
-                        verticalSpaceMedium,
-                        ...model.properties
-                            .map(
-                              (property) {
-                                return Column(
-                                  children: [
-                                    PropertyCard(
-                                      onTap: model.goToPropertyDetails,
-                                      image: property.image,
-                                      amountPerYear: property.amountPerYear,
-                                      location: property.location,
-                                      address: property.address,
-                                      numberOfBathrooms:
-                                          property.numberOfBedrooms,
-                                      numberOfBedrooms:
-                                          property.numberOfBathrooms,
-                                      squareFeet: property.squareFeet,
-                                      // isFavoriteTap: property.isFavoriteTap,
-                                      onFavoriteTap: () {},
+                              verticalSpaceTiny,
+                              Divider(),
+                              verticalSpaceTiny,
+                              Text('About',
+                                  style: AppStyle.kBodyRegularBlack16W600),
+                              verticalSpaceTiny,
+                              Text(
+                                'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)',
+                              ),
+                              verticalSpaceTiny,
+                              Divider(),
+                              verticalSpaceTiny,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: ResavationButton(
+                                      width: double.infinity,
+                                      title: 'Message',
+                                      icon: Icons.messenger_outline,
+                                      onTap: model.goToMessagesView,
                                     ),
-                                    verticalSpaceSmall
-                                  ],
-                                );
+                                  ),
+                                  horizontalSpaceSmall,
+                                  Expanded(
+                                    child: ResavationButton(
+                                      buttonColor: kGreen,
+                                      borderColor: kGreen,
+                                      width: double.infinity,
+                                      title: 'Call',
+                                      icon: Icons.call_outlined,
+                                      onTap: () {
+                                        model.goToAudioCallView();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              verticalSpaceTiny,
+                              const Divider(),
+                              verticalSpaceTiny,
+                              TitleListTile(
+                                title: "Stephen's Listing",
+                                visibility: false,
+                              ),
+                              verticalSpaceTiny,
+                              const Divider(),
+                            ],
+                          ),
+                        ),
+                        verticalSpaceTiny,
+                        ListView.builder(
+                          itemBuilder: (ctx, index) {
+                            final property = model.properties[index];
+                            return PropertyCard(
+                              id: property.id,
+                              onTap: () => model.goToPropertyDetails(property),
+                              image: property.image,
+                              amountPerYear: property.amountPerYear,
+                              location: property.location,
+                              address: property.address,
+                              numberOfBathrooms: property.numberOfBedrooms,
+                              numberOfBedrooms: property.numberOfBathrooms,
+                              squareFeet: property.squareFeet,
+                              isFavoriteTap: property.isFavoriteTap,
+                              onFavoriteTap: () {
+                                //model.onFavoriteTap(property)
                               },
-                            )
-                            .toList()
-                            .take(2),
+                            );
+                          },
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: model.properties.length,
+                        )
                       ],
                     ),
                   ),
@@ -118,7 +136,7 @@ class PropertyOwnerProfileView extends StatelessWidget {
     );
   }
 }
-// 
+//
 //  verticalSpaceRegular,
 //                         Container(
 //                           padding: const EdgeInsets.symmetric(

@@ -6,6 +6,6 @@ class ImagePickerService with ReactiveServiceMixin {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result == null) return;
 
-    PlatformFile? file = result!.files.first;
+    PlatformFile? file = result.files.first;
   }
 }

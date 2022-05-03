@@ -11,16 +11,16 @@ class FavoriteViewModel extends BaseViewModel {
   bool isFavorite = false;
   int _id = 0;
 
-
   void changeFavoriteIcon(int id) {
-
     print(id);
-    if (id == 1 ) {
+    if (id == 1) {
       isFavorite = !isFavorite;
       notifyListeners();
     }
   }
-  void goToPropertyDetails() {
-    _navigationService.navigateTo(Routes.propertyDetailsView);
+
+  void goToPropertyDetails(Property property) {
+    _navigationService.navigateTo(Routes.propertyDetailsView,
+        arguments: property);
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "144710589748",
+    "project_id": "resavation-ng",
+    "storage_bucket": "resavation-ng.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144710589748:android:3785df311590602c8e1961",
+        "android_client_info": {
+          "package_name": "com.resavation.resavation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144710589748-irvlg1k4lvptpofdcu3vj7nio2pck4bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2DfwgX1mijiXn6F-dCGEfUAd8auHYiTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144710589748-irvlg1k4lvptpofdcu3vj7nio2pck4bg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

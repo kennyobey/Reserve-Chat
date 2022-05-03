@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
@@ -10,6 +11,7 @@ class PropertyCard extends StatelessWidget {
     Key? key,
     required this.image,
     this.onFavoriteTap,
+    required this.id,
     this.amountPerYear,
     required this.location,
     this.address = '',
@@ -22,6 +24,7 @@ class PropertyCard extends StatelessWidget {
 
   final void Function()? onFavoriteTap;
   final String image;
+  final int id;
   final int? amountPerYear;
   final String location;
   final String address;
@@ -33,33 +36,39 @@ class PropertyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final oCcy = NumberFormat("#,##0.00", "en_US");
+    return InkWell(
+      splashColor: Colors.transparent,
       onTap: onTap,
       child: Card(
-        elevation: 5,
-        shadowColor: kBlack54,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 400),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Container(
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 150,
-                    color: kDarkBlue,
-                    child: ResavationImage(
-                      image: image,
+                  Hero(
+                    child: Container(
+                      width: double.infinity,
+                      height: 150,
+                      color: kDarkBlue,
+                      child: ResavationImage(
+                        image: image,
+                      ),
                     ),
+                    tag: id.toString(),
                   ),
                   Positioned(
-                    right: 10,
-                    top: 10,
+                    right: 0,
+                    top: 0,
                     child: IconButton(
                       icon: Icon(
                         isFavoriteTap ? Icons.favorite : Icons.favorite_border,
-                        color: isFavoriteTap ? kRed : null,
+                        color: isFavoriteTap ? kRed : kWhite,
                       ),
                       iconSize: 25,
                       onPressed: onFavoriteTap,
@@ -73,21 +82,11 @@ class PropertyCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          location,
-                          style: AppStyle.kBodySmallRegular12W500,
-                        ),
-                        Text(
-                          '\$ ' + amountPerYear.toString() + '/ year',
-                          style: AppStyle.kBodySmallRegular12W500.copyWith(
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      location,
+                      style: AppStyle.kBodyRegular18W500,
                     ),
+                    verticalSpaceTiny,
                     Text(
                       address,
                       style: AppStyle.kBodySmallRegular12W300,
@@ -97,11 +96,24 @@ class PropertyCard extends StatelessWidget {
               ),
               verticalSpaceSmall,
               Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: PropertyDetails(
-                  numberOfBedrooms: numberOfBedrooms,
-                  numberOfBathrooms: numberOfBathrooms,
-                  squareFeet: squareFeet,
+                padding: const EdgeInsets.only(left: 10.0, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: PropertyDetails(
+                        numberOfBedrooms: numberOfBedrooms,
+                        numberOfBathrooms: numberOfBathrooms,
+                        squareFeet: squareFeet,
+                      ),
+                    ),
+                    Text(
+                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}/year',
+                      style: AppStyle.kBodySmallRegular12W500.copyWith(
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               verticalSpaceSmall,

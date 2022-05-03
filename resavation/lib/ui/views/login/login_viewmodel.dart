@@ -14,7 +14,6 @@ class LogInViewModel extends BaseViewModel {
   final httpService = locator<HttpService>();
   final userTypeService = locator<UserTypeService>();
 
-
   late LoginModel logIn;
 
   final TextEditingController emailController = TextEditingController();
@@ -25,13 +24,15 @@ class LogInViewModel extends BaseViewModel {
   late Timer timer;
 
   // Login user
-  void onLoginButtonTap() async{
-    final String email = emailController.text;
-    final String password = passwordController.text;
+  onLoginButtonTap() async {
+    final String email = emailController.text.trim();
+    final String password = passwordController.text.trim();
 
-    LoginModel login = await httpService.loginUser(email, password);
-    goToMainView();
-
+    try {
+      await httpService.loginUser(email, password);
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
 
   bool _checkValue = false;

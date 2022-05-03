@@ -21,9 +21,9 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.audioCallView);
   }
 
-
-  void goToPropertyDetails() {
-    _navigationService.navigateTo(Routes.propertyDetailsView);
+  void goToPropertyDetails(Property property) {
+    _navigationService.replaceWith(Routes.propertyDetailsView,
+        arguments: property);
   }
 
   void navigateBack() {
