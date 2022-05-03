@@ -1,53 +1,78 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/model/login_model.dart';
 import 'package:resavation/model/registration_model.dart';
 import 'package:resavation/services/core/user_type_service.dart';
-import 'package:stacked_services/stacked_services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class HttpService  {
+class HttpService {
   final userTypeService = locator<UserTypeService>();
 
   //final _httpService = locator<HttpService>();
-  late RegistrationModel registration;
+
   final requestSite = "resavation-backend.herokuapp.com";
 
-  // Sign-up Request Logic
-  Future<RegistrationModel> registerUser(
-    String accountType,
-    String email,
-    String firstname,
-    String lastname,
-    String password,
-    String verifyPassword,
-    bool termAndCondition,
-  ) async {
-    var response =
-        await http.post(Uri.http(requestSite, "api/v1/auth/register"),
-            headers: <String, String>{'Content-Type': 'application/json'},
-            body: jsonEncode(<String, dynamic>{
-              "verifyPassword": verifyPassword,
-              "accountType": accountType,
-              "email": email,
-              "firstname": firstname,
-              "lastname": lastname,
-              "password": password,
-              "termAndCondition": termAndCondition,
-            }));
-    var data = response.body;
-    print(data);
-
-    if (response.statusCode == 200) {
-      String responseString = response.body;
-      return registrationModelFromJson(responseString);
-    } else
-      throw Exception("Failed to Login user");
+  confirmRegByOTP({required String email, required String otp}) async {
+    try {
+      var response = await http.post(
+        Uri.http(
+            requestSite, "api/v1/auth/confirm-reg-by-otp", <String, dynamic>{
+          "email": email,
+          "otp": otp,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+      );
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in confirming OTP");
+    }
   }
 
-  // Sign-In Request Logic
-  void sendDetailsToServer(
+  loginUser(String email, String password) async {
+    try {
+      var response = await http.post(
+        Uri.http(requestSite, "api/v1/auth/login"),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: jsonEncode(
+          <String, String>{
+            "email": email,
+            "password": password,
+          },
+        ),
+      );
+
+      if (response.statusCode <= 299) {
+        String responseString = response.body;
+        var loginModel = loginModelFromJson(responseString);
+        userTypeService.setUserData(loginModel);
+        return loginModel;
+      } else if (response.statusCode == 400) {
+        userTypeService.error.value = "Incorrect Username or Password";
+        return Future.error("Incorrect Username or Password");
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Failed to login user");
+    }
+  }
+
+  // Sign-up Request Logic
+  sendDetailsToServer(
       String email,
       String firstname,
       String lastname,
@@ -55,49 +80,164 @@ class HttpService  {
       String verifyPassword,
       bool termAndCondition,
       String accountType) async {
-    String? email;
-    String? firstname;
-    String? lastname;
-    String? password;
-    String? verifyPassword;
-    bool? termAndCondition;
-    String? accountType;
+    try {
+      final response =
+          await http.post(Uri.http(requestSite, "api/v1/auth/register"),
+              headers: <String, String>{'Content-Type': 'application/json'},
+              body: jsonEncode(<String, dynamic>{
+                "verifyPassword": verifyPassword,
+                "accountType": accountType,
+                "email": email,
+                "firstname": firstname,
+                "lastname": lastname,
+                "password": password,
+                "platform": "mobile",
+                "imageUrl": "",
+                "termAndCondition": termAndCondition,
+              }));
 
-    RegistrationModel register = await registerUser(accountType!, email!,
-        firstname!, lastname!, password!, verifyPassword!, termAndCondition!);
-
-    @override
-    void initState() {
-      registration = register;
-      //super.initState();
+      if (response.statusCode <= 299) {
+        return registrationModelFromJson(response.body);
+      } else {
+        return Future.error((json.decode(response.body)['message']) ??
+            'Failed to register user');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Failed to register user");
     }
-
-
   }
 
-  // Login Request Logic
-  Future<LoginModel> loginUser(String email, String password) async {
-    var response = await http.post(Uri.http(requestSite, "api/v1/auth/login"),
+  forgotPassword(
+      {required String email,
+      required String password,
+      required String confirmPassword,
+      required String otp}) async {
+    try {
+      var response = await http.post(
+        Uri.http(requestSite, "api/v1/auth/reset-password"),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8'
         },
-        body: jsonEncode(<String, String>{
-          "email": email,
-          "password": password,
-        }));
-
-    if (response.statusCode == 200) {
-      String responseString = response.body;
-      return loginModelFromJson(responseString);
-    } else if (response.statusCode == 400) {
-      String responseString = response.body;
-      userTypeService.error.value =  "Incorrect Username or Password";
-      throw Exception(userTypeService.error.value);
-    } else
-      throw Exception("Failed to Login user");
-
+        body: jsonEncode(
+          <String, String>{
+            "confirmPassword": confirmPassword,
+            "email": email,
+            "newPassword": password,
+            "otp": otp
+          },
+        ),
+      );
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in changing your password");
+    }
   }
 
+  sendOTP({required String email}) async {
+    try {
+      var response = await http.post(
+        Uri.http(
+            requestSite, "api/v1/auth/reset-password-otp", <String, dynamic>{
+          "email": email,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+      );
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in sending OTP");
+    }
+  }
 
+  getAllProperties({required int page, required int size}) async {
+    try {
+      var response = await http.get(
+        Uri.http(requestSite, "api/v1/properties", <String, dynamic>{
+          "page": page,
+          "size": size,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+      );
+      if (response.statusCode <= 299) {
+        // return registrationModelFromJson(response.body);
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
 
+  getAllPropertyById({required int id}) async {
+    try {
+      var response = await http.get(
+        Uri.http(
+          requestSite,
+          "api/v1/properties/$id",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+      );
+      if (response.statusCode <= 299) {
+        // return registrationModelFromJson(response.body);
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  updateProfile(
+      {required Map<String, dynamic> body,
+      required String authorization,
+      required String tokenType}) async {
+    try {
+      var response = await http.post(
+        Uri.http(
+          requestSite,
+          "api/v1/user/profile/update",
+        ),
+        body: jsonEncode(body),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': '$tokenType $authorization'
+        },
+      );
+      if (response.statusCode <= 299) {
+        // return registrationModelFromJson(response.body);
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
 }

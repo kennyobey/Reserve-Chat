@@ -1,15 +1,21 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/utility/assets.dart';
-import 'package:stacked/stacked.dart';
+
+import '../../../model/property_model.dart';
 
 class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
-   PropertyDetailsHeader({
+  final Property? property;
+
+  PropertyDetailsHeader({
     Key? key,
     this.onBackTap,
     this.onFavoriteTap,
+    required this.property,
     this.isFavoriteTap = false,
   });
 
@@ -17,84 +23,102 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
   final void Function()? onFavoriteTap;
   final bool isFavoriteTap;
 
-   int _current = 0;
-   final CarouselController _controller = CarouselController();
+  final StreamController<int> _fetchingStream =
+      StreamController<int>.broadcast();
+  final CarouselController _controller = CarouselController();
 
   @override
   Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
+    final topPadding = MediaQuery.of(context).padding.top;
+
     return Stack(
       fit: StackFit.expand,
       children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            onPageChanged: (index, reason){
-              _current = index;
-            },
-            autoPlay: true,
-          ),
-          items: Assets.imgList
-              .map((item) => ResavationImage(image: item))
-              .toList(),),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: Assets.imgList.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: Container(
-                width: 12.0,
-                height: 12.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-              ),
-            );
-          }).toList(),
-        ),
-
-        Positioned(
-          left: 30,
-          top: 50,
-          child: GestureDetector(
-            onTap: onBackTap,
-            child: Container(
-              width: 25,
-              height: 25,
-              decoration: BoxDecoration(
-                color: Colors.grey[700],
-              ),
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 4),
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
+        Hero(
+          tag: (property?.id ?? -1).toString(),
+          child: CarouselSlider(
+            options: CarouselOptions(
+              onPageChanged: (index, reason) {
+                _fetchingStream.add(index);
+              },
+              autoPlay: true,
             ),
+            items: Assets.imgList
+                .map((item) => ResavationImage(image: item))
+                .toList(),
           ),
         ),
-        Positioned(
-          right: 30,
-          top: 50,
-          child: Container(
-            width: 25,
-            height: 25,
-            decoration: BoxDecoration(
-              color: Colors.grey[700],
-            ),
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(1),
-            child: Icon(
-              isFavoriteTap ? Icons.favorite_border : Icons.favorite_border,
-              color: isFavoriteTap ? kRed : kWhite,
-
-            ),
-          ),
-        ),
+        buildIndicators(_fetchingStream.stream),
+        buildBackButton(topPadding),
+        buildFavouriteButton(topPadding),
       ],
+    );
+  }
+
+  StreamBuilder<int> buildIndicators(Stream<int> stream) {
+    return StreamBuilder<int>(
+        stream: stream,
+        builder: (ctx, asyncDataSnapshot) {
+          final index = asyncDataSnapshot.data ?? 0;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: Assets.imgList.asMap().entries.map((entry) {
+              final isSelected = index == entry.key;
+              return InkWell(
+                splashColor: Colors.transparent,
+                onTap: () => _controller.animateToPage(entry.key),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: isSelected ? 20.0 : 10.0,
+                  height: 10.0,
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black.withOpacity(isSelected ? 0.9 : 0.4),
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        });
+  }
+
+  Positioned buildFavouriteButton(double topPadding) {
+    return Positioned(
+      right: 10,
+      top: topPadding + 10,
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.black, borderRadius: BorderRadius.circular(25)),
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(5),
+        child: Icon(
+          isFavoriteTap ? Icons.favorite_border : Icons.favorite_border,
+          color: isFavoriteTap ? kRed : kWhite,
+          size: 20,
+        ),
+      ),
+    );
+  }
+
+  Positioned buildBackButton(double topPadding) {
+    return Positioned(
+      left: 10,
+      top: topPadding + 10,
+      child: GestureDetector(
+        onTap: onBackTap,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black, borderRadius: BorderRadius.circular(25)),
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      ),
     );
   }
 

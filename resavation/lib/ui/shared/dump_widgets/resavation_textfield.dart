@@ -66,11 +66,18 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
             border: OutlineInputBorder(
               borderSide: const BorderSide(color: kGray, width: 0.5),
             ),
-            fillColor: widget.fillColors ?? null,
+            disabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red, width: 0.5),
+            ),
+
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: kGray, width: 0.5),
+            ),
+            // fillColor: widget.fillColors ?? null,
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
             ),
-            filled: true,
+            // filled: true,
             hintText: widget.hintText,
             labelText: widget.labelText,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -81,7 +88,6 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
                 ? GestureDetector(
                     onTap: () {
                       setState(() {
-                        print(true);
                         _obscureText = !_obscureText;
                       });
                     },

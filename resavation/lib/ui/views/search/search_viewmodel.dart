@@ -13,8 +13,7 @@ class SearchViewModel extends BaseViewModel {
   late List<Property> property;
   String query = '';
 
-  Widget buildSearch() =>
-      ResavationSearchBar(
+  Widget buildSearch() => ResavationSearchBar(
         text: query,
         hintText: 'Product Name',
         onChanged: searchProperty,
@@ -30,12 +29,13 @@ class SearchViewModel extends BaseViewModel {
       final searchLower = query.toLowerCase();
 
       return propertyLocation.contains(searchLower) ||
-          propertyAddress.contains(searchLower) || propertyCategory.contains(searchLower);
+          propertyAddress.contains(searchLower) ||
+          propertyCategory.contains(searchLower);
     }).toList();
 
-      this.query = query;
-      this.property = property;
-      notifyListeners();
+    this.query = query;
+    this.property = property;
+    notifyListeners();
   }
 
   // drop-down button logic
@@ -47,7 +47,7 @@ class SearchViewModel extends BaseViewModel {
     'Item4',
   ];
 
-  void onSelectedValueChange(value){
+  void onSelectedValueChange(value) {
     selectedValue = value as String;
 
     notifyListeners();
@@ -59,8 +59,11 @@ class SearchViewModel extends BaseViewModel {
 
   List<Property> get properties => listOfProperties;
 
-  void goToPropertyDetails() {
-    _navigationService.navigateTo(Routes.propertyDetailsView);
+  void goToPropertyDetails(Property property) {
+    _navigationService.navigateTo(
+      Routes.propertyDetailsView,
+      arguments: property,
+    );
   }
 
   void goToFilterView() {

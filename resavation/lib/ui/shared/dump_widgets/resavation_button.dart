@@ -6,6 +6,7 @@ class ResavationButton extends StatelessWidget {
   const ResavationButton(
       {Key? key,
       this.onTap,
+      this.margin = const EdgeInsets.all(0),
       required this.title,
       this.titleColor = kWhite,
       this.buttonColor = kPrimaryColor,
@@ -18,6 +19,7 @@ class ResavationButton extends StatelessWidget {
       : super(key: key);
   final void Function()? onTap;
   final String title;
+  final EdgeInsets margin;
   final Color titleColor;
   final Color buttonColor;
   final double? height;
@@ -31,37 +33,39 @@ class ResavationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: buttonColor,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: borderColor),
-          ),
-          duration: const Duration(milliseconds: 300),
-          height: height ?? 50,
-          // width: width ?? 350,
-          width: width ?? 350,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: textStyle?.copyWith(color: titleColor) ??
-                    AppStyle.kBodyRegular.copyWith(
-                      color: titleColor,
-                      fontSize: fontSize,
-                    ),
-              ),
+      child: Container(
+        alignment: Alignment.center,
+        margin: margin,
+        decoration: BoxDecoration(
+          color: buttonColor,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: borderColor),
+        ),
+        height: height ?? 50,
+        width: width ?? 350,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: textStyle?.copyWith(color: titleColor) ??
+                  AppStyle.kBodyRegular.copyWith(
+                    color: titleColor,
+                    fontSize: fontSize,
+                  ),
+            ),
+            if (icon != null)
               SizedBox(
                 width: 5,
               ),
+            if (icon != null)
               Icon(
                 icon,
                 color: kWhite,
               ),
-            ],
-          )),
+          ],
+        ),
+      ),
     );
   }
 }

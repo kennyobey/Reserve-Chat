@@ -4,10 +4,13 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
 class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ResavationAppBar({Key? key, this.title, this.actions}) : super(key: key);
+  const ResavationAppBar(
+      {Key? key, this.title, this.actions, this.centerTitle = true})
+      : super(key: key);
 
   final String? title;
   final List<Widget>? actions;
+  final bool centerTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +22,11 @@ class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: AppStyle.kHeading0.copyWith(color: kBlack),
       ),
       elevation: 0,
-      centerTitle: true,
+      centerTitle: centerTitle,
       // iconTheme: IconThemeData(color: ),
       leading: Navigator.canPop(context)
-          ? IconButton(
-              onPressed: () => Navigator.maybePop(context),
-              icon: Icon(
-                CupertinoIcons.chevron_back,
-                color: kDarkBlue,
-                size: 24,
-              ),
+          ? BackButton(
+              color: kDarkBlue,
             )
           : null,
     );
