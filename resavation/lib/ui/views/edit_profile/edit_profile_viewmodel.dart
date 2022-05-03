@@ -56,7 +56,6 @@ class EditProfileViewModel extends BaseViewModel {
   }
 
   uploadDocument(File file) async {
-    //todo replace with the right id
     Reference sFirebaseStorageRef = FirebaseStorage.instance.ref();
     Reference firebaseStorageRef = sFirebaseStorageRef
         .child('users/${userData.email}/profilePictures/profilePicture');
