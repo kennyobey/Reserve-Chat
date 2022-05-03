@@ -8,6 +8,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
   final void Function()? onBackTap;
   @override
   Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
+    final topPadding = MediaQuery.of(context).padding.top;
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -29,29 +30,27 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
           ),
         ),
         Positioned(
-          left: 20,
-          bottom: 0,
+          left: 10,
+          bottom: 10,
           child: CircleAvatar(
-            radius: 35, // Image radius
+            radius: 40, // Image radius
             backgroundImage: AssetImage(Assets.profile_image),
           ),
         ),
         Positioned(
-          left: 30,
-          top: 50,
+          left: 10,
+          top: topPadding + 10,
           child: GestureDetector(
             onTap: onBackTap,
             child: Container(
-              width: 25,
-              height: 25,
               decoration: BoxDecoration(
-                color: Colors.grey[700],
-              ),
+                  color: Colors.black, borderRadius: BorderRadius.circular(25)),
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 4),
+              padding: EdgeInsets.all(5),
               child: Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back_ios_rounded,
                 color: Colors.white,
+                size: 20,
               ),
             ),
           ),

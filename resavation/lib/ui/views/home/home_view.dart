@@ -5,7 +5,6 @@ import 'package:resavation/ui/shared/smart_widgets/find_your_location.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/home/home_viewmodel.dart';
-import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
@@ -14,120 +13,124 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      builder: (context, model, child) => SafeArea(
-        child: Scaffold(
-          body: Column(
-            children: [
-              verticalSpaceMedium,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: model.goToEditProfileView,
-                      child: CircleAvatar(
-                        radius: 20, // Image radius
-                        backgroundImage: AssetImage(Assets.profile_image),
-                      ),
-                    ),
-                    horizontalSpaceSmall,
-                    Text( "Hi there!",
-                      style: AppStyle.kBodyRegularBlack14W600,
-                    ),
-                    Spacer(),
-                    Icon(Icons.notifications_none_outlined),
-                  ],
+      builder: (context, model, child) => Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            leading: Center(
+              child: GestureDetector(
+                onTap: model.goToEditProfileView,
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(40)),
+                  child: ResavationImage(
+                    image: model.userData.imageUrl ?? '',
+                  ),
                 ),
               ),
-              verticalSpaceMedium,
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Find a \n',
-                          style: AppStyle.kHeading0.copyWith(color: kBlack, height: 1.5),
-                          children: [
-                            TextSpan(
-                              text: 'Suitable Apartment',
-                              style: AppStyle.kHeading2.copyWith(color: kBlack, height: 1.5),
-                            ),
-                          ],
-                        ),
-                      ),
-                      verticalSpaceMedium,
-                      FindYourLocation(
-                        onTap: model.goToFilterView,
-                      ),
-                      verticalSpaceMedium,
-                      TitleListTile(
-                        onTap: model.goToProfileProductListView,
-                        visibility: true,
-                        title: 'Categories',
-                      ),
-                      verticalSpaceMedium,
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (final category in model.categories) ...[
-                              CategoryCard(
-                                image: category.image,
-                                category: category.category,
-                                onTap: (){
-                                  category.featureReady? model.goToPropertySearch() : model.showComingSoon();
-                                },
-                              ),
-                              horizontalSpaceSmall,
-                            ],
-                          ],
-                        ),
-                      ),
-                      verticalSpaceMedium,
-                      TitleListTile(
-                        onTap: model.goToProfileProductListView,
-                        visibility: true,
-                        title: 'Top Cities',
-                      ),
-                      verticalSpaceSmall,
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (final city in model.topCities) ...[
-                              TopCityCard(
-                                image: city.image,
-                                numberOfProperties: city.numberOfProperties,
-                                location: city.location,
-                              ),
-                              horizontalSpaceSmall,
-                            ]
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+            ),
+            title: Text(
+              'Welcome ${model.userData.firstName.toUpperCase()}',
+              style: AppStyle.kBodyRegularBlack14W600,
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  model.goToMessage();
+                },
+                icon: Icon(
+                  Icons.notifications_none_outlined,
+                  color: Colors.black,
                 ),
               ),
             ],
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: 'Find a\n',
+                    style:
+                        AppStyle.kHeading0.copyWith(color: kBlack, height: 1.5),
+                    children: [
+                      TextSpan(
+                        text: 'Suitable Apartment',
+                        style: AppStyle.kHeading2
+                            .copyWith(color: kBlack, height: 1.5),
+                      ),
+                    ],
+                  ),
+                ),
+                verticalSpaceMedium,
+                FindYourLocation(
+                  onTap: model.goToFilterView,
+                ),
+                verticalSpaceMedium,
+                TitleListTile(
+                  onTap: model.goToProfileProductListView,
+                  visibility: true,
+                  title: 'Categories',
+                ),
+                verticalSpaceMedium,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final category in model.categories) ...[
+                        CategoryCard(
+                          image: category.image,
+                          category: category.category,
+                          onTap: () {
+                            category.featureReady
+                                ? model.goToPropertySearch()
+                                : model.showComingSoon();
+                          },
+                        ),
+                        horizontalSpaceSmall,
+                      ],
+                    ],
+                  ),
+                ),
+                verticalSpaceMedium,
+                TitleListTile(
+                  onTap: model.goToProfileProductListView,
+                  visibility: true,
+                  title: 'Top Cities',
+                ),
+                verticalSpaceSmall,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final city in model.topCities) ...[
+                        TopCityCard(
+                          image: city.image,
+                          numberOfProperties: city.numberOfProperties,
+                          location: city.location,
+                        ),
+                        horizontalSpaceSmall,
+                      ]
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )),
       viewModelBuilder: () => HomeViewModel(),
     );
   }
 }
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({
-    Key? key,
-    this.category = '',
-    required this.image,
-    this.onTap
-  }) : super(key: key);
+  const CategoryCard(
+      {Key? key, this.category = '', required this.image, this.onTap})
+      : super(key: key);
 
   final String category;
   final String image;

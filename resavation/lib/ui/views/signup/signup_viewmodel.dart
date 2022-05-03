@@ -1,25 +1,20 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/registration_model.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'dart:async';
-import 'package:http/http.dart' as http;
 
 class SignUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
   final userTypeService = locator<UserTypeService>();
 
-
   // Global Keys to use with the form text fields
   final registrationFormKey = GlobalKey<FormState>();
-  late Timer timer;
 
   // A controller for each field
   final emailFieldController = TextEditingController();
@@ -28,29 +23,25 @@ class SignUpViewModel extends BaseViewModel {
   final passwordFieldController = TextEditingController();
   final verifyPasswordFieldController = TextEditingController();
 
-
   bool _checkValue = false;
   bool get checkValue => _checkValue;
   String userType = "PROPERTY_OWNER";
 
-
   // To send details to the server
-  void sendDetailsToServer() async {
-    final String email = emailFieldController.text;
-    final String firstname =
-        firstNameFieldController.text;
-    final String lastname =
-        lastNameFieldController.text;
-    final String password =
-        passwordFieldController.text;
-    final String verifyPassword =
-        verifyPasswordFieldController.text;
-    final bool termAndCondition = true;
-
-    final String accountType = userType;
-    httpService.sendDetailsToServer(email, firstname, lastname, password, verifyPassword, termAndCondition, accountType);
+  sendDetailsToServer() async {
+    final String email = emailFieldController.text.trim();
+    final String firstname = firstNameFieldController.text.trim();
+    final String lastname = lastNameFieldController.text.trim();
+    final String password = passwordFieldController.text.trim();
+    final String verifyPassword = verifyPasswordFieldController.text.trim();
+    final bool termAndCondition = _checkValue;
+    final String accountType = userType.trim();
+    try {
+      await httpService.sendDetailsToServer(email, firstname, lastname, password, verifyPassword, termAndCondition, accountType);
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
-
 
   // To select the userType
   void onRadioChanged(String value) {
@@ -78,5 +69,4 @@ class SignUpViewModel extends BaseViewModel {
     print(userTypeService.isTenant);
     notifyListeners();
   }
-
 }

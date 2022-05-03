@@ -1,7 +1,3 @@
-import 'dart:async';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
@@ -15,6 +11,10 @@ class PropertyDetailsViewModel extends BaseViewModel {
   final _snackbarService = locator<CustomSnackbarService>();
   int _pagePosition = 0;
   int get pagePosition => _pagePosition;
+
+  Property getProperty() {
+    return _navigationService.currentArguments;
+  }
 
   void onPageChanged(int index) {
     _pagePosition = index;
@@ -36,7 +36,7 @@ class PropertyDetailsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.datePickerView);
   }
 
-  void goToPropertyOwnersProfileView(){
+  void goToPropertyOwnersProfileView() {
     _navigationService.navigateTo(Routes.propertyOwnerProfileView);
   }
 
@@ -44,6 +44,4 @@ class PropertyDetailsViewModel extends BaseViewModel {
   void goToMapView() {
     _navigationService.navigateTo(Routes.mapView);
   }
-
-
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
@@ -39,83 +40,94 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
 
   @override
   Widget build(BuildContext context, model) {
-    return Card(
-      elevation: 5,
-      shadowColor: kBlack54,
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-
-          children: [
-            Expanded(
-              flex: 2,
-              child: GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  height: 110,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: ResavationImage(
-                      image: image,
+    final oCcy = NumberFormat("#,##0.00", "en_US");
+    return InkWell(
+      splashColor: Colors.transparent,
+      onTap: onTap,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 2,
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: Hero(
+                    child: Container(
+                      height: 100,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: ResavationImage(
+                        image: image,
+                      ),
                     ),
+                    tag: id.toString(),
                   ),
                 ),
               ),
-            ),
-            horizontalSpaceSmall,
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        location,
-                        style: AppStyle.kBodySmallRegular12W500,
-                      ),
-                      InkWell(
-                        onTap: (){
-                          model.changeFavoriteIcon(id);
-                        },
-                        child: Icon(
-                          Icons.favorite,
-                          color: model.isFavorite? kRed : kTransparent,
+              horizontalSpaceSmall,
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          location,
+                          style: AppStyle.kBodyRegular18W500,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            model.changeFavoriteIcon(id);
+                          },
+                          child: Icon(
+                            model.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border_outlined,
+                            color: model.isFavorite ? kRed : Colors.grey,
+                            size: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      address,
+                      style: AppStyle.kBodySmallRegular12W300,
+                    ),
+                    verticalSpaceSmall,
+                    PropertyDetails(
+                      numberOfBedrooms: numberOfBedrooms,
+                      numberOfBathrooms: numberOfBathrooms,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      squareFeet: squareFeet,
+                    ),
+                    verticalSpaceSmall,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}/year',
+                        style: AppStyle.kBodySmallRegular12W500.copyWith(
+                          color: kPrimaryColor,
                         ),
                       ),
-                    ],
-                  ),
-                  // verticalSpaceSmall,
-                  Container(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(
-                      category ?? '',
-                      style: AppStyle.kBodySmallRegular12W300.copyWith(
-                        color: kBlack54,
-                      ),
                     ),
-                  ),
-                  verticalSpaceSmall,
-                  Text(
-                    '\$ ' + amountPerYear.toString() + ' /year',
-                    style: AppStyle.kBodySmallRegular11W400.copyWith(
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                  verticalSpaceSmall,
-                  PropertyDetails(
-                    numberOfBedrooms: numberOfBedrooms,
-                    numberOfBathrooms: numberOfBathrooms,
-                    squareFeet: squareFeet,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

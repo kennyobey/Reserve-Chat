@@ -1,7 +1,9 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/login_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/http_service.dart';
+import 'package:resavation/services/core/user_type_service.dart';
 import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -26,7 +28,9 @@ class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<CustomSnackbarService>();
   final httpService = locator<HttpService>();
+  final _userService = locator<UserTypeService>();
 
+  LoginModel get userData => _userService.userData;
 
   void showComingSoon() {
     _snackbarService.showComingSoon();
@@ -43,7 +47,6 @@ class HomeViewModel extends BaseViewModel {
   ];
 
   void goToFilterView() {
-
     _navigationService.navigateTo(Routes.filterView);
   }
 
@@ -61,6 +64,9 @@ class HomeViewModel extends BaseViewModel {
 
   void goToEditProfileView() {
     _navigationService.navigateTo(Routes.editProfileView);
+  }
 
+  void goToMessage() {
+    _navigationService.navigateTo(Routes.messagesView);
   }
 }

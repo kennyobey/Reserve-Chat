@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -12,107 +13,91 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsViewModel>.reactive(
-      builder: (context, model, child) => SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'Settings',
-                    style: AppStyle.kHeading0,
-                  ),
+      builder: (context, model, child) => Scaffold(
+        appBar: ResavationAppBar(title: 'Settings'),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SettingsListTile(
+                icon: Icons.people,
+                title: 'Account',
+              ),
+              SettingsListTile(
+                title: 'Edit Profile',
+                onTap: model.goToEditProfileView,
+              ),
+              SettingsListTile(
+                title: 'Change Password',
+                onTap: model.goToResetPasswordView,
+              ),
+              verticalSpaceSmall,
+              SettingsListTile(
+                onTap: model.showComingSoon,
+                icon: Icons.notifications,
+                title: 'Notification',
+              ),
+              SettingsListTile(
+                onSwitchTap: model.onNotificationSwitchChanged,
+                isSwitch: true,
+                switchValue: model.notificationSwitchValue,
+                title: 'Notifications',
+              ),
+              SettingsListTile(
+                onSwitchTap: model.onAppNotificationSwitchValue,
+                isSwitch: true,
+                switchValue: model.appNotificationSwitchValue,
+                title: 'App Notifications',
+              ),
+              verticalSpaceSmall,
+              SettingsListTile(
+                onTap: model.showComingSoon,
+                icon: Icons.more_rounded,
+                title: 'More',
+              ),
+              SettingsListTile(
+                title: 'Language',
+                onTap: model.showComingSoon,
+              ),
+              SettingsListTile(
+                title: 'Country',
+                onTap: model.showComingSoon,
+              ),
+              verticalSpaceMedium,
+              ResavationButton(
+                onTap: () {
+                  model.goToPropertyOwnerHomePageView();
+                  model.updateUserType();
+                },
+                width: double.infinity,
+                title: model.returnUserType()
+                    ? 'Switch to Property Owner'
+                    : 'Switch to User',
+                borderColor: kBlack,
+                titleColor: kBlack,
+                buttonColor: kWhite.withOpacity(0.9),
+              ),
+              verticalSpaceLarge,
+              ListTile(
+                minLeadingWidth: 0,
+                horizontalTitleGap: 5,
+                onTap: model.logout,
+                dense: true,
+                contentPadding: EdgeInsets.all(0),
+                leading: Icon(
+                  Icons.logout,
+                  color: kRed,
+                  // onTap: model.goToOff(),
                 ),
-                SettingsListTile(
-                  onTap: model.showComingSoon,
-                  icon: Icons.people,
-                  title: 'Account',
+                title: Text(
+                  'Logout',
+                  style: AppStyle.kBodyBold.copyWith(color: kRed),
                 ),
-                SettingsListTile(
-                  title: 'Edit Profile',
-                  onTap: model.goToEditProfileView,
-                ),
-                SettingsListTile(
-                  title: 'Change Password',
-                  onTap: model.goToResetPasswordView,
-                ),
-                SettingsListTile(
-                  onTap: model.showComingSoon,
-                  icon: Icons.notifications,
-                  title: 'Notification',
-                ),
-                SwitchListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.all(0),
-                  value: model.notificationSwitchValue,
-                  onChanged: model.onNotificationSwitchChanged,
-                  title: Text(
-                    'Notifications',
-                    style: AppStyle.kBodyRegularBlack14,
-                  ),
-                ),
-                SwitchListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.all(0),
-                  value: model.appNotificationSwitchValue,
-                  onChanged: model.onAppNotificationSwitchValue,
-                  title: Text(
-                    'App Notifications',
-                    style: AppStyle.kBodyRegularBlack14,
-                  ),
-                ),
-                SettingsListTile(
-                  onTap: model.showComingSoon,
-                  icon: Icons.more_rounded,
-                  title: 'More',
-                ),
-                SettingsListTile(
-                  title: 'Language',
-                  onTap: model.showComingSoon,
-                ),
-                SettingsListTile(
-                  title: 'Country',
-                  onTap: model.showComingSoon,
-                ),
-                verticalSpaceMedium,
-                ResavationButton(
-                  onTap: () {
-                    model.goToPropertyOwnerHomePageView();
-                    model.updateUserType();
-                  },
-                  title: model.returnUserType()
-                      ? 'Switch to Property Owner'
-                      : 'Switch to User',
-                  borderColor: kBlack,
-                  titleColor: kBlack,
-                  buttonColor: kWhite.withOpacity(0.9),
-                  //  borderColor: kp,
-                ),
-                Spacer(),
-                ListTile(
-                  minLeadingWidth: 0,
-                  horizontalTitleGap: 5,
-                  onTap: model.logout,
-                  dense: true,
-                  contentPadding: EdgeInsets.all(0),
-                  leading: Icon(
-                    Icons.logout,
-                    color: kRed,
-                    // onTap: model.goToOff(),
-                  ),
-                  title: Text(
-                    'Logout',
-                    style: AppStyle.kBodyBold.copyWith(color: kRed),
-                  ),
-                ),
-                Spacer(),
-              ],
-            ),
+              ),
+              verticalSpaceLarge,
+
+            ],
           ),
         ),
       ),
@@ -125,29 +110,53 @@ class SettingsListTile extends StatelessWidget {
   const SettingsListTile({
     Key? key,
     this.icon,
+    this.isSwitch = false,
+    this.isTitle = false,
+    this.switchValue = false,
     required this.title,
     this.onTap,
+    this.onSwitchTap,
   }) : super(key: key);
 
   final IconData? icon;
+  final bool isTitle;
+  final bool isSwitch;
+  final bool switchValue;
   final String title;
   final void Function()? onTap;
+  final void Function(bool)? onSwitchTap;
+
 
   @override
   Widget build(BuildContext context) {
     bool hasIcon = icon != null;
-    return ListTile(
-      onTap: hasIcon ? null : onTap,
-      dense: true,
-      contentPadding: EdgeInsets.all(0),
-      leading: hasIcon ? Icon(icon) : null,
-      title: Transform.translate(
-        offset: hasIcon ? Offset(-22, 0) : Offset(0, 0),
-        child: Text(
-          title,
-          style: hasIcon
-              ? AppStyle.kBodySmallRegular12W500
-              : AppStyle.kBodyRegularBlack14,
+    return InkWell(
+      onTap: onTap,
+      splashColor: Colors.transparent,
+      child: Padding(
+        padding: isSwitch
+            ? EdgeInsets.only(top: 3, bottom: 3)
+            : EdgeInsets.only(top: 8, bottom: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            (hasIcon) ? Icon(icon) : horizontalSpaceMedium,
+            horizontalSpaceSmall,
+            Expanded(
+              child: Text(
+                title,
+                style: hasIcon
+                    ? AppStyle.kBodyRegularBlack14W500
+                    : AppStyle.kBodyRegularBlack14,
+              ),
+            ),
+            horizontalSpaceSmall,
+            if (isSwitch)
+              Switch(
+                value: switchValue,
+                onChanged: onSwitchTap,
+              )
+          ],
         ),
       ),
     );

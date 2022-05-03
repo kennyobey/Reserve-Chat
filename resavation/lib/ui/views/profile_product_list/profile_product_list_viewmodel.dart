@@ -5,10 +5,18 @@ import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../model/login_model.dart';
+import '../../../services/core/user_type_service.dart';
+
 class ProfileProductListViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+
   final _snackbarService = locator<CustomSnackbarService>();
   List<Property> get properties => listOfProperties;
+
+  final _userService = locator<UserTypeService>();
+
+  LoginModel get userData => _userService.userData;
 
   // drop-down button
   String? selectedValue;
@@ -19,7 +27,7 @@ class ProfileProductListViewModel extends BaseViewModel {
     'Item4',
   ];
 
-  void onSelectedValueChange(value){
+  void onSelectedValueChange(value) {
     selectedValue = value as String;
 
     notifyListeners();
@@ -29,7 +37,8 @@ class ProfileProductListViewModel extends BaseViewModel {
     _snackbarService.showComingSoon();
   }
 
-  void goToPropertyDetails() {
-    _navigationService.navigateTo(Routes.propertyDetailsView);
+  void goToPropertyDetails(Property property) {
+    _navigationService.navigateTo(Routes.propertyDetailsView,
+        arguments: property);
   }
 }
