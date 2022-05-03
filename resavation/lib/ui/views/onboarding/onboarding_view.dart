@@ -56,11 +56,31 @@ class OnboardingView extends HookWidget {
                   onPageChanged: model.onPageChanged,
                   children: _pages,
                 ),
+
+              ],
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.06  ,
+              child: model.pagePosition == 2
+                  ? ResavationButton(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      title: "Get Started",
+                      onTap: model.goToMainView,
+                    )
+                  : DotsIndicator(
+                      dotsCount: 3,
+                      position: model.pagePosition.toDouble(),
+                    ),
+            )
+          ],
+        )),
+
               ),
               buildBottomWidget(context, model)
             ],
           ),
         ),
+
       ),
     );
   }

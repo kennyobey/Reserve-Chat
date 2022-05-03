@@ -178,7 +178,7 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
                           "Select Property Status",
                           style: AppStyle.kBodyRegular,
                         ),
-                        items: model.listingOption
+                        items: model.propertyStatus
                             .map((item) => DropdownMenuItem<String>(
                                   value: item,
                                   child: Text(

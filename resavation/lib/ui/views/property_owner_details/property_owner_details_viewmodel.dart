@@ -17,6 +17,16 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
   final TextEditingController propertDescriptionController = TextEditingController();
   final TextEditingController propertAddressController = TextEditingController();
 
+  // To upoload property to the server
+
+  void upoloadPropertyToServer() async{
+    final String propertyName = propertyNameController.text;
+    final String description = propertDescriptionController.text;
+    final String address = propertAddressController.text;
+
+   //httpService.uploadProperty(address, amenities, availability, bathTubCount, bedroomCount, carSlots, city, country, description, imageUrl, listingOption, liveInSPace, propertyName, roomType, rules, spaceFurnished, spacePrice, spaceServiced, spaceType, state, subscription, surfaceArea);
+  }
+
   void goToPropertyOwnerAddPhotosView() {
     _navigationService.navigateTo(Routes.propertyOwnerAddPhotosView);
   }

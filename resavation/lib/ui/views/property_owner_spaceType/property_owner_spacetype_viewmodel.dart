@@ -1,11 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/services/core/http_service.dart';
+import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final httpService = locator<HttpService>();
+  final userTypeService = locator<UserTypeService>();
+
+   // Global Keys to use with the form text fields
+  final registrationFormKey = GlobalKey<FormState>();
+  late Timer timer;
+
 
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
@@ -41,7 +52,6 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   // drop-down button UI logic for property status
   String? selectedValue3;
   List<String> propertyStatus = [
-    
     'For Sale',
     'For Rent'
   ];

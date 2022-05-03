@@ -260,28 +260,28 @@ class HttpService {
 
   //Property Upload Logic
   Future<UploadProperty?> uploadProperty(
-      String address,
-      String amenities,
-      String availability,
-      int bathTubCount,
-      int bedroomCount,
-      int carSlots,
-      String city,
-      String country,
-      String description,
-      String imageUrl,
-      String listingOption,
-      bool liveInSPace,
-      String propertyName,
-      String roomType,
-      String rules,
-      bool spaceFurnished,
-      int spacePrice,
-      bool spaceServiced,
-      String spaceType,
-      String state,
-      int subscription,
-      int surfaceArea) async {
+      String? address,
+      String? amenities,
+      String? availability,
+      int? bathTubCount,
+      int? bedroomCount,
+      int? carSlots,
+      String? city,
+      String? country,
+      String? description,
+      String? imageUrl,
+      String? listingOption,
+      bool? liveInSPace,
+      String? propertyName,
+      String? roomType,
+      String? rules,
+      bool? spaceFurnished,
+      int? spacePrice,
+      bool? spaceServiced,
+      String? spaceType,
+      String? state,
+      int? subscription,
+      int? surfaceArea) async {
     var response =
         await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
             headers: <String, String>{'Content-Type': 'application/json'},
@@ -318,6 +318,6 @@ class HttpService {
       userTypeService.error.value = "";
       throw Exception(userTypeService.error.value);
     } else
-      throw Exception("Failed to Login user");
+      throw Exception("Failed to upload property");
   }
 }
