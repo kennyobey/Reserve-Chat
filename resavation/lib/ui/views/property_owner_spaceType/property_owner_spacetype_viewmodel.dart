@@ -14,8 +14,14 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final userTypeService = locator<UserTypeService>();
 
   void upoloadPropertyToServer() async {
-    httpService.uploadProperty("", "", "", 0, 0, 0, "", "", "", "", "", false,
-        "", "", "", false, 0, false, "", "", 0, 0);
+    httpService.uploadProperty(
+        spaceServiced: false,
+        spaceFurnished: false,
+        liveInSPace: false,
+        listingOption: "listingOption",
+        bathTubCount: numberOfBathrooms,
+        bedroomCount: numberOfBedrooms,
+        carSlots: numberOfCarSlot);
   }
 
   // Global Keys to use with the form text fields

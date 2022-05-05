@@ -3,11 +3,18 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../services/core/http_service.dart';
+
 class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final httpService = locator<HttpService>();
 
   /// Checkboxes are named to fit their corresponding value
   /// To enable for easy recognition and usage
+
+  void upoloadPropertyToServer() async {
+    httpService.uploadProperty(amenities: "amenities");
+  }
 
   bool hasWifi = false;
   //bool get hasWifi => _hasWifi;
@@ -49,7 +56,6 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   void onCheckChanged3(bool? value) {
     _checkValue3 = value ?? false;
     notifyListeners();
-
   }
 
   void onCheckChanged4(bool? value) {

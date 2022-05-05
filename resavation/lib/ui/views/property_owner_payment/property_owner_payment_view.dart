@@ -54,9 +54,17 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                       style: AppStyle.kBodySmallRegular12W500,
                     ),
                     verticalSpaceTiny,
-                    ResavationTextField(
-                      hintText: 'Ease Subscription',
-                    ),
+                    // ResavationTextField(
+                    //   hintText: 'Ease Subscription',
+                    //   textInputAction: TextInputAction.next,
+                    //   controller: model.propertySubscriptionController,
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter property subscription';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
                     Text(
                       'Choose your ease subscription type',
                       style: AppStyle.kBodySmallRegular12,
@@ -114,7 +122,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                           label: 'From',
                           date: "${model.selectedDate.toLocal()}".split(' ')[0],
                           onPressed: () {
-                            model.selectDate(context);
+                            model.selecStarttDate(context);
                           },
                         ),
                         horizontalSpaceRegular,
@@ -122,7 +130,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                           label: 'To',
                           date: "${model.selectedDate.toLocal()}".split(' ')[0],
                           onPressed: () {
-                            model.selectDate(context);
+                            model.selectEndDate(context);
                           },
                         ),
                       ],
@@ -140,6 +148,17 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     verticalSpaceTiny,
                     ResavationTextField(
                       hintText: '# 100,000',
+                      textInputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        model.incrementPrice(input: value);
+                      },
+                      // controller: model.propertymonthlyPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
                     ),
                     verticalSpaceTiny,
                     Text(
@@ -149,6 +168,14 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     verticalSpaceTiny,
                     ResavationTextField(
                       hintText: '# 300,000',
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyquaterlylPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
                     ),
                     verticalSpaceTiny,
                     Text(
@@ -158,6 +185,14 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     verticalSpaceTiny,
                     ResavationTextField(
                       hintText: '# 600,000',
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertybiannualPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
                     ),
                     verticalSpaceTiny,
                     verticalSpaceTiny,
@@ -168,6 +203,14 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     verticalSpaceTiny,
                     ResavationTextField(
                       hintText: '# 600,000',
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyannualPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
                     ),
                     verticalSpaceTiny,
                     Row(
@@ -196,6 +239,14 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                             onPressed: () async {
                               if (uploadFormKey.currentState!.validate()) {
                                 model.goToPropertyOwnerAmenitiesView();
+
+                                print(model.selectedValue1);
+                                print(model.isServiced);
+                                print(model.selectedDate);
+                                print(model.propertyannualPriceController);
+                                print(model.propertybiannualPriceController);
+                                print(model.propertyquaterlylPriceController);
+                                print(model.propertymonthlyPriceController);
                               } else {
                                 model.upoloadPropertyToServer();
                               }
@@ -212,19 +263,6 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
       viewModelBuilder: () => PropertyOwnerPaymentViewModel(),
     );
   }
-
-  void _onSelectionChanged(
-      DateRangePickerSelectionChangedArgs dateRangePickerSelectionChangedArgs) {
-    print(dateRangePickerSelectionChangedArgs.value);
-  }
-
-  Future OpenDialogue() => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Dailoge"),
-          content: Text("My name"),
-        ),
-      );
 }
 
 class Date {}

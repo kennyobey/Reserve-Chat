@@ -90,6 +90,11 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
                       onSelected: model.onSelectCountryTap(Country.worldWide),
                     ),
                     verticalSpaceTiny,
+                    Text(
+                      'State',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
                     ResavationTextField(
                       hintText: 'State',
                       fillColors: Colors.white,
@@ -103,6 +108,11 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
                       },
                     ),
                     verticalSpaceTiny,
+                    Text(
+                      'City',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
                     ResavationTextField(
                       hintText: 'City',
                       fillColors: Colors.white,
@@ -114,6 +124,11 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
                         }
                         return null;
                       },
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      'Address',
+                      style: AppStyle.kBodySmallRegular12W500,
                     ),
                     verticalSpaceTiny,
                     ResavationTextField(

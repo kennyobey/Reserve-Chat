@@ -32,8 +32,13 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
     final String state = propertyStateController.text;
     final String city = propertyCityController.text;
 
-    httpService.uploadProperty(address, "", "", 0, 0, 0, city, "", description,
-        "", "", false, propertyName, "", "", false, 0, false, "", state, 0, 0);
+    httpService.uploadProperty(
+        propertyName: propertyName,
+        description: description,
+        address: address,
+        state: state,
+        city: city,
+        country: selectedCountry);
   }
 
   void goToPropertyOwnerAddPhotosView() {

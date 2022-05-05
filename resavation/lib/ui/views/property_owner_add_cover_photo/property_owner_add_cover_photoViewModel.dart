@@ -7,9 +7,17 @@ import 'package:resavation/services/core/image_picker_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../services/core/http_service.dart';
+
 class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _imagePickerService = locator<ImagePickerService>();
+  final httpService = locator<HttpService>();
+
+  void upoloadPropertyToServer() async {
+    httpService.uploadProperty(imageUrl: "");
+  }
+
   final List<String> imageContainer = <String>[];
 
   void pickFiles() async {

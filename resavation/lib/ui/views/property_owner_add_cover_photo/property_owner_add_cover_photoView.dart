@@ -22,100 +22,85 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
     return ViewModelBuilder<PropertyOwnerAddCoverPhotosViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpaceMedium,
-                Center(
-                  child: Text(
-                    'Add Photos',
-                    style: AppStyle.kBodyBold,
-                  ),
+          body: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 15,
                 ),
-                verticalSpaceMedium,
-                // model.showAddedPhoto() != null?Wrap(
-                //   children: model.showAddedPhoto().value!.map((imageOne){
-                //     return Container(
-                //         child:Container(
-                //           height: 96, width:169,
-                //           child: Image.file(File(imageOne.path)),
-                //         )
-                //     );
-                //   }).toList(),
-                // ):Container(),
-                // Center(
-                //   child: Row(
-                //     children: [
-                //       _coverPhoto(),
-                //       horizontalSpaceTiny,
-                //       // Expanded(child: _Photo())
-                //     ],
-                //   ),
-                // ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 2 / 2.2),
-                  itemBuilder: (_, index) {
-                    List<String> data = model.imageContainer;
-                    print(".........$data");
-                    return coverPhoto(
-                        imageUrl: data[index],
-                        isCover: (index == 0) ? true : false);
-                  },
-                  itemCount: model.imageContainer.length,
-                ),
-                verticalSpaceTiny,
-                ResavationButton(
-                  onTap: () {
-                    model.pickFiles();
-                  },
-                  title: 'Add photos',
-                  titleColor: kWhite,
-                  buttonColor: kPrimaryColor,
-                  //  borderColor: kp,
-                ),
-                // _Photo(),
-                Spacer(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FlatButton(
+                    verticalSpaceMedium,
+                    Center(
                       child: Text(
-                        'Back',
-                        style: AppStyle.kBodyRegular,
+                        'Add Photos',
+                        style: AppStyle.kBodyBold,
                       ),
-                      color: kWhite,
-                      textColor: kBlack,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
                     ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Next',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goToPropertyOwnerPaymentView();
+                    verticalSpaceMedium,
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 2 / 2.2),
+                      itemBuilder: (_, index) {
+                        List<String> data = model.imageContainer;
+                        print(".........$data");
+                        return coverPhoto(
+                            imageUrl: data[index],
+                            isCover: (index == 0) ? true : false);
                       },
+                      itemCount: model.imageContainer.length,
+                    ),
+                    verticalSpaceTiny,
+                    Spacer(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          child: Text(
+                            'Back',
+                            style: AppStyle.kBodyRegular,
+                          ),
+                          color: kWhite,
+                          textColor: kBlack,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Spacer(),
+                        FlatButton(
+                          child: Text(
+                            'Next',
+                            style: AppStyle.kBodyRegular,
+                          ),
+                          color: kPrimaryColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            model.goToPropertyOwnerPaymentView();
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Positioned(
+                top: 25,
+                right: 20,
+                child: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  backgroundColor: kPrimaryColor,
+                  foregroundColor: kWhite,
+                  onPressed: () => {model.pickFiles()},
+                ),
+              )
+            ],
           ),
         ),
       ),

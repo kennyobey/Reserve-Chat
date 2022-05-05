@@ -57,7 +57,7 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                 verticalSpaceRegular,
                 ResavationButton(
                   onTap: () {
-                    //model.pickFiles();
+                    model.goToPropertyOwnerAddCoverPhotosView();
                   },
                   title: 'Add photos',
                   titleColor: kWhite,
@@ -77,10 +77,10 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   child: Text("Back"),
                   onPressed: () => Navigator.pop(context),
                 ),
-                ResavationElevatedButton(
-                  child: Text("Next"),
-                  onPressed: () => model.goToPropertyOwnerAddCoverPhotosView(),
-                )
+                // ResavationElevatedButton(
+                //   child: Text("Next"),
+                //   onPressed: () => model.goToPropertyOwnerAddCoverPhotosView(),
+                // )
               ],
             ),
           ),
