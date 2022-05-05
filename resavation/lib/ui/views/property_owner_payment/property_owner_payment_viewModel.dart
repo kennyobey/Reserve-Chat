@@ -4,10 +4,17 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../services/core/http_service.dart';
+
 class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final httpService = locator<HttpService>();
+  DateTime selectedDate = DateTime.now();
 
-DateTime selectedDate = DateTime.now();
+  void upoloadPropertyToServer() async {
+    httpService.uploadProperty("", "", "", 0, 0, 0, "", "", "", "", "", false,
+        "", "", "", false, 0, false, "", "", 0, 0);
+  }
 
 // drop-down button UI logic for spaceType
   String? selectedValue1;
@@ -25,8 +32,9 @@ DateTime selectedDate = DateTime.now();
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
-        selectedDate = picked;
-         print("The picked date is $selectedDate");
+      selectedDate = picked;
+      print("The picked date is $selectedDate");
+
       notifyListeners();
     }
   }

@@ -57,14 +57,14 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                 verticalSpaceRegular,
                 ResavationButton(
                   onTap: () {
-                    model.pickFiles();
+                    //model.pickFiles();
                   },
                   title: 'Add photos',
                   titleColor: kWhite,
                   buttonColor: kPrimaryColor,
                   //  borderColor: kp,
                 ),
-                if (file != null) fileDetails(file!),
+                // if (file != null) fileDetails(file!),
               ],
             ),
           ),
@@ -91,21 +91,21 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
   }
 }
 
-Widget fileDetails(PlatformFile file) {
-  final kb = file.size / 1024;
-  final mb = kb / 1024;
-  final size =
-      (mb >= 1) ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('File Name: ${file.name}'),
-        Text('File Size: $size'),
-        Text('File Extension: ${file.extension}'),
-        Text('File Path: ${file.path}'),
-      ],
-    ),
-  );
-}
+// Widget fileDetails(PlatformFile file) {
+//   final kb = file.size / 1024;
+//   final mb = kb / 1024;
+//   final size =
+//       (mb >= 1) ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
+//   return Padding(
+//     padding: const EdgeInsets.all(8.0),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text('File Name: ${file.name}'),
+//         Text('File Size: $size'),
+//         Text('File Extension: ${file.extension}'),
+//         Text('File Path: ${file.path}'),
+//       ],
+//     ),
+//   );
+// }

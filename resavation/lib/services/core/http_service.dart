@@ -242,20 +242,6 @@ class HttpService {
       return Future.error("Error occurred in communicating with the server");
     }
 
-        body: jsonEncode(<String, String>{
-          "email": email,
-          "password": password,
-        }));
-
-    if (response.statusCode == 200) {
-      String responseString = response.body;
-      return loginModelFromJson(responseString);
-    } else if (response.statusCode == 400) {
-      String responseString = response.body;
-      userTypeService.error.value = "Incorrect Username or Password";
-      throw Exception(userTypeService.error.value);
-    } else
-      throw Exception("Failed to Login user");
   }
 
   //Property Upload Logic

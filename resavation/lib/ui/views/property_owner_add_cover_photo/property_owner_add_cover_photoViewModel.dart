@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:resavation/app/app.locator.dart';
@@ -9,7 +10,28 @@ import 'package:stacked_services/stacked_services.dart';
 class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _imagePickerService = locator<ImagePickerService>();
+  final List<String> imageContainer = <String>[];
 
+  void pickFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true,
+    );
+    if (result != null) {
+      List<String?> data = result.paths;
+      data.forEach((element) {
+        imageContainer.add(element!);
+      });
+    }
+    print(
+        'From the image house>>>>>>>>>>>>>> ${imageContainer.toSet().toList()}');
+    // PlatformFile? file = result.files.first;
+
+    // print('File Name: ${file.name}');
+    // print('File Size: ${file.size}');
+    // print('File Extension: ${file.extension}');
+    // print('File Path: ${file.path}');
+  }
 
   // RxValue<List<XFile>?> showAddedPhoto (){
   //   notifyListeners();

@@ -12,8 +12,17 @@ import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spac
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerSpaceTypeView extends StatelessWidget {
+class PropertyOwnerSpaceTypeView extends StatefulWidget {
   PropertyOwnerSpaceTypeView({Key? key}) : super(key: key);
+
+  @override
+  State<PropertyOwnerSpaceTypeView> createState() =>
+      _PropertyOwnerSpaceTypeViewState();
+}
+
+class _PropertyOwnerSpaceTypeViewState
+    extends State<PropertyOwnerSpaceTypeView> {
+  final uploadFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,263 +35,279 @@ class PropertyOwnerSpaceTypeView extends StatelessWidget {
               vertical: 15,
             ),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      'Space Type',
-                      style: AppStyle.kHeading0,
+              child: Form(
+                key: uploadFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        'Space Type',
+                        style: AppStyle.kHeading0,
+                      ),
                     ),
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Tell us about your property',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Property Type',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                        hint: Text(
-                          "Select Property ",
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        items: model.spaceType
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: AppStyle.kBodyRegular,
-                                  ),
-                                ))
-                            .toList(),
-                        value: model.selectedValue1,
-                        onChanged: (value) {
-                          model.onSelectedValueChange1(value);
-                        },
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                        ),
-                        buttonWidth: 330,
-                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.black26,
+                    verticalSpaceMedium,
+                    Text(
+                      'Tell us about your property',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceMedium,
+                    Text(
+                      'Property Type',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceTiny,
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                          hint: Text(
+                            "Select Property ",
+                            style: AppStyle.kBodyRegular,
                           ),
-                        )),
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Narrow down your space type',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Is your space serviced',
-                    style: AppStyle.kBodyRegular,
-                  ),
-
-                  // is your space serviced Yes/No
-                  ResavationRadioButton(
-                    title: 'Yes',
-                    radioValue: "Yes",
-                    groupValue: model.isServiced,
-                    onChanged: (String? radioValue) {
-                      model.onSpaceServicedRadioChange(radioValue.toString());
-                    },
-                  ),
-                  ResavationRadioButton(
-                    title: 'No',
-                    radioValue: "No",
-                    groupValue: model.isServiced,
-                    onChanged: (String? radioValue) {
-                      model.onSpaceServicedRadioChange(radioValue.toString());
-                    },
-                  ),
-                  verticalSpaceSmall,
-                  Text(
-                    'Is your space furnished',
-                    style: AppStyle.kBodyRegular,
-                  ),
-
-                  // Is your space furnished Yes/No
-                  ResavationRadioButton(
-                    title: 'Yes',
-                    radioValue: "Yes",
-                    groupValue: model.isFurnished,
-                    onChanged: (String? radioValue) {
-                      model.onSpaceFurnishedRadioChange(radioValue.toString());
-                    },
-                  ),
-                  ResavationRadioButton(
-                    title: 'No',
-                    radioValue: "No",
-                    groupValue: model.isFurnished,
-                    onChanged: (String? radioValue) {
-                      model.onSpaceFurnishedRadioChange(radioValue.toString());
-                    },
-                  ),
-                  verticalSpaceSmall,
-                  Text(
-                    'Listing Options',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                        hint: Text(
-                          "Select Listing Option",
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        items: model.listingOption
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: AppStyle.kBodyRegular,
-                                  ),
-                                ))
-                            .toList(),
-                        value: model.selectedValue2,
-                        onChanged: (value) {
-                          model.onSelectedValueChange2(value);
-                        },
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                        ),
-                        buttonWidth: 330,
-                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.black26,
+                          items: model.spaceType
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: AppStyle.kBodyRegular,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: model.selectedValue1,
+                          onChanged: (value) {
+                            model.onSelectedValueChange1(value);
+                          },
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
                           ),
-                        )),
-                  ),
+                          buttonWidth: 330,
+                          buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.black26,
+                            ),
+                          )),
+                    ),
+                    verticalSpaceMedium,
+                    Text(
+                      'Narrow down your space type',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceMedium,
+                    Text(
+                      'Is your space serviced',
+                      style: AppStyle.kBodyRegular,
+                    ),
 
-                      verticalSpaceSmall,
-                      Text(
-                    'Property Status',
-                    style: AppStyle.kBodyRegular,
-                  ),
-                  verticalSpaceTiny,
-                   DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                        hint: Text(
-                          "Select Property Status",
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        items: model.propertyStatus
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: AppStyle.kBodyRegular,
-                                  ),
-                                ))
-                            .toList(),
-                        value: model.selectedValue3,
-                        onChanged: (value) {
-                          model.onSelectedValueChange3(value);
-                        },
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                        ),
-                        buttonWidth: 330,
-                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.black26,
+                    // is your space serviced Yes/No
+                    ResavationRadioButton(
+                      title: 'Yes',
+                      radioValue: "Yes",
+                      groupValue: model.isServiced,
+                      onChanged: (String? radioValue) {
+                        model.onSpaceServicedRadioChange(radioValue.toString());
+                      },
+                    ),
+                    ResavationRadioButton(
+                      title: 'No',
+                      radioValue: "No",
+                      groupValue: model.isServiced,
+                      onChanged: (String? radioValue) {
+                        model.onSpaceServicedRadioChange(radioValue.toString());
+                      },
+                    ),
+                    verticalSpaceSmall,
+                    Text(
+                      'Is your space furnished',
+                      style: AppStyle.kBodyRegular,
+                    ),
+
+                    // Is your space furnished Yes/No
+                    ResavationRadioButton(
+                      title: 'Yes',
+                      radioValue: "Yes",
+                      groupValue: model.isFurnished,
+                      onChanged: (String? radioValue) {
+                        model
+                            .onSpaceFurnishedRadioChange(radioValue.toString());
+                      },
+                    ),
+                    ResavationRadioButton(
+                      title: 'No',
+                      radioValue: "No",
+                      groupValue: model.isFurnished,
+                      onChanged: (String? radioValue) {
+                        model
+                            .onSpaceFurnishedRadioChange(radioValue.toString());
+                      },
+                    ),
+                    verticalSpaceSmall,
+                    Text(
+                      'Listing Options',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceTiny,
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                          hint: Text(
+                            "Select Listing Option",
+                            style: AppStyle.kBodyRegular,
                           ),
-                        )),   
-                  ),
-                  verticalSpaceSmall,
-                  Text(
-                    'Do you leave in this space',
-                    style: AppStyle.kBodyRegular,
-                  ),
+                          items: model.listingOption
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: AppStyle.kBodyRegular,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: model.selectedValue2,
+                          onChanged: (value) {
+                            model.onSelectedValueChange2(value);
+                          },
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                          ),
+                          buttonWidth: 330,
+                          buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.black26,
+                            ),
+                          )),
+                    ),
 
-                  // do you leave in this space Yes/No
-                  ResavationRadioButton(
-                    title: 'Yes',
-                    radioValue: "Yes",
-                    groupValue: model.leaveHere,
-                    onChanged: (String? radioValue) {
-                      model.onLeaveHereRadioChange(radioValue.toString());
-                    },
-                  ),
+                    verticalSpaceSmall,
+                    Text(
+                      'Property Status',
+                      style: AppStyle.kBodyRegular,
+                    ),
+                    verticalSpaceTiny,
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                          hint: Text(
+                            "Select Property Status",
+                            style: AppStyle.kBodyRegular,
+                          ),
+                          items: model.propertyStatus
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: AppStyle.kBodyRegular,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: model.selectedValue3,
+                          onChanged: (value) {
+                            model.onSelectedValueChange3(value);
+                          },
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                          ),
+                          buttonWidth: 330,
+                          buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.black26,
+                            ),
+                          )),
+                    ),
+                    verticalSpaceSmall,
+                    Text(
+                      'Do you leave in this space',
+                      style: AppStyle.kBodyRegular,
+                    ),
 
-                  ResavationRadioButton(
-                    title: 'No',
-                    radioValue: "No",
-                    groupValue: model.leaveHere,
-                    onChanged: (String? radioValue) {
-                      model.onLeaveHereRadioChange(radioValue.toString());
-                    },
-                  ),
-                  verticalSpaceSmall,
-                  //Select the number of bedrooms
-                  AmenitiesSelection(
-                    title: "Number Of bedrooms",
-                    value: model.numberOfBedrooms,
-                    onPositiveTap: () => model.onPositiveBedRoomTap(),
-                    onNegativeTap: () => model.onNegativeBedRoomTap(),
-                  ),
-                  verticalSpaceSmall,
-                  //Select the number of bathrooms
-                  AmenitiesSelection(
-                    title: "Number of bathrooms",
-                    value: model.numberOfBathrooms,
-                    onPositiveTap: () => model.onPositiveBathRoomTap(),
-                    onNegativeTap: () => model.onNegativeBathRoomTap(),
-                  ),
-                  verticalSpaceSmall,
-                  //Select the number of car slots
-                  AmenitiesSelection(
-                    title: "Number of car slots",
-                    value: model.numberOfCarSlot,
-                    onPositiveTap: () => model.onPositiveCarSlotTap(),
-                    onNegativeTap: () => model.onNegativeCarSlotTap(),
-                  ),
-                  verticalSpaceLarge,
+                    // do you leave in this space Yes/No
+                    ResavationRadioButton(
+                      title: 'Yes',
+                      radioValue: "Yes",
+                      groupValue: model.leaveHere,
+                      onChanged: (String? radioValue) {
+                        model.onLeaveHereRadioChange(radioValue.toString());
+                      },
+                    ),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Back',
-                          style: AppStyle.kBodyRegularBlack14W500,
+                    ResavationRadioButton(
+                      title: 'No',
+                      radioValue: "No",
+                      groupValue: model.leaveHere,
+                      onChanged: (String? radioValue) {
+                        model.onLeaveHereRadioChange(radioValue.toString());
+                      },
+                    ),
+                    verticalSpaceSmall,
+                    //Select the number of bedrooms
+                    AmenitiesSelection(
+                      title: "Number Of bedrooms",
+                      value: model.numberOfBedrooms,
+                      onPositiveTap: () => model.onPositiveBedRoomTap(),
+                      onNegativeTap: () => model.onNegativeBedRoomTap(),
+                    ),
+                    verticalSpaceSmall,
+                    //Select the number of bathrooms
+                    AmenitiesSelection(
+                      title: "Number of bathrooms",
+                      value: model.numberOfBathrooms,
+                      onPositiveTap: () => model.onPositiveBathRoomTap(),
+                      onNegativeTap: () => model.onNegativeBathRoomTap(),
+                    ),
+                    verticalSpaceSmall,
+                    //Select the number of car slots
+                    AmenitiesSelection(
+                      title: "Number of car slots",
+                      value: model.numberOfCarSlot,
+                      onPositiveTap: () => model.onPositiveCarSlotTap(),
+                      onNegativeTap: () => model.onNegativeCarSlotTap(),
+                    ),
+                    verticalSpaceLarge,
+
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          child: Text(
+                            'Back',
+                            style: AppStyle.kBodyRegularBlack14W500,
+                          ),
+                          color: kWhite,
+                          textColor: kBlack,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
-                        color: kWhite,
-                        textColor: kBlack,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Spacer(),
-                      FlatButton(
-                        child: Text(
-                          'Next',
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        color: kPrimaryColor,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          model.goToPropertyOwnerDetailsView();
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                        Spacer(),
+                        FlatButton(
+                            child: Text(
+                              'Next',
+                              style: AppStyle.kBodyRegular,
+                            ),
+                            color: kPrimaryColor,
+                            textColor: Colors.white,
+                            onPressed: () async {
+                              if (uploadFormKey.currentState!.validate()) {
+                                model.goToPropertyOwnerDetailsView();
+
+                                print(model.isFurnished);
+                                print(model.isServiced);
+                                print(model.leaveHere);
+                                print(model.numberOfBathrooms);
+                                print(model.selectedValue1);
+                                print(model.numberOfBedrooms);
+                                print(model.numberOfCarSlot);
+                              } else {
+                                model.upoloadPropertyToServer();
+                              }
+                            }),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

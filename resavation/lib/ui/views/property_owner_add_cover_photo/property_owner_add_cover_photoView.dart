@@ -11,6 +11,9 @@ import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owne
 
 import 'package:stacked/stacked.dart';
 
+import '../../shared/dump_widgets/resavation_button.dart';
+import '../property_owner_add_photos/property_owner_add_photosViewModel.dart';
+
 class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
   const PropertyOwnerAddCoverPhotosView({Key? key}) : super(key: key);
 
@@ -45,17 +48,42 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
                 //     );
                 //   }).toList(),
                 // ):Container(),
-                Center(
-                  child: Row(
-                    children: [
-                      Expanded(child: _coverPhoto()),
-                      horizontalSpaceTiny,
-                      Expanded(child: _Photo())
-                    ],
-                  ),
+                // Center(
+                //   child: Row(
+                //     children: [
+                //       _coverPhoto(),
+                //       horizontalSpaceTiny,
+                //       // Expanded(child: _Photo())
+                //     ],
+                //   ),
+                // ),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 2 / 2.2),
+                  itemBuilder: (_, index) {
+                    List<String> data = model.imageContainer;
+                    print(".........$data");
+                    return coverPhoto(
+                        imageUrl: data[index],
+                        isCover: (index == 0) ? true : false);
+                  },
+                  itemCount: model.imageContainer.length,
                 ),
                 verticalSpaceTiny,
-                _Photo(),
+                ResavationButton(
+                  onTap: () {
+                    model.pickFiles();
+                  },
+                  title: 'Add photos',
+                  titleColor: kWhite,
+                  buttonColor: kPrimaryColor,
+                  //  borderColor: kp,
+                ),
+                // _Photo(),
                 Spacer(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -96,33 +124,40 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
   }
 }
 
-Widget _coverPhoto() {
+Widget coverPhoto({required String imageUrl, required bool isCover}) {
   return Container(
     padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(border: Border.all(color: kGray), color: kGray),
+    decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        color: kGray,
+        image: DecorationImage(
+          image: FileImage(File(imageUrl)),
+          fit: BoxFit.cover,
+        )),
     width: 169,
     height: 86.0,
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Container(
-            decoration:
-                BoxDecoration(border: Border.all(color: kGray), color: kBlack),
-            height: 26,
-            width: 83,
-            child: FlatButton(
-              child: Text(
-                'Cover',
-                style: AppStyle.kBodySmallRegular11W300.copyWith(color: kWhite),
-              ),
-              color: kChatTextColor,
-              textColor: kBlack,
-              onPressed: () {},
-            ),
-          ),
-        ),
-        Spacer(),
+        (isCover)
+            ? Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: kGray), color: kBlack),
+                height: 26,
+                width: 65,
+                child: FlatButton(
+                  child: Text(
+                    'Cover',
+                    style: AppStyle.kBodySmallRegular11W300
+                        .copyWith(color: kWhite),
+                  ),
+                  color: kChatTextColor,
+                  textColor: kBlack,
+                  onPressed: () {},
+                ),
+              )
+            : Container(),
         Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
           height: 23,

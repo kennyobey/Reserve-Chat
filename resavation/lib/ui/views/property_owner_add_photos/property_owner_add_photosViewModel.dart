@@ -7,11 +7,14 @@ import 'package:resavation/services/core/image_picker_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart';
+
 class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _imagePickerService = locator<ImagePickerService>();
 
   String fileType = 'All';
+
   var fileTypeList = ['All', 'Image', 'Video', 'Audio', 'MultipleFile'];
   FilePickerResult? result;
   PlatformFile? file;
@@ -25,20 +28,26 @@ class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyOwnerAddCoverPhotosView);
   }
 
-  void pickFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: true,
-    );
-    if (result == null) return;
+  // void pickFiles() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.image,
+  //     allowMultiple: true,
+  //   );
+  //   if (result != null) {
+  //     List<String?> data = result.paths;
+  //     data.forEach((element) {
+  //       PropertyOwnerAddCoverPhotosViewModel().imageContainer.add(element!);
+  //     });
+  //   }
+  //   print(
+  //       'From the image house>>>>>>>>>>>>>> ${PropertyOwnerAddCoverPhotosViewModel().imageContainer.toSet().toList()}');
+  //   // PlatformFile? file = result.files.first;
 
-    PlatformFile? file = result.files.first;
-
-    print('File Name: ${file.name}');
-    print('File Size: ${file.size}');
-    print('File Extension: ${file.extension}');
-    print('File Path: ${file.path}');
-  }
+  //   // print('File Name: ${file.name}');
+  //   // print('File Size: ${file.size}');
+  //   // print('File Extension: ${file.extension}');
+  //   // print('File Path: ${file.path}');
+  // }
 
   void viewFile(PlatformFile file) {
     OpenFile.open(file.path);

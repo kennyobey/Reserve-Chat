@@ -11,8 +11,16 @@ import 'package:resavation/ui/views/property_owner_details/property_owner_detail
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerDetailsView extends StatelessWidget {
+class PropertyOwnerDetailsView extends StatefulWidget {
   const PropertyOwnerDetailsView({Key? key}) : super(key: key);
+
+  @override
+  State<PropertyOwnerDetailsView> createState() =>
+      _PropertyOwnerDetailsViewState();
+}
+
+class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
+  final uploadFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,66 +34,113 @@ class PropertyOwnerDetailsView extends StatelessWidget {
               vertical: 15,
             ),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpaceMedium,
-                  Text(
-                    'Details',
-                    style: AppStyle.kHeading0,
-                  ),
-                  verticalSpaceRegular,
-                  Text(
-                    'Property Name',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '',
-                    fillColors: Colors.white,
-                  ),
-                  Text(
-                    'Property Description',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  verticalSpaceTiny,
-                  _buildTextField(''),
-                  Text(
-                    'Location',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  verticalSpaceTiny,
-                  SelectCountry(
-                    label: model.selectedCountry,
-                    onSelected: model.onSelectCountryTap(Country.worldWide),
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'State',
-                    fillColors: Colors.white,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'City',
-                    fillColors: Colors.white,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Enter the address of this space',
-                    fillColors: Colors.white,
-                  ),
-                  Text(
-                    'Generate your address on Google map',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  ResavationElevatedButton(
-                    child: Text("Go to Map"),
-                    onPressed: () {
-                      model.goToMapView();
-                    },
-                  ),
-                  verticalSpaceLarge,
-                ],
+              child: Form(
+                key: uploadFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    verticalSpaceMedium,
+                    Text(
+                      'Details',
+                      style: AppStyle.kHeading0,
+                    ),
+                    verticalSpaceRegular,
+                    Text(
+                      'Property Name',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: '',
+                      fillColors: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property name';
+                        }
+                        return null;
+                      },
+                    ),
+                    Text(
+                      'Property Description',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: '',
+                      fillColors: Colors.white,
+                      maxline: 5,
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyDescriptionController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property description';
+                        }
+                        return null;
+                      },
+                    ),
+                    Text(
+                      'Location',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
+                    SelectCountry(
+                      label: model.selectedCountry,
+                      onSelected: model.onSelectCountryTap(Country.worldWide),
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: 'State',
+                      fillColors: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyStateController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter state';
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: 'City',
+                      fillColors: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyCityController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter city';
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: 'Enter the address of this space',
+                      fillColors: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyAddressController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property address';
+                        }
+                        return null;
+                      },
+                    ),
+                    Text(
+                      'Generate your address on Google map',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    ResavationElevatedButton(
+                      child: Text("Go to Map"),
+                      onPressed: () {
+                        model.goToMapView();
+                      },
+                    ),
+                    verticalSpaceLarge,
+                  ],
+                ),
               ),
             ),
           ),
@@ -99,9 +154,18 @@ class PropertyOwnerDetailsView extends StatelessWidget {
                   onPressed: () => Navigator.pop(context),
                 ),
                 ResavationElevatedButton(
-                  child: Text("Next"),
-                  onPressed: () => model.goToPropertyOwnerAddPhotosView(),
-                )
+                    child: Text("Next"),
+                    onPressed: () async {
+                      if (uploadFormKey.currentState!.validate()) {
+                        print(model.propertyNameController.text);
+                        print(model.selectedCountry);
+                        model.goToPropertyOwnerAddPhotosView();
+                      } else {
+                        model.upoloadPropertyToServer();
+                      }
+                    }
+                    //=> model.goToPropertyOwnerAddPhotosView(),
+                    )
               ],
             ),
           ),
