@@ -100,22 +100,24 @@ class _PropertyOwnerSpaceTypeViewState
                     ),
 
                     // is your space serviced Yes/No
-                    ResavationRadioButton(
-                      title: 'Yes',
-                      radioValue: "Yes",
-                      groupValue: model.isServiced,
-                      onChanged: (String? radioValue) {
-                        model.onSpaceServicedRadioChange(radioValue.toString());
-                      },
-                    ),
-                    ResavationRadioButton(
-                      title: 'No',
-                      radioValue: "No",
-                      groupValue: model.isServiced,
-                      onChanged: (String? radioValue) {
-                        model.onSpaceServicedRadioChange(radioValue.toString());
-                      },
-                    ),
+                    // ResavationRadioButton(
+                    //   title: 'Yes',
+                    //   radioValue: model.isServiced,
+                    //   groupValue: model.isServiced,
+                    //   onChanged: (radioValue) {
+                    //     model.onSpaceServicedRadioChange(true);
+                    //   },
+                    // ),
+                    // ResavationRadioButton(
+                    //   title: 'No',
+                    //   radioValue: model.isServiced,
+                    //   groupValue: model.isServiced,
+                    //   onChanged: (radioValue) {
+                    //     model.onSpaceServicedRadioChange(false);
+                    //   },
+                    // ),
+                    //
+                    FilterListTile(),
                     verticalSpaceSmall,
                     Text(
                       'Is your space furnished',
@@ -123,24 +125,26 @@ class _PropertyOwnerSpaceTypeViewState
                     ),
 
                     // Is your space furnished Yes/No
-                    ResavationRadioButton(
-                      title: 'Yes',
-                      radioValue: "Yes",
-                      groupValue: model.isFurnished,
-                      onChanged: (String? radioValue) {
-                        model
-                            .onSpaceFurnishedRadioChange(radioValue.toString());
-                      },
-                    ),
-                    ResavationRadioButton(
-                      title: 'No',
-                      radioValue: "No",
-                      groupValue: model.isFurnished,
-                      onChanged: (String? radioValue) {
-                        model
-                            .onSpaceFurnishedRadioChange(radioValue.toString());
-                      },
-                    ),
+                    // ResavationRadioButton(
+                    //   title: 'Yes',
+                    //   radioValue: "Yes",
+                    //   groupValue: model.isFurnished,
+                    //   onChanged: (String? radioValue) {
+                    //     model
+                    //         .onSpaceFurnishedRadioChange(radioValue.toString());
+                    //   },
+                    // ),
+                    // ResavationRadioButton(
+                    //   title: 'No',
+                    //   radioValue: "No",
+                    //   groupValue: model.isFurnished,
+                    //   onChanged: (String? radioValue) {
+                    //     model
+                    //         .onSpaceFurnishedRadioChange(radioValue.toString());
+                    //   },
+                    // ),
+
+                    FilterListTile(),
                     verticalSpaceSmall,
                     Text(
                       'Listing Options',
@@ -223,23 +227,25 @@ class _PropertyOwnerSpaceTypeViewState
                     ),
 
                     // do you leave in this space Yes/No
-                    ResavationRadioButton(
-                      title: 'Yes',
-                      radioValue: "Yes",
-                      groupValue: model.leaveHere,
-                      onChanged: (String? radioValue) {
-                        model.onLeaveHereRadioChange(radioValue.toString());
-                      },
-                    ),
+                    // ResavationRadioButton(
+                    //   title: 'Yes',
+                    //   radioValue: "Yes",
+                    //   groupValue: model.leaveHere,
+                    //   onChanged: (String? radioValue) {
+                    //     model.onLeaveHereRadioChange(radioValue.toString());
+                    //   },
+                    // ),
 
-                    ResavationRadioButton(
-                      title: 'No',
-                      radioValue: "No",
-                      groupValue: model.leaveHere,
-                      onChanged: (String? radioValue) {
-                        model.onLeaveHereRadioChange(radioValue.toString());
-                      },
-                    ),
+                    // ResavationRadioButton(
+                    //   title: 'No',
+                    //   radioValue: "No",
+                    //   groupValue: model.leaveHere,
+                    //   onChanged: (String? radioValue) {
+                    //     model.onLeaveHereRadioChange(radioValue.toString());
+                    //   },
+                    // ),
+
+                    FilterListTile(),
                     verticalSpaceSmall,
                     //Select the number of bedrooms
                     AmenitiesSelection(
@@ -283,27 +289,46 @@ class _PropertyOwnerSpaceTypeViewState
                         ),
                         Spacer(),
                         FlatButton(
-                            child: Text(
-                              'Next',
-                              style: AppStyle.kBodyRegular,
-                            ),
-                            color: kPrimaryColor,
-                            textColor: Colors.white,
-                            onPressed: () async {
-                              if (uploadFormKey.currentState!.validate()) {
-                                model.goToPropertyOwnerDetailsView();
+                          child: Text(
+                            'Next',
+                            style: AppStyle.kBodyRegular,
+                          ),
+                          color: kPrimaryColor,
+                          textColor: Colors.white,
+                          onPressed: () async {
+                            if (uploadFormKey.currentState!.validate()) {
+                              model.goToPropertyOwnerDetailsView();
 
-                                print(model.isFurnished);
-                                print(model.isServiced);
-                                print(model.leaveHere);
-                                print(model.numberOfBathrooms);
-                                print(model.selectedValue1);
-                                print(model.numberOfBedrooms);
-                                print(model.numberOfCarSlot);
-                              } else {
-                                model.upoloadPropertyToServer();
-                              }
-                            }),
+                              print('furnish ${model.isFurnished}');
+                              print('serviced ${model.isServiced}');
+                              print('live here ${model.leaveHere}');
+                              print(
+                                  'nos of bathroom ${model.numberOfBathrooms}');
+                              print('selected value ${model.selectedValue1}');
+                              print('nos of bedroom ${model.numberOfBedrooms}');
+                              print('no of car lot ${model.numberOfCarSlot}');
+                            } else {
+                              model.upoloadPropertyToServer();
+                            }
+                          },
+                          //           onPressed: ()async {
+                          //     if (uploadFormKey.currentState!.validate()) {
+                          //               // model.goToPropertyOwnerDetailsView();
+                          //   // Navigator to the next page.
+                          //   Navigator.of(context).push(
+                          //     MaterialPageRoute(
+
+                          //         // Builder for the nextpage class's constructor.
+                          //         builder: (context) => PropertyOwnerDetailsView(
+
+                          //               // Data as arguments to send to next page.
+                          //               name: _name.text,
+                          //               email: _email.text,
+                          //               phoneno: _phoneno.text,
+                          //             ),),
+                          //   );
+                          // },
+                        ),
                       ],
                     ),
                   ],
@@ -405,6 +430,68 @@ class IncrementAmenities extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FilterListTile extends StatefulWidget {
+  const FilterListTile({Key? key, e}) : super(key: key);
+
+  @override
+  State<FilterListTile> createState() => _FilterListTileState();
+}
+
+class _FilterListTileState extends State<FilterListTile> {
+  int? _groupValue;
+  late List<FocusNode> _focusNodes;
+
+  @override
+  void initState() {
+    _focusNodes = Iterable<int>.generate(2).map((e) => FocusNode()).toList();
+
+    _focusNodes[0].requestFocus();
+  }
+
+  Widget buildRadio(String title, int value, FocusNode focusNode) {
+    return Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: kBlack,
+                fontSize: 13,
+              ),
+            ),
+            Radio<int>(
+                groupValue: _groupValue,
+                value: value,
+                onChanged: (int? newValue) {
+                  setState(() {
+                    _groupValue = newValue;
+                  });
+                },
+                hoverColor: kWhite,
+                activeColor: kPrimaryColor,
+                focusColor: kPrimaryColor,
+                splashRadius: 25,
+                toggleable: true,
+                visualDensity: VisualDensity.compact,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                focusNode: focusNode),
+          ],
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        buildRadio('Yes', 1, _focusNodes[0]),
+        buildRadio('No', 2, _focusNodes[1]),
+      ],
     );
   }
 }

@@ -14,6 +14,7 @@ import '../services/core/custom_snackbar_service.dart';
 import '../services/core/http_service.dart';
 import '../services/core/image_picker_service.dart';
 import '../services/core/user_type_service.dart';
+import '../services/uploadpropertyService.dart';
 
 final locator = StackedLocator.instance;
 
@@ -29,4 +30,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => CustomSnackbarService());
   locator.registerLazySingleton(() => UserTypeService());
   locator.registerLazySingleton(() => ImagePickerService());
+  locator.registerLazySingleton(() => UploadPropertyServiceService());
 }

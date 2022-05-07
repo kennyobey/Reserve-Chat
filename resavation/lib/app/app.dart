@@ -42,6 +42,8 @@ import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../services/uploadpropertyService.dart';
+
 @StackedApp(
   routes: [
     AdaptiveRoute(page: StartupView, initial: true),
@@ -94,6 +96,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: CustomSnackbarService),
     LazySingleton(classType: UserTypeService),
     LazySingleton(classType: ImagePickerService),
+    LazySingleton(classType: UploadPropertyServiceService),
   ],
   logger: StackedLogger(),
 )

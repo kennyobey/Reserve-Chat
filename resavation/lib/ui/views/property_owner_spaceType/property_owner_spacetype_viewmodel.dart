@@ -75,16 +75,22 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void onSelectedValueChange3(value) {
-    selectedValue3 = value as String;
+    selectedValue3 = value;
 
     notifyListeners();
   }
 
   //is your space serviced UI logic
-  String isServiced = "";
+  bool isServiced = false;
 
-  void onSpaceServicedRadioChange(String value) {
-    isServiced = value.toString();
+  void onSpaceServicedRadioChange(bool? value) {
+    isServiced == value!;
+    if (isServiced == "Yes") {
+      print("fjfffk ${true.toString()}");
+    } else {
+      print("Somethij");
+    }
+
     notifyListeners();
   }
 
@@ -152,6 +158,7 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerDetailsView() {
+    String name;
     _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
   }
 }

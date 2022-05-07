@@ -12,7 +12,16 @@ import 'package:resavation/ui/views/property_owner_details/property_owner_detail
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerDetailsView extends StatefulWidget {
-  const PropertyOwnerDetailsView({Key? key}) : super(key: key);
+  const PropertyOwnerDetailsView(
+      {Key? key,
+      required this.isFurnished,
+      required this.isServiced,
+      required this.leaveHere})
+      : super(key: key);
+
+  final bool isFurnished;
+  final bool isServiced;
+  final bool leaveHere;
 
   @override
   State<PropertyOwnerDetailsView> createState() =>
