@@ -15,9 +15,9 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
 
   void upoloadPropertyToServer() async {
     httpService.uploadProperty(
-        spaceServiced: false,
-        spaceFurnished: false,
-        liveInSPace: false,
+        // spaceServiced: false,
+        // spaceFurnished: false,
+        // liveInSPace: false,
         listingOption: "listingOption",
         bathTubCount: numberOfBathrooms,
         bedroomCount: numberOfBedrooms,

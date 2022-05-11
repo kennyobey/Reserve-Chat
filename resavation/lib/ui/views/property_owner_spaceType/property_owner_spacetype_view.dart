@@ -468,9 +468,9 @@ class _FilterListTileState extends State<FilterListTile> {
             Radio<int>(
                 groupValue: _groupValue,
                 value: value,
-                onChanged: (int? newValue) {
+                onChanged: (int? value) {
                   setState(() {
-                    _groupValue = newValue;
+                    _groupValue = value;
                   });
                 },
                 hoverColor: kWhite,

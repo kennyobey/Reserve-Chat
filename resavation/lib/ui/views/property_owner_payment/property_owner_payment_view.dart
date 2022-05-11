@@ -128,7 +128,8 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                         horizontalSpaceRegular,
                         DateContainer(
                           label: 'To',
-                          date: "${model.selectedDate.toLocal()}".split(' ')[0],
+                          date:
+                              "${model.selectedDate2.toLocal()}".split(' ')[0],
                           onPressed: () {
                             model.selectEndDate(context);
                           },

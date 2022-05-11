@@ -10,6 +10,7 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
   DateTime selectedDate = DateTime.now();
+  DateTime selectedDate2 = DateTime.now();
 
   bool hasWifi = false;
 
@@ -68,7 +69,7 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
-      print("The picked date is $selectedDate");
+      print("The picked date for date 1 is $selectedDate");
 
       notifyListeners();
     }
@@ -77,12 +78,12 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   Future<void> selectEndDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: selectedDate2,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      selectedDate = picked;
-      print("The picked date is $selectedDate");
+    if (picked != null && picked != selectedDate2) {
+      selectedDate2 = picked;
+      print("The picked date for date 2 is $selectedDate2");
 
       notifyListeners();
     }
