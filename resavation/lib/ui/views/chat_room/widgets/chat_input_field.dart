@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
 import 'package:resavation/ui/views/chat_room/widgets/buttom_sheet_widget.dart';
+import 'package:resavation/ui/views/messages/messages_view.dart';
 import 'package:stacked/stacked.dart';
 
 class ChatInputField extends ViewModelWidget<ChatRoomViewModel> {
-  const ChatInputField({
+  final ChatModel? chatModel;
+
+  ChatInputField(
+    this.chatModel, {
     Key? key,
   }) : super(key: key);
 
@@ -16,7 +20,7 @@ class ChatInputField extends ViewModelWidget<ChatRoomViewModel> {
   Widget build(BuildContext context, model) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
+        horizontal: kDefaultPadding / 2,
         vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
@@ -29,72 +33,123 @@ class ChatInputField extends ViewModelWidget<ChatRoomViewModel> {
           ),
         ],
       ),
-      child: SafeArea(
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding * 0.75,
-                ),
-                decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Row(
-                  children: [
-                    ChatInputIcon(
-                      icon: Icons.sentiment_satisfied_alt_outlined,
-                      onTap: () {
-                        showModalBottomSheet(
-                            backgroundColor: kTransparent,
-                            context: context,
-                            builder: (builder) => showEmoji(context));
-                        model.emojiShowing = !model.emojiShowing;
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                color: kPrimaryColor.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ChatInputIcon(
+                    icon: Icons.sentiment_satisfied_alt_outlined,
+                    onTap: () {
+                      showModalBottomSheet(
+                          backgroundColor: kTransparent,
+                          context: context,
+                          builder: (builder) => showEmoji(context, model));
+                      model.emojiShowing = !model.emojiShowing;
+                    },
+                  ),
+                  SizedBox(width: kDefaultPadding / 4),
+                  Expanded(
+                    child: TextFormField(
+                      controller: model.controller,
+                      onChanged: (_) {
+                        model.updateTextState();
                       },
-                    ),
-                    SizedBox(width: kDefaultPadding / 4),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Type message",
-                          border: InputBorder.none,
-                        ),
+                      maxLines: 8,
+                      minLines: 1,
+                      textAlign: TextAlign.start,
+                      textInputAction: TextInputAction.newline,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: const EdgeInsets.only(
+                            bottom: 5, top: 5, left: 5, right: 5),
+                        hintText: 'Type your message',
+                        // hintStyle: bodyText2
                       ),
+                      // cursorColor: kTextColor,
                     ),
-                    ChatInputIcon(
-                      icon: Icons.attach_file,
-                      onTap: () {
-                        showModalBottomSheet(
-                            backgroundColor: kTransparent,
-                            context: context,
-                            builder: (builder) => bottomSheet(context));
-                      },
-                    ),
-                    SizedBox(width: kDefaultPadding / 4),
-                    ChatInputIcon(
-                      icon: Icons.camera_alt_outlined,
-                    ),
-                  ],
-                ),
+                  ),
+                  ChatInputIcon(
+                    icon: Icons.attach_file,
+                    onTap: () {
+                      showModalBottomSheet(
+                          backgroundColor: kTransparent,
+                          context: context,
+                          builder: (builder) => bottomSheet(context));
+                    },
+                  ),
+                  SizedBox(width: kDefaultPadding / 4),
+                  ChatInputIcon(
+                    icon: Icons.camera_alt_outlined,
+                  ),
+                ],
               ),
             ),
-            SizedBox(width: kDefaultPadding),
-            Icon(Icons.mic, color: kPrimaryColor),
-          ],
-        ),
+          ),
+          SizedBox(width: kDefaultPadding / 2),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 1000),
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(bottom: model.isMessageEmpty ? 10 : 8),
+            child: model.isMessageEmpty
+                ? Icon(Icons.mic, color: kPrimaryColor)
+                : InkWell(
+                    onTap: () => sendChatMessage(model, context),
+                    child: const Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: Icon(
+                        Icons.send,
+                        color: kPrimaryColor,
+                        size: 22,
+                      ),
+                    ),
+                  ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget showEmoji(BuildContext context) {
+  void sendChatMessage(ChatRoomViewModel model, BuildContext context) async {
+    final message = model.controller.text.trim();
+    if (message.isNotEmpty && chatModel != null) {
+      try {
+        model.controller.text = '';
+        model.updateTextState();
+        await ChatRoomViewModel.sendChatMessage(chatModel!, message);
+        model.scrollController.animateTo(
+          model.scrollController.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 500),
+        );
+      } catch (exception) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(exception.toString())));
+      }
+    }
+  }
+
+  Widget showEmoji(BuildContext context, ChatRoomViewModel model) {
     return SizedBox(
       height: 250,
       child: EmojiPicker(
           onEmojiSelected: (Category category, Emoji emoji) {
-            // model.onEmojiSelected(emoji);
+            model.onEmojiSelected(emoji);
           },
-          onBackspacePressed: () {},
+          onBackspacePressed: () {
+            model.onBackspacePressed();
+          },
           config: Config(
               columns: 7,
               emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),

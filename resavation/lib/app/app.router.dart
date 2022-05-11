@@ -7,6 +7,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:resavation/model/call_model.dart';
 import 'package:stacked/stacked.dart';
 
 import '../model/property_model.dart';
@@ -224,8 +225,11 @@ class StackedRouter extends RouterBase {
       );
     },
     ChatRoomView: (data) {
+      final ChatModel? chatModel = data.arguments as ChatModel?;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => ChatRoomView(),
+        builder: (context) => ChatRoomView(
+          chatModel: chatModel,
+        ),
         settings: data,
       );
     },
@@ -243,8 +247,11 @@ class StackedRouter extends RouterBase {
       );
     },
     AudioCallView: (data) {
+      final CallModel? call = data.arguments as CallModel?;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const AudioCallView(),
+        builder: (context) => AudioCallView(
+          call: call,
+        ),
         settings: data,
       );
     },
@@ -306,8 +313,9 @@ class StackedRouter extends RouterBase {
       );
     },
     DatePickerView: (data) {
+      final Property? property = data.arguments as Property?;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const DatePickerView(),
+        builder: (context) => DatePickerView(property: property),
         settings: data,
       );
     },
@@ -319,8 +327,12 @@ class StackedRouter extends RouterBase {
       );
     },
     BookingSubmissionView: (data) {
+      final Map<String, dynamic>? bookingData =
+          data.arguments as Map<String, dynamic>?;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const BookingSubmissionView(),
+        builder: (context) => BookingSubmissionView(
+          bookingData: bookingData,
+        ),
         settings: data,
       );
     },

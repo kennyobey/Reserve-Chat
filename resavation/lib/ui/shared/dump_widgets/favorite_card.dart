@@ -91,12 +91,16 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
                           onTap: () {
                             model.changeFavoriteIcon(id);
                           },
-                          child: Icon(
-                            model.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border_outlined,
-                            color: model.isFavorite ? kRed : Colors.grey,
-                            size: 18,
+                          child: Padding(
+                            child: Icon(
+                              /* isFavoriteTap
+                                  ? */
+                              Icons
+                                  .favorite /* : Icons.favorite_border_outlined*/,
+                              color: /*isFavoriteTap ?*/ kRed /*: Colors.grey*/,
+                              size: 18,
+                            ),
+                            padding: const EdgeInsets.only(left: 5, bottom: 5),
                           ),
                         ),
                       ],
@@ -107,21 +111,18 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
                       style: AppStyle.kBodySmallRegular12W300,
                     ),
                     verticalSpaceSmall,
+                    Text(
+                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}/year',
+                      style: AppStyle.kBodySmallRegular12W500.copyWith(
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                    verticalSpaceSmall,
                     PropertyDetails(
                       numberOfBedrooms: numberOfBedrooms,
                       numberOfBathrooms: numberOfBathrooms,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       squareFeet: squareFeet,
-                    ),
-                    verticalSpaceSmall,
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}/year',
-                        style: AppStyle.kBodySmallRegular12W500.copyWith(
-                          color: kPrimaryColor,
-                        ),
-                      ),
                     ),
                   ],
                 ),

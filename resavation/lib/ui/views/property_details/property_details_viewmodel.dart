@@ -3,6 +3,7 @@ import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
 import 'package:resavation/model/property_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
+import 'package:resavation/ui/views/messages/messages_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -32,8 +33,12 @@ class PropertyDetailsViewModel extends BaseViewModel {
     _snackbarService.showComingSoon();
   }
 
-  void goToDatePickerView() {
-    _navigationService.navigateTo(Routes.datePickerView);
+  void goToDatePickerView(Property? property) {
+    _navigationService.navigateTo(Routes.datePickerView, arguments: property);
+  }
+
+  void gotToChatRoomView(ChatModel? model) {
+    _navigationService.navigateTo(Routes.chatRoomView, arguments: model);
   }
 
   void goToPropertyOwnersProfileView() {

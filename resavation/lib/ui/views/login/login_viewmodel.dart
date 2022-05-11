@@ -23,14 +23,22 @@ class LogInViewModel extends BaseViewModel {
   final loginFormKey = GlobalKey<FormState>();
   late Timer timer;
 
+  bool isLoading = false;
+
   // Login user
   onLoginButtonTap() async {
+    isLoading = true;
+    notifyListeners();
     final String email = emailController.text.trim();
     final String password = passwordController.text.trim();
 
     try {
       await httpService.loginUser(email, password);
+      isLoading = false;
+      notifyListeners();
     } catch (exception) {
+      isLoading = false;
+      notifyListeners();
       return Future.error(exception.toString());
     }
   }

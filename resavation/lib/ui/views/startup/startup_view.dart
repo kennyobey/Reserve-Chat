@@ -4,30 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 
-/*
-class StartupView extends StatelessWidget {
-  const StartupView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder<StartupViewModel>.reactive(
-      onModelReady: (model) => model.goToOnboardingView(),
-      builder: (context, model, child) => Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-      viewModelBuilder: () => StartupViewModel(),
-    );
-  }
-}
-
-*/
 
 class StartupView extends StatefulWidget {
   const StartupView({Key? key}) : super(key: key);
@@ -120,8 +102,15 @@ class _StartupViewState extends State<StartupView>
     super.dispose();
   }
 
-  void route() {
-    locator<NavigationService>().replaceWith(Routes.onboardingView);
+  void route() async{
+    final prefs = await SharedPreferences.getInstance();
+    final visibility =  prefs.getBool('onboarding_visibility')??true;
+    final service = locator<NavigationService>();
+    if(visibility) {
+      service.replaceWith(Routes.onboardingView);
+    }else{
+      service.replaceWith(Routes.logInView);
+    }
   }
 
   Future startTime() async {

@@ -227,9 +227,10 @@ class _SignUpViewState extends State<SignUpView> {
       ResavationButton(
           width: double.infinity,
           title: 'Sign Up',
+          isLoadingEnabled: model.isLoading,
           onTap: () async {
             final isValid = model.registrationFormKey.currentState?.validate();
-            if ((isValid ?? false) == false) {
+            if ((isValid ?? false) == false || model.isLoading) {
               return;
             }
             if (!model.checkValue) {
@@ -242,9 +243,6 @@ class _SignUpViewState extends State<SignUpView> {
             }
 
             try {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Registration in progress')),
-              );
               await model.sendDetailsToServer();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

@@ -1,4 +1,18 @@
+import 'dart:convert';
+
 import 'package:resavation/utility/assets.dart';
+
+List<Property> propertyFromJson(String str) {
+  final data = json.decode(str);
+
+  if (data['property'] != null) {
+    return (data['property'] as List<dynamic>)
+        .map((data) => Property.fromJson(data))
+        .toList();
+  } else {
+    return [];
+  }
+}
 
 class Property {
   final int id;
@@ -9,7 +23,7 @@ class Property {
   final int numberOfBedrooms;
   final int numberOfBathrooms;
   final int squareFeet;
-  final bool isFavoriteTap;
+  bool isFavoriteTap;
   final String? category;
 
   ///
@@ -17,25 +31,77 @@ class Property {
   final String ownerProfileImage;
   final String ownerProfileName;
   final String ownerAgentType;
-  final List<String> houseRules;
+  final List<dynamic> houseRules;
 
   Property({
-    required this.id,
+    this.id = -1,
     this.ownerAgentType = '',
-    required this.image,
-    this.amountPerYear,
+    this.image = '',
+    this.amountPerYear = 0,
     this.houseRules = const [],
     this.description = '',
     this.ownerProfileImage = '',
     this.ownerProfileName = '',
-    required this.location,
+    this.location = '',
     this.address = '',
-    required this.numberOfBedrooms,
-    required this.numberOfBathrooms,
-    required this.squareFeet,
-    required this.isFavoriteTap,
+    this.numberOfBedrooms = -1,
+    this.numberOfBathrooms = -1,
+    this.squareFeet = -1,
+    this.isFavoriteTap = false,
     this.category,
   });
+
+/*
+  Property.fromJson(Map<String, dynamic> json) {
+    if (json['message'] != null) {
+      message = <Message>[];
+      json['message'].forEach((v) {
+        message?.add(Message.fromJson(v));
+      });
+    }
+  }*/
+
+  factory Property.fromJson(Map<String, dynamic> json) {
+    return Property(
+      id: json["id"] ?? '',
+      image: json["image"] ?? '',
+      amountPerYear: json["amount_per_year"] ?? -1,
+      location: json["location"] ?? '',
+      address: json["address"] ?? '',
+      numberOfBedrooms: json["no_of_bedroom"] ?? -1,
+      numberOfBathrooms: json["no_of_batroom"] ?? -1,
+      squareFeet: json["square_feet"] ?? -1,
+      isFavoriteTap: json["is_favourite"] ?? false,
+      category: json["category"] ?? '',
+      description: json["description"] ?? '',
+      ownerProfileImage: json["owner_profile_image"] ?? '',
+      ownerProfileName: json["owner_profile_name"] ?? '',
+      ownerAgentType: json["owner_agent_type"] ?? '',
+      houseRules: json["house_rules"] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+
+    data["id"] = id;
+    data["image"] = image;
+    data["amount_per_year"] = amountPerYear;
+    data["location"] = location;
+    data["address"] = address;
+    data["no_of_bedroom"] = numberOfBedrooms;
+    data["no_of_batroom"] = numberOfBathrooms;
+    data["square_feet"] = squareFeet;
+    data["is_favourite"] = isFavoriteTap;
+    data["category"] = category;
+    data["description"] = description;
+    data["owner_profile_image"] = ownerProfileImage;
+    data["owner_profile_name"] = ownerProfileName;
+    data["owner_agent_type"] = ownerAgentType;
+    data["house_rules"] = houseRules;
+
+    return data;
+  }
 }
 
 final listOfProperties = <Property>[

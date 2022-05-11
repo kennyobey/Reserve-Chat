@@ -60,13 +60,16 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
           style: style,
           decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
-              borderSide: const BorderSide(color: kGray, width: 0.0),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             fillColor: widget.fillColors ?? null,
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
+              borderSide:
+                  BorderSide(color: widget.fillColors ?? kGray, width: 0.5),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: widget.fillColors ?? kGray, width: 0.5),
             ),
             hintText: widget.hintText,
             labelText: widget.labelText,

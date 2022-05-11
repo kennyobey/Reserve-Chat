@@ -54,6 +54,13 @@ class AppStyle {
     height: 1.5,
     color: Colors.black,
   );
+  // text style with 15px font size
+  static TextStyle kBodyRegularBlack15W500 = GoogleFonts.montserrat(
+    fontWeight: FontWeight.w500,
+    fontSize: 15,
+    height: 1.5,
+    color: Colors.black,
+  );
 
   // text style with 14px font size
   static TextStyle kBodyRegularBlack14W600 = GoogleFonts.montserrat(
