@@ -77,7 +77,7 @@ class OnboardingView extends HookWidget {
                 width: double.infinity,
                 margin: const EdgeInsets.only(left: 20, right: 20),
                 title: "Get Started",
-                onTap: model.goToSignUpView,
+                onTap: model.goToSignInView,
               )
             : buildIndicators(model.pagePosition),
         duration: const Duration(milliseconds: 500),

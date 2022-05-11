@@ -74,7 +74,7 @@ class SettingsView extends StatelessWidget {
                 title: model.returnUserType()
                     ? 'Switch to Property Owner'
                     : 'Switch to User',
-                borderColor: kBlack,
+                borderColor: kBlack.withOpacity(0.4),
                 titleColor: kBlack,
                 buttonColor: kWhite.withOpacity(0.9),
               ),
@@ -96,7 +96,6 @@ class SettingsView extends StatelessWidget {
                 ),
               ),
               verticalSpaceLarge,
-
             ],
           ),
         ),
@@ -126,7 +125,6 @@ class SettingsListTile extends StatelessWidget {
   final void Function()? onTap;
   final void Function(bool)? onSwitchTap;
 
-
   @override
   Widget build(BuildContext context) {
     bool hasIcon = icon != null;
@@ -134,9 +132,8 @@ class SettingsListTile extends StatelessWidget {
       onTap: onTap,
       splashColor: Colors.transparent,
       child: Padding(
-        padding: isSwitch
-            ? EdgeInsets.only(top: 3, bottom: 3)
-            : EdgeInsets.only(top: 8, bottom: 8),
+        padding:
+            isSwitch ? EdgeInsets.all(0) : EdgeInsets.only(top: 4, bottom: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

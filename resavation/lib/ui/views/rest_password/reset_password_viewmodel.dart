@@ -43,6 +43,9 @@ class ResetPasswordViewModel extends BaseViewModel {
 
   int _pagePosition = 0;
 
+  bool isStage1Loading = false;
+  bool isStage2Loading = false;
+
   int get pagePosition => _pagePosition;
 
   void onPageChanged(int index) {
@@ -56,6 +59,8 @@ class ResetPasswordViewModel extends BaseViewModel {
   }
 
   sendResetPasswordLink() async {
+    isStage2Loading = true;
+    notifyListeners();
     final String email = emailFieldController.text.trim();
     final String otp = otpFieldController.text.trim();
     final String password = passwordFieldController.text.trim();
@@ -67,16 +72,26 @@ class ResetPasswordViewModel extends BaseViewModel {
           password: password,
           confirmPassword: confirmPassword,
           otp: otp);
+      isStage2Loading = false;
+      notifyListeners();
     } catch (exception) {
+      isStage2Loading = false;
+      notifyListeners();
       return Future.error(exception.toString());
     }
   }
 
   sendOTP() async {
+    isStage1Loading = true;
+    notifyListeners();
     final String email = emailFieldController.text.trim();
     try {
       await httpService.sendOTP(email: email);
+      isStage1Loading = false;
+      notifyListeners();
     } catch (exception) {
+      isStage1Loading = false;
+      notifyListeners();
       return Future.error(exception.toString());
     }
   }

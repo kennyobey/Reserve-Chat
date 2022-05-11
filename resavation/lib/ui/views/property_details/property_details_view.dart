@@ -10,6 +10,7 @@ import 'package:resavation/ui/views/property_details/property_details_viewmodel.
 import 'package:stacked/stacked.dart';
 
 import '../../../model/property_model.dart';
+import '../messages/messages_viewmodel.dart';
 
 class PropertyDetailsView extends StatelessWidget {
   final Property? property;
@@ -26,7 +27,7 @@ class PropertyDetailsView extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             buildHeader(model),
-            buildDescription(model),
+            buildDescription(model, context),
             buildAmenity(model),
             buildLocation(model),
           ],
@@ -65,7 +66,7 @@ class PropertyDetailsView extends StatelessWidget {
           ),
           ResavationElevatedButton(
             child: Text('Rent Now'),
-            onPressed: model.goToDatePickerView,
+            onPressed: () => model.goToDatePickerView(property),
           ),
         ],
       ),
@@ -121,7 +122,7 @@ class PropertyDetailsView extends StatelessWidget {
                     children: [
                       Text(
                         '- $rule',
-                        style: AppStyle.kBodySmallRegular12W500,
+                        style: AppStyle.kBodySmallRegular12,
                       ),
                       verticalSpaceSmall,
                     ],
@@ -152,7 +153,8 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  SliverList buildDescription(PropertyDetailsViewModel model) {
+  SliverList buildDescription(
+      PropertyDetailsViewModel model, BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -163,6 +165,7 @@ class PropertyDetailsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                verticalSpaceSmall,
                 Text(
                   property?.location ?? '',
                   style: AppStyle.kBodyRegularBlack16W600,
@@ -206,7 +209,17 @@ class PropertyDetailsView extends StatelessWidget {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: model.showComingSoon,
+                      onTap: () async {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Settig up chatroom, please wait')),
+                        );
+                        final chatModel = await MessagesViewModel.createChat(
+                            'otitemitope6@gmail.com',
+                            property?.ownerProfileName ?? '',
+                            'https://firebasestorage.googleapis.com/v0/b/oh2020-a8512.appspot.com/o/images%2Fothers%2FEXCEEDING%20EXPECTATIONS%20DAY%202%2F49834?alt=media&token=6a9c3239-f222-44d1-ab9f-a87a9a3fd960');
+                        model.gotToChatRoomView(chatModel);
+                      },
                       child: Icon(
                         Icons.message_rounded,
                         color: Colors.black38,
@@ -215,7 +228,18 @@ class PropertyDetailsView extends StatelessWidget {
                     ),
                     horizontalSpaceSmall,
                     GestureDetector(
-                      onTap: model.showComingSoon,
+                      onTap: () async {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content:
+                                  Text('Setting up chatroom, please wait')),
+                        );
+                        final chatModel = await MessagesViewModel.createChat(
+                            'otitemitope6@gmail.com',
+                            property?.ownerProfileName ?? '',
+                            'https://firebasestorage.googleapis.com/v0/b/oh2020-a8512.appspot.com/o/images%2Fothers%2FEXCEEDING%20EXPECTATIONS%20DAY%202%2F49834?alt=media&token=6a9c3239-f222-44d1-ab9f-a87a9a3fd960');
+                        model.gotToChatRoomView(chatModel);
+                      },
                       child: Icon(
                         Icons.call,
                         size: 20,

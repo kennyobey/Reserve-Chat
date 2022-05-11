@@ -27,8 +27,12 @@ class SignUpViewModel extends BaseViewModel {
   bool get checkValue => _checkValue;
   String userType = "PROPERTY_OWNER";
 
+  bool isLoading = false;
+
   // To send details to the server
   sendDetailsToServer() async {
+    isLoading = true;
+    notifyListeners();
     final String email = emailFieldController.text.trim();
     final String firstname = firstNameFieldController.text.trim();
     final String lastname = lastNameFieldController.text.trim();
@@ -37,8 +41,13 @@ class SignUpViewModel extends BaseViewModel {
     final bool termAndCondition = _checkValue;
     final String accountType = userType.trim();
     try {
-      await httpService.sendDetailsToServer(email, firstname, lastname, password, verifyPassword, termAndCondition, accountType);
+      await httpService.sendDetailsToServer(email, firstname, lastname,
+          password, verifyPassword, termAndCondition, accountType);
+      isLoading = false;
+      notifyListeners();
     } catch (exception) {
+      isLoading = false;
+      notifyListeners();
       return Future.error(exception.toString());
     }
   }

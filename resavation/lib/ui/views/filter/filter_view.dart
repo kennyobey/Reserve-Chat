@@ -281,13 +281,13 @@ class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
         width: double.infinity,
         decoration: BoxDecoration(
             color: (isActive) ? kPrimaryColor : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
                 color:
-                    (isActive) ? kBlack.withOpacity(0.3) : Colors.transparent,
+                    (isActive) ? kBlack.withOpacity(0.2) : Colors.transparent,
                 blurRadius: 0.5,
-                offset: Offset(3, 3),
+                offset: Offset(1, 1),
               )
             ]),
         child: Row(

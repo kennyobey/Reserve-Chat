@@ -96,15 +96,6 @@ class _LogInViewState extends State<LogInView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Checkbox(
-                      activeColor: kPrimaryColor,
-                      value: model.checkValue,
-                      onChanged: model.onCheckChanged,
-                    ),
-                    Text(
-                      'Remember me',
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
                     Spacer(),
                     InkWell(
                       splashColor: Colors.transparent,
@@ -121,15 +112,14 @@ class _LogInViewState extends State<LogInView> {
                 verticalSpaceMedium,
                 ResavationButton(
                   title: 'Log In',
+                  isLoadingEnabled: model.isLoading,
                   width: MediaQuery.of(context).size.width,
                   onTap: () async {
                     final isValid = model.loginFormKey.currentState?.validate();
-                    if ((isValid ?? false) == false) {
+                    if ((isValid ?? false) == false || model.isLoading) {
                       return;
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Logging in please wait')),
-                    );
+
                     try {
                       await model.onLoginButtonTap();
                       model.goToMainView();

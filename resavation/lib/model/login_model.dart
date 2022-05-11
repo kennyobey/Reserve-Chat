@@ -4,6 +4,8 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 LoginModel loginModelFromJson(String str) =>
     LoginModel.fromJson(json.decode(str));
+LoginModel loginFromOldModel(String str, LoginModel loginModel) =>
+    LoginModel.fromOldModel(json.decode(str), loginModel);
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
@@ -44,6 +46,25 @@ class LoginModel {
       tokenType: json["tokenType"] ?? '',
     );
   }
+
+  factory LoginModel.fromOldModel(
+      Map<String, dynamic> json, final LoginModel loginModel) {
+    final token = json["token"] ?? '';
+
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    return LoginModel(
+      accessToken: token,
+      email: loginModel.email,
+      firstName: decodedToken["firstname"] ?? '',
+      lastName: decodedToken["lastname"] ?? '',
+      imageUrl: decodedToken["imageUrl"] ?? '',
+      id: loginModel.id,
+      roles: loginModel.roles,
+      tokenType: json["tokenType"] ?? '',
+    );
+  }
+
   Map<String, dynamic> toJson() => {
         "accessToken": accessToken,
         "email": email,

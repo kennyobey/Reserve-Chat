@@ -1,22 +1,27 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/property_model.dart';
+import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class FavoriteViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _httpService = locator<HttpService>();
   List<Property> get properties => listOfProperties;
 
-  bool isFavorite = false;
-  int _id = 0;
+  changeFavoriteIcon(int propertyId) async {
+/*    try {
+      final property =
+          properties.firstWhere((property) => property.id == propertyId);
+      // await _httpService.togglePropertyAsFavourite(propertyId: property.id, isFavourite: property.isFavoriteTap);
+      int index = properties.indexOf(property);
 
-  void changeFavoriteIcon(int id) {
-    print(id);
-    if (id == 1) {
-      isFavorite = !isFavorite;
-      notifyListeners();
+      properties[index].isFavoriteTap = !property.isFavoriteTap;
+    } catch (exception) {
+      //todo handle error
     }
+    notifyListeners();*/
   }
 
   void goToPropertyDetails(Property property) {

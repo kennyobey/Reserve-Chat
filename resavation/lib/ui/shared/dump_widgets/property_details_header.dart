@@ -29,7 +29,8 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
-    final topPadding = MediaQuery.of(context).padding.top;
+    var queryData = MediaQuery.of(context);
+    final topPadding = queryData.padding.top;
 
     return Stack(
       fit: StackFit.expand,
@@ -38,17 +39,28 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
           tag: (property?.id ?? -1).toString(),
           child: CarouselSlider(
             options: CarouselOptions(
+              height: double.infinity,
+              enableInfiniteScroll: true,
+              pauseAutoPlayOnTouch: true,
               onPageChanged: (index, reason) {
                 _fetchingStream.add(index);
               },
               autoPlay: true,
             ),
             items: Assets.imgList
-                .map((item) => ResavationImage(image: item))
+                .map((item) => Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: ResavationImage(image: item),
+                    ))
                 .toList(),
           ),
         ),
-        buildIndicators(_fetchingStream.stream),
+        Positioned(
+          child: buildIndicators(_fetchingStream.stream),
+          bottom: 5,
+          left: 0,
+          right: 0,
+        ),
         buildBackButton(topPadding),
         buildFavouriteButton(topPadding),
       ],
@@ -69,12 +81,13 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
                 onTap: () => _controller.animateToPage(entry.key),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  width: isSelected ? 20.0 : 10.0,
-                  height: 10.0,
+                  width: 6.0,
+                  height: 6.0,
                   margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black.withOpacity(isSelected ? 0.9 : 0.4),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: kWhite),
+                    color: isSelected ? kWhite : Colors.transparent,
                   ),
                 ),
               );

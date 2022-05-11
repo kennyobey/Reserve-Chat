@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/model/login_model.dart';
+import 'package:resavation/model/property_model.dart';
 import 'package:resavation/model/registration_model.dart';
 import 'package:resavation/model/upload_property_model.dart';
 import 'package:resavation/services/core/user_type_service.dart';
@@ -145,8 +146,7 @@ class HttpService {
   sendOTP({required String email}) async {
     try {
       var response = await http.post(
-        Uri.http(
-            requestSite, "api/v1/auth/reset-password-otp", <String, dynamic>{
+        Uri.http(requestSite, "api/v1/auth/forgot-password", <String, dynamic>{
           "email": email,
         }),
         headers: <String, String>{
@@ -165,7 +165,8 @@ class HttpService {
     }
   }
 
-  getAllProperties({required int page, required int size}) async {
+  Future<List<Property>> getAllProperties(
+      {required int page, required int size}) async {
     try {
       var response = await http.get(
         Uri.http(requestSite, "api/v1/properties", <String, dynamic>{
@@ -173,12 +174,12 @@ class HttpService {
           "size": size,
         }),
         headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8'
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
         },
       );
       if (response.statusCode <= 299) {
-        // return registrationModelFromJson(response.body);
-        return;
+        return propertyFromJson(response.body);
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
@@ -197,7 +198,8 @@ class HttpService {
           "api/v1/properties/$id",
         ),
         headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8'
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -213,10 +215,33 @@ class HttpService {
     }
   }
 
-  updateProfile(
-      {required Map<String, dynamic> body,
-      required String authorization,
-      required String tokenType}) async {
+  togglePropertyAsFavourite(
+      {required int propertyId, required bool isFavourite}) async {
+    try {
+      var response = await http.post(
+        Uri.http(
+            requestSite, "api/v1/properties/$propertyId", <String, dynamic>{
+          "property_id": propertyId,
+          "is_favourite": isFavourite,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } on SocketException {
+      return Future.error("No internet connection");
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  updateProfile({required Map<String, dynamic> body}) async {
     try {
       var response = await http.post(
         Uri.http(
@@ -226,11 +251,13 @@ class HttpService {
         body: jsonEncode(body),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': '$tokenType $authorization'
+          'Authorization': userTypeService.authorization
         },
       );
       if (response.statusCode <= 299) {
-        // return registrationModelFromJson(response.body);
+        final loginModel =
+            loginFromOldModel(response.body, userTypeService.userData);
+        userTypeService.updateUserData(loginModel);
         return;
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
@@ -324,6 +351,58 @@ class HttpService {
         Uri.http(requestSite, "/api/v1/properties/upload"),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: data);
+
+  Future<UploadProperty?> uploadProperty(
+      String? address,
+      String? amenities,
+      String? availability,
+      int? bathTubCount,
+      int? bedroomCount,
+      int? carSlots,
+      String? city,
+      String? country,
+      String? description,
+      String? imageUrl,
+      String? listingOption,
+      bool? liveInSPace,
+      String? propertyName,
+      String? roomType,
+      String? rules,
+      bool? spaceFurnished,
+      int? spacePrice,
+      bool? spaceServiced,
+      String? spaceType,
+      String? state,
+      int? subscription,
+      int? surfaceArea) async {
+    var response =
+        await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
+            headers: <String, String>{'Content-Type': 'application/json'},
+            body: jsonEncode({
+              "address": address,
+              "amenities": amenities,
+              "availability": availability,
+              "bathTubCount": bathTubCount,
+              "bedroomCount": bedroomCount,
+              "carSlots": carSlots,
+              "city": city,
+              "country": country,
+              "description": description,
+              "imageUrl": imageUrl,
+              "listingOption": listingOption,
+              "liveInSPace": liveInSPace,
+              "propertyName": propertyName,
+              "roomType": roomType,
+              "rules": rules,
+              "spaceFurnished": spaceFurnished,
+              "spacePrice": spacePrice,
+              "spaceServiced": spaceServiced,
+              "spaceType": spaceType,
+              "state": state,
+              "subscription": subscription,
+              "surfaceArea": surfaceArea
+            }));
+
     print('From the uploading session: ${response.body}');
     if (response.statusCode == 200) {
       String responseString = response.body;
