@@ -44,9 +44,7 @@ class HomeViewModel extends BaseViewModel {
     TopCity('Abuja', 50, Assets.abuja_location_placeholder),
     TopCity('Lagos', 20, Assets.lagos_location_placeholder),
     TopCity('Kaduna', 20, Assets.kaduna_location_placeholder),
-    TopCity('Abuja', 50, Assets.abuja_location_placeholder),
-    TopCity('Lagos', 20, Assets.lagos_location_placeholder),
-    TopCity('Kaduna', 20, Assets.kaduna_location_placeholder),
+
   ];
 
   List<Category> categories = [
