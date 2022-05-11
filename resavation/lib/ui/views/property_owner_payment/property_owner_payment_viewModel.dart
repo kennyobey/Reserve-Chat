@@ -31,18 +31,17 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
       TextEditingController();
 
   void upoloadPropertyToServer() async {
-    final String subscription = propertySubscriptionController.text;
     var annualPrice = propertyannualPriceController.text;
     final String biannualPrice = propertybiannualPriceController.text;
     final String monthlylPrice = propertymonthlyPriceController.text;
     final String quaterlylPrice = propertyquaterlylPriceController.text;
 
-    httpService.uploadProperty(
+    httpService.uploadProperty(subscription: {
       annualPrice: 0,
       biannualPrice: 0,
-      quarterlyPrice: 0,
-      monthlyPrice: 0,
-    );
+      quaterlylPrice: 0,
+      monthlylPrice: 0
+    });
   }
 
   void incrementPrice({required String input}) {

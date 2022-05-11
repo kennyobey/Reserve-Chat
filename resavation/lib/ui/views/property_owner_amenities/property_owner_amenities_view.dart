@@ -23,6 +23,8 @@ class _PropertyOwnerAmenitiesViewState
   MaterialPropertyResolver<Color?>? get getColor => null;
 
   final uploadFormKey = GlobalKey<FormState>();
+  List<String>? amenities;
+  List<String>? rules;
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +66,17 @@ class _PropertyOwnerAmenitiesViewState
                           ),
                           AmenitiesItem(
                             label: "Washing Machine",
-                            checkboxValue: model.checkValue2,
-                            onChanged: model.onCheckChanged2,
+                            checkboxValue: model.hasMachine,
+                            onChanged: (value) {
+                              setState(() {
+                                // value = model.onCheckChanged2;
+                                print('Machine: ${value}');
+                              });
+                            },
                           ),
                           AmenitiesItem(
                             label: "Air Conditioning",
-                            checkboxValue: model.checkValue3,
+                            checkboxValue: model.hasAC,
                             onChanged: model.onCheckChanged3,
                           ),
                         ],
@@ -81,17 +88,17 @@ class _PropertyOwnerAmenitiesViewState
                         children: [
                           AmenitiesItem(
                             label: "TV",
-                            checkboxValue: model.checkValue4,
+                            checkboxValue: model.hasTV,
                             onChanged: model.onCheckChanged4,
                           ),
                           AmenitiesItem(
                             label: "Hair Dryer",
-                            checkboxValue: model.checkValue5,
+                            checkboxValue: model.hasHairDryer,
                             onChanged: model.onCheckChanged5,
                           ),
                           AmenitiesItem(
                             label: "Fire Alarm",
-                            checkboxValue: model.checkValue6,
+                            checkboxValue: model.hasFireAlarm,
                             onChanged: model.onCheckChanged6,
                           ),
                         ],
@@ -114,20 +121,20 @@ class _PropertyOwnerAmenitiesViewState
                             children: [
                               AmenitiesItem(
                                 label: "No Smoking",
-                                checkboxValue: model.checkValue7,
+                                checkboxValue: model.smoking,
                                 onChanged: model.onCheckChanged7,
                               ),
                               horizontalSpaceLarge,
                               AmenitiesItem(
                                 label: "No Pets",
-                                checkboxValue: model.checkValue8,
+                                checkboxValue: model.pets,
                                 onChanged: model.onCheckChanged8,
                               ),
                             ],
                           ),
                           AmenitiesItem(
                             label: "No House Party",
-                            checkboxValue: model.checkValue9,
+                            checkboxValue: model.houseParty,
                             onChanged: model.onCheckChanged9,
                           ),
                         ],
@@ -163,15 +170,9 @@ class _PropertyOwnerAmenitiesViewState
                             if (uploadFormKey.currentState!.validate()) {
                               model.goToPropertyOwnerIdentificationView();
 
-                              print(" one is ${model.checkValue2}");
-                              print(" two is ${model.checkValue3}");
-                              print(" three is ${model.checkValue4}");
-                              print(" four is ${model.checkValue5}");
-                              print("wifi is ${model.hasWifi}");
-                              print(" two is ${model.checkValue7}");
-                              print(" two is ${model.checkValue9}");
+                              print(" TV is ${model.hasTV}");
                             } else {
-                              model.upoloadPropertyToServer();
+                              model.upoloadPropertyToServer(amenities, rules);
                             }
                           }),
                     ],

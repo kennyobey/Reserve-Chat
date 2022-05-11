@@ -12,79 +12,90 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   /// Checkboxes are named to fit their corresponding value
   /// To enable for easy recognition and usage
 
-  void upoloadPropertyToServer() async {
-    httpService.uploadProperty(amenities: "amenities");
+  void upoloadPropertyToServer(
+      List<String>? amenities, List<String>? rules) async {
+    httpService.uploadProperty(amenities: amenities, rules: rules);
   }
 
-  bool hasWifi = false;
-  //bool get hasWifi => _hasWifi;
+  List amenities = [];
 
-  bool _checkValue2 = false;
-  bool get checkValue2 => _checkValue2;
+  bool _hasWifi = false;
+  bool get hasWifi => _hasWifi;
 
-  bool _checkValue3 = false;
-  bool get checkValue3 => _checkValue3;
+  bool _hasMachine = false;
+  bool get hasMachine => _hasMachine;
 
-  bool _checkValue4 = false;
-  bool get checkValue4 => _checkValue4;
+  bool _hasAC = false;
+  bool get hasAC => _hasAC;
 
-  bool _checkValue5 = false;
-  bool get checkValue5 => _checkValue5;
+  bool _hasTV = false;
+  bool get hasTV => _hasTV;
 
-  bool _checkValue6 = false;
-  bool get checkValue6 => _checkValue6;
+  bool _hasHairDryer = false;
+  bool get hasHairDryer => _hasHairDryer;
 
-  bool _checkValue7 = false;
-  bool get checkValue7 => _checkValue7;
+  bool _hasFireAlarm = false;
+  bool get hasFireAlarm => _hasFireAlarm;
 
-  bool _checkValue8 = false;
-  bool get checkValue8 => _checkValue8;
+  bool _smoking = false;
+  bool get smoking => _smoking;
 
-  bool _checkValue9 = false;
-  bool get checkValue9 => _checkValue9;
+  bool _pets = false;
+  bool get pets => _pets;
+
+  bool _houseParty = false;
+  bool get houseParty => _houseParty;
 
   void onHasWifiChange(bool? value) {
-    hasWifi = value!;
+    _hasWifi = value!;
     notifyListeners();
   }
 
   void onCheckChanged2(bool? value) {
-    _checkValue2 = value ?? false;
+    _hasMachine = value ?? false;
+    if (amenities.contains("Machine")) {
+      amenities.remove("Machine");
+      print(amenities);
+    } else {
+      amenities.add("Machine");
+      print(amenities);
+    }
+
     notifyListeners();
   }
 
   void onCheckChanged3(bool? value) {
-    _checkValue3 = value ?? false;
+    _hasAC = value ?? false;
     notifyListeners();
   }
 
   void onCheckChanged4(bool? value) {
-    _checkValue4 = value ?? false;
+    _hasTV = value ?? false;
     notifyListeners();
   }
 
   void onCheckChanged5(bool? value) {
-    _checkValue5 = value ?? false;
+    _hasHairDryer = value ?? false;
     notifyListeners();
   }
 
   void onCheckChanged6(bool? value) {
-    _checkValue6 = value ?? false;
+    _hasFireAlarm = value ?? false;
     notifyListeners();
   }
 
   void onCheckChanged7(bool? value) {
-    _checkValue7 = value ?? false;
+    _smoking = value ?? false;
     notifyListeners();
   }
 
   void onCheckChanged8(bool? value) {
-    _checkValue8 = value ?? false;
+    _pets = value ?? false;
     notifyListeners();
   }
 
   void onCheckChanged9(bool? value) {
-    _checkValue9 = value ?? false;
+    _houseParty = value ?? false;
     notifyListeners();
   }
 

@@ -240,7 +240,6 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                             onPressed: () async {
                               if (uploadFormKey.currentState!.validate()) {
                                 model.goToPropertyOwnerAmenitiesView();
-
                                 print(model.selectedValue1);
                                 print(model.isServiced);
                                 print(model.selectedDate);

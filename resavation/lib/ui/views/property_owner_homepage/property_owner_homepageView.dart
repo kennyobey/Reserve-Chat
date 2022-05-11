@@ -56,7 +56,10 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                               style: AppStyle.kBodyRegularBlack14W600,
                             ),
                             Spacer(),
-                            Icon(Icons.notifications_outlined),
+                            InkWell(
+                              child: Icon(Icons.notifications_outlined),
+                              onTap: () => model.goToMessage(),
+                            ),
                           ],
                         ),
                         verticalSpaceMedium,
@@ -195,44 +198,45 @@ class ListingCard extends StatelessWidget {
         ),
         width: MediaQuery.of(context).size.width,
         height: 80,
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-          ListTile(
-            leading: Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6), //or 15.0
-                child: Image.asset(
-                  Assets.profile_image4,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ListTile(
+                leading: Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6), //or 15.0
+                    child: Image.asset(
+                      Assets.profile_image4,
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ),
+                title: Text(
+                  "Adeyemo Stphen",
+                  style: AppStyle.kBodySmallRegular11W500,
+                ),
+                subtitle: Text(
+                  "SeedBuilderHub",
+                  style: AppStyle.kBodySmallRegular10W400,
+                ),
+                trailing: Container(
                   width: 80,
-                  height: 80,
+                  height: 30,
+                  child: FlatButton(
+                    child: Text(
+                      'Accept',
+                      style: TextStyle(fontSize: 12.0),
+                    ),
+                    color: Colors.blueAccent,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      bookApartment(context);
+                    },
+                  ),
                 ),
-              ),
-            ),
-            title: Text(
-              "Adeyemo Stphen",
-              style: AppStyle.kBodySmallRegular11W500,
-            ),
-            subtitle: Text(
-              "SeedBuilderHub",
-              style: AppStyle.kBodySmallRegular10W400,
-            ),
-            trailing: Container(
-              width: 80,
-              height: 30,
-              child: FlatButton(
-                child: Text(
-                  'Accept',
-                  style: TextStyle(fontSize: 12.0),
-                ),
-                color: Colors.blueAccent,
-                textColor: Colors.white,
-                onPressed: () {
-                  bookApartment(context);
-                },
-              ),
-            ),
-          )
-        ]));
+              )
+            ]));
   }
 
   void bookApartment(BuildContext context) {

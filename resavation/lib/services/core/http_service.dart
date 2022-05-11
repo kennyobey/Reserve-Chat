@@ -290,7 +290,7 @@ class HttpService {
       "country": country,
       "description": description,
       "imageUrl": imageUrl,
-      "listingOption": [],
+      "listingOption": listingOption,
       "liveInSPace": liveInSPace,
       "propertyName": propertyName,
       "roomType": roomType,
