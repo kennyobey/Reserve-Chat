@@ -63,7 +63,7 @@ class ResetPasswordView extends StatelessWidget {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
-    debugPrint('Called');
+
     return [
       Pinput(
         defaultPinTheme: defaultPinTheme,
@@ -245,16 +245,14 @@ class ResetPasswordView extends StatelessWidget {
             verticalSpaceMedium,
             ResavationButton(
               title: 'Send OTP',
+              isLoadingEnabled: model.isStage1Loading,
               width: MediaQuery.of(context).size.width,
               onTap: () async {
                 final isValid = model.stage1FormKey.currentState?.validate();
-                if ((isValid ?? false) == false) {
+                if ((isValid ?? false) == false || model.isStage1Loading) {
                   return;
                 }
                 try {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Processing request, please wait')),
-                  );
                   await model.sendOTP();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -328,17 +326,14 @@ class ResetPasswordView extends StatelessWidget {
             verticalSpaceMedium,
             ResavationButton(
               title: 'Reset Password',
+              isLoadingEnabled: model.isStage2Loading,
               width: MediaQuery.of(context).size.width,
               onTap: () async {
                 final isValid = model.stage3FormKey.currentState?.validate();
                 if ((isValid ?? false) == false) {
                   return;
                 }
-
                 try {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Processing request, please wait')),
-                  );
                   await model.sendResetPasswordLink();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

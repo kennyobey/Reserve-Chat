@@ -68,8 +68,18 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 verticalSpaceMedium,
-                FindYourLocation(
-                  onTap: model.goToFilterView,
+                InkWell(
+                  onTap: () {
+                    model.setPositionAsSearch();
+                  },
+                  splashColor: Colors.transparent,
+                  child: AbsorbPointer(
+                    absorbing: true,
+                    child: FindYourLocation(
+                      onTap: () {},
+                      controller: null,
+                    ),
+                  ),
                 ),
                 verticalSpaceMedium,
                 TitleListTile(

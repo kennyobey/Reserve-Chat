@@ -12,8 +12,8 @@ class MakePayment {
 
   String email;
 
-  static const String payStackKey = "pk_test_e16fa6551c9df39291ec9a0d69efed432d1a6cb3";
-
+  static const String payStackKey =
+      "pk_test_e16fa6551c9df39291ec9a0d69efed432d1a6cb3";
 
   PaystackPlugin paystack = PaystackPlugin();
 
@@ -40,8 +40,9 @@ class MakePayment {
   }
 
   //Method Charging card
-  chargeCardAndMakePayment() async {
-    initializePlugin().then((_) async {
+  Future<bool> chargeCardAndMakePayment() async {
+    try {
+      await initializePlugin();
       Charge charge = Charge()
         ..amount = price * 100
         ..email = email
@@ -61,10 +62,12 @@ class MakePayment {
       print("Response $response");
 
       if (response.status == true) {
-        print("Transaction successful");
+        return true;
       } else {
-        print("Transaction failed");
+        return false;
       }
-    });
+    } catch (exceptionm) {
+      return false;
+    }
   }
 }

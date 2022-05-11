@@ -6,12 +6,29 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../services/core/http_service.dart';
+
 class SearchViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final httpService = locator<HttpService>();
+  bool isLoadingData = false;
 
-  // search bar searching logic
-  late List<Property> property;
   String query = '';
+  List<Property> properties = listOfProperties;
+
+  TextEditingController textFieldController = TextEditingController();
+
+  @override
+  void dispose() {
+    textFieldController.dispose();
+    super.dispose();
+  }
+
+  SearchViewModel() {
+    textFieldController.addListener(() {
+      searchProperty(textFieldController.text);
+    });
+  }
 
   Widget buildSearch() => ResavationSearchBar(
         text: query,
@@ -34,7 +51,7 @@ class SearchViewModel extends BaseViewModel {
     }).toList();
 
     this.query = query;
-    this.property = property;
+    this.properties = property;
     notifyListeners();
   }
 
@@ -54,10 +71,16 @@ class SearchViewModel extends BaseViewModel {
   }
 
   void onFavoriteTap(Property property) {
+    try {
+      // await _httpService.togglePropertyAsFavourite(propertyId: property.id, isFavourite: property.isFavoriteTap);
+      int index = properties.indexOf(property);
+
+      properties[index].isFavoriteTap = !property.isFavoriteTap;
+    } catch (exception) {
+      //todo handle error
+    }
     notifyListeners();
   }
-
-  List<Property> get properties => listOfProperties;
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
@@ -72,6 +95,22 @@ class SearchViewModel extends BaseViewModel {
 
   @override
   void initState() {
-    property = listOfProperties;
+    //  property = listOfProperties;
+    getData();
+  }
+
+  getData() async {
+    isLoadingData = true;
+    notifyListeners();
+
+    try {
+      properties = await httpService.getAllProperties(page: 0, size: 10);
+      notifyListeners();
+    } catch (exception) {
+      //
+      properties = [];
+    }
+    isLoadingData = false;
+    notifyListeners();
   }
 }

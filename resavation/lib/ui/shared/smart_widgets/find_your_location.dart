@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 
+import '../spacing.dart';
+
 class FindYourLocation extends StatelessWidget {
   const FindYourLocation({
     Key? key,
@@ -27,19 +29,18 @@ class FindYourLocation extends StatelessWidget {
             fillColors: kWhite,
           ),
         ),
+        horizontalSpaceSmall,
         GestureDetector(
           onTap: onTap,
           child: Container(
-            height: 48,
+            height: 40,
             width: 40,
             child: Icon(
               Icons.filter_list,
               color: kWhite,
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(5),
-                  bottomRight: Radius.circular(5)),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
               color: kPrimaryColor,
             ),
           ),

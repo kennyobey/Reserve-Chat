@@ -10,6 +10,8 @@ import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/views/search/search_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/colors.dart';
+
 class SearchView extends StatefulWidget {
   const SearchView({Key? key}) : super(key: key);
 
@@ -78,8 +80,12 @@ class _SearchViewState extends State<SearchView> {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               children: [
-                FindYourLocation(
+                /*      FindYourLocation(
                   controller: _textFieldController,
+                  onTap: model.goToFilterView,
+                ), */
+                FindYourLocation(
+                  controller: model.textFieldController,
                   onTap: model.goToFilterView,
                 ),
                 verticalSpaceSmall,
@@ -102,26 +108,71 @@ class _SearchViewState extends State<SearchView> {
 
   Widget buildBody(SearchViewModel model) {
     final properties = model.properties;
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        final property = properties[index];
-        return PropertyCard(
-          id: property.id,
-          onTap: () => model.goToPropertyDetails(property),
-          image: property.image,
-          amountPerYear: property.amountPerYear,
-          location: property.location,
-          address: property.address,
-          numberOfBathrooms: property.numberOfBedrooms,
-          numberOfBedrooms: property.numberOfBathrooms,
-          squareFeet: property.squareFeet,
-          isFavoriteTap: property.isFavoriteTap,
-          onFavoriteTap: () => model.onFavoriteTap(property),
-        );
-      },
-      padding: const EdgeInsets.all(0),
-      physics: const BouncingScrollPhysics(),
-      itemCount: properties.length,
+    return model.isLoadingData
+        ? buildLoadingWidget()
+        : properties.isEmpty
+            ? buildEmptyBody()
+            : ListView.builder(
+                itemBuilder: (ctx, index) {
+                  final property = properties[index];
+                  return PropertyCard(
+                    id: property.id,
+                    onTap: () => model.goToPropertyDetails(property),
+                    image: property.image,
+                    amountPerYear: property.amountPerYear,
+                    location: property.location,
+                    address: property.address,
+                    numberOfBathrooms: property.numberOfBedrooms,
+                    numberOfBedrooms: property.numberOfBathrooms,
+                    squareFeet: property.squareFeet,
+                    isFavoriteTap: property.isFavoriteTap,
+                    onFavoriteTap: () => model.onFavoriteTap(property),
+                  );
+                },
+                padding: const EdgeInsets.all(0),
+                physics: const BouncingScrollPhysics(),
+                itemCount: properties.length,
+              );
+  }
+
+  Column buildEmptyBody() {
+    var textTheme = Theme.of(context).textTheme;
+    final bodyText1 = textTheme.bodyText1!
+        .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
+    final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Text(
+          'No property yet!',
+          style: bodyText1,
+        ),
+        const SizedBox(
+          height: 5,
+          width: double.infinity,
+        ),
+        Text(
+          'Kindly check back later for the specified property',
+          textAlign: TextAlign.center,
+          style: bodyText2,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
+
+  Center buildLoadingWidget() {
+    return const Center(
+      child: SizedBox(
+        height: 40,
+        width: 40,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: Colors.blue,
+          valueColor: AlwaysStoppedAnimation(kWhite),
+        ),
+      ),
     );
   }
 }

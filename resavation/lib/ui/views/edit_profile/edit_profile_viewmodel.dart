@@ -67,10 +67,7 @@ class EditProfileViewModel extends BaseViewModel {
       final body = {
         "imageUrl": url,
       };
-      await _httpService.updateProfile(
-          body: body,
-          authorization: userData.accessToken,
-          tokenType: userData.tokenType);
+      await _httpService.updateProfile(body: body);
       goToMainView();
     } catch (e) {
       return Future.error(e.toString());
@@ -83,13 +80,9 @@ class EditProfileViewModel extends BaseViewModel {
     try {
       final body = {
         "firstName": firstName.isNotEmpty ? firstName : userData.firstName,
-        // "imageUrl": url,
         "lastName": lastName.isNotEmpty ? lastName : userData.lastName,
       };
-      await _httpService.updateProfile(
-          body: body,
-          authorization: userData.accessToken,
-          tokenType: userData.tokenType);
+      await _httpService.updateProfile(body: body);
     } catch (e) {
       return Future.error(e.toString());
     }

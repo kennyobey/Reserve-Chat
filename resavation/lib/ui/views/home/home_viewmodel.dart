@@ -32,6 +32,10 @@ class HomeViewModel extends BaseViewModel {
 
   LoginModel get userData => _userService.userData;
 
+  void setPositionAsSearch() {
+    _userService.changePositionToSearch();
+  }
+
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }
@@ -39,11 +43,15 @@ class HomeViewModel extends BaseViewModel {
   List<TopCity> topCities = [
     TopCity('Abuja', 50, Assets.abuja_location_placeholder),
     TopCity('Lagos', 20, Assets.lagos_location_placeholder),
+    TopCity('Kaduna', 20, Assets.kaduna_location_placeholder),
+    TopCity('Abuja', 50, Assets.abuja_location_placeholder),
+    TopCity('Lagos', 20, Assets.lagos_location_placeholder),
+    TopCity('Kaduna', 20, Assets.kaduna_location_placeholder),
   ];
 
   List<Category> categories = [
     Category('Apartment', Assets.house_placeholder, true),
-    Category('Office Space', Assets.office_placeholder, false),
+    Category('Office Space', Assets.office_placeholder, true),
   ];
 
   void goToFilterView() {
@@ -55,7 +63,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void goToPropertySearch() {
-    _navigationService.navigateTo(Routes.searchView);
+    _userService.changePositionToSearch();
   }
 
   void goToProfileProductListView() {
