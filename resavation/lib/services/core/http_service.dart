@@ -270,6 +270,88 @@ class HttpService {
   }
 
   //Property Upload Logic
+  Future<UploadProperty?> uploadProperty({
+    String? address,
+    List<String>? amenities,
+    Map<String, String>? availability,
+    String? from,
+    String? to,
+    int? bathTubCount,
+    int? bedroomCount,
+    int? carSlots,
+    String? city,
+    String? country,
+    String? description,
+    String? imageUrl,
+    List<String>? listingOption,
+    bool? liveInSPace,
+    String? propertyName,
+    String? roomType,
+    List<String>? rules,
+    bool? spaceFurnished,
+    int? spacePrice,
+    bool? spaceServiced,
+    String? spaceType,
+    String? state,
+    Map<String, int>? subscription,
+    int? annualPrice,
+    int? biannualPrice,
+    int? monthlyPrice,
+    int? quarterlyPrice,
+    int? surfaceArea,
+    Map<String, String>? userDetails,
+    String? dateOfBirth,
+    String? firstName,
+    String? gender,
+    String? lastName,
+    String? phoneNumber,
+  }) async {
+    var data = jsonEncode({
+      "address": address,
+      "amenities": amenities,
+      "availability": {"from": from, "to": to},
+      "bathTubCount": bathTubCount,
+      "bedroomCount": bedroomCount,
+      "carSlots": carSlots,
+      "city": city,
+      "country": country,
+      "description": description,
+      "imageUrl": imageUrl,
+      "listingOption": listingOption,
+      "liveInSPace": liveInSPace,
+      "propertyName": propertyName,
+      "roomType": roomType,
+      "rules": rules,
+      "spaceFurnished": spaceFurnished,
+      "spacePrice": spacePrice,
+      "spaceServiced": spaceServiced,
+      "spaceType": spaceType,
+      "state": state,
+      "subscription": {
+        "annualPrice": annualPrice,
+        "biannualPrice": biannualPrice,
+        "monthlyPrice": monthlyPrice,
+        "quarterlyPrice": quarterlyPrice
+      },
+      "surfaceArea": surfaceArea,
+      "userDetails": {
+        "address": address,
+        "city": city,
+        "country": country,
+        "dateOfBirth": dateOfBirth,
+        "firstName": firstName,
+        "gender": gender,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+        "state": state
+      }
+    });
+    print(data);
+    var response = await http.post(
+        Uri.http(requestSite, "/api/v1/properties/upload"),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: data);
+
   Future<UploadProperty?> uploadProperty(
       String? address,
       String? amenities,
@@ -320,6 +402,7 @@ class HttpService {
               "subscription": subscription,
               "surfaceArea": surfaceArea
             }));
+
     print('From the uploading session: ${response.body}');
     if (response.statusCode == 200) {
       String responseString = response.body;
@@ -327,6 +410,7 @@ class HttpService {
     } else if (response.statusCode == 400) {
       String responseString = response.body;
       userTypeService.error.value = "";
+      print(responseString);
       throw Exception(userTypeService.error.value);
     } else
       throw Exception("Failed to upload property");

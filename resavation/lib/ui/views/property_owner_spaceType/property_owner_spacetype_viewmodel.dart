@@ -13,10 +13,20 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final httpService = locator<HttpService>();
   final userTypeService = locator<UserTypeService>();
 
-   // Global Keys to use with the form text fields
+  void upoloadPropertyToServer() async {
+    httpService.uploadProperty(
+        spaceServiced: false,
+        // spaceFurnished: false,
+        // liveInSPace: false,
+        listingOption: [],
+        bathTubCount: numberOfBathrooms,
+        bedroomCount: numberOfBedrooms,
+        carSlots: numberOfCarSlot);
+  }
+
+  // Global Keys to use with the form text fields
   final registrationFormKey = GlobalKey<FormState>();
   late Timer timer;
-
 
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
@@ -48,13 +58,9 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     'Short Let'
   ];
 
-
   // drop-down button UI logic for property status
   String? selectedValue3;
-  List<String> propertyStatus = [
-    'For Sale',
-    'For Rent'
-  ];
+  List<String> propertyStatus = ['For Sale', 'For Rent'];
 
   void onSelectedValueChange1(value) {
     selectedValue1 = value as String;
@@ -69,16 +75,22 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void onSelectedValueChange3(value) {
-    selectedValue3 = value as String;
+    selectedValue3 = value;
 
     notifyListeners();
   }
 
   //is your space serviced UI logic
-  String isServiced = "";
+  bool isServiced = false;
 
-  void onSpaceServicedRadioChange(String value) {
-    isServiced = value.toString();
+  void onSpaceServicedRadioChange(bool? value) {
+    isServiced == value!;
+    if (isServiced == "Yes") {
+      print("fjfffk ${true.toString()}");
+    } else {
+      print("Somethij");
+    }
+
     notifyListeners();
   }
 
@@ -146,6 +158,7 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerDetailsView() {
+    String name;
     _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
   }
 }

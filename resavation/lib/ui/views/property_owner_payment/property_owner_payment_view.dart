@@ -3,7 +3,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_radio_button.dart';
 
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -13,15 +12,20 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerPaymentView extends StatelessWidget {
+class PropertyOwnerPaymentView extends StatefulWidget {
   const PropertyOwnerPaymentView({Key? key}) : super(key: key);
 
-  get context => null;
+  @override
+  State<PropertyOwnerPaymentView> createState() =>
+      _PropertyOwnerPaymentViewState();
+}
+
+class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
+  final uploadFormKey = GlobalKey<FormState>();
 
   get date => null;
 
-  get selectedDate => null;
-
+  // var selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerPaymentViewModel>.reactive(
@@ -33,168 +37,224 @@ class PropertyOwnerPaymentView extends StatelessWidget {
               vertical: 15,
             ),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      'Step 2',
-                      style: AppStyle.kHeading0,
+              child: Form(
+                key: uploadFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        'Step 2',
+                        style: AppStyle.kHeading0,
+                      ),
                     ),
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Payment Type',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: 'Ease Subscription',
-                  ),
-                  Text(
-                    'Choose your ease subscription type',
-                    style: AppStyle.kBodySmallRegular12,
-                  ),
-                  Text(
-                    '(You can select more than one)',
-                    style: AppStyle.kBodySmallRegular12,
-                  ),
-                  verticalSpaceTiny,
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                        hint: Text(
-                          "Select Property ",
-                          style: AppStyle.kBodyRegular,
-                        ),
-                        items: model.subscriptionType
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: AppStyle.kBodyRegular,
-                                  ),
-                                ))
-                            .toList(),
-                        value: model.selectedValue1,
-                        onChanged: (value) {
-                          model.onSelectedValueChange1(value);
-                        },
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                        ),
-                        buttonWidth: 330,
-                        buttonPadding: EdgeInsets.only(left: 18, right: 20),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            //color: Colors.black26,
+                    verticalSpaceMedium,
+                    Text(
+                      'Payment Type',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
+                    // ResavationTextField(
+                    //   hintText: 'Ease Subscription',
+                    //   textInputAction: TextInputAction.next,
+                    //   controller: model.propertySubscriptionController,
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter property subscription';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    Text(
+                      'Choose your ease subscription type',
+                      style: AppStyle.kBodySmallRegular12,
+                    ),
+                    Text(
+                      '(You can select more than one)',
+                      style: AppStyle.kBodySmallRegular12,
+                    ),
+                    verticalSpaceTiny,
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                          hint: Text(
+                            "Select Property ",
+                            style: AppStyle.kBodyRegular,
                           ),
-                        )),
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'Availability Period',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  verticalSpaceRegular,
-    //               Text(
-    //   "${selectedDate.toString()}".split(' ')[0],
-    //   style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
-    // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DateContainer(
-                        label: 'From',
-                        date: "${selectedDate.toString()}",
-    
-                        onPressed: () {
-                       model.selectDate(context);
-                        },
-                      ),
-                      horizontalSpaceRegular,
-                      DateContainer(
-                        label: 'To',
-                        date: 'Jan 1, 2023',
-                        onPressed: () {
-                          model.selectDate(context);
-                        },
-                      ),
-                    ],
-                  ),
-                  verticalSpaceMedium,
-                  Text(
-                    'Space Price',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the monthly rent of this unit?',
-                    style: AppStyle.kBodySmallRegular12,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 100,000',
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the quarterlet rent of this unit?',
-                    style: AppStyle.kBodySmallRegular12,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 300,000',
-                  ),
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the biannual rent of this unit?',
-                    style: AppStyle.kBodySmallRegular12,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 600,000',
-                  ),
-                  verticalSpaceTiny,
-                  verticalSpaceTiny,
-                  Text(
-                    'What is the annual rent of this unit?',
-                    style: AppStyle.kBodySmallRegular12,
-                  ),
-                  verticalSpaceTiny,
-                  ResavationTextField(
-                    hintText: '# 600,000',
-                  ),
-                  verticalSpaceTiny,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Back',
-                          style: AppStyle.kBodyRegularBlack14W500,
+                          items: model.subscriptionType
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: AppStyle.kBodyRegular,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: model.selectedValue1,
+                          onChanged: (value) {
+                            model.onSelectedValueChange1(value);
+                          },
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                          ),
+                          buttonWidth: 330,
+                          buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                                //color: Colors.black26,
+                                ),
+                          )),
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      'Availability Period',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceRegular,
+                    //               Text(
+                    //   "${selectedDate.toString()}".split(' ')[0],
+                    //   style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DateContainer(
+                          label: 'From',
+                          date: "${model.selectedDate.toLocal()}".split(' ')[0],
+                          onPressed: () {
+                            model.selecStarttDate(context);
+                          },
                         ),
-                        color: kWhite,
-                        textColor: kBlack,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Spacer(),
-                      FlatButton(
-                        child: Text(
-                          'Next',
-                          style: AppStyle.kBodyRegular,
+                        horizontalSpaceRegular,
+                        DateContainer(
+                          label: 'To',
+                          date:
+                              "${model.selectedDate2.toLocal()}".split(' ')[0],
+                          onPressed: () {
+                            model.selectEndDate(context);
+                          },
                         ),
-                        color: kPrimaryColor,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          model.goToPropertyOwnerAmenitiesView();
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    verticalSpaceMedium,
+                    Text(
+                      'Space Price',
+                      style: AppStyle.kBodySmallRegular12W500,
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      'What is the monthly rent of this unit?',
+                      style: AppStyle.kBodySmallRegular12,
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: '# 100,000',
+                      textInputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        model.incrementPrice(input: value);
+                      },
+                      // controller: model.propertymonthlyPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      'What is the quarterlet rent of this unit?',
+                      style: AppStyle.kBodySmallRegular12,
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: '# 300,000',
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyquaterlylPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      'What is the biannual rent of this unit?',
+                      style: AppStyle.kBodySmallRegular12,
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: '# 600,000',
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertybiannualPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpaceTiny,
+                    verticalSpaceTiny,
+                    Text(
+                      'What is the annual rent of this unit?',
+                      style: AppStyle.kBodySmallRegular12,
+                    ),
+                    verticalSpaceTiny,
+                    ResavationTextField(
+                      hintText: '# 600,000',
+                      textInputAction: TextInputAction.next,
+                      controller: model.propertyannualPriceController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter property subscription';
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpaceTiny,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          child: Text(
+                            'Back',
+                            style: AppStyle.kBodyRegularBlack14W500,
+                          ),
+                          color: kWhite,
+                          textColor: kBlack,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Spacer(),
+                        FlatButton(
+                            child: Text(
+                              'Next',
+                              style: AppStyle.kBodyRegular,
+                            ),
+                            color: kPrimaryColor,
+                            textColor: Colors.white,
+                            onPressed: () async {
+                              if (uploadFormKey.currentState!.validate()) {
+                                model.goToPropertyOwnerAmenitiesView();
+                                print(model.selectedValue1);
+                                print(model.isServiced);
+                                print(model.selectedDate);
+                                print(model.propertyannualPriceController);
+                                print(model.propertybiannualPriceController);
+                                print(model.propertyquaterlylPriceController);
+                                print(model.propertymonthlyPriceController);
+                              } else {
+                                model.upoloadPropertyToServer();
+                              }
+                            }),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -203,23 +263,9 @@ class PropertyOwnerPaymentView extends StatelessWidget {
       viewModelBuilder: () => PropertyOwnerPaymentViewModel(),
     );
   }
-
-  void _onSelectionChanged(
-      DateRangePickerSelectionChangedArgs dateRangePickerSelectionChangedArgs) {
-    print(dateRangePickerSelectionChangedArgs.value);
-  }
-
-  Future OpenDialogue() => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Dailoge"),
-          content: Text("My name"),
-        ),
-      );
 }
 
-class Date {
-}
+class Date {}
 
 class DateContainer extends StatelessWidget {
   const DateContainer({
@@ -231,7 +277,7 @@ class DateContainer extends StatelessWidget {
 
   final String label;
   final String date;
-  final Function()onPressed;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -262,9 +308,6 @@ class DateContainer extends StatelessWidget {
   }
 }
 
-
-
-
 showAlertDialog(BuildContext context) {
   // set up the button
   Widget okButton = TextButton(
@@ -290,69 +333,63 @@ showAlertDialog(BuildContext context) {
   );
 }
 
-
 void pickDate(BuildContext context) {
-    var alertdialog = Dialog(
+  var alertdialog = Dialog(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        width: double.infinity,
-        height: 420,
-        child: Center(
-          child:
-           Column(
-             children: [
-               CalendarDatePicker(
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2025),
-                      onDateChanged: (DateTime) {
-                        String date = DateTime.toString();
-                        print("The picked date is $date");
-                      },
-                    ),
-                     Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Row(
-                   // crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          'Cancel',
-                          style: AppStyle.kBodySmallRegular12W500,
-                        ),
-                        color: kWhite,
-                        textColor: kPrimaryColor,
-                        onPressed: () {},
-                      ),
-                      horizontalSpaceTiny,
-                      FlatButton(
-                        child: Text(
-                          'Ok',
-                          style: AppStyle.kBodySmallRegular12W500,
-                        ),
-                        color: kWhite,
-                        textColor: kPrimaryColor,
-                        onPressed: () {
-                         
-                        },
-                      ),
-                    ],
+    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20.0),
+    ),
+    width: double.infinity,
+    height: 420,
+    child: Center(
+      child: Column(
+        children: [
+          CalendarDatePicker(
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2025),
+            onDateChanged: (DateTime) {
+              String date = DateTime.toString();
+              print("The picked date is $date");
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Row(
+              // crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FlatButton(
+                  child: Text(
+                    'Cancel',
+                    style: AppStyle.kBodySmallRegular12W500,
                   ),
-                )
-             ],
-           ),
+                  color: kWhite,
+                  textColor: kPrimaryColor,
+                  onPressed: () {},
+                ),
+                horizontalSpaceTiny,
+                FlatButton(
+                  child: Text(
+                    'Ok',
+                    style: AppStyle.kBodySmallRegular12W500,
+                  ),
+                  color: kWhite,
+                  textColor: kPrimaryColor,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          )
+        ],
       ),
-    ));
+    ),
+  ));
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alertdialog;
-        });
-  
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertdialog;
+      });
 }
-

@@ -11,6 +11,9 @@ import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owne
 
 import 'package:stacked/stacked.dart';
 
+import '../../shared/dump_widgets/resavation_button.dart';
+import '../property_owner_add_photos/property_owner_add_photosViewModel.dart';
+
 class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
   const PropertyOwnerAddCoverPhotosView({Key? key}) : super(key: key);
 
@@ -19,75 +22,85 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
     return ViewModelBuilder<PropertyOwnerAddCoverPhotosViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpaceMedium,
-                Center(
-                  child: Text(
-                    'Add Photos',
-                    style: AppStyle.kBodyBold,
-                  ),
+          body: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 15,
                 ),
-                verticalSpaceMedium,
-                // model.showAddedPhoto() != null?Wrap(
-                //   children: model.showAddedPhoto().value!.map((imageOne){
-                //     return Container(
-                //         child:Container(
-                //           height: 96, width:169,
-                //           child: Image.file(File(imageOne.path)),
-                //         )
-                //     );
-                //   }).toList(),
-                // ):Container(),
-                Center(
-                  child: Row(
-                    children: [
-                      Expanded(child: _coverPhoto()),
-                      horizontalSpaceTiny,
-                      Expanded(child: _Photo())
-                    ],
-                  ),
-                ),
-                verticalSpaceTiny,
-                _Photo(),
-                Spacer(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FlatButton(
+                    verticalSpaceMedium,
+                    Center(
                       child: Text(
-                        'Back',
-                        style: AppStyle.kBodyRegular,
+                        'Add Photos',
+                        style: AppStyle.kBodyBold,
                       ),
-                      color: kWhite,
-                      textColor: kBlack,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
                     ),
-                    Spacer(),
-                    FlatButton(
-                      child: Text(
-                        'Next',
-                        style: AppStyle.kBodyRegular,
-                      ),
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        model.goToPropertyOwnerPaymentView();
+                    verticalSpaceMedium,
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 2 / 2.2),
+                      itemBuilder: (_, index) {
+                        List<String> data = model.imageContainer;
+                        print(".........$data");
+                        return coverPhoto(
+                            imageUrl: data[index],
+                            isCover: (index == 0) ? true : false);
                       },
+                      itemCount: model.imageContainer.length,
+                    ),
+                    verticalSpaceTiny,
+                    Spacer(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          child: Text(
+                            'Back',
+                            style: AppStyle.kBodyRegular,
+                          ),
+                          color: kWhite,
+                          textColor: kBlack,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Spacer(),
+                        FlatButton(
+                          child: Text(
+                            'Next',
+                            style: AppStyle.kBodyRegular,
+                          ),
+                          color: kPrimaryColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            model.goToPropertyOwnerPaymentView();
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Positioned(
+                top: 25,
+                right: 20,
+                child: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  backgroundColor: kPrimaryColor,
+                  foregroundColor: kWhite,
+                  onPressed: () => {model.pickFiles()},
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -96,33 +109,40 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
   }
 }
 
-Widget _coverPhoto() {
+Widget coverPhoto({required String imageUrl, required bool isCover}) {
   return Container(
     padding: EdgeInsets.all(10.0),
-    decoration: BoxDecoration(border: Border.all(color: kGray), color: kGray),
+    decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        color: kGray,
+        image: DecorationImage(
+          image: FileImage(File(imageUrl)),
+          fit: BoxFit.cover,
+        )),
     width: 169,
     height: 86.0,
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Container(
-            decoration:
-                BoxDecoration(border: Border.all(color: kGray), color: kBlack),
-            height: 26,
-            width: 83,
-            child: FlatButton(
-              child: Text(
-                'Cover',
-                style: AppStyle.kBodySmallRegular11W300.copyWith(color: kWhite),
-              ),
-              color: kChatTextColor,
-              textColor: kBlack,
-              onPressed: () {},
-            ),
-          ),
-        ),
-        Spacer(),
+        (isCover)
+            ? Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: kGray), color: kBlack),
+                height: 26,
+                width: 65,
+                child: FlatButton(
+                  child: Text(
+                    'Cover',
+                    style: AppStyle.kBodySmallRegular11W300
+                        .copyWith(color: kWhite),
+                  ),
+                  color: kChatTextColor,
+                  textColor: kBlack,
+                  onPressed: () {},
+                ),
+              )
+            : Container(),
         Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
           height: 23,

@@ -21,6 +21,7 @@ class ResavationTextField extends StatefulWidget {
     this.controller,
     this.validator,
     this.onChanged,
+    this.maxline,
   }) : super(key: key);
 
   final void Function()? onTap;
@@ -39,6 +40,7 @@ class ResavationTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final int? maxline;
 
   @override
   _ResavationTextFieldState createState() => _ResavationTextFieldState();
@@ -62,6 +64,7 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
           validator: widget.validator,
           obscureText: _obscureText,
           style: style,
+          //  maxLines: widget.maxline,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(color: kGray, width: 0.5),

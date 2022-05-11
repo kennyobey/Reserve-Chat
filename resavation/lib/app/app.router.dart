@@ -407,7 +407,11 @@ class StackedRouter extends RouterBase {
     },
     PropertyOwnerDetailsView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerDetailsView(),
+        builder: (context) => const PropertyOwnerDetailsView(
+          isFurnished: false,
+          isServiced: false,
+          leaveHere: false,
+        ),
         settings: data,
       );
     },
