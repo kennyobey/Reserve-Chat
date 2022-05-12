@@ -352,67 +352,68 @@ class HttpService {
         headers: <String, String>{'Content-Type': 'application/json'},
         body: data);
 
-  Future<UploadProperty?> uploadProperty(
-      String? address,
-      String? amenities,
-      String? availability,
-      int? bathTubCount,
-      int? bedroomCount,
-      int? carSlots,
-      String? city,
-      String? country,
-      String? description,
-      String? imageUrl,
-      String? listingOption,
-      bool? liveInSPace,
-      String? propertyName,
-      String? roomType,
-      String? rules,
-      bool? spaceFurnished,
-      int? spacePrice,
-      bool? spaceServiced,
-      String? spaceType,
-      String? state,
-      int? subscription,
-      int? surfaceArea) async {
-    var response =
-        await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
-            headers: <String, String>{'Content-Type': 'application/json'},
-            body: jsonEncode({
-              "address": address,
-              "amenities": amenities,
-              "availability": availability,
-              "bathTubCount": bathTubCount,
-              "bedroomCount": bedroomCount,
-              "carSlots": carSlots,
-              "city": city,
-              "country": country,
-              "description": description,
-              "imageUrl": imageUrl,
-              "listingOption": listingOption,
-              "liveInSPace": liveInSPace,
-              "propertyName": propertyName,
-              "roomType": roomType,
-              "rules": rules,
-              "spaceFurnished": spaceFurnished,
-              "spacePrice": spacePrice,
-              "spaceServiced": spaceServiced,
-              "spaceType": spaceType,
-              "state": state,
-              "subscription": subscription,
-              "surfaceArea": surfaceArea
-            }));
+    Future<UploadProperty?> uploadProperty(
+        String? address,
+        String? amenities,
+        String? availability,
+        int? bathTubCount,
+        int? bedroomCount,
+        int? carSlots,
+        String? city,
+        String? country,
+        String? description,
+        String? imageUrl,
+        String? listingOption,
+        bool? liveInSPace,
+        String? propertyName,
+        String? roomType,
+        String? rules,
+        bool? spaceFurnished,
+        int? spacePrice,
+        bool? spaceServiced,
+        String? spaceType,
+        String? state,
+        int? subscription,
+        int? surfaceArea) async {
+      var response =
+          await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
+              headers: <String, String>{'Content-Type': 'application/json'},
+              body: jsonEncode({
+                "address": address,
+                "amenities": amenities,
+                "availability": availability,
+                "bathTubCount": bathTubCount,
+                "bedroomCount": bedroomCount,
+                "carSlots": carSlots,
+                "city": city,
+                "country": country,
+                "description": description,
+                "imageUrl": imageUrl,
+                "listingOption": listingOption,
+                "liveInSPace": liveInSPace,
+                "propertyName": propertyName,
+                "roomType": roomType,
+                "rules": rules,
+                "spaceFurnished": spaceFurnished,
+                "spacePrice": spacePrice,
+                "spaceServiced": spaceServiced,
+                "spaceType": spaceType,
+                "state": state,
+                "subscription": subscription,
+                "surfaceArea": surfaceArea
+              }));
 
-    print('From the uploading session: ${response.body}');
-    if (response.statusCode == 200) {
-      String responseString = response.body;
-      return uploadPropertyFromJson(responseString);
-    } else if (response.statusCode == 400) {
-      String responseString = response.body;
-      userTypeService.error.value = "";
-      print(responseString);
-      throw Exception(userTypeService.error.value);
-    } else
-      throw Exception("Failed to upload property");
+      print('From the uploading session: ${response.body}');
+      if (response.statusCode == 200) {
+        String responseString = response.body;
+        return uploadPropertyFromJson(responseString);
+      } else if (response.statusCode == 400) {
+        String responseString = response.body;
+        userTypeService.error.value = "";
+        print(responseString);
+        throw Exception(userTypeService.error.value);
+      } else
+        throw Exception("Failed to upload property");
+    }
   }
 }
