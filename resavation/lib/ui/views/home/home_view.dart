@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(40)),
                   child: ResavationImage(
-                    image: model.userData.imageUrl ?? '',
+                    image: model.userData.imageUrl,
                   ),
                 ),
               ),

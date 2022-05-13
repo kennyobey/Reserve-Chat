@@ -12,6 +12,20 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
   final userTypeService = locator<UserTypeService>();
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
+
+  setLiveInSpace(bool? liveInSpace) {
+    propertyOwnerUploadModel.liveInSpace = liveInSpace;
+  }
+
+  setSpaceServiced(bool? isServiced) {
+    propertyOwnerUploadModel.isSpaceServiced = isServiced;
+  }
+
+  setSpaceFurnished(bool? isFurnished) {
+    propertyOwnerUploadModel.isSpaceFurnished = isFurnished;
+  }
 
   void upoloadPropertyToServer() async {
     httpService.uploadProperty(
@@ -29,10 +43,11 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   late Timer timer;
 
   bool _notificationSwitchValue = false;
+
   bool get notificationSwitchValue => _notificationSwitchValue;
 
   // drop-down button UI logic for spaceType
-  String? selectedValue1;
+  String? selectedProperty;
   List<String> spaceType = [
     'Town House',
     'Plot of Land',
@@ -48,7 +63,7 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   ];
 
 // drop-down button UI logic for Listing Option
-  String? selectedValue2;
+  String? listingOptionValue;
   List<String> listingOption = [
     'Shared Space',
     'Entire Space',
@@ -59,24 +74,24 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   ];
 
   // drop-down button UI logic for property status
-  String? selectedValue3;
+  String? propertyStatusValue;
   List<String> propertyStatus = ['For Sale', 'For Rent'];
 
-  void onSelectedValueChange1(value) {
-    selectedValue1 = value as String;
-
+  void onSelectedPropertyChange(value) {
+    selectedProperty = value as String;
+    propertyOwnerUploadModel.propertyType = selectedProperty;
     notifyListeners();
   }
 
-  void onSelectedValueChange2(value) {
-    selectedValue2 = value as String;
-
+  void onListingOptionValueChange(value) {
+    listingOptionValue = value as String;
+    propertyOwnerUploadModel.listingOption = listingOptionValue;
     notifyListeners();
   }
 
-  void onSelectedValueChange3(value) {
-    selectedValue3 = value;
-
+  void onPropertyStatusValueChange(value) {
+    propertyStatusValue = value;
+    propertyOwnerUploadModel.propertyStatus = propertyStatusValue;
     notifyListeners();
   }
 
@@ -118,36 +133,42 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   // method for each amenities tap
   void onPositiveBedRoomTap() {
     numberOfBedrooms++;
+    propertyOwnerUploadModel.noOfBedroom = numberOfBedrooms;
     notifyListeners();
   }
 
   void onNegativeBedRoomTap() {
     if (numberOfBedrooms != 0) {
       numberOfBedrooms--;
+      propertyOwnerUploadModel.noOfBedroom = numberOfBedrooms;
     }
     notifyListeners();
   }
 
   void onPositiveBathRoomTap() {
     numberOfBathrooms++;
+    propertyOwnerUploadModel.noOfBathroom = numberOfBathrooms;
     notifyListeners();
   }
 
   void onNegativeBathRoomTap() {
     if (numberOfBathrooms != 0) {
       numberOfBathrooms--;
+      propertyOwnerUploadModel.noOfBathroom = numberOfBathrooms;
     }
     notifyListeners();
   }
 
   void onPositiveCarSlotTap() {
     numberOfCarSlot++;
+    propertyOwnerUploadModel.numberOfCarSLot = numberOfCarSlot;
     notifyListeners();
   }
 
   void onNegativeCarSlotTap() {
     if (numberOfCarSlot != 0) {
       numberOfCarSlot--;
+      propertyOwnerUploadModel.numberOfCarSLot = numberOfCarSlot;
     }
 
     notifyListeners();
@@ -158,7 +179,47 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerDetailsView() {
-    String name;
-    _navigationService.navigateTo(Routes.propertyOwnerDetailsView);
+    _navigationService.navigateTo(Routes.propertyOwnerDetailsView,
+        arguments: propertyOwnerUploadModel);
   }
+}
+
+class PropertyOwnerUploadModel {
+  ///stage 1 data
+  String? propertyType;
+  bool? isSpaceServiced;
+  bool? isSpaceFurnished;
+  String? listingOption;
+  String? propertyStatus;
+  bool? liveInSpace;
+  int? noOfBedroom;
+  int? noOfBathroom;
+  int? numberOfCarSLot;
+
+  ///stage 2 data
+  String? propertyName;
+  String? propertyDescription;
+  String? location;
+  String? state;
+  String? city;
+  String? address;
+
+  //add stage 3 data here
+
+  PropertyOwnerUploadModel(
+      {this.propertyType,
+      this.isSpaceServiced,
+      this.isSpaceFurnished,
+      this.listingOption,
+      this.propertyStatus,
+      this.liveInSpace,
+      this.noOfBedroom,
+      this.noOfBathroom,
+      this.numberOfCarSLot,
+      this.propertyName,
+      this.propertyDescription,
+      this.location,
+      this.state,
+      this.city,
+      this.address});
 }

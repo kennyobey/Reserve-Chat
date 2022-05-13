@@ -2,9 +2,8 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/upload_property_model.dart';
-import 'package:resavation/services/core/http_service.dart';
-import 'package:resavation/services/core/user_type_service.dart';
+import 'package:resavation/services/core/httpr_type_service.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -41,8 +40,16 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
         country: selectedCountry);
   }
 
-  void goToPropertyOwnerAddPhotosView() {
-    _navigationService.navigateTo(Routes.propertyOwnerAddPhotosView);
+  void goToPropertyOwnerAddPhotosView(
+      PropertyOwnerUploadModel propertyOwnerUploadModel) {
+    propertyOwnerUploadModel.propertyName = propertyNameController.text.trim();
+    propertyOwnerUploadModel.propertyDescription =
+        propertyDescriptionController.text.trim();
+    propertyOwnerUploadModel.address = propertyAddressController.text.trim();
+    propertyOwnerUploadModel.state = propertyStateController.text.trim();
+    propertyOwnerUploadModel.city = propertyCityController.text.trim();
+    _navigationService.navigateTo(Routes.propertyOwnerAddPhotosView,
+        arguments: propertyOwnerUploadModel);
   }
 
   // country picker UI logic

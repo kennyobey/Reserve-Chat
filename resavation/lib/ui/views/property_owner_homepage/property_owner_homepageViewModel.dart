@@ -3,8 +3,14 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../model/login_model.dart';
+import '../../../services/core/user_type_service.dart';
+
 class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _userService = locator<UserTypeService>();
+
+  LoginModel get userData => _userService.userData;
 
   void goToPropertyOwnerIdentificationVerificationView() {
     _navigationService

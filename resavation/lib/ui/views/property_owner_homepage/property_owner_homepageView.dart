@@ -8,12 +8,11 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart';
-
 import 'package:resavation/utility/assets.dart';
-
 import 'package:stacked/stacked.dart';
+
+import '../../shared/dump_widgets/resavation_image.dart';
 
 class PropertyOwnerHomePageView extends StatelessWidget {
   const PropertyOwnerHomePageView({Key? key}) : super(key: key);
@@ -21,115 +20,112 @@ class PropertyOwnerHomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerHomePageViewModel>.reactive(
-      builder: (context, model, child) => SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 15,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpaceMedium,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                                child: CircleAvatar(
-                                  radius: 20, // Image radius
-                                  backgroundImage:
-                                      AssetImage(Assets.profile_image),
-                                ),
-                                onTap: () {
-                                  model
-                                      .goToPropertyOwnerIdentificationVerificationView();
-                                }),
-                            horizontalSpaceSmall,
-                            Text(
-                              'Welcome Steven!',
-                              style: AppStyle.kBodyRegularBlack14W600,
-                            ),
-                            Spacer(),
-                            InkWell(
-                              child: Icon(Icons.notifications_outlined),
-                              onTap: () => model.goToMessage(),
-                            ),
-                          ],
-                        ),
-                        verticalSpaceMedium,
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: kGray),
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: kBlack,
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          height: 135.0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              verticalSpaceTiny,
-                              Text(
-                                "Connecting you to the best tenant all over the world",
-                                style: TextStyle(color: kWhite),
-                              ),
-                              verticalSpaceSmall,
-                              ResavationElevatedButton(
-                                child: Text("List your space"),
-                                onPressed: () {
-                                  model.goToPropertyOwnerSpaceTypeView();
-                                },
-                                //  borderColor: kp,
-                              ),
-                            ],
-                          ),
-                        ),
-                        verticalSpaceMedium,
-                        Text(
-                          "Tenants request",
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        verticalSpaceTiny,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Details",
-                                style: AppStyle.kBodyRegularBlack14,
-                              ),
-                              Spacer(),
-                              Text(
-                                "File",
-                                style: AppStyle.kBodyRegularBlack14,
-                              ),
-                              Spacer(),
-                              Text(
-                                "Actions",
-                                style: AppStyle.kBodyRegularBlack14,
-                              ),
-                            ],
-                          ),
-                        ),
-                        verticalSpaceRegular,
-                        ListingCard(),
-                        verticalSpaceTiny,
-                        ListingCard(),
-                        verticalSpaceTiny,
-                        ListingCard(),
-                      ],
-                    ),
-                  ),
-                ],
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          leading: Center(
+            child: GestureDetector(
+              onTap: model.goToPropertyOwnerIdentificationVerificationView,
+              child: Container(
+                height: 40,
+                width: 40,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(40)),
+                child: ResavationImage(
+                  image: model.userData.imageUrl,
+                ),
               ),
             ),
+          ),
+          title: Text(
+            'Welcome ${model.userData.firstName.toUpperCase()}',
+            style: AppStyle.kBodyRegularBlack14W600,
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                model.goToMessage();
+              },
+              icon: Icon(
+                Icons.notifications_none_outlined,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: kGray),
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: kBlack,
+                ),
+                width: double.infinity,
+                height: 135.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    verticalSpaceTiny,
+                    Text(
+                      "Connecting you to the best tenant all over the world",
+                      style: TextStyle(color: kWhite),
+                    ),
+                    verticalSpaceSmall,
+                    ResavationElevatedButton(
+                      child: Text("List your space"),
+                      onPressed: () {
+                        model.goToPropertyOwnerSpaceTypeView();
+                      },
+                      //  borderColor: kp,
+                    ),
+                  ],
+                ),
+              ),
+              verticalSpaceMedium,
+              const Divider(),
+              verticalSpaceTiny,
+              Text(
+                "Tenants request",
+                style: AppStyle.kBodyRegularBlack14W500,
+              ),
+              verticalSpaceTiny,
+              const Divider(),
+              verticalSpaceTiny,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Details",
+                      style: AppStyle.kBodyRegularBlack14,
+                    ),
+                    Spacer(),
+                    Text(
+                      "File",
+                      style: AppStyle.kBodyRegularBlack14,
+                    ),
+                    Spacer(),
+                    Text(
+                      "Actions",
+                      style: AppStyle.kBodyRegularBlack14,
+                    ),
+                  ],
+                ),
+              ),
+              verticalSpaceRegular,
+              ListingCard(),
+              verticalSpaceTiny,
+              ListingCard(),
+              verticalSpaceTiny,
+              ListingCard(),
+            ],
           ),
         ),
       ),
