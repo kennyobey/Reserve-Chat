@@ -8,21 +8,18 @@ import 'package:resavation/ui/shared/dump_widgets/select_country.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
-
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerDetailsView extends StatefulWidget {
-  const PropertyOwnerDetailsView(
-      {Key? key,
-      required this.isFurnished,
-      required this.isServiced,
-      required this.leaveHere})
-      : super(key: key);
+  const PropertyOwnerDetailsView({
+    Key? key,
+    required this.propertyOwnerUploadModel,
+    required this.leaveHere,
+  }) : super(key: key);
 
-  final bool isFurnished;
-  final bool isServiced;
   final bool leaveHere;
-
+  final PropertyOwnerUploadModel propertyOwnerUploadModel;
   @override
   State<PropertyOwnerDetailsView> createState() =>
       _PropertyOwnerDetailsViewState();
@@ -183,7 +180,8 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
                       if (uploadFormKey.currentState!.validate()) {
                         print(model.propertyNameController.text);
                         print(model.selectedCountry);
-                        model.goToPropertyOwnerAddPhotosView();
+                        model.goToPropertyOwnerAddPhotosView(
+                            widget.propertyOwnerUploadModel);
                       } else {
                         model.upoloadPropertyToServer();
                       }

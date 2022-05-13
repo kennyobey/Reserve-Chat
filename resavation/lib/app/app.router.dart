@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/model/call_model.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import '../model/property_model.dart';
@@ -406,10 +407,11 @@ class StackedRouter extends RouterBase {
       );
     },
     PropertyOwnerDetailsView: (data) {
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerDetailsView(
-          isFurnished: false,
-          isServiced: false,
+        builder: (context) => PropertyOwnerDetailsView(
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
           leaveHere: false,
         ),
         settings: data,
