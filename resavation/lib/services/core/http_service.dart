@@ -349,7 +349,8 @@ class HttpService {
         Uri.http(requestSite, "/api/v1/properties/upload"),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: data);
-
+    Future<UploadProperty?> uploadProperty(
+        String? address,
     Future<UploadProperty?> uploadProperty(String? address,
         String? amenities,
         String? availability,
@@ -373,6 +374,32 @@ class HttpService {
         int? subscription,
         int? surfaceArea) async {
       var response =
+          await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
+              headers: <String, String>{'Content-Type': 'application/json'},
+              body: jsonEncode({
+                "address": address,
+                "amenities": amenities,
+                "availability": availability,
+                "bathTubCount": bathTubCount,
+                "bedroomCount": bedroomCount,
+                "carSlots": carSlots,
+                "city": city,
+                "country": country,
+                "description": description,
+                "imageUrl": imageUrl,
+                "listingOption": listingOption,
+                "liveInSPace": liveInSPace,
+                "propertyName": propertyName,
+                "roomType": roomType,
+                "rules": rules,
+                "spaceFurnished": spaceFurnished,
+                "spacePrice": spacePrice,
+                "spaceServiced": spaceServiced,
+                "spaceType": spaceType,
+                "state": state,
+                "subscription": subscription,
+                "surfaceArea": surfaceArea
+              }));
       await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode({
