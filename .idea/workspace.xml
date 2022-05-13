@@ -40,10 +40,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="Application Updated">
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" afterDir="false" />
-    </list>
+    <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="Application Updated" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -328,7 +325,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652400649861</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Application Updated">
+      <created>1652425020393</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1652425020393</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
