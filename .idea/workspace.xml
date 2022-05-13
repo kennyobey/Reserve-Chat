@@ -41,17 +41,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f487099b-b681-43be-bbe5-9d8f5c4bca89" name="Default Changelist" comment="Application Updated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/android/app/key.jks" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/key.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/app/app.router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/app/app.router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/services/core/http_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/services/core/http_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/home/home_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/resavation/lib/ui/views/property_owner_details/property_owner_details_viewmodel.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +59,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="temitope_new_branch" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -323,7 +314,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652263789625</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Application Updated">
+      <created>1652400612987</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1652400612987</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Application Updated">
+      <created>1652400649861</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1652400649861</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
