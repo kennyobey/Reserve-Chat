@@ -74,7 +74,8 @@ class HttpService {
   }
 
   // Sign-up Request Logic
-  sendDetailsToServer(String email,
+  sendDetailsToServer(
+      String email,
       String firstname,
       String lastname,
       String password,
@@ -83,19 +84,19 @@ class HttpService {
       String accountType) async {
     try {
       final response =
-      await http.post(Uri.http(requestSite, "api/v1/auth/register"),
-          headers: <String, String>{'Content-Type': 'application/json'},
-          body: jsonEncode(<String, dynamic>{
-            "verifyPassword": verifyPassword,
-            "accountType": accountType,
-            "email": email,
-            "firstname": firstname,
-            "lastname": lastname,
-            "password": password,
-            "platform": "mobile",
-            "imageUrl": "",
-            "termAndCondition": termAndCondition,
-          }));
+          await http.post(Uri.http(requestSite, "api/v1/auth/register"),
+              headers: <String, String>{'Content-Type': 'application/json'},
+              body: jsonEncode(<String, dynamic>{
+                "verifyPassword": verifyPassword,
+                "accountType": accountType,
+                "email": email,
+                "firstname": firstname,
+                "lastname": lastname,
+                "password": password,
+                "platform": "mobile",
+                "imageUrl": "",
+                "termAndCondition": termAndCondition,
+              }));
 
       if (response.statusCode <= 299) {
         return registrationModelFromJson(response.body);
@@ -110,10 +111,11 @@ class HttpService {
     }
   }
 
-  forgotPassword({required String email,
-    required String password,
-    required String confirmPassword,
-    required String otp}) async {
+  forgotPassword(
+      {required String email,
+      required String password,
+      required String confirmPassword,
+      required String otp}) async {
     try {
       var response = await http.post(
         Uri.http(requestSite, "api/v1/auth/reset-password"),
@@ -254,7 +256,7 @@ class HttpService {
       );
       if (response.statusCode <= 299) {
         final loginModel =
-        loginFromOldModel(response.body, userTypeService.userData);
+            loginFromOldModel(response.body, userTypeService.userData);
         userTypeService.updateUserData(loginModel);
         return;
       } else {
@@ -268,6 +270,87 @@ class HttpService {
   }
 
   //Property Upload Logic
+  // Future<UploadProperty?> uploadProperty({
+  //   String? address,
+  //   List<String>? amenities,
+  //   Map<String, String>? availability,
+  //   String? from,
+  //   String? to,
+  //   int? bathTubCount,
+  //   int? bedroomCount,
+  //   int? carSlots,
+  //   String? city,
+  //   String? country,
+  //   String? description,
+  //   String? imageUrl,
+  //   List<String>? listingOption,
+  //   bool? liveInSPace,
+  //   String? propertyName,
+  //   String? roomType,
+  //   List<String>? rules,
+  //   bool? spaceFurnished,
+  //   int? spacePrice,
+  //   bool? spaceServiced,
+  //   String? spaceType,
+  //   String? state,
+  //   Map<String, int>? subscription,
+  //   int? annualPrice,
+  //   int? biannualPrice,
+  //   int? monthlyPrice,
+  //   int? quarterlyPrice,
+  //   int? surfaceArea,
+  //   Map<String, String>? userDetails,
+  //   String? dateOfBirth,
+  //   String? firstName,
+  //   String? gender,
+  //   String? lastName,
+  //   String? phoneNumber,
+  // }) async {
+  //   var data = jsonEncode({
+  //     "address": address,
+  //     "amenities": amenities,
+  //     "availability": {"from": from, "to": to},
+  //     "bathTubCount": bathTubCount,
+  //     "bedroomCount": bedroomCount,
+  //     "carSlots": carSlots,
+  //     "city": city,
+  //     "country": country,
+  //     "description": description,
+  //     "imageUrl": imageUrl,
+  //     "listingOption": listingOption,
+  //     "liveInSPace": liveInSPace,
+  //     "propertyName": propertyName,
+  //     "roomType": roomType,
+  //     "rules": rules,
+  //     "spaceFurnished": spaceFurnished,
+  //     "spacePrice": spacePrice,
+  //     "spaceServiced": spaceServiced,
+  //     "spaceType": spaceType,
+  //     "state": state,
+  //     "subscription": {
+  //       "annualPrice": annualPrice,
+  //       "biannualPrice": biannualPrice,
+  //       "monthlyPrice": monthlyPrice,
+  //       "quarterlyPrice": quarterlyPrice
+  //     },
+  //     "surfaceArea": surfaceArea,
+  //     "userDetails": {
+  //       "address": address,
+  //       "city": city,
+  //       "country": country,
+  //       "dateOfBirth": dateOfBirth,
+  //       "firstName": firstName,
+  //       "gender": gender,
+  //       "lastName": lastName,
+  //       "phoneNumber": phoneNumber,
+  //       "state": state
+  //     }
+  //   });
+  //   print(data);
+  //   var response = await http.post(
+  //       Uri.http(requestSite, "/api/v1/properties/upload"),
+  //       headers: <String, String>{'Content-Type': 'application/json'},
+  //       body: data);
   Future<UploadProperty?> uploadProperty({
     String? address,
     List<String>? amenities,
@@ -304,140 +387,60 @@ class HttpService {
     String? lastName,
     String? phoneNumber,
   }) async {
-    var data = jsonEncode({
-      "address": address,
-      "amenities": amenities,
-      "availability": {"from": from, "to": to},
-      "bathTubCount": bathTubCount,
-      "bedroomCount": bedroomCount,
-      "carSlots": carSlots,
-      "city": city,
-      "country": country,
-      "description": description,
-      "imageUrl": imageUrl,
-      "listingOption": listingOption,
-      "liveInSPace": liveInSPace,
-      "propertyName": propertyName,
-      "roomType": roomType,
-      "rules": rules,
-      "spaceFurnished": spaceFurnished,
-      "spacePrice": spacePrice,
-      "spaceServiced": spaceServiced,
-      "spaceType": spaceType,
-      "state": state,
-      "subscription": {
-        "annualPrice": annualPrice,
-        "biannualPrice": biannualPrice,
-        "monthlyPrice": monthlyPrice,
-        "quarterlyPrice": quarterlyPrice
-      },
-      "surfaceArea": surfaceArea,
-      "userDetails": {
-        "address": address,
-        "city": city,
-        "country": country,
-        "dateOfBirth": dateOfBirth,
-        "firstName": firstName,
-        "gender": gender,
-        "lastName": lastName,
-        "phoneNumber": phoneNumber,
-        "state": state
-      }
-    });
-    print(data);
-    var response = await http.post(
-        Uri.http(requestSite, "/api/v1/properties/upload"),
-        headers: <String, String>{'Content-Type': 'application/json'},
-        body: data);
-    Future<UploadProperty?> uploadProperty(
-        String? address,
-    Future<UploadProperty?> uploadProperty(String? address,
-        String? amenities,
-        String? availability,
-        int? bathTubCount,
-        int? bedroomCount,
-        int? carSlots,
-        String? city,
-        String? country,
-        String? description,
-        String? imageUrl,
-        String? listingOption,
-        bool? liveInSPace,
-        String? propertyName,
-        String? roomType,
-        String? rules,
-        bool? spaceFurnished,
-        int? spacePrice,
-        bool? spaceServiced,
-        String? spaceType,
-        String? state,
-        int? subscription,
-        int? surfaceArea) async {
-      var response =
-          await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
-              headers: <String, String>{'Content-Type': 'application/json'},
-              body: jsonEncode({
+    var response =
+        await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
+            headers: <String, String>{'Content-Type': 'application/json'},
+            body: jsonEncode({
+              "address": address,
+              "amenities": amenities,
+              "availability": {"from": from, "to": to},
+              "bathTubCount": bathTubCount,
+              "bedroomCount": bedroomCount,
+              "carSlots": carSlots,
+              "city": city,
+              "country": country,
+              "description": description,
+              "imageUrl": imageUrl,
+              "listingOption": listingOption,
+              "liveInSPace": liveInSPace,
+              "propertyName": propertyName,
+              "roomType": roomType,
+              "rules": rules,
+              "spaceFurnished": spaceFurnished,
+              "spacePrice": spacePrice,
+              "spaceServiced": spaceServiced,
+              "spaceType": spaceType,
+              "state": state,
+              "subscription": {
+                "annualPrice": annualPrice,
+                "biannualPrice": biannualPrice,
+                "monthlyPrice": monthlyPrice,
+                "quarterlyPrice": quarterlyPrice
+              },
+              "surfaceArea": surfaceArea,
+              "userDetails": {
                 "address": address,
-                "amenities": amenities,
-                "availability": availability,
-                "bathTubCount": bathTubCount,
-                "bedroomCount": bedroomCount,
-                "carSlots": carSlots,
                 "city": city,
                 "country": country,
-                "description": description,
-                "imageUrl": imageUrl,
-                "listingOption": listingOption,
-                "liveInSPace": liveInSPace,
-                "propertyName": propertyName,
-                "roomType": roomType,
-                "rules": rules,
-                "spaceFurnished": spaceFurnished,
-                "spacePrice": spacePrice,
-                "spaceServiced": spaceServiced,
-                "spaceType": spaceType,
-                "state": state,
-                "subscription": subscription,
-                "surfaceArea": surfaceArea
-              }));
-      await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
-          headers: <String, String>{'Content-Type': 'application/json'},
-          body: jsonEncode({
-            "address": address,
-            "amenities": amenities,
-            "availability": availability,
-            "bathTubCount": bathTubCount,
-            "bedroomCount": bedroomCount,
-            "carSlots": carSlots,
-            "city": city,
-            "country": country,
-            "description": description,
-            "imageUrl": imageUrl,
-            "listingOption": listingOption,
-            "liveInSPace": liveInSPace,
-            "propertyName": propertyName,
-            "roomType": roomType,
-            "rules": rules,
-            "spaceFurnished": spaceFurnished,
-            "spacePrice": spacePrice,
-            "spaceServiced": spaceServiced,
-            "spaceType": spaceType,
-            "state": state,
-            "subscription": subscription,
-            "surfaceArea": surfaceArea
-          }));
+                "dateOfBirth": dateOfBirth,
+                "firstName": firstName,
+                "gender": gender,
+                "lastName": lastName,
+                "phoneNumber": phoneNumber,
+                "state": state
+              }
+            }));
 
-      print('From the uploading session: ${response.body}');
-      if (response.statusCode == 200) {
-        String responseString = response.body;
-        return uploadPropertyFromJson(responseString);
-      } else if (response.statusCode == 400) {
-        String responseString = response.body;
-        userTypeService.error.value = "";
-        print(responseString);
-        throw Exception(userTypeService.error.value);
-      } else
-        throw Exception("Failed to upload property");
-    }
+    print('From the uploading session: ${response.body}');
+    if (response.statusCode == 200) {
+      String responseString = response.body;
+      return uploadPropertyFromJson(responseString);
+    } else if (response.statusCode == 400) {
+      String responseString = response.body;
+      userTypeService.error.value = "";
+      print(responseString);
+      throw Exception(userTypeService.error.value);
+    } else
+      throw Exception("Failed to upload property");
   }
 }
