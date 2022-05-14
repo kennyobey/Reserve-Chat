@@ -206,7 +206,17 @@ class PropertyOwnerUploadModel {
   //add stage 3 data here
   String? imageUrl;
 
-//Stage 4 data
+  //Stage 4 data
+  int? annualPrice;
+  int? biannualPrice;
+  int? monthlyPrice;
+  int? quarterlyPrice;
+  String? from;
+  String? to;
+
+  //Stage 5 data
+  List<String>? amenities;
+  List<String>? rules;
 
   PropertyOwnerUploadModel({
     this.propertyType,
@@ -225,5 +235,9 @@ class PropertyOwnerUploadModel {
     this.city,
     this.address,
     this.imageUrl,
+    this.annualPrice,
+    this.biannualPrice,
+    this.monthlyPrice,
+    this.quarterlyPrice,
   });
 }

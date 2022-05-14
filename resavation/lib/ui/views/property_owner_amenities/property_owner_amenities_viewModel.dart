@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -18,6 +19,7 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   }
 
   List amenities = [];
+  List rules = [];
 
   bool _hasWifi = false;
   bool get hasWifi => _hasWifi;
@@ -99,7 +101,12 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToPropertyOwnerIdentificationView() {
-    _navigationService.navigateTo(Routes.propertyOwnerIdentificationView);
+  void goToPropertyOwnerIdentificationView(
+      PropertyOwnerUploadModel propertyOwnerUploadModel) {
+    propertyOwnerUploadModel.amenities = amenities[0];
+    propertyOwnerUploadModel.rules = rules[0];
+
+    _navigationService.navigateTo(Routes.propertyOwnerIdentificationView,
+        arguments: propertyOwnerUploadModel);
   }
 }

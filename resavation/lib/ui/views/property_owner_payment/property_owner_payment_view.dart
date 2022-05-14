@@ -3,17 +3,19 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_viewModel.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
 import 'package:stacked/stacked.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerPaymentView extends StatefulWidget {
-  const PropertyOwnerPaymentView({Key? key}) : super(key: key);
+  const PropertyOwnerPaymentView(
+      {Key? key, required this.propertyOwnerUploadModel})
+      : super(key: key);
+
+  final PropertyOwnerUploadModel propertyOwnerUploadModel;
 
   @override
   State<PropertyOwnerPaymentView> createState() =>
@@ -239,14 +241,15 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                             textColor: Colors.white,
                             onPressed: () async {
                               if (uploadFormKey.currentState!.validate()) {
-                                model.goToPropertyOwnerAmenitiesView();
-                                print(model.selectedValue1);
-                                print(model.isServiced);
-                                print(model.selectedDate);
-                                print(model.propertyannualPriceController);
-                                print(model.propertybiannualPriceController);
-                                print(model.propertyquaterlylPriceController);
-                                print(model.propertymonthlyPriceController);
+                                model.goToPropertyOwnerAmenitiesView(
+                                    widget.propertyOwnerUploadModel);
+                                // print(model.selectedValue1);
+                                // print(model.isServiced);
+                                // print(model.selectedDate);
+                                // print(model.propertyannualPriceController);
+                                // print(model.propertybiannualPriceController);
+                                // print(model.propertyquaterlylPriceController);
+                                // print(model.propertymonthlyPriceController);
                               } else {
                                 model.upoloadPropertyToServer();
                               }
