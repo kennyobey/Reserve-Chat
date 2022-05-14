@@ -105,7 +105,6 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     } else {
       print("Somethij");
     }
-
     notifyListeners();
   }
 
@@ -205,21 +204,26 @@ class PropertyOwnerUploadModel {
   String? address;
 
   //add stage 3 data here
+  String? imageUrl;
 
-  PropertyOwnerUploadModel(
-      {this.propertyType,
-      this.isSpaceServiced,
-      this.isSpaceFurnished,
-      this.listingOption,
-      this.propertyStatus,
-      this.liveInSpace,
-      this.noOfBedroom,
-      this.noOfBathroom,
-      this.numberOfCarSLot,
-      this.propertyName,
-      this.propertyDescription,
-      this.location,
-      this.state,
-      this.city,
-      this.address});
+//Stage 4 data
+
+  PropertyOwnerUploadModel({
+    this.propertyType,
+    this.isSpaceServiced,
+    this.isSpaceFurnished,
+    this.listingOption,
+    this.propertyStatus,
+    this.liveInSpace,
+    this.noOfBedroom,
+    this.noOfBathroom,
+    this.numberOfCarSLot,
+    this.propertyName,
+    this.propertyDescription,
+    this.location,
+    this.state,
+    this.city,
+    this.address,
+    this.imageUrl,
+  });
 }

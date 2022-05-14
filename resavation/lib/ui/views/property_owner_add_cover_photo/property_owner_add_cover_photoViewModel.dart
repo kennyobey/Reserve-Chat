@@ -8,6 +8,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -49,5 +50,12 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
 
   void goToPropertyOwnerPaymentView() {
     _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+  }
+
+  void goToPropertyOwnerPaymentView(
+      PropertyOwnerUploadModel propertyOwnerUploadModel) {
+    propertyOwnerUploadModel.imageUrl = "";
+    _navigationService.navigateTo(Routes.propertyOwnerPaymentView,
+        arguments: propertyOwnerUploadModel);
   }
 }
