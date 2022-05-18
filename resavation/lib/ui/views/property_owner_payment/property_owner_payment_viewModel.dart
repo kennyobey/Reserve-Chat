@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/upload_property_model.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../services/core/http_service.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -12,7 +14,12 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   DateTime selectedDate = DateTime.now();
   DateTime selectedDate2 = DateTime.now();
 
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
+
   bool hasWifi = false;
+
+  get selectedAnimals => "Subscription";
 
   void onHasWifiChange(bool? value) {
     hasWifi = value!;
@@ -53,10 +60,19 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
 
 // drop-down button UI logic for spaceType
   String? selectedValue1;
-  List<String> subscriptionType = [
-    'Office Space',
-    'Appartment',
+  List<Object>? subscriptionType = [
+    'Monthly',
+    'Quarterly',
+    'Biannually',
+    'Annually'
   ];
+  bool _hasHairDryer = false;
+  bool get hasHairDryer => _hasHairDryer;
+
+  void onCheckChanged5(bool? value) {
+    _hasHairDryer = value ?? false;
+    notifyListeners();
+  }
 
   String isServiced = "";
 
@@ -69,7 +85,7 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
       print("The picked date for date 1 is $selectedDate");
-
+      propertyOwnerUploadModel.from = selectedDate as String?;
       notifyListeners();
     }
   }
@@ -83,14 +99,9 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     if (picked != null && picked != selectedDate2) {
       selectedDate2 = picked;
       print("The picked date for date 2 is $selectedDate2");
-
+      propertyOwnerUploadModel.from = selectedDate2 as String?;
       notifyListeners();
     }
-  }
-
-  void onSpaceServicedRadioChange(String value) {
-    isServiced = value.toString();
-    notifyListeners();
   }
 
   void onSelectedValueChange1(value) {
@@ -100,10 +111,64 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerAmenitiesView() {
-    _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView);
+    propertyOwnerUploadModel.annualPrice =
+        propertyannualPriceController.text as int?;
+    propertyOwnerUploadModel.biannualPrice =
+        propertybiannualPriceController.text as int?;
+    propertyOwnerUploadModel.quarterlyPrice =
+        propertyquaterlylPriceController.text as int?;
+    propertyOwnerUploadModel.monthlyPrice =
+        propertymonthlyPriceController.text as int?;
+
+    _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView,
+        arguments: propertyOwnerUploadModel);
   }
 
   void goToPropertyOwnerDatePickerView() {
     _navigationService.navigateTo(Routes.propertyOwnerDatePickerView);
   }
+
+  List<SubType>? subTypes = [
+    SubType(id: 1, name: "Monthly"),
+    SubType(id: 2, name: "Quarterly"),
+    SubType(id: 3, name: "Biannully"),
+    SubType(id: 4, name: "Anually"),
+  ];
+  late final items = subTypes
+      ?.map((subscription) =>
+          MultiSelectItem<SubType>(subscription, subscription.name))
+      .toList();
+
+  List<SubType>? selectedSub = [];
+
+  void onSelectedSubChange1(value) {
+    selectedSub = subTypes;
+
+    notifyListeners();
+  }
+
+  // void showMultiSelect(BuildContext context) async {
+  //   await showDialog(
+  //     context: context,
+  //     builder: (ctx) {
+  //       return MultiSelectDialog(
+  //         items: items,
+  //         initialValue: selectedAnimals,
+  //         onConfirm: (values) {
+  //           selectedSub = subTypes;
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+}
+
+class SubType {
+  final int id;
+  final String name;
+
+  SubType({
+    required this.id,
+    required this.name,
+  });
 }

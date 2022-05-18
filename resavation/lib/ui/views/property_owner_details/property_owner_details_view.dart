@@ -14,12 +14,9 @@ import 'package:stacked/stacked.dart';
 class PropertyOwnerDetailsView extends StatefulWidget {
   const PropertyOwnerDetailsView({
     Key? key,
-    required this.propertyOwnerUploadModel,
-    required this.leaveHere,
+    required PropertyOwnerUploadModel propertyOwnerUploadModel,
   }) : super(key: key);
 
-  final bool leaveHere;
-  final PropertyOwnerUploadModel propertyOwnerUploadModel;
   @override
   State<PropertyOwnerDetailsView> createState() =>
       _PropertyOwnerDetailsViewState();
@@ -27,6 +24,8 @@ class PropertyOwnerDetailsView extends StatefulWidget {
 
 class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
   final uploadFormKey = GlobalKey<FormState>();
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
   @override
   Widget build(BuildContext context) {
@@ -180,8 +179,7 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
                       if (uploadFormKey.currentState!.validate()) {
                         print(model.propertyNameController.text);
                         print(model.selectedCountry);
-                        model.goToPropertyOwnerAddPhotosView(
-                            widget.propertyOwnerUploadModel);
+                        model.goToPropertyOwnerAddPhotosView();
                       } else {
                         model.upoloadPropertyToServer();
                       }

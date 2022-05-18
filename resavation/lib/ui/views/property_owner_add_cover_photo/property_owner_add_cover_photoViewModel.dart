@@ -12,8 +12,10 @@ import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _imagePickerService = locator<ImagePickerService>();
   final httpService = locator<HttpService>();
+
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
   void upoloadPropertyToServer() async {
     httpService.uploadProperty(imageUrl: "");
@@ -40,6 +42,7 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
     // print('File Size: ${file.size}');
     // print('File Extension: ${file.extension}');
     // print('File Path: ${file.path}');
+    notifyListeners();
   }
 
   // RxValue<List<XFile>?> showAddedPhoto (){
@@ -48,12 +51,11 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   //
   // }
 
-  void goToPropertyOwnerPaymentView() {
-    _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
-  }
+  // void goToPropertyOwnerPaymentView() {
+  //   _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+  // }
 
-  void goToPropertyOwnerPaymentView(
-      PropertyOwnerUploadModel propertyOwnerUploadModel) {
+  void goToPropertyOwnerPaymentView() {
     propertyOwnerUploadModel.imageUrl = "";
     _navigationService.navigateTo(Routes.propertyOwnerPaymentView,
         arguments: propertyOwnerUploadModel);

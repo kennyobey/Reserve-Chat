@@ -7,10 +7,14 @@ import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_viewModel.dart';
 import 'package:resavation/ui/views/property_owner_amenities/widgets/amenities_item_widget.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerAmenitiesView extends StatefulWidget {
-  PropertyOwnerAmenitiesView({Key? key}) : super(key: key);
+  late PropertyOwnerUploadModel propertyOwnerUploadModel;
+
+  PropertyOwnerAmenitiesView({Key? key, propertyOwnerUploadModel})
+      : super(key: key);
 
   @override
   State<PropertyOwnerAmenitiesView> createState() =>
@@ -167,7 +171,8 @@ class _PropertyOwnerAmenitiesViewState
                           textColor: Colors.white,
                           onPressed: () async {
                             if (uploadFormKey.currentState!.validate()) {
-                              model.goToPropertyOwnerIdentificationView();
+                              model.goToPropertyOwnerIdentificationView(
+                                  widget.propertyOwnerUploadModel);
 
                               print(" TV is ${model.hasTV}");
                             } else {

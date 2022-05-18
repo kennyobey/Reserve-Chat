@@ -115,13 +115,13 @@ class _LogInViewState extends State<LogInView> {
                   isLoadingEnabled: model.isLoading,
                   width: MediaQuery.of(context).size.width,
                   onTap: () async {
-                    final isValid = model.loginFormKey.currentState?.validate();
-                    if ((isValid ?? false) == false || model.isLoading) {
-                      return;
-                    }
+                    // final isValid = model.loginFormKey.currentState?.validate();
+                    // if ((isValid ?? false) == false || model.isLoading) {
+                    //   return;
+                    // }
 
                     try {
-                      await model.onLoginButtonTap();
+                      // await model.onLoginButtonTap();
                       model.goToMainView();
                     } catch (exception) {
                       ScaffoldMessenger.of(context).showSnackBar(
