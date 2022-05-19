@@ -13,7 +13,8 @@ import 'package:stacked/stacked.dart';
 class PropertyOwnerAmenitiesView extends StatefulWidget {
   late PropertyOwnerUploadModel propertyOwnerUploadModel;
 
-  PropertyOwnerAmenitiesView({Key? key, propertyOwnerUploadModel})
+  PropertyOwnerAmenitiesView(
+      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
       : super(key: key);
 
   @override

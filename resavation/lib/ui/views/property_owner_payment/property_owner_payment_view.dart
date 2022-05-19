@@ -86,7 +86,12 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
-                          child: Text('Subcription Plan'),
+                          style: ElevatedButton.styleFrom(primary: kWhite),
+                          child: Text(
+                            'Subscription Plan',
+                            style: AppStyle.kBodySmallRegular12
+                                .copyWith(color: kBlack),
+                          ),
                           onPressed: () async {
                             flavours = await showDialog<List<String>>(
                                     context: context,
@@ -185,6 +190,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     ),
                     verticalSpaceTiny,
                     ResavationTextField(
+                      keyboardType: TextInputType.number,
                       hintText: '# 100,000',
                       textInputAction: TextInputAction.next,
                       onChanged: (value) {

@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+// import 'dart:js';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
@@ -7,6 +9,7 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerSpaceTypeView extends StatefulWidget {
@@ -20,6 +23,18 @@ class PropertyOwnerSpaceTypeView extends StatefulWidget {
 class _PropertyOwnerSpaceTypeViewState
     extends State<PropertyOwnerSpaceTypeView> {
   final uploadFormKey = GlobalKey<FormState>();
+
+  List<dynamic> Categories = [];
+  String? CategoriesID;
+
+  @override
+  void initState() {
+    super.initState;
+    this.Categories.add({"id": 1, "name": "Residential"});
+    this.Categories.add({"id": 2, "name": "Commercial"});
+    this.Categories.add({"id": 3, "name": "Industrial"});
+    this.Categories.add({"id": 4, "name": "Retail"});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,41 +50,48 @@ class _PropertyOwnerSpaceTypeViewState
           ),
           child: Form(
             key: uploadFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tell us about your property',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                ...buildPropertyType(model),
-                verticalSpaceMedium,
-                Text(
-                  'Narrow down your space type',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                ...buildSpaceServiced(model),
-                verticalSpaceSmall,
-                ...buildSpaceFurnished(model),
-                verticalSpaceSmall,
-                ...buildListingOptions(model),
-                verticalSpaceSmall,
-                ...buildPropertyStatus(model),
-                verticalSpaceSmall,
-                ...buildLiveInSpace(model),
-                verticalSpaceSmall,
-                buildNumberOfBedrooms(model),
-                verticalSpaceSmall,
-                //Select the number of bathrooms
-                buildNumberOfBathrooms(model),
-                verticalSpaceSmall,
-                //Select the number of car slots
-                buildNumberOfCarSlots(model),
-                verticalSpaceLarge,
-                buildButtons(context, model),
-              ],
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tell us about your property',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceSmall,
+                  ...buildPropertyStatus(model),
+                  verticalSpaceSmall,
+
+                  ...buildPropertyCategory(context),
+                  verticalSpaceMedium,
+                  ...buildPropertyType(model),
+
+                  verticalSpaceMedium,
+                  Text(
+                    'Narrow down your space type',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceMedium,
+                  ...buildSpaceServiced(model),
+                  verticalSpaceSmall,
+                  ...buildSpaceFurnished(model),
+                  verticalSpaceSmall,
+                  ...buildListingOptions(model),
+
+                  verticalSpaceSmall,
+                  ...buildLiveInSpace(model),
+                  verticalSpaceSmall,
+                  buildNumberOfBedrooms(model),
+                  verticalSpaceSmall,
+                  //Select the number of bathrooms
+                  buildNumberOfBathrooms(model),
+                  verticalSpaceSmall,
+                  //Select the number of car slots
+                  buildNumberOfCarSlots(model),
+                  verticalSpaceLarge,
+                  buildButtons(context, model),
+                ],
+              ),
             ),
           ),
         ),
@@ -347,6 +369,33 @@ class _PropertyOwnerSpaceTypeViewState
               ),
             )),
       ),
+    ];
+  }
+
+  List<Widget> buildPropertyCategory(BuildContext context) {
+    return [
+      Text(
+        'Property Category',
+        style: AppStyle.kBodyRegular,
+      ),
+      verticalSpaceTiny,
+      Container(
+        width: MediaQuery.of(context).size.width,
+        child: FormHelper.dropDownWidget(
+            context, "Property category", this.CategoriesID, this.Categories,
+            (onChangeVal) {
+          this.CategoriesID = onChangeVal;
+          print("SelectedCtegories $onChangeVal");
+        }, (onValidateVal) {
+          if (onValidateVal == null) {
+            return "Please Select Category";
+          }
+        },
+            borderColor: kGray,
+            borderRadius: 5,
+            optionLabel: "name",
+            optionValue: "id"),
+      )
     ];
   }
 }

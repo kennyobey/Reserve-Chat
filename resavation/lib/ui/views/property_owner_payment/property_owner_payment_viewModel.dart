@@ -39,9 +39,9 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
 
   void upoloadPropertyToServer() async {
     var annualPrice = propertyannualPriceController.text;
-    final String biannualPrice = propertybiannualPriceController.text;
-    final String monthlylPrice = propertymonthlyPriceController.text;
-    final String quaterlylPrice = propertyquaterlylPriceController.text;
+    var biannualPrice = propertybiannualPriceController.text;
+    var monthlylPrice = propertymonthlyPriceController.text;
+    var quaterlylPrice = propertyquaterlylPriceController.text;
 
     httpService.uploadProperty(subscription: {
       annualPrice: 0,
@@ -119,32 +119,14 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
         propertyquaterlylPriceController.text as int?;
     propertyOwnerUploadModel.monthlyPrice =
         propertymonthlyPriceController.text as int?;
-
+    propertyOwnerUploadModel.from = selectedDate as String?;
+    propertyOwnerUploadModel.to = selectedDate2 as String?;
     _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView,
         arguments: propertyOwnerUploadModel);
   }
 
   void goToPropertyOwnerDatePickerView() {
     _navigationService.navigateTo(Routes.propertyOwnerDatePickerView);
-  }
-
-  List<SubType>? subTypes = [
-    SubType(id: 1, name: "Monthly"),
-    SubType(id: 2, name: "Quarterly"),
-    SubType(id: 3, name: "Biannully"),
-    SubType(id: 4, name: "Anually"),
-  ];
-  late final items = subTypes
-      ?.map((subscription) =>
-          MultiSelectItem<SubType>(subscription, subscription.name))
-      .toList();
-
-  List<SubType>? selectedSub = [];
-
-  void onSelectedSubChange1(value) {
-    selectedSub = subTypes;
-
-    notifyListeners();
   }
 
   // void showMultiSelect(BuildContext context) async {
@@ -161,14 +143,4 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   //     },
   //   );
   // }
-}
-
-class SubType {
-  final int id;
-  final String name;
-
-  SubType({
-    required this.id,
-    required this.name,
-  });
 }

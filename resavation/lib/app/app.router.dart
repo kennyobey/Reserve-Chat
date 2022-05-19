@@ -438,12 +438,11 @@ class StackedRouter extends RouterBase {
       );
     },
     PropertyOwnerAmenitiesView: (data) {
-      var args = data.getArgs<PropertyOwnerAmenitiesViewArguments>(
-        orElse: () => PropertyOwnerAmenitiesViewArguments(),
-      );
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerAmenitiesView(
-          key: args.key,
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
           //propertyOwnerUploadModel: propertyOwnerUploadMode,
         ),
         settings: data,
