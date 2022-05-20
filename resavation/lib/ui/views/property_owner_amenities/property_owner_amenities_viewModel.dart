@@ -10,16 +10,18 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
 
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
+
   /// Checkboxes are named to fit their corresponding value
   /// To enable for easy recognition and usage
 
-  void upoloadPropertyToServer(
-      List<String>? amenities, List<String>? rules) async {
+  void upoloadPropertyToServer() async {
     httpService.uploadProperty(amenities: amenities, rules: rules);
   }
 
-  List amenities = [];
-  List rules = [];
+  List<bool> amenities = [];
+  List<bool> rules = [];
 
   bool _hasWifi = false;
   bool get hasWifi => _hasWifi;
@@ -55,13 +57,13 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
 
   void onCheckChanged2(bool? value) {
     _hasMachine = value ?? false;
-    if (amenities.contains("Machine")) {
-      amenities.remove("Machine");
-      print(amenities);
-    } else {
-      amenities.add("Machine");
-      print(amenities);
-    }
+    // if (amenities.contains("Machine")) {
+    //   amenities.remove("Machine");
+    //   print(amenities);
+    // } else {
+    //   amenities.add("Machine");
+    //   print(amenities);
+    // }
 
     notifyListeners();
   }
@@ -101,12 +103,18 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToPropertyOwnerIdentificationView(
-      PropertyOwnerUploadModel propertyOwnerUploadModel) {
-    propertyOwnerUploadModel.amenities = amenities[0];
-    propertyOwnerUploadModel.rules = rules[0];
+  void PropertyOwnerVerificationView() {
+    propertyOwnerUploadModel.airConditional = _hasAC;
+    propertyOwnerUploadModel.airDryer = _hasHairDryer;
+    propertyOwnerUploadModel.fireAlarm = _hasFireAlarm;
+    propertyOwnerUploadModel.tv = _hasTV;
+    propertyOwnerUploadModel.washingMachine = _hasMachine;
+    propertyOwnerUploadModel.wifi = _hasWifi;
+    propertyOwnerUploadModel.noHouseParty = _houseParty;
+    propertyOwnerUploadModel.noPet = _pets;
+    propertyOwnerUploadModel.noSmoking = _smoking;
 
-    _navigationService.navigateTo(Routes.propertyOwnerIdentificationView,
+    _navigationService.navigateTo(Routes.propertyOwnerVerificationView,
         arguments: propertyOwnerUploadModel);
   }
 }

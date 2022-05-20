@@ -216,7 +216,18 @@ class PropertyOwnerUploadModel {
 
   //Stage 5 data
   List<String>? amenities;
+  bool? airConditional;
+  bool? airDryer;
+  bool? fireAlarm;
+  bool? tv;
+  bool? washingMachine;
+  bool? wifi;
+
+  /// Rules
   List<String>? rules;
+  bool? noHouseParty;
+  bool? noPet;
+  bool? noSmoking;
 
   PropertyOwnerUploadModel({
     this.propertyType,

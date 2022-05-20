@@ -113,14 +113,14 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   void goToPropertyOwnerAmenitiesView() {
     propertyOwnerUploadModel.annualPrice =
         propertyannualPriceController.text as int?;
-    propertyOwnerUploadModel.biannualPrice =
-        propertybiannualPriceController.text as int?;
-    propertyOwnerUploadModel.quarterlyPrice =
-        propertyquaterlylPriceController.text as int?;
-    propertyOwnerUploadModel.monthlyPrice =
-        propertymonthlyPriceController.text as int?;
-    propertyOwnerUploadModel.from = selectedDate as String?;
-    propertyOwnerUploadModel.to = selectedDate2 as String?;
+    // propertyOwnerUploadModel.biannualPrice =
+    //     propertybiannualPriceController.text as int?;
+    // propertyOwnerUploadModel.quarterlyPrice =
+    //     propertyquaterlylPriceController.text as int?;
+    // propertyOwnerUploadModel.monthlyPrice =
+    //     propertymonthlyPriceController.text as int?;
+    // propertyOwnerUploadModel.from = selectedDate as String?;
+    // propertyOwnerUploadModel.to = selectedDate2 as String?;
     _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView,
         arguments: propertyOwnerUploadModel);
   }

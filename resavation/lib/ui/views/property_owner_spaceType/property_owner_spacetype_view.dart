@@ -87,7 +87,7 @@ class _PropertyOwnerSpaceTypeViewState
                   verticalSpaceSmall,
 
                   ...buildPropertyCategory(context),
-                  verticalSpaceMedium,
+                  verticalSpaceSmall,
                   // ...buildPropertyType1(context),
                   ...buildPropertyType(model),
 
@@ -406,31 +406,34 @@ class _PropertyOwnerSpaceTypeViewState
       verticalSpaceTiny,
       Container(
           width: MediaQuery.of(context).size.width,
+          height: 50,
           child: FormHelper.dropDownWidget(
-              context, "Property category", this.CategoriesID, this.Categories,
-              (onChangeVal) {
-            this.CategoriesID = onChangeVal;
-            print("SelectedCtegories $onChangeVal");
+            context, "Property category", this.CategoriesID, this.Categories,
+            (onChangeVal) {
+              this.CategoriesID = onChangeVal;
+              print("SelectedCtegories $onChangeVal");
 
-            this.subCategories = this
-                .subCategoriesMaster
-                .where(
-                  (subCategoriesItem) =>
-                      subCategoriesItem["parentID"].toString() ==
-                      onChangeVal.toString(),
-                )
-                .toList();
+              this.subCategories = this
+                  .subCategoriesMaster
+                  .where(
+                    (subCategoriesItem) =>
+                        subCategoriesItem["parentID"].toString() ==
+                        onChangeVal.toString(),
+                  )
+                  .toList();
 
-            this.subCategoriesID = null;
-          }, (onValidateVal) {
-            if (onValidateVal == null) {
-              return "Please Select Category";
-            }
-          },
-              borderColor: kGray,
-              borderRadius: 5,
-              optionLabel: "name",
-              optionValue: "id")),
+              this.subCategoriesID = null;
+            },
+            (onValidateVal) {
+              if (onValidateVal == null) {
+                return "Please Select Category";
+              }
+            },
+            borderColor: kGray,
+            borderRadius: 5,
+            // optionLabel: "name",
+            // optionValue: "id"
+          )),
       Text(
         'Property Type',
         style: AppStyle.kBodyRegular,

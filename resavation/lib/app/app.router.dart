@@ -455,8 +455,12 @@ class StackedRouter extends RouterBase {
       );
     },
     PropertyOwnerVerificationView: (data) {
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerVerificationView(),
+        builder: (context) => PropertyOwnerVerificationView(
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
+        ),
         settings: data,
       );
     },
