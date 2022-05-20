@@ -25,7 +25,11 @@ class _PropertyOwnerSpaceTypeViewState
   final uploadFormKey = GlobalKey<FormState>();
 
   List<dynamic> Categories = [];
+  List<dynamic> subCategoriesMaster = [];
+  List<dynamic> subCategories = [];
+
   String? CategoriesID;
+  String? subCategoriesID;
 
   @override
   void initState() {
@@ -34,6 +38,26 @@ class _PropertyOwnerSpaceTypeViewState
     this.Categories.add({"id": 2, "name": "Commercial"});
     this.Categories.add({"id": 3, "name": "Industrial"});
     this.Categories.add({"id": 4, "name": "Retail"});
+
+    this.subCategoriesMaster = [
+      // Residential
+      {"ID": 1, "Name": "Duplex", "parentID": 1},
+      {"ID": 2, "Name": "Detached huse", "parentID": 1},
+      {"ID": 3, "Name": "Terraced House", "parentID": 1},
+      {"ID": 4, "Name": "Pent House", "parentID": 1},
+      {"ID": 5, "Name": "Apartment", "parentID": 1},
+      {"ID": 6, "Name": "Bungalow", "parentID": 1},
+      {"ID": 7, "Name": "Mansion", "parentID": 1},
+      //Commercial
+      {"ID": 1, "Name": "Co-working space", "parentID": 2},
+      {"ID": 2, "Name": "Private Office", "parentID": 2},
+      //Industrial
+      {"ID": 1, "Name": "Warehouse", "parentID": 3},
+      {"ID": 2, "Name": "Factory", "parentID": 3},
+      //Retial
+      {"ID": 1, "Name": "Building", "parentID": 4},
+      {"ID": 2, "Name": "Shop", "parentID": 4},
+    ];
   }
 
   @override
@@ -64,6 +88,7 @@ class _PropertyOwnerSpaceTypeViewState
 
                   ...buildPropertyCategory(context),
                   verticalSpaceMedium,
+                  // ...buildPropertyType1(context),
                   ...buildPropertyType(model),
 
                   verticalSpaceMedium,
@@ -380,24 +405,81 @@ class _PropertyOwnerSpaceTypeViewState
       ),
       verticalSpaceTiny,
       Container(
+          width: MediaQuery.of(context).size.width,
+          child: FormHelper.dropDownWidget(
+              context, "Property category", this.CategoriesID, this.Categories,
+              (onChangeVal) {
+            this.CategoriesID = onChangeVal;
+            print("SelectedCtegories $onChangeVal");
+
+            this.subCategories = this
+                .subCategoriesMaster
+                .where(
+                  (subCategoriesItem) =>
+                      subCategoriesItem["parentID"].toString() ==
+                      onChangeVal.toString(),
+                )
+                .toList();
+
+            this.subCategoriesID = null;
+          }, (onValidateVal) {
+            if (onValidateVal == null) {
+              return "Please Select Category";
+            }
+          },
+              borderColor: kGray,
+              borderRadius: 5,
+              optionLabel: "name",
+              optionValue: "id")),
+      Text(
+        'Property Type',
+        style: AppStyle.kBodyRegular,
+      ),
+      verticalSpaceTiny,
+      Container(
         width: MediaQuery.of(context).size.width,
-        child: FormHelper.dropDownWidget(
-            context, "Property category", this.CategoriesID, this.Categories,
-            (onChangeVal) {
-          this.CategoriesID = onChangeVal;
-          print("SelectedCtegories $onChangeVal");
+        child: FormHelper.dropDownWidget(context, "Select Property Type ",
+            this.subCategoriesID, this.subCategories, (onChangeVal) {
+          this.subCategoriesID = onChangeVal;
+          print("Selected  Property Types $onChangeVal");
         }, (onValidateVal) {
           if (onValidateVal == null) {
-            return "Please Select Category";
+            return "Please Select Property Type";
           }
         },
             borderColor: kGray,
             borderRadius: 5,
-            optionLabel: "name",
-            optionValue: "id"),
+            optionLabel: "Name",
+            optionValue: "ID"),
       )
     ];
   }
+
+  // List<Widget> buildPropertyType1(BuildContext context) {
+  //   return [
+  //     Text(
+  //       'Property Type',
+  //       style: AppStyle.kBodyRegular,
+  //     ),
+  //     verticalSpaceTiny,
+  //     Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       child: FormHelper.dropDownWidget(context, "Select Property Type ",
+  //           this.subCategoriesID, this.subCategories, (onChangeVal) {
+  //         this.subCategoriesID = onChangeVal;
+  //         print("Selected  Property Types $onChangeVal");
+  //       }, (onValidateVal) {
+  //         if (onValidateVal == null) {
+  //           return "Please Select Property Type";
+  //         }
+  //       },
+  //           borderColor: kGray,
+  //           borderRadius: 5,
+  //           optionLabel: "Name",
+  //           optionValue: "ID"),
+  //     )
+  //   ];
+  // }
 }
 
 class AmenitiesSelection extends StatelessWidget {

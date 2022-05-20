@@ -61,3 +61,34 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
         arguments: propertyOwnerUploadModel);
   }
 }
+
+
+//image_picker: ^0.6.7+14
+//firebase_storage: ^5.0.1
+
+// import 'package:flutter/material.dart';
+// import 'dart:io';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+
+// void demo() async {
+//   var pickedImage = await ImagePicker().getImage(
+//       source: ImageSource.gallery, //pick from device gallery
+//       maxWidth: 1920,
+//       maxHeight: 1200,   //specify size and quality
+//       imageQuality: 80); //so image_picker will resize for you
+
+//   var anotherPickedImage = await ImagePicker().getImage(
+//       source: ImageSource.camera, //pick from camera
+//       maxWidth: 1920,
+//       maxHeight: 1200,
+//       imageQuality: 80);
+
+//   //upload and get download url
+//   Reference ref = FirebaseStorage.instance.ref().child("unique_name.jpg");//generate a unique name
+//   await ref.putFile(File(pickedImage.path));//you need to add path here
+//   String imageUrl = await ref.getDownloadURL();
+
+//   // To use the image within your widgets:
+//   // Image.network(imageUrl);
+// }
