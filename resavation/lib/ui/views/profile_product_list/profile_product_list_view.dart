@@ -77,16 +77,16 @@ class ProfileProductListView extends StatelessWidget {
                     itemBuilder: (ctx, index) {
                       final property = properties[index];
                       return PropertyCard(
-                        id: property.id,
+                        id: property.id ?? -1,
                         onTap: () => model.goToPropertyDetails(property),
-                        image: property.image,
-                        amountPerYear: property.amountPerYear,
-                        location: property.location,
-                        address: property.address,
-                        numberOfBathrooms: property.numberOfBedrooms,
-                        numberOfBedrooms: property.numberOfBathrooms,
-                        squareFeet: property.squareFeet,
-                        isFavoriteTap: property.isFavoriteTap,
+                        image: property.imageUrl ?? '',
+                        amountPerYear: property.spacePrice,
+                        propertyName: property.city ?? '',
+                        address: property.address ?? '',
+                        numberOfBathrooms: property.bathTubCount ?? 0,
+                        numberOfBedrooms: property.bedroomCount ?? 0,
+                        squareFeet: property.surfaceArea ?? 0,
+                        isFavoriteTap: property.favourite ?? false,
                         onFavoriteTap: () {},
                       );
                     },

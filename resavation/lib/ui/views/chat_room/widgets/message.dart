@@ -32,21 +32,25 @@ class Message extends StatelessWidget {
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Column(
         children: [
-
           Row(
-            mainAxisAlignment:
-            message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: message.isSender
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             children: [
               messageContaint(message),
             ],
           ),
-          SizedBox(height: 2,),
+          SizedBox(
+            height: 2,
+          ),
           Row(
-            mainAxisAlignment:
-            message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: message.isSender
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             children: [
-              message.isSender? Text("18:24") : Text("18:20"),
-              if (message.isSender) MessageStatusDot(status: message.messageStatus)
+              message.isSender ? Text("18:24") : Text("18:20"),
+              if (message.isSender)
+                MessageStatusDot(status: message.messageStatus)
             ],
           ),
         ],
@@ -76,8 +80,6 @@ class MessageStatusDot extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(left: kDefaultPadding / 2),
-
-
       child: Icon(
         status == MessageStatus.not_sent ? Icons.close : Icons.done_all,
         size: 16,

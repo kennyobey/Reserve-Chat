@@ -8,7 +8,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/model/call_model.dart';
+import 'package:resavation/ui/views/categories_list/categories_list_view.dart';
+import 'package:resavation/ui/views/cities_list/cities_list_view.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
+import 'package:resavation/ui/views/sign_up_confirmation/signup_confirmation_view.dart';
+import 'package:resavation/ui/views/verify_user_account/verify_user_account.dart';
 import 'package:stacked/stacked.dart';
 
 import '../model/property_model.dart';
@@ -55,7 +59,9 @@ class Routes {
   static const String mainView = '/main-view';
   static const String onboardingView = '/onboarding-view';
   static const String signUpView = '/sign-up-view';
+  static const String signUpConfirmationView = '/sign-up-confirmation-view';
   static const String logInView = '/log-in-view';
+  static const String verifyUserAccount = '/verify-user-account';
   static const String chatRoomView = '/chat-room-view';
   static const String propertyOwnerIdentificationVerificationView =
       '/property-owner-identification-verification-view';
@@ -85,6 +91,8 @@ class Routes {
   static const String propertyOwnerProfileView = '/property-owner-profile-view';
   static const String confirmationView = '/confirmation-view';
   static const String profileProductListView = '/profile-product-list-view';
+  static const String categoriesListView = '/categories-list-view';
+  static const String citiesListView = '/cities-list-view';
   static const String searchView = '/search-view';
   static const String editProfileView = '/edit-profile-view';
   static const String messagesView = '/messages-view';
@@ -105,7 +113,9 @@ class Routes {
     mainView,
     onboardingView,
     signUpView,
+    signUpConfirmationView,
     logInView,
+    verifyUserAccount,
     chatRoomView,
     propertyOwnerIdentificationVerificationView,
     propertyOwnerHomePageView,
@@ -128,6 +138,8 @@ class Routes {
     propertyOwnerProfileView,
     confirmationView,
     profileProductListView,
+    categoriesListView,
+    citiesListView,
     searchView,
     editProfileView,
     messagesView,
@@ -149,7 +161,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.onboardingView, page: OnboardingView),
     RouteDef(Routes.signUpView, page: SignUpView),
+    RouteDef(Routes.signUpConfirmationView, page: SignUpConfirmationView),
     RouteDef(Routes.logInView, page: LogInView),
+    RouteDef(Routes.verifyUserAccount, page: VerifyUserAccount),
     RouteDef(Routes.chatRoomView, page: ChatRoomView),
     RouteDef(Routes.propertyOwnerIdentificationVerificationView,
         page: PropertyOwnerIdentificationVerificationView),
@@ -177,6 +191,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerProfileView, page: PropertyOwnerProfileView),
     RouteDef(Routes.confirmationView, page: ConfirmationView),
     RouteDef(Routes.profileProductListView, page: ProfileProductListView),
+    RouteDef(Routes.categoriesListView, page: CategoriesListView),
+    RouteDef(Routes.citiesListView, page: CitiesListView),
     RouteDef(Routes.searchView, page: SearchView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
     RouteDef(Routes.messagesView, page: MessagesView),
@@ -213,6 +229,13 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    SignUpConfirmationView: (data) {
+      final String? email = data.arguments as String?;
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => SignUpConfirmationView(email: email ?? ''),
+        settings: data,
+      );
+    },
     SignUpView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const SignUpView(),
@@ -222,6 +245,15 @@ class StackedRouter extends RouterBase {
     LogInView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const LogInView(),
+        settings: data,
+      );
+    },
+    VerifyUserAccount: (data) {
+      final String? email = data.arguments as String?;
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => VerifyUserAccount(
+          email: email ?? '',
+        ),
         settings: data,
       );
     },
@@ -323,7 +355,7 @@ class StackedRouter extends RouterBase {
     PropertyDetailsView: (data) {
       final Property? property = data.arguments as Property?;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyDetailsView(property: property),
+        builder: (context) => PropertyDetailsView(passedProperty: property),
         settings: data,
       );
     },
@@ -380,8 +412,21 @@ class StackedRouter extends RouterBase {
       );
     },
     SearchView: (data) {
+      final String? passedQuery = data.arguments as String?;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const SearchView(),
+        builder: (context) => SearchView(passedQuery: passedQuery),
+        settings: data,
+      );
+    },
+    CategoriesListView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const CategoriesListView(),
+        settings: data,
+      );
+    },
+    CitiesListView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const CitiesListView(),
         settings: data,
       );
     },

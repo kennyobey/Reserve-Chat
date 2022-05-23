@@ -63,7 +63,7 @@ class DatePickerView extends StatelessWidget {
                           title: 'Annual',
                           value: ChoiceOfPayment.Annual,
                           subTitle: 'Every year you pay',
-                          amount: property?.amountPerYear ?? 0,
+                          amount: property?.spacePrice ?? 0,
                         ),
                       ],
                     ),

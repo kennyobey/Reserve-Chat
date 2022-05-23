@@ -9,6 +9,8 @@ import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import '../home/widget/items.dart';
+
 class PropertyOwnerProfileView extends StatelessWidget {
   const PropertyOwnerProfileView({Key? key}) : super(key: key);
 
@@ -103,16 +105,16 @@ class PropertyOwnerProfileView extends StatelessWidget {
                           itemBuilder: (ctx, index) {
                             final property = model.properties[index];
                             return PropertyCard(
-                              id: property.id,
+                              id: property.id ?? -1,
                               onTap: () => model.goToPropertyDetails(property),
-                              image: property.image,
-                              amountPerYear: property.amountPerYear,
-                              location: property.location,
-                              address: property.address,
-                              numberOfBathrooms: property.numberOfBedrooms,
-                              numberOfBedrooms: property.numberOfBathrooms,
-                              squareFeet: property.squareFeet,
-                              isFavoriteTap: property.isFavoriteTap,
+                              image: property.imageUrl ?? '',
+                              amountPerYear: property.spacePrice ?? 0,
+                              propertyName: property.city ?? '',
+                              address: property.address ?? '',
+                              numberOfBathrooms: property.bathTubCount ?? 0,
+                              numberOfBedrooms: property.bedroomCount ?? 0,
+                              squareFeet: property.surfaceArea ?? 0,
+                              isFavoriteTap: property.favourite ?? false,
                               onFavoriteTap: () {
                                 //model.onFavoriteTap(property)
                               },

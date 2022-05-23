@@ -3,144 +3,237 @@ import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
-import 'package:resavation/ui/views/chat_room/widgets/buttom_sheet_widget.dart';
+import 'package:resavation/ui/views/chat_room/chat_input_field_viewmodel.dart';
 import 'package:resavation/ui/views/messages/messages_view.dart';
 import 'package:stacked/stacked.dart';
 
-class ChatInputField extends ViewModelWidget<ChatRoomViewModel> {
+class ChatInputField extends StatelessWidget {
   final ChatModel? chatModel;
+  final VoidCallback onMessageSent;
 
-  ChatInputField(
-    this.chatModel, {
+  ChatInputField({
+    required this.chatModel,
+    required this.onMessageSent,
     Key? key,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context, model) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: kDefaultPadding / 2,
-        vertical: kDefaultPadding / 2,
-      ),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 32,
-            color: Color(0xFF087949).withOpacity(0.08),
-          ),
-        ],
-      ),
-      width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+  Widget buildImageWidget(ChatInputFieldViewModel model, BuildContext context) {
+    return AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: model.imagePath.isNotEmpty
+            ? Stack(
                 children: [
-                  ChatInputIcon(
-                    icon: Icons.sentiment_satisfied_alt_outlined,
-                    onTap: () {
-                      showModalBottomSheet(
-                          backgroundColor: kTransparent,
-                          context: context,
-                          builder: (builder) => showEmoji(context, model));
-                      model.emojiShowing = !model.emojiShowing;
-                    },
-                  ),
-                  SizedBox(width: kDefaultPadding / 4),
-                  Expanded(
-                    child: TextFormField(
-                      controller: model.controller,
-                      onChanged: (_) {
-                        model.updateTextState();
-                      },
-                      maxLines: 8,
-                      minLines: 1,
-                      textAlign: TextAlign.start,
-                      textInputAction: TextInputAction.newline,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.only(
-                            bottom: 5, top: 5, left: 5, right: 5),
-                        hintText: 'Type your message',
-                        // hintStyle: bodyText2
+                  Container(
+                    width: double.infinity,
+                    height: 150,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8),
+                        bottomLeft: Radius.circular(8),
                       ),
-                      // cursorColor: kTextColor,
+                    ),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      onTap: () => model.showImage(context),
+                      child: Image.file(
+                        File(model.imagePath),
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                  ChatInputIcon(
-                    icon: Icons.attach_file,
-                    onTap: () {
-                      showModalBottomSheet(
-                          backgroundColor: kTransparent,
-                          context: context,
-                          builder: (builder) => bottomSheet(context));
-                    },
-                  ),
-                  SizedBox(width: kDefaultPadding / 4),
-                  ChatInputIcon(
-                    icon: Icons.camera_alt_outlined,
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      onTap: model.clearImage,
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        alignment: Alignment.center,
+                        child: Icon(Icons.cancel_outlined, color: kWhite),
+                      ),
+                    ),
                   ),
                 ],
-              ),
+              )
+            : const SizedBox());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<ChatInputFieldViewModel>.reactive(
+        viewModelBuilder: () => ChatInputFieldViewModel(),
+        builder: (context, model, child) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2,
+              vertical: kDefaultPadding / 2,
             ),
-          ),
-          SizedBox(width: kDefaultPadding / 2),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 1000),
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: model.isMessageEmpty ? 10 : 8),
-            child: model.isMessageEmpty
-                ? Icon(Icons.mic, color: kPrimaryColor)
-                : InkWell(
-                    onTap: () => sendChatMessage(model, context),
-                    child: const Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Icon(
-                        Icons.send,
-                        color: kPrimaryColor,
-                        size: 22,
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 4),
+                  blurRadius: 32,
+                  color: Color(0xFF087949).withOpacity(0.08),
+                ),
+              ],
+            ),
+            width: double.infinity,
+            child: Column(children: [
+              buildImageWidget(model, context),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: kPrimaryColor.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          buildEmojiField(context, model),
+                          SizedBox(width: kDefaultPadding / 4),
+                          buildInputField(model),
+                          ChatInputIcon(
+                            icon: Icons.attach_file,
+                            onTap: () {
+                              try {
+                                model.showImagePicker(false);
+                              } catch (exception) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      exception.toString(),
+                                    ),
+                                  ),
+                                );
+                              }
+                              /*    showModalBottomSheet(
+                                  backgroundColor: kTransparent,
+                                  context: context,
+                                  builder: (builder) => bottomSheet(context)); */
+                            },
+                          ),
+                          SizedBox(width: kDefaultPadding / 4),
+                          ChatInputIcon(
+                            onTap: () => model.showImagePicker(true),
+                            icon: Icons.camera_alt_outlined,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-          ),
-        ],
+                  SizedBox(width: kDefaultPadding / 2),
+                  buildSendButton(model, context),
+                ],
+              ),
+            ]),
+          );
+        });
+  }
+
+  ChatInputIcon buildEmojiField(
+      BuildContext context, ChatInputFieldViewModel model) {
+    return ChatInputIcon(
+      icon: Icons.sentiment_satisfied_alt_outlined,
+      onTap: () {
+        showModalBottomSheet(
+            backgroundColor: kTransparent,
+            context: context,
+            builder: (builder) => showEmoji(context, model));
+        model.emojiShowing = !model.emojiShowing;
+      },
+    );
+  }
+
+  Expanded buildInputField(ChatInputFieldViewModel model) {
+    return Expanded(
+      child: TextFormField(
+        controller: model.controller,
+        onChanged: (_) {
+          model.updateTextState();
+        },
+        maxLines: 8,
+        minLines: 1,
+        textAlign: TextAlign.start,
+        textInputAction: TextInputAction.newline,
+        keyboardType: TextInputType.multiline,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          isDense: true,
+          contentPadding:
+              const EdgeInsets.only(bottom: 5, top: 5, left: 5, right: 5),
+          hintText: 'Type your message',
+          // hintStyle: bodyText2
+        ),
+        // cursorColor: kTextColor,
       ),
     );
   }
 
-  void sendChatMessage(ChatRoomViewModel model, BuildContext context) async {
+  AnimatedContainer buildSendButton(
+      ChatInputFieldViewModel model, BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 1000),
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(bottom: model.isMessageEmpty ? 10 : 8),
+      child: model.isMessageEmpty
+          ? Icon(Icons.mic, color: kPrimaryColor)
+          : InkWell(
+              onTap: () => sendChatMessage(model, context),
+              child: Icon(
+                Icons.send,
+                color: kPrimaryColor,
+                size: 22,
+              ),
+            ),
+    );
+  }
+
+  void sendChatMessage(
+      ChatInputFieldViewModel model, BuildContext context) async {
     final message = model.controller.text.trim();
-    if (message.isNotEmpty && chatModel != null) {
+    final imagePath = model.imagePath;
+    if ((message.isNotEmpty || imagePath.isNotEmpty) && chatModel != null) {
+      if (imagePath.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Uploading image, your message would be sent after a successful file upload.'),
+          ),
+        );
+      }
       try {
         model.controller.text = '';
+        model.imagePath = '';
         model.updateTextState();
-        await ChatRoomViewModel.sendChatMessage(chatModel!, message);
-        model.scrollController.animateTo(
-          model.scrollController.position.maxScrollExtent,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 500),
-        );
+        await model.sendChatMessage(chatModel!, message, imagePath);
+        onMessageSent();
       } catch (exception) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(exception.toString())));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              exception.toString(),
+            ),
+          ),
+        );
       }
     }
   }
 
-  Widget showEmoji(BuildContext context, ChatRoomViewModel model) {
+  Widget showEmoji(BuildContext context, ChatInputFieldViewModel model) {
     return SizedBox(
       height: 250,
       child: EmojiPicker(

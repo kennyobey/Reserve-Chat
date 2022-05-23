@@ -12,7 +12,8 @@ class ProfileProductListViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   final _snackbarService = locator<CustomSnackbarService>();
-  List<Property> get properties => listOfProperties;
+  // List<Property> get properties => listOfProperties;
+  List<Property> get properties => [];
 
   final _userService = locator<UserTypeService>();
 

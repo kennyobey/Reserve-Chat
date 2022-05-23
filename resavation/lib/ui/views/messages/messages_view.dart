@@ -301,6 +301,7 @@ class ChatModel {
 
 class ChatMessageModel {
   String message;
+  String imageUrl;
   String userId;
   int timestamp;
 
@@ -308,12 +309,14 @@ class ChatMessageModel {
     required this.message,
     required this.userId,
     required this.timestamp,
+    required this.imageUrl,
   });
 
   static ChatMessageModel fromJson(Map<String, dynamic> json) {
     return ChatMessageModel(
       message: json['message'] ?? '',
       userId: json['user_id'] ?? '',
+      imageUrl: json['image_url'] ?? '',
       timestamp: json['timestamp'] ?? 0,
     );
   }
@@ -324,6 +327,7 @@ class ChatMessageModel {
     data['message'] = message;
     data['timestamp'] = timestamp;
     data['user_id'] = userId;
+    data['image_url'] = imageUrl;
 
     return data;
   }
