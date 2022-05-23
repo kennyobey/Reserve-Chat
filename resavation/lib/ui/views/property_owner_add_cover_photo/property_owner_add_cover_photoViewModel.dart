@@ -1,3 +1,4 @@
+import 'package:analyzer/file_system/file_system.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:observable_ish/observable_ish.dart';
@@ -6,6 +7,7 @@ import 'package:resavation/app/app.router.dart';
 import 'package:resavation/services/core/image_picker_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../services/core/http_service.dart';
 import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
@@ -17,9 +19,9 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final PropertyOwnerUploadModel propertyOwnerUploadModel =
       PropertyOwnerUploadModel();
 
-  void upoloadPropertyToServer() async {
-    httpService.uploadProperty(imageUrl: "");
-  }
+  // void upoloadPropertyToServer() async {
+  //   httpService.uploadProperty();
+  // }
 
   final List<String> imageContainer = <String>[];
 
@@ -52,7 +54,26 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   // }
 
   // void goToPropertyOwnerPaymentView() {
+
   //   _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
+  // }
+
+  // uploadDocument(File file) async {
+  //   Reference sFirebaseStorageRef = FirebaseStorage.instance.ref();
+  //   Reference firebaseStorageRef = sFirebaseStorageRef
+  //       .child('users/${userData.email}/profilePictures/profilePicture');
+  //   try {
+  //     UploadTask uploadTask = firebaseStorageRef.putFile(file);
+  //     final TaskSnapshot taskSnapshot = await uploadTask;
+  //     String url = await taskSnapshot.ref.getDownloadURL();
+
+  //     final body = {
+  //       "imageUrl": url,
+  //     };
+  //     await _httpService.updateProfile(body: body);
+  //   } catch (e) {
+  //     return Future.error(e.toString());
+  //   }
   // }
 
   void goToPropertyOwnerPaymentView() {

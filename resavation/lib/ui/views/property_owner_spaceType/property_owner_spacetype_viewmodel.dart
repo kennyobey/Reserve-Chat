@@ -27,16 +27,16 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     propertyOwnerUploadModel.isSpaceFurnished = isFurnished;
   }
 
-  void upoloadPropertyToServer() async {
-    httpService.uploadProperty(
-        spaceServiced: false,
-        // spaceFurnished: false,
-        // liveInSPace: false,
-        listingOption: [],
-        bathTubCount: numberOfBathrooms,
-        bedroomCount: numberOfBedrooms,
-        carSlots: numberOfCarSlot);
-  }
+  // void upoloadPropertyToServer() async {
+  //   httpService.uploadProperty(
+  //       spaceServiced: false,
+  //       spaceFurnished: false,
+  //       liveInSPace: false,
+  //       listingOption: [],
+  //       bathTubCount: numberOfBathrooms,
+  //       bedroomCount: numberOfBedrooms,
+  //       carSlots: numberOfCarSlot);
+  // }
 
   // Global Keys to use with the form text fields
   final registrationFormKey = GlobalKey<FormState>();

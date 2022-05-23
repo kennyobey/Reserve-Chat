@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/upload_property_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -16,9 +17,9 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   /// Checkboxes are named to fit their corresponding value
   /// To enable for easy recognition and usage
 
-  void upoloadPropertyToServer() async {
-    httpService.uploadProperty(amenities: amenities, rules: rules);
-  }
+  // void upoloadPropertyToServer() async {
+  //   httpService.uploadProperty(amenities: amenities, rules: rules);
+  // }
 
   List<bool> amenities = [];
   List<bool> rules = [];
@@ -103,7 +104,7 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void PropertyOwnerVerificationView() {
+  void PropertyOwnerVerificationView() async {
     propertyOwnerUploadModel.airConditional = _hasAC;
     propertyOwnerUploadModel.airDryer = _hasHairDryer;
     propertyOwnerUploadModel.fireAlarm = _hasFireAlarm;
@@ -116,5 +117,14 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
 
     _navigationService.navigateTo(Routes.propertyOwnerVerificationView,
         arguments: propertyOwnerUploadModel);
+
+    try {
+      await httpService.uploadProperty();
+
+      notifyListeners();
+    } catch (exception) {
+      notifyListeners();
+      return Future.error(exception.toString());
+    }
   }
 }

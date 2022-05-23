@@ -178,10 +178,10 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
                     onPressed: () async {
                       if (uploadFormKey.currentState!.validate()) {
                         print(model.propertyNameController.text);
-                        print(model.selectedCountry);
+
                         model.goToPropertyOwnerAddPhotosView();
                       } else {
-                        model.upoloadPropertyToServer();
+                        // model.upoloadPropertyToServer();
                       }
                     }
                     //=> model.goToPropertyOwnerAddPhotosView(),

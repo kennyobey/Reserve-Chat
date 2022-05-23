@@ -176,7 +176,6 @@ class _PropertyOwnerSpaceTypeViewState
           onPressed: () async {
             if (uploadFormKey.currentState!.validate()) {
               model.goToPropertyOwnerDetailsView();
-
               print('furnish ${model.isFurnished}');
               print('serviced ${model.isServiced}');
               print('live here ${model.leaveHere}');
@@ -184,8 +183,6 @@ class _PropertyOwnerSpaceTypeViewState
               print('selected value ${model.selectedProperty}');
               print('nos of bedroom ${model.numberOfBedrooms}');
               print('no of car lot ${model.numberOfCarSlot}');
-            } else {
-              model.upoloadPropertyToServer();
             }
           },
           //           onPressed: ()async {
@@ -446,9 +443,9 @@ class _PropertyOwnerSpaceTypeViewState
           this.subCategoriesID = onChangeVal;
           print("Selected  Property Types $onChangeVal");
         }, (onValidateVal) {
-          if (onValidateVal == null) {
-            return "Please Select Property Type";
-          }
+          // if (onValidateVal == null) {
+          //   return "Please Select Property Type";
+          // }
         },
             borderColor: kGray,
             borderRadius: 5,

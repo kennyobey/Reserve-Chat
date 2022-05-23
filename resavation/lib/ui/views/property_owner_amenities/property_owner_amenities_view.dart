@@ -169,12 +169,11 @@ class _PropertyOwnerAmenitiesViewState
                           textColor: Colors.white,
                           onPressed: () async {
                             if (uploadFormKey.currentState!.validate()) {
-                              model
-                                  .PropertyOwnerIdentificationVerificationView();
+                              model.PropertyOwnerVerificationView();
 
                               print(" TV is ${model.hasTV}");
                             } else {
-                              model.upoloadPropertyToServer();
+                              //  model.upoloadPropertyToServer();
                             }
                           }),
                     ],

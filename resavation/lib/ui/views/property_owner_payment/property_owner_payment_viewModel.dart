@@ -43,12 +43,12 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     var monthlylPrice = propertymonthlyPriceController.text;
     var quaterlylPrice = propertyquaterlylPriceController.text;
 
-    httpService.uploadProperty(subscription: {
-      annualPrice: 0,
-      biannualPrice: 0,
-      quaterlylPrice: 0,
-      monthlylPrice: 0
-    });
+    // httpService.uploadProperty(subscription: {
+    //   annualPrice: 0,
+    //   biannualPrice: 0,
+    //   quaterlylPrice: 0,
+    //   monthlylPrice: 0
+    // });
   }
 
   void incrementPrice({required String input}) {
@@ -111,8 +111,8 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerAmenitiesView() {
-    propertyOwnerUploadModel.annualPrice =
-        propertyannualPriceController.text as int?;
+    // propertyOwnerUploadModel.annualPrice =
+    //     propertyannualPriceController.text as int?;
     // propertyOwnerUploadModel.biannualPrice =
     //     propertybiannualPriceController.text as int?;
     // propertyOwnerUploadModel.quarterlyPrice =

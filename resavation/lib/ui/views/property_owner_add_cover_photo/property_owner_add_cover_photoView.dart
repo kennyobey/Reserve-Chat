@@ -99,7 +99,7 @@ class _PropertyOwnerAddCoverPhotosViewState
                                 if (uploadFormKey.currentState!.validate()) {
                                   model.goToPropertyOwnerPaymentView();
                                 } else {
-                                  model.upoloadPropertyToServer();
+                                  // model.upoloadPropertyToServer();
                                 }
                               }
                               //=> model.goToPropertyOwnerAddPhotosView(),
