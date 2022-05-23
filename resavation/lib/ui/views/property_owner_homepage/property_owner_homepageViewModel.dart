@@ -32,4 +32,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void PropertyOwnerMyPropertyView() {
     _navigationService.navigateTo(Routes.propertyOwnerMyPropertyView);
   }
+
+  void PropertyOwnerTrackListView() {
+    _navigationService.navigateTo(Routes.propertyOwnerTrackListView);
+  }
 }

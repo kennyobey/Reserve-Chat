@@ -47,6 +47,7 @@ import '../ui/views/property_owner_payment/property_owner_payment_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
 import '../ui/views/property_owner_settings/property_owner_settingsView.dart';
 import '../ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
+import '../ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
 import '../ui/views/property_owner_verification/property_owner_verificationView.dart';
 import '../ui/views/property_verification/property_verificationView.dart';
 import '../ui/views/rest_password/reset_password_view.dart';
@@ -114,6 +115,9 @@ class Routes {
       '/property-owner-accept-button-view';
   static const String propertyOwnerMyPropertyView =
       '/property-owner-my-property-view';
+  static const String propertyOwnerTrackListView =
+      '/property-owner-track-list-view';
+  //PropertyOwnerTrackListView
   static const all = <String>{
     startupView,
     mainView,
@@ -157,7 +161,8 @@ class Routes {
     propertyOwnerVerificationView,
     propertyOwnerSettingsView,
     propertyOwnerAcceptbuttonView,
-    propertyOwnerMyPropertyView
+    propertyOwnerMyPropertyView,
+    propertyOwnerTrackListView
   };
 }
 
@@ -221,6 +226,8 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerAcceptbuttonView),
     RouteDef(Routes.propertyOwnerMyPropertyView,
         page: PropertyOwnerMyPropertyView),
+    RouteDef(Routes.propertyOwnerTrackListView,
+        page: PropertyOwnerTrackListView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -536,6 +543,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerMyPropertyView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const PropertyOwnerMyPropertyView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerTrackListView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerTrackListView(),
         settings: data,
       );
     },

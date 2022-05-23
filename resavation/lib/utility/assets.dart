@@ -33,6 +33,7 @@ class Assets {
   static const profile_image3 = 'assets/images/profile_image3.png';
   static const profile_image4 = 'assets/images/client1.png';
   static const listingImage = 'assets/images/listingImage.png';
+  static const CarVector = 'assets/icons/CarVector.png';
 
   // Slider Image List
   static const List<String> imgList = [
