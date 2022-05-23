@@ -4,18 +4,30 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart';
 
 import 'package:stacked/stacked.dart';
+import '../../shared/dump_widgets/resavation_elevated_button.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
-import '../../shared/dump_widgets/resavation_button.dart';
-import '../property_owner_add_photos/property_owner_add_photosViewModel.dart';
+class PropertyOwnerAddCoverPhotosView extends StatefulWidget {
+  PropertyOwnerAddCoverPhotosView(
+      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
+      : super(key: key);
 
-class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
-  const PropertyOwnerAddCoverPhotosView({Key? key}) : super(key: key);
+  @override
+  State<PropertyOwnerAddCoverPhotosView> createState() =>
+      _PropertyOwnerAddCoverPhotosViewState();
+}
+
+class _PropertyOwnerAddCoverPhotosViewState
+    extends State<PropertyOwnerAddCoverPhotosView> {
+  final uploadFormKey = GlobalKey<FormState>();
+
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
   @override
   Widget build(BuildContext context) {
@@ -29,65 +41,73 @@ class PropertyOwnerAddCoverPhotosView extends StatelessWidget {
                   horizontal: 24,
                   vertical: 15,
                 ),
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpaceMedium,
-                    Center(
-                      child: Text(
-                        'Add Photos',
-                        style: AppStyle.kBodyBold,
+                child: Form(
+                  key: uploadFormKey,
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpaceMedium,
+                      Center(
+                        child: Text(
+                          'Add Photos',
+                          style: AppStyle.kBodyBold,
+                        ),
                       ),
-                    ),
-                    verticalSpaceMedium,
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 2 / 2.2),
-                      itemBuilder: (_, index) {
-                        List<String> data = model.imageContainer;
-                        print(".........$data");
-                        return coverPhoto(
-                            imageUrl: data[index],
-                            isCover: (index == 0) ? true : false);
-                      },
-                      itemCount: model.imageContainer.length,
-                    ),
-                    verticalSpaceTiny,
-                    Spacer(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FlatButton(
-                          child: Text(
-                            'Back',
-                            style: AppStyle.kBodyRegular,
+                      verticalSpaceMedium,
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 2 / 2.2),
+                        itemBuilder: (_, index) {
+                          List<String> data = model.imageContainer;
+                          print(".........$data");
+                          return coverPhoto(
+                              imageUrl: data[index],
+                              isCover: (index == 0) ? true : false);
+                        },
+                        itemCount: model.imageContainer.length,
+                      ),
+                      verticalSpaceTiny,
+                      Spacer(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FlatButton(
+                            child: Text(
+                              'Back',
+                              style: AppStyle.kBodyRegular,
+                            ),
+                            color: kWhite,
+                            textColor: kBlack,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          color: kWhite,
-                          textColor: kBlack,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        Spacer(),
-                        FlatButton(
-                          child: Text(
-                            'Next',
-                            style: AppStyle.kBodyRegular,
-                          ),
-                          color: kPrimaryColor,
-                          textColor: Colors.white,
-                          onPressed: () {
-                            model.goToPropertyOwnerPaymentView();
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
+                          Spacer(),
+                          FlatButton(
+                              child: Text(
+                                'Next',
+                                style: AppStyle.kBodyRegular,
+                              ),
+                              color: kPrimaryColor,
+                              textColor: kWhite,
+                              onPressed: () async {
+                                if (uploadFormKey.currentState!.validate()) {
+                                  model.goToPropertyOwnerPaymentView();
+                                } else {
+                                  // model.upoloadPropertyToServer();
+                                }
+                              }
+                              //=> model.goToPropertyOwnerAddPhotosView(),
+                              )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(

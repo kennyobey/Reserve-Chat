@@ -2,18 +2,24 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:resavation/ui/shared/colors.dart';
-
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_viewModel.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
+import 'package:resavation/ui/views/property_owner_payment/subscription.dart';
 import 'package:stacked/stacked.dart';
+import '../property_owner_amenities/widgets/amenities_item_widget.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerPaymentView extends StatefulWidget {
-  const PropertyOwnerPaymentView({Key? key}) : super(key: key);
+  PropertyOwnerPaymentView(
+      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
+      : super(key: key);
+
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
   @override
   State<PropertyOwnerPaymentView> createState() =>
@@ -23,7 +29,10 @@ class PropertyOwnerPaymentView extends StatefulWidget {
 class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
   final uploadFormKey = GlobalKey<FormState>();
 
+  var items;
+
   get date => null;
+  List<String> flavours = [];
 
   // var selectedDate = DateTime.now();
   @override
@@ -74,37 +83,70 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                       style: AppStyle.kBodySmallRegular12,
                     ),
                     verticalSpaceTiny,
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                          hint: Text(
-                            "Select Property ",
-                            style: AppStyle.kBodyRegular,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: kWhite),
+                          child: Text(
+                            'Subscription Plan',
+                            style: AppStyle.kBodySmallRegular12
+                                .copyWith(color: kBlack),
                           ),
-                          items: model.subscriptionType
-                              .map((item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: AppStyle.kBodyRegular,
-                                    ),
-                                  ))
-                              .toList(),
-                          value: model.selectedValue1,
-                          onChanged: (value) {
-                            model.onSelectedValueChange1(value);
-                          },
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                          ),
-                          buttonWidth: 330,
-                          buttonPadding: EdgeInsets.only(left: 18, right: 20),
-                          buttonDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                //color: Colors.black26,
-                                ),
-                          )),
+                          onPressed: () async {
+                            flavours = await showDialog<List<String>>(
+                                    context: context,
+                                    builder: (_) => MultiSelectDialog(
+                                            question: Text(
+                                                'Select Your Subcription Type'),
+                                            answers: [
+                                              'Monthly',
+                                              'Quarterly',
+                                              'Biannually',
+                                              'Annually'
+                                            ])) ??
+                                [];
+                            print(flavours);
+                            // Logic to save selected flavours in the database
+                          }),
                     ),
+                    // DropdownButtonHideUnderline(
+                    //   child: DropdownButton2(
+                    //       hint: Text(
+                    //         "Select Property ",
+                    //         style: AppStyle.kBodyRegular,
+                    //       ),
+                    //       items: model.subscriptionType
+                    //           .map(
+                    //             (item) => DropdownMenuItem<String>(
+                    //               value: item,
+                    //               child: Column(
+                    //                 children: [
+                    //                   AmenitiesItem(
+                    //                     label: item,
+                    //                     checkboxValue: model.hasHairDryer,
+                    //                     onChanged: model.onCheckChanged5,
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           )
+                    //           .toList(),
+                    //       value: model.selectedValue1,
+                    //       onChanged: (value) {
+                    //         model.onSelectedValueChange1(value);
+                    //       },
+                    //       icon: const Icon(
+                    //         Icons.keyboard_arrow_down_rounded,
+                    //       ),
+                    //       buttonWidth: 330,
+                    //       buttonPadding: EdgeInsets.only(left: 18, right: 20),
+                    //       buttonDecoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(8),
+                    //         border: Border.all(
+                    //             //color: Colors.black26,
+                    //             ),
+                    //       )),
+                    // ),
                     verticalSpaceTiny,
                     Text(
                       'Availability Period',
@@ -148,6 +190,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     ),
                     verticalSpaceTiny,
                     ResavationTextField(
+                      keyboardType: TextInputType.number,
                       hintText: '# 100,000',
                       textInputAction: TextInputAction.next,
                       onChanged: (value) {
@@ -240,13 +283,13 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                             onPressed: () async {
                               if (uploadFormKey.currentState!.validate()) {
                                 model.goToPropertyOwnerAmenitiesView();
-                                print(model.selectedValue1);
-                                print(model.isServiced);
-                                print(model.selectedDate);
-                                print(model.propertyannualPriceController);
-                                print(model.propertybiannualPriceController);
-                                print(model.propertyquaterlylPriceController);
-                                print(model.propertymonthlyPriceController);
+                                // print(model.selectedValue1);
+                                // print(model.isServiced);
+                                // print(model.selectedDate);
+                                // print(model.propertyannualPriceController);
+                                // print(model.propertybiannualPriceController);
+                                // print(model.propertyquaterlylPriceController);
+                                // print(model.propertymonthlyPriceController);
                               } else {
                                 model.upoloadPropertyToServer();
                               }

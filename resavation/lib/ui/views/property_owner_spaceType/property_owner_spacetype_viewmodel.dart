@@ -27,16 +27,16 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     propertyOwnerUploadModel.isSpaceFurnished = isFurnished;
   }
 
-  void upoloadPropertyToServer() async {
-    httpService.uploadProperty(
-        spaceServiced: false,
-        // spaceFurnished: false,
-        // liveInSPace: false,
-        listingOption: [],
-        bathTubCount: numberOfBathrooms,
-        bedroomCount: numberOfBedrooms,
-        carSlots: numberOfCarSlot);
-  }
+  // void upoloadPropertyToServer() async {
+  //   httpService.uploadProperty(
+  //       spaceServiced: false,
+  //       spaceFurnished: false,
+  //       liveInSPace: false,
+  //       listingOption: [],
+  //       bathTubCount: numberOfBathrooms,
+  //       bedroomCount: numberOfBedrooms,
+  //       carSlots: numberOfCarSlot);
+  // }
 
   // Global Keys to use with the form text fields
   final registrationFormKey = GlobalKey<FormState>();
@@ -105,7 +105,6 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
     } else {
       print("Somethij");
     }
-
     notifyListeners();
   }
 
@@ -205,21 +204,51 @@ class PropertyOwnerUploadModel {
   String? address;
 
   //add stage 3 data here
+  String? imageUrl;
 
-  PropertyOwnerUploadModel(
-      {this.propertyType,
-      this.isSpaceServiced,
-      this.isSpaceFurnished,
-      this.listingOption,
-      this.propertyStatus,
-      this.liveInSpace,
-      this.noOfBedroom,
-      this.noOfBathroom,
-      this.numberOfCarSLot,
-      this.propertyName,
-      this.propertyDescription,
-      this.location,
-      this.state,
-      this.city,
-      this.address});
+  //Stage 4 data
+  int? annualPrice;
+  int? biannualPrice;
+  int? monthlyPrice;
+  int? quarterlyPrice;
+  String? from;
+  String? to;
+
+  //Stage 5 data
+  List<String>? amenities;
+  bool? airConditional;
+  bool? airDryer;
+  bool? fireAlarm;
+  bool? tv;
+  bool? washingMachine;
+  bool? wifi;
+
+  /// Rules
+  List<String>? rules;
+  bool? noHouseParty;
+  bool? noPet;
+  bool? noSmoking;
+
+  PropertyOwnerUploadModel({
+    this.propertyType,
+    this.isSpaceServiced,
+    this.isSpaceFurnished,
+    this.listingOption,
+    this.propertyStatus,
+    this.liveInSpace,
+    this.noOfBedroom,
+    this.noOfBathroom,
+    this.numberOfCarSLot,
+    this.propertyName,
+    this.propertyDescription,
+    this.location,
+    this.state,
+    this.city,
+    this.address,
+    this.imageUrl,
+    this.annualPrice,
+    this.biannualPrice,
+    this.monthlyPrice,
+    this.quarterlyPrice,
+  });
 }

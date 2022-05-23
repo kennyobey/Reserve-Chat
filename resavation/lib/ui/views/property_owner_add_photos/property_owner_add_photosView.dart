@@ -11,14 +11,24 @@ import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/chat_room/widgets/buttom_sheet_widget.dart';
 import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosViewModel.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerAddPhotosView extends StatelessWidget {
-  PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
+class PropertyOwnerAddPhotosView extends StatefulWidget {
+  PropertyOwnerAddPhotosView(
+      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
+      : super(key: key);
 
-  PlatformFile? get file => null;
+  @override
+  State<PropertyOwnerAddPhotosView> createState() =>
+      _PropertyOwnerAddPhotosViewState();
+}
 
+class _PropertyOwnerAddPhotosViewState
+    extends State<PropertyOwnerAddPhotosView> {
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerAddPhotosViewModel>.reactive(
@@ -77,10 +87,10 @@ class PropertyOwnerAddPhotosView extends StatelessWidget {
                   child: Text("Back"),
                   onPressed: () => Navigator.pop(context),
                 ),
-                // ResavationElevatedButton(
-                //   child: Text("Next"),
-                //   onPressed: () => model.goToPropertyOwnerAddCoverPhotosView(),
-                // )
+                ResavationElevatedButton(
+                  child: Text("Next"),
+                  onPressed: () => model.goToPropertyOwnerAddCoverPhotosView(),
+                )
               ],
             ),
           ),
