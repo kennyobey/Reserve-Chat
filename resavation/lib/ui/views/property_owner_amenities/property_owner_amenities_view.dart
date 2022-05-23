@@ -138,6 +138,16 @@ class _PropertyOwnerAmenitiesViewState
                             checkboxValue: model.houseParty,
                             onChanged: model.onCheckChanged9,
                           ),
+                          FlatButton(
+                              child: Text(
+                                'Next',
+                                style: AppStyle.kBodyRegular,
+                              ),
+                              color: kPrimaryColor,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                model.PropertyOwnerAcceptbuttonView();
+                              })
                         ],
                       ),
                       horizontalSpaceRegular,

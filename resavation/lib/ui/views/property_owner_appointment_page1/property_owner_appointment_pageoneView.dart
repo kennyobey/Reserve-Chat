@@ -94,9 +94,9 @@ class PropertyOwnerAppointmentPageoneView extends StatelessWidget {
   }
 }
 
-class Merchants {}
+// class Merchants {}
 
-class Customers {}
+// class Customers {}
 
 //  @override
 //   Widget build(BuildContext context) {

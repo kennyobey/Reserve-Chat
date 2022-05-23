@@ -31,6 +31,7 @@ import '../ui/views/onboarding/onboarding_view.dart';
 import '../ui/views/payment/payment_view.dart';
 import '../ui/views/profile_product_list/profile_product_list_view.dart';
 import '../ui/views/property_details/property_details_view.dart';
+import '../ui/views/property_owner_acceptbutton/property_owner_acceptbuttonView.dart';
 import '../ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoView.dart';
 import '../ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import '../ui/views/property_owner_amenities/property_owner_amenities_view.dart';
@@ -108,6 +109,8 @@ class Routes {
       '/property-owner-verification-view';
   static const String propertyOwnerSettingsView =
       '/property-owner-settings-view';
+  static const String propertyOwnerAcceptbuttonView =
+      '/property-owner-accept-button-view';
   static const all = <String>{
     startupView,
     mainView,
@@ -150,6 +153,7 @@ class Routes {
     propertyOwnerIdentificationView,
     propertyOwnerVerificationView,
     propertyOwnerSettingsView,
+    propertyOwnerAcceptbuttonView,
   };
 }
 
@@ -209,6 +213,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerVerificationView,
         page: PropertyOwnerVerificationView),
     RouteDef(Routes.propertyOwnerSettingsView, page: PropertyOwnerSettingsView),
+    RouteDef(Routes.propertyOwnerAcceptbuttonView,
+        page: PropertyOwnerAcceptbuttonView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -512,6 +518,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerSettingsView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const PropertyOwnerSettingsView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerAcceptbuttonView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerAcceptbuttonView(),
         settings: data,
       );
     },

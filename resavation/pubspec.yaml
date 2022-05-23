@@ -30,7 +30,7 @@ dependencies:
 
   # ui
   country_picker: ^2.0.12
-  google_fonts: ^2.2.0
+  google_fonts: ^3.0.1
   cupertino_icons: ^1.0.2
   animations: ^2.0.2
   flutter_svg: ^1.0.0
