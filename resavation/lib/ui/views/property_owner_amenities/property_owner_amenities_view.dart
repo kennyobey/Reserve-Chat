@@ -2,16 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_viewModel.dart';
 import 'package:resavation/ui/views/property_owner_amenities/widgets/amenities_item_widget.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerAmenitiesView extends StatefulWidget {
-  PropertyOwnerAmenitiesView({Key? key}) : super(key: key);
+  PropertyOwnerAmenitiesView({
+    Key? key,
+    required PropertyOwnerUploadModel propertyOwnerUploadModel,
+  }) : super(key: key);
 
   @override
   State<PropertyOwnerAmenitiesView> createState() =>
@@ -20,11 +23,15 @@ class PropertyOwnerAmenitiesView extends StatefulWidget {
 
 class _PropertyOwnerAmenitiesViewState
     extends State<PropertyOwnerAmenitiesView> {
+  _PropertyOwnerAmenitiesViewState();
+
   MaterialPropertyResolver<Color?>? get getColor => null;
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
   final uploadFormKey = GlobalKey<FormState>();
-  List<String>? amenities;
-  List<String>? rules;
+  List<bool>? amenities;
+  List<bool>? rules;
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +72,9 @@ class _PropertyOwnerAmenitiesViewState
                             onChanged: model.onHasWifiChange,
                           ),
                           AmenitiesItem(
-                            label: "Washing Machine",
-                            checkboxValue: model.hasMachine,
-                            onChanged: (value) {
-                              setState(() {
-                                // value = model.onCheckChanged2;
-                                print('Machine: ${value}');
-                              });
-                            },
-                          ),
+                              label: "Washing Machine",
+                              checkboxValue: model.hasMachine,
+                              onChanged: model.onCheckChanged2),
                           AmenitiesItem(
                             label: "Air Conditioning",
                             checkboxValue: model.hasAC,
@@ -168,11 +169,11 @@ class _PropertyOwnerAmenitiesViewState
                           textColor: Colors.white,
                           onPressed: () async {
                             if (uploadFormKey.currentState!.validate()) {
-                              model.goToPropertyOwnerIdentificationView();
+                              model.PropertyOwnerVerificationView();
 
                               print(" TV is ${model.hasTV}");
                             } else {
-                              model.upoloadPropertyToServer(amenities, rules);
+                              //  model.upoloadPropertyToServer();
                             }
                           }),
                     ],

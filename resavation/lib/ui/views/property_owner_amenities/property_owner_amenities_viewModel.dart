@@ -1,23 +1,28 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/upload_property_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
 
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
+
   /// Checkboxes are named to fit their corresponding value
   /// To enable for easy recognition and usage
 
-  void upoloadPropertyToServer(
-      List<String>? amenities, List<String>? rules) async {
-    httpService.uploadProperty(amenities: amenities, rules: rules);
-  }
+  // void upoloadPropertyToServer() async {
+  //   httpService.uploadProperty(amenities: amenities, rules: rules);
+  // }
 
-  List amenities = [];
+  List<bool> amenities = [];
+  List<bool> rules = [];
 
   bool _hasWifi = false;
   bool get hasWifi => _hasWifi;
@@ -53,13 +58,13 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
 
   void onCheckChanged2(bool? value) {
     _hasMachine = value ?? false;
-    if (amenities.contains("Machine")) {
-      amenities.remove("Machine");
-      print(amenities);
-    } else {
-      amenities.add("Machine");
-      print(amenities);
-    }
+    // if (amenities.contains("Machine")) {
+    //   amenities.remove("Machine");
+    //   print(amenities);
+    // } else {
+    //   amenities.add("Machine");
+    //   print(amenities);
+    // }
 
     notifyListeners();
   }
@@ -99,7 +104,27 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToPropertyOwnerIdentificationView() {
-    _navigationService.navigateTo(Routes.propertyOwnerIdentificationView);
+  void PropertyOwnerVerificationView() async {
+    propertyOwnerUploadModel.airConditional = _hasAC;
+    propertyOwnerUploadModel.airDryer = _hasHairDryer;
+    propertyOwnerUploadModel.fireAlarm = _hasFireAlarm;
+    propertyOwnerUploadModel.tv = _hasTV;
+    propertyOwnerUploadModel.washingMachine = _hasMachine;
+    propertyOwnerUploadModel.wifi = _hasWifi;
+    propertyOwnerUploadModel.noHouseParty = _houseParty;
+    propertyOwnerUploadModel.noPet = _pets;
+    propertyOwnerUploadModel.noSmoking = _smoking;
+
+    _navigationService.navigateTo(Routes.propertyOwnerVerificationView,
+        arguments: propertyOwnerUploadModel);
+
+    try {
+      await httpService.uploadProperty();
+
+      notifyListeners();
+    } catch (exception) {
+      notifyListeners();
+      return Future.error(exception.toString());
+    }
   }
 }

@@ -11,6 +11,8 @@ import '../../../services/core/http_service.dart';
 class PropertyOwnerDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
 // Global Keys to use with the form text fields
   // final uploadFormKey = GlobalKey<FormState>();
@@ -32,17 +34,16 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
     final String state = propertyStateController.text;
     final String city = propertyCityController.text;
 
-    httpService.uploadProperty(
-        propertyName: propertyName,
-        description: description,
-        address: address,
-        state: state,
-        city: city,
-        country: selectedCountry);
+    // httpService.uploadProperty(
+    //     propertyName: propertyName,
+    //     description: description,
+    //     address: address,
+    //     state: state,
+    //     city: city,
+    //     country: selectedCountry);
   }
 
-  void goToPropertyOwnerAddPhotosView(
-      PropertyOwnerUploadModel propertyOwnerUploadModel) {
+  void goToPropertyOwnerAddPhotosView() {
     propertyOwnerUploadModel.propertyName = propertyNameController.text.trim();
     propertyOwnerUploadModel.propertyDescription =
         propertyDescriptionController.text.trim();
@@ -67,3 +68,62 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.mapView);
   }
 }
+
+// class PropertyOwnerUploadModel {
+//   ///stage 1 data
+//   String? propertyType;
+//   bool? isSpaceServiced;
+//   bool? isSpaceFurnished;
+//   String? listingOption;
+//   String? propertyStatus;
+//   bool? liveInSpace;
+//   int? noOfBedroom;
+//   int? noOfBathroom;
+//   int? numberOfCarSLot;
+
+//   ///stage 2 data
+//   String? propertyName;
+//   String? propertyDescription;
+//   String? location;
+//   String? state;
+//   String? city;
+//   String? address;
+
+//   //add stage 3 data here
+//   String? imageUrl;
+
+//   //Stage 4 data
+//   int? annualPrice;
+//   int? biannualPrice;
+//   int? monthlyPrice;
+//   int? quarterlyPrice;
+//   String? from;
+//   String? to;
+
+//   //Stage 5 data
+//   List<String>? amenities;
+//   List<String>? rules;
+
+//   PropertyOwnerUploadModel({
+//     this.propertyType,
+//     this.isSpaceServiced,
+//     this.isSpaceFurnished,
+//     this.listingOption,
+//     this.propertyStatus,
+//     this.liveInSpace,
+//     this.noOfBedroom,
+//     this.noOfBathroom,
+//     this.numberOfCarSLot,
+//     this.propertyName,
+//     this.propertyDescription,
+//     this.location,
+//     this.state,
+//     this.city,
+//     this.address,
+//     this.imageUrl,
+//     this.annualPrice,
+//     this.biannualPrice,
+//     this.monthlyPrice,
+//     this.quarterlyPrice,
+//   });
+// }

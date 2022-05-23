@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+// import 'dart:js';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
@@ -7,6 +9,7 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:stacked/stacked.dart';
 
 class PropertyOwnerSpaceTypeView extends StatefulWidget {
@@ -20,6 +23,42 @@ class PropertyOwnerSpaceTypeView extends StatefulWidget {
 class _PropertyOwnerSpaceTypeViewState
     extends State<PropertyOwnerSpaceTypeView> {
   final uploadFormKey = GlobalKey<FormState>();
+
+  List<dynamic> Categories = [];
+  List<dynamic> subCategoriesMaster = [];
+  List<dynamic> subCategories = [];
+
+  String? CategoriesID;
+  String? subCategoriesID;
+
+  @override
+  void initState() {
+    super.initState;
+    this.Categories.add({"id": 1, "name": "Residential"});
+    this.Categories.add({"id": 2, "name": "Commercial"});
+    this.Categories.add({"id": 3, "name": "Industrial"});
+    this.Categories.add({"id": 4, "name": "Retail"});
+
+    this.subCategoriesMaster = [
+      // Residential
+      {"ID": 1, "Name": "Duplex", "parentID": 1},
+      {"ID": 2, "Name": "Detached huse", "parentID": 1},
+      {"ID": 3, "Name": "Terraced House", "parentID": 1},
+      {"ID": 4, "Name": "Pent House", "parentID": 1},
+      {"ID": 5, "Name": "Apartment", "parentID": 1},
+      {"ID": 6, "Name": "Bungalow", "parentID": 1},
+      {"ID": 7, "Name": "Mansion", "parentID": 1},
+      //Commercial
+      {"ID": 1, "Name": "Co-working space", "parentID": 2},
+      {"ID": 2, "Name": "Private Office", "parentID": 2},
+      //Industrial
+      {"ID": 1, "Name": "Warehouse", "parentID": 3},
+      {"ID": 2, "Name": "Factory", "parentID": 3},
+      //Retial
+      {"ID": 1, "Name": "Building", "parentID": 4},
+      {"ID": 2, "Name": "Shop", "parentID": 4},
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,41 +74,49 @@ class _PropertyOwnerSpaceTypeViewState
           ),
           child: Form(
             key: uploadFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tell us about your property',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                ...buildPropertyType(model),
-                verticalSpaceMedium,
-                Text(
-                  'Narrow down your space type',
-                  style: AppStyle.kBodyRegular,
-                ),
-                verticalSpaceMedium,
-                ...buildSpaceServiced(model),
-                verticalSpaceSmall,
-                ...buildSpaceFurnished(model),
-                verticalSpaceSmall,
-                ...buildListingOptions(model),
-                verticalSpaceSmall,
-                ...buildPropertyStatus(model),
-                verticalSpaceSmall,
-                ...buildLiveInSpace(model),
-                verticalSpaceSmall,
-                buildNumberOfBedrooms(model),
-                verticalSpaceSmall,
-                //Select the number of bathrooms
-                buildNumberOfBathrooms(model),
-                verticalSpaceSmall,
-                //Select the number of car slots
-                buildNumberOfCarSlots(model),
-                verticalSpaceLarge,
-                buildButtons(context, model),
-              ],
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tell us about your property',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceSmall,
+                  ...buildPropertyStatus(model),
+                  verticalSpaceSmall,
+
+                  ...buildPropertyCategory(context),
+                  verticalSpaceSmall,
+                  // ...buildPropertyType1(context),
+                  ...buildPropertyType(model),
+
+                  verticalSpaceMedium,
+                  Text(
+                    'Narrow down your space type',
+                    style: AppStyle.kBodyRegular,
+                  ),
+                  verticalSpaceMedium,
+                  ...buildSpaceServiced(model),
+                  verticalSpaceSmall,
+                  ...buildSpaceFurnished(model),
+                  verticalSpaceSmall,
+                  ...buildListingOptions(model),
+
+                  verticalSpaceSmall,
+                  ...buildLiveInSpace(model),
+                  verticalSpaceSmall,
+                  buildNumberOfBedrooms(model),
+                  verticalSpaceSmall,
+                  //Select the number of bathrooms
+                  buildNumberOfBathrooms(model),
+                  verticalSpaceSmall,
+                  //Select the number of car slots
+                  buildNumberOfCarSlots(model),
+                  verticalSpaceLarge,
+                  buildButtons(context, model),
+                ],
+              ),
             ),
           ),
         ),
@@ -129,7 +176,6 @@ class _PropertyOwnerSpaceTypeViewState
           onPressed: () async {
             if (uploadFormKey.currentState!.validate()) {
               model.goToPropertyOwnerDetailsView();
-
               print('furnish ${model.isFurnished}');
               print('serviced ${model.isServiced}');
               print('live here ${model.leaveHere}');
@@ -137,8 +183,6 @@ class _PropertyOwnerSpaceTypeViewState
               print('selected value ${model.selectedProperty}');
               print('nos of bedroom ${model.numberOfBedrooms}');
               print('no of car lot ${model.numberOfCarSlot}');
-            } else {
-              model.upoloadPropertyToServer();
             }
           },
           //           onPressed: ()async {
@@ -349,6 +393,93 @@ class _PropertyOwnerSpaceTypeViewState
       ),
     ];
   }
+
+  List<Widget> buildPropertyCategory(BuildContext context) {
+    return [
+      Text(
+        'Property Category',
+        style: AppStyle.kBodyRegular,
+      ),
+      verticalSpaceTiny,
+      Container(
+          width: MediaQuery.of(context).size.width,
+          height: 50,
+          child: FormHelper.dropDownWidget(
+            context, "Property category", this.CategoriesID, this.Categories,
+            (onChangeVal) {
+              this.CategoriesID = onChangeVal;
+              print("SelectedCtegories $onChangeVal");
+
+              this.subCategories = this
+                  .subCategoriesMaster
+                  .where(
+                    (subCategoriesItem) =>
+                        subCategoriesItem["parentID"].toString() ==
+                        onChangeVal.toString(),
+                  )
+                  .toList();
+
+              this.subCategoriesID = null;
+            },
+            (onValidateVal) {
+              if (onValidateVal == null) {
+                return "Please Select Category";
+              }
+            },
+            borderColor: kGray,
+            borderRadius: 5,
+            // optionLabel: "name",
+            // optionValue: "id"
+          )),
+      Text(
+        'Property Type',
+        style: AppStyle.kBodyRegular,
+      ),
+      verticalSpaceTiny,
+      Container(
+        width: MediaQuery.of(context).size.width,
+        child: FormHelper.dropDownWidget(context, "Select Property Type ",
+            this.subCategoriesID, this.subCategories, (onChangeVal) {
+          this.subCategoriesID = onChangeVal;
+          print("Selected  Property Types $onChangeVal");
+        }, (onValidateVal) {
+          // if (onValidateVal == null) {
+          //   return "Please Select Property Type";
+          // }
+        },
+            borderColor: kGray,
+            borderRadius: 5,
+            optionLabel: "Name",
+            optionValue: "ID"),
+      )
+    ];
+  }
+
+  // List<Widget> buildPropertyType1(BuildContext context) {
+  //   return [
+  //     Text(
+  //       'Property Type',
+  //       style: AppStyle.kBodyRegular,
+  //     ),
+  //     verticalSpaceTiny,
+  //     Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       child: FormHelper.dropDownWidget(context, "Select Property Type ",
+  //           this.subCategoriesID, this.subCategories, (onChangeVal) {
+  //         this.subCategoriesID = onChangeVal;
+  //         print("Selected  Property Types $onChangeVal");
+  //       }, (onValidateVal) {
+  //         if (onValidateVal == null) {
+  //           return "Please Select Property Type";
+  //         }
+  //       },
+  //           borderColor: kGray,
+  //           borderRadius: 5,
+  //           optionLabel: "Name",
+  //           optionValue: "ID"),
+  //     )
+  //   ];
+  // }
 }
 
 class AmenitiesSelection extends StatelessWidget {

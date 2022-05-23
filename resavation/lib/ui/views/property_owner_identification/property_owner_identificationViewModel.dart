@@ -36,17 +36,17 @@ class PropertyOwnerIdentificationViewModel extends BaseViewModel {
 
     final String userAddress = userAddressController.text;
 
-    httpService.uploadProperty(userDetails: {
-      "address": userAddress,
-      "city": userCity,
-      "country": selectedCountry,
-      "dateOfBirth": selectedDate.toString(),
-      "phoneNumber": userPhoneNum,
-      "state": userState,
-      "gender": selectedGender.toString(),
-      "firstName": userFirstName,
-      "lastName": userLastName
-    });
+    // httpService.uploadProperty(userDetails: {
+    //   "address": userAddress,
+    //   "city": userCity,
+    //   "country": selectedCountry,
+    //   "dateOfBirth": selectedDate.toString(),
+    //   "phoneNumber": userPhoneNum,
+    //   "state": userState,
+    //   "gender": selectedGender.toString(),
+    //   "firstName": userFirstName,
+    //   "lastName": userLastName
+    // });
   }
 
   // country picker UI logic

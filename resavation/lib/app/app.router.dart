@@ -154,6 +154,8 @@ class Routes {
 }
 
 class StackedRouter extends RouterBase {
+  static var propertyOwnerUploadModel;
+
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
@@ -313,17 +315,25 @@ class StackedRouter extends RouterBase {
       );
     },
     PropertyOwnerAddPhotosView: (data) {
-      var args = data.getArgs<PropertyOwnerAddPhotosViewArguments>(
-        orElse: () => PropertyOwnerAddPhotosViewArguments(),
-      );
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
+      // var args = data.getArgs<PropertyOwnerAddPhotosViewArguments>(
+      //   orElse: () => PropertyOwnerAddPhotosViewArguments(),
+      // );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerAddPhotosView(key: args.key),
+        builder: (context) => PropertyOwnerAddPhotosView(
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
+        ),
         settings: data,
       );
     },
     PropertyOwnerAddCoverPhotosView: (data) {
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerAddCoverPhotosView(),
+        builder: (context) => PropertyOwnerAddCoverPhotosView(
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
+        ),
         settings: data,
       );
     },
@@ -454,26 +464,32 @@ class StackedRouter extends RouterBase {
     PropertyOwnerDetailsView: (data) {
       final PropertyOwnerUploadModel propertyOwnerUploadModel =
           data.arguments as PropertyOwnerUploadModel;
+      // var args = data.getArgs<PropertyOwnerDetailsViewArguments>(
+      //   orElse: () => PropertyOwnerDetailsViewArguments(),
+      // );
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerDetailsView(
-          propertyOwnerUploadModel: propertyOwnerUploadModel,
-          leaveHere: false,
-        ),
+            propertyOwnerUploadModel: propertyOwnerUploadModel),
         settings: data,
       );
     },
     PropertyOwnerPaymentView: (data) {
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerPaymentView(),
+        builder: (context) => PropertyOwnerPaymentView(
+            propertyOwnerUploadModel: propertyOwnerUploadModel),
         settings: data,
       );
     },
     PropertyOwnerAmenitiesView: (data) {
-      var args = data.getArgs<PropertyOwnerAmenitiesViewArguments>(
-        orElse: () => PropertyOwnerAmenitiesViewArguments(),
-      );
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyOwnerAmenitiesView(key: args.key),
+        builder: (context) => PropertyOwnerAmenitiesView(
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
+          //propertyOwnerUploadModel: propertyOwnerUploadMode,
+        ),
         settings: data,
       );
     },
@@ -484,8 +500,12 @@ class StackedRouter extends RouterBase {
       );
     },
     PropertyOwnerVerificationView: (data) {
+      final PropertyOwnerUploadModel propertyOwnerUploadModel =
+          data.arguments as PropertyOwnerUploadModel;
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerVerificationView(),
+        builder: (context) => PropertyOwnerVerificationView(
+          propertyOwnerUploadModel: propertyOwnerUploadModel,
+        ),
         settings: data,
       );
     },
@@ -525,4 +545,9 @@ class PropertyOwnerSpaceTypeViewArguments {
 class PropertyOwnerAmenitiesViewArguments {
   final Key? key;
   PropertyOwnerAmenitiesViewArguments({this.key});
+}
+
+class PropertyOwnerDetailsViewArguments {
+  final Key? key;
+  PropertyOwnerDetailsViewArguments({this.key});
 }

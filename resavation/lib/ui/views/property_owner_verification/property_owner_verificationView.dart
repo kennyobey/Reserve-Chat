@@ -6,14 +6,26 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationViewModel.dart';
 
 import 'package:stacked/stacked.dart';
 
-class PropertyOwnerVerificationView extends StatelessWidget {
-  const PropertyOwnerVerificationView({Key? key}) : super(key: key);
+class PropertyOwnerVerificationView extends StatefulWidget {
+  const PropertyOwnerVerificationView(
+      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
+      : super(key: key);
 
+  @override
+  State<PropertyOwnerVerificationView> createState() =>
+      _PropertyOwnerVerificationViewState();
+}
+
+class _PropertyOwnerVerificationViewState
+    extends State<PropertyOwnerVerificationView> {
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerVerificationViewModel>.reactive(

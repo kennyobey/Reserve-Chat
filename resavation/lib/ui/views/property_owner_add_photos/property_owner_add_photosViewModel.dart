@@ -8,10 +8,13 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart';
+import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _imagePickerService = locator<ImagePickerService>();
+  final PropertyOwnerUploadModel propertyOwnerUploadModel =
+      PropertyOwnerUploadModel();
 
   String fileType = 'All';
 
@@ -25,9 +28,9 @@ class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerAddCoverPhotosView() {
-    _navigationService.navigateTo(Routes.propertyOwnerAddCoverPhotosView);
+    _navigationService.navigateTo(Routes.propertyOwnerAddCoverPhotosView,
+        arguments: propertyOwnerUploadModel);
   }
-
   // void pickFiles() async {
   //   FilePickerResult? result = await FilePicker.platform.pickFiles(
   //     type: FileType.image,
