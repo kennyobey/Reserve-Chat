@@ -104,7 +104,7 @@ class AppointmentView extends StatelessWidget {
                     'Adeyemo Stephen',
                     style: AppStyle.kSubHeading,
                   ),
-                  horizontalSpaceMedium,
+                  horizontalSpaceLarge,
                   FlatButton(
                     height: 5,
                     child: Text(

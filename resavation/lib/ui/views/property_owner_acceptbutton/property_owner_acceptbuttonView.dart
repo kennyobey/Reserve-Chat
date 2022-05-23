@@ -47,7 +47,9 @@ class PropertyOwnerAcceptbuttonView extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(width: 1, color: kGray)),
+                            border: Border.all(
+                                width: 1,
+                                color: Color.fromARGB(255, 224, 221, 221))),
                         child: TabBar(
                           labelStyle:
                               Theme.of(context).textTheme.headline2!.copyWith(

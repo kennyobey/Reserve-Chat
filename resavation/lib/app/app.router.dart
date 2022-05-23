@@ -42,6 +42,7 @@ import '../ui/views/property_owner_edit_profile/property_owner_edit_profileView.
 import '../ui/views/property_owner_homepage/property_owner_homepageView.dart';
 import '../ui/views/property_owner_identification/property_owner_identificationView.dart';
 import '../ui/views/property_owner_identification_verification/property_owner_identification_verificationView.dart';
+import '../ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import '../ui/views/property_owner_payment/property_owner_payment_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
 import '../ui/views/property_owner_settings/property_owner_settingsView.dart';
@@ -111,6 +112,8 @@ class Routes {
       '/property-owner-settings-view';
   static const String propertyOwnerAcceptbuttonView =
       '/property-owner-accept-button-view';
+  static const String propertyOwnerMyPropertyView =
+      '/property-owner-my-property-view';
   static const all = <String>{
     startupView,
     mainView,
@@ -154,6 +157,7 @@ class Routes {
     propertyOwnerVerificationView,
     propertyOwnerSettingsView,
     propertyOwnerAcceptbuttonView,
+    propertyOwnerMyPropertyView
   };
 }
 
@@ -215,6 +219,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerSettingsView, page: PropertyOwnerSettingsView),
     RouteDef(Routes.propertyOwnerAcceptbuttonView,
         page: PropertyOwnerAcceptbuttonView),
+    RouteDef(Routes.propertyOwnerMyPropertyView,
+        page: PropertyOwnerMyPropertyView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -524,6 +530,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerAcceptbuttonView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const PropertyOwnerAcceptbuttonView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerMyPropertyView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerMyPropertyView(),
         settings: data,
       );
     },

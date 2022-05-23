@@ -81,7 +81,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                     ResavationElevatedButton(
                       child: Text("List your space"),
                       onPressed: () {
-                        model.goToPropertyOwnerSpaceTypeView();
+                        model.PropertyOwnerMyPropertyView();
                       },
                       //  borderColor: kp,
                     ),

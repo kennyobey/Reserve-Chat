@@ -28,4 +28,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void goToMessage() {
     _navigationService.navigateTo(Routes.messagesView);
   }
+
+  void PropertyOwnerMyPropertyView() {
+    _navigationService.navigateTo(Routes.propertyOwnerMyPropertyView);
+  }
 }
