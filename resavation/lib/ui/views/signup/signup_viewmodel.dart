@@ -78,4 +78,10 @@ class SignUpViewModel extends BaseViewModel {
     print(userTypeService.isTenant);
     notifyListeners();
   }
+
+  void goToSignUpConfirmation() {
+    final String email = emailFieldController.text.trim();
+    _navigationService.navigateTo(Routes.signUpConfirmationView,
+        arguments: email);
+  }
 }

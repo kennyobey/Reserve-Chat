@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
@@ -9,31 +9,26 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../../model/call_model.dart';
 import '../../../services/core/user_type_service.dart';
+import '../../shared/dump_widgets/resavation_image.dart';
 import '../audio_call/call_methods.dart';
 import '../audio_call/permission_checker.dart';
-import '../messages/messages_view.dart';
 
 class ChatRoomViewModel extends BaseViewModel {
-  // emoji picker UI logic
-  final TextEditingController controller = TextEditingController();
-
-  bool isMessageEmpty = true;
-
-  bool emojiShowing = false;
-
   final scrollController = ScrollController();
 
   static final CallMethods callMethods = CallMethods();
+
   final _navigationService = locator<NavigationService>();
   final _userTypeService = locator<UserTypeService>();
 
   get getUserEmail => _userTypeService.userData.email;
 
-  onEmojiSelected(Emoji emoji) {
-    controller
-      ..text += emoji.emoji
-      ..selection = TextSelection.fromPosition(
-          TextPosition(offset: controller.text.length));
+  onMessageSent() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 500),
+    );
   }
 
   static bool isUSerChat(String userEmail) =>
@@ -58,13 +53,6 @@ class ChatRoomViewModel extends BaseViewModel {
     }
   }
 
-  onBackspacePressed() {
-    controller
-      ..text = controller.text.characters.skipLast(1).toString()
-      ..selection = TextSelection.fromPosition(
-          TextPosition(offset: controller.text.length));
-  }
-
   void goToVideoCallView() {
     _navigationService.navigateTo(Routes.videoCallView);
   }
@@ -77,56 +65,6 @@ class ChatRoomViewModel extends BaseViewModel {
         .collection('messages')
         .orderBy('timestamp', descending: false)
         .snapshots();
-  }
-
-  static sendChatMessage(ChatModel model, String message) async {
-    try {
-      final _userTypeService = locator<UserTypeService>();
-      String userEmail = _userTypeService.userData.email;
-
-      ChatModel chatModel = model;
-
-      int timeStamp = DateTime.now().millisecondsSinceEpoch;
-      ChatMessageModel chatMessageModel = ChatMessageModel(
-          message: message, userId: userEmail, timestamp: timeStamp);
-
-      String otherUserEmail = chatModel.usersId
-          .where((element) => element.toString() != userEmail)
-          .first;
-
-      //check if chat already exists
-      var chatDocumentReference =
-          FirebaseFirestore.instance.collection('chat').doc(chatModel.chatId);
-
-      final newCount = chatModel.messageCount[otherUserEmail] + 1;
-
-      chatModel.lastMessage = chatMessageModel;
-      chatModel.lastMessageTimeStamp = chatMessageModel.timestamp;
-      chatModel.messageCount = {otherUserEmail: newCount, userEmail: 0};
-
-      //update or create the chat document
-      await chatDocumentReference.set(
-          chatModel.toJson(), SetOptions(merge: true));
-      // add the message to the chat document
-      await chatDocumentReference
-          .collection('messages')
-          .doc()
-          .set(chatMessageModel.toJson());
-    } catch (exception) {
-      return Future.error(exception.toString());
-    }
-  }
-
-  void updateTextState() {
-    final text = controller.text.trim();
-
-    if (isMessageEmpty && text.isNotEmpty) {
-      isMessageEmpty = false;
-      notifyListeners();
-    } else if (!isMessageEmpty && text.isEmpty) {
-      isMessageEmpty = true;
-      notifyListeners();
-    }
   }
 
   void startCall(
@@ -157,5 +95,50 @@ class ChatRoomViewModel extends BaseViewModel {
         _navigationService.navigateTo(Routes.audioCallView, arguments: call);
       }
     }
+  }
+
+  showImage(String imageUrl, BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 5,
+      child: Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        height: size.height * 0.8,
+        width: size.width * 0.9,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: PhotoView.customChild(
+          minScale: PhotoViewComputedScale.contained * 0.8,
+          maxScale: PhotoViewComputedScale.covered * 2.5,
+          child: ResavationImage(
+            image: imageUrl,
+          ),
+        ),
+      ),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Image Viewer",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
   }
 }

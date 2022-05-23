@@ -150,7 +150,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   showImageDialog(String imageUrl, EditProfileViewModel model) {
-    var file = File(imageUrl);
+    final file = File(imageUrl);
     Dialog dialog = Dialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),

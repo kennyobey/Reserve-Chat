@@ -26,16 +26,17 @@ class LogInViewModel extends BaseViewModel {
   bool isLoading = false;
 
   // Login user
-  onLoginButtonTap() async {
+  Future<bool> onLoginButtonTap() async {
     isLoading = true;
     notifyListeners();
     final String email = emailController.text.trim();
     final String password = passwordController.text.trim();
 
     try {
-      await httpService.loginUser(email, password);
+      final isUserVerified = await httpService.loginUser(email, password);
       isLoading = false;
       notifyListeners();
+      return isUserVerified;
     } catch (exception) {
       isLoading = false;
       notifyListeners();
@@ -62,5 +63,11 @@ class LogInViewModel extends BaseViewModel {
 
   void goToMainView() {
     _navigationService.clearStackAndShow(Routes.mainView);
+  }
+
+  void goToVerifyAccount() {
+    final String email = emailController.text.trim();
+    _navigationService.navigateTo(Routes.signUpConfirmationView,
+        arguments: email);
   }
 }

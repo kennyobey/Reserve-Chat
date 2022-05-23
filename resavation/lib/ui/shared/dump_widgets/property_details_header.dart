@@ -96,19 +96,23 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
         });
   }
 
-  Positioned buildFavouriteButton(double topPadding) {
+  Widget buildFavouriteButton(double topPadding) {
     return Positioned(
       right: 10,
       top: topPadding + 10,
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.black, borderRadius: BorderRadius.circular(25)),
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(5),
-        child: Icon(
-          isFavoriteTap ? Icons.favorite_border : Icons.favorite_border,
-          color: isFavoriteTap ? kRed : kWhite,
-          size: 20,
+      child: InkWell(
+        splashColor: Colors.transparent,
+        onTap: onFavoriteTap,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black, borderRadius: BorderRadius.circular(25)),
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            isFavoriteTap ? Icons.favorite : Icons.favorite_border,
+            color: isFavoriteTap ? kRed : kWhite,
+            size: 20,
+          ),
         ),
       ),
     );

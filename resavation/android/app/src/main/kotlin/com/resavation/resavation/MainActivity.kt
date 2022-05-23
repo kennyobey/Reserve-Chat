@@ -40,8 +40,6 @@ class AlgoliaAPIFlutterAdapter(applicationID: ApplicationID, apiKey: APIKey) {
     val client = ClientSearch(applicationID, apiKey)
 
     fun perform(call: MethodCall, result: MethodChannel.Result): Unit = runBlocking {
-//        Log.d("AlgoliaAPIAdapter", "method: ${call.method}")
-//        Log.d("AlgoliaAPIAdapter", "args: ${call.arguments}")
         val args = call.arguments as? List<String>
         if (args == null) {
             result.error("AlgoliaNativeError", "Missing arguments", null)

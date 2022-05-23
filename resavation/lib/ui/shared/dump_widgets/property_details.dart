@@ -16,7 +16,7 @@ class PropertyDetails extends StatelessWidget {
 
   final int numberOfBedrooms;
   final int numberOfBathrooms;
-  final int squareFeet;
+  final double squareFeet;
   final String? title;
   final MainAxisAlignment mainAxisAlignment;
 
@@ -26,41 +26,40 @@ class PropertyDetails extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       children: [
         PropertyDetailsIcon(
-          icon: Icons.king_bed_outlined,
-          numberOfBedrooms: numberOfBedrooms),
+            icon: Icons.king_bed_outlined, numberOfBedrooms: numberOfBedrooms),
         horizontalSpaceSmall,
         PropertyDetailsIcon(
-            icon: Icons.shower_outlined,
-            numberOfBedrooms: numberOfBathrooms),
+            icon: Icons.shower_outlined, numberOfBedrooms: numberOfBathrooms),
         horizontalSpaceSmall,
         PropertyDetailsIcon(
-            icon: Icons.square_foot_outlined,
-            numberOfBedrooms: squareFeet),
-
-
-
+            icon: Icons.square_foot_outlined, numberOfBedrooms: squareFeet),
       ],
     );
   }
 }
 
 class PropertyDetailsIcon extends StatelessWidget {
-  const PropertyDetailsIcon({
-    Key? key,
-    required this.numberOfBedrooms, required this.icon
-  }) : super(key: key);
+  const PropertyDetailsIcon(
+      {Key? key, required this.numberOfBedrooms, required this.icon})
+      : super(key: key);
 
-  final int numberOfBedrooms;
+  final dynamic numberOfBedrooms;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: kBlack54, size: 20,),
-        SizedBox(width: 4,),
+        Icon(
+          icon,
+          color: kBlack54,
+          size: 20,
+        ),
+        SizedBox(
+          width: 4,
+        ),
         Text(
-          numberOfBedrooms.toString() ,
+          numberOfBedrooms.toString(),
           style: AppStyle.kBodySmallRegular,
         ),
       ],
