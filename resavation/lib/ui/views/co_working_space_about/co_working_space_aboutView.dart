@@ -34,7 +34,6 @@ class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
             buildDescription(model, context),
             buildAmenity(model),
             buildLocation(model),
-            planButton(context, model),
           ],
         ),
         bottomSheet: planButton(context, model),
@@ -342,7 +341,7 @@ class AmenitiesItem extends StatelessWidget {
 
 Widget planButton(BuildContext context, CoWorkingSpaceAboutViewModel model) {
   return ResavationElevatedButton(
-      child: Container(child: Text("Choose Plan")),
+      child: Text("Choose Plan"),
       onPressed: () {
         showModalBottomSheet(
             context: context,
@@ -350,11 +349,22 @@ Widget planButton(BuildContext context, CoWorkingSpaceAboutViewModel model) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("Choose your Plan"),
+                    ],
+                  ),
+                  verticalSpaceRegular,
                   buildNumberOfDays(model),
-                  ListTile(
-                    leading: new Icon(Icons.share),
-                    title: new Text('Share'),
-                    onTap: () {
+                  verticalSpaceTiny,
+                  buildNumberOfWeeks(model),
+                  verticalSpaceTiny,
+                  buildNumberOfMonths(model),
+                  verticalSpaceRegular,
+                  ResavationElevatedButton(
+                    child: Text('Continue to Checkout'),
+                    onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
@@ -366,7 +376,28 @@ Widget planButton(BuildContext context, CoWorkingSpaceAboutViewModel model) {
 
 PlanSelection buildNumberOfDays(CoWorkingSpaceAboutViewModel model) {
   return PlanSelection(
-    title: "Number Of bedrooms",
+    title: "Daily",
+    amount: "#2000/day",
+    value: model.numberOfDays,
+    onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
+    onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
+  );
+}
+
+PlanSelection buildNumberOfWeeks(CoWorkingSpaceAboutViewModel model) {
+  return PlanSelection(
+    title: "Weekly (Mon/Friday)",
+    amount: "#7000/week",
+    value: model.numberOfDays,
+    onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
+    onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
+  );
+}
+
+PlanSelection buildNumberOfMonths(CoWorkingSpaceAboutViewModel model) {
+  return PlanSelection(
+    title: "Monthly",
+    amount: "#25000/month",
     value: model.numberOfDays,
     onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
     onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
@@ -377,10 +408,12 @@ class PlanSelection extends StatelessWidget {
   const PlanSelection(
       {Key? key,
       this.title,
+      this.amount,
       this.onNegativeTap,
       this.onPositiveTap,
       this.value})
       : super(key: key);
+  final String? amount;
   final String? title;
   final int? value;
   final Function()? onNegativeTap;
@@ -388,31 +421,47 @@ class PlanSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title!,
-              style: AppStyle.kBodySmallRegular12,
-            ),
-            Row(
-              children: [
-                IncrementPlans(
-                  icon: Icons.remove,
-                  onTap: onNegativeTap,
-                ),
-                Text(value.toString()),
-                IncrementPlans(
-                  icon: Icons.add,
-                  onTap: onPositiveTap,
-                ),
-              ],
-            )
-          ],
+    return Container(
+      padding: EdgeInsets.all(5),
+      height: 60,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
         ),
-      ],
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title!,
+            style: AppStyle.kBodySmallRegular12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                amount!,
+                style: AppStyle.kBodySmallRegular12,
+              ),
+              Row(
+                children: [
+                  IncrementPlans(
+                    icon: Icons.remove,
+                    onTap: onNegativeTap,
+                  ),
+                  Text(value.toString()),
+                  IncrementPlans(
+                    icon: Icons.add,
+                    onTap: onPositiveTap,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
