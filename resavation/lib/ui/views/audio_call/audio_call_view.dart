@@ -6,6 +6,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
+import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,28 +16,105 @@ import '../../shared/dump_widgets/resavation_image.dart';
 import '../../shared/text_styles.dart';
 import 'call_methods.dart';
 
-class AudioCallView extends StatefulWidget {
+class AudioCallView extends StatelessWidget {
+  final _httpLocator = locator<HttpService>();
+  final _userService = locator<UserTypeService>();
   final CallModel? call;
 
   AudioCallView({
+    Key? key,
     required this.call,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder<String>(
+        future: _httpLocator.getCallToken(
+            callId: call?.channelId ?? '',
+            isSender: call?.callerId == _userService.userData.email,
+            userId: _userService.userData.id),
+        builder: (context, asyncDataSnapshot) {
+          if (asyncDataSnapshot.hasError) {
+            return buildErrorBody(context);
+          }
+
+          if (asyncDataSnapshot.data != null) {
+            final token = asyncDataSnapshot.data ?? '';
+            return AudioCallViewBody(
+              call: call,
+              token: token,
+            );
+          } else {
+            return buildLoadingWidget();
+          }
+        },
+      ),
+    );
+  }
+
+  Center buildLoadingWidget() {
+    return const Center(
+      child: SizedBox(
+        height: 40,
+        width: 40,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: Colors.blue,
+          valueColor: AlwaysStoppedAnimation(kWhite),
+        ),
+      ),
+    );
+  }
+
+  Column buildErrorBody(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+    final bodyText1 = textTheme.bodyText1!
+        .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
+    final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Text(
+          'Error occurred!',
+          style: bodyText1,
+        ),
+        const SizedBox(
+          height: 5,
+          width: double.infinity,
+        ),
+        Text(
+          'An error occured with the data fetch, please try again later',
+          textAlign: TextAlign.center,
+          style: bodyText2,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
+}
+
+class AudioCallViewBody extends StatefulWidget {
+  final CallModel? call;
+  final String token;
+
+  AudioCallViewBody({
+    required this.call,
+    required this.token,
   });
 
   @override
-  _AudioCallViewState createState() => _AudioCallViewState();
+  _AudioCallViewBodyState createState() => _AudioCallViewBodyState();
 }
 
-class _AudioCallViewState extends State<AudioCallView> {
+class _AudioCallViewBodyState extends State<AudioCallViewBody> {
   static const APP_ID = '727ccbedaa644e80a7700e2b17c5fa06';
-
-  static const Token =
-      '0062998731ccff54ea78cf2d71a5af4b66dIAAAHZGfXdNsay43RHeQR65mgdClxuSVEmFoZo8Ya7T4Ic+UovsAAAAAEAATtvR92RQdYgEAAQDTFB1i';
-
+  final _userService = locator<UserTypeService>();
   final CallMethods callMethods = CallMethods();
   late RtcEngine _engine;
   int? _remoteUid;
 
-  bool _localUserJoined = false;
   final _userTypeService = locator<UserTypeService>();
   late StreamSubscription callStreamSubscription;
 
@@ -55,7 +133,9 @@ class _AudioCallViewState extends State<AudioCallView> {
     _addAgoraEventHandlers();
     await _engine.setParameters(
         '''{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}''');
-    await _engine.joinChannel(Token, widget.call?.channelId ?? '', null, 0);
+
+    await _engine.joinChannel(widget.token, widget.call?.channelId ?? '', null,
+        _userService.userData.id);
   }
 
   addPostFrameCallback() {
@@ -84,15 +164,6 @@ class _AudioCallViewState extends State<AudioCallView> {
             message: code.toString(),
             duration: const Duration(milliseconds: 1000),
           );
-        },
-        joinChannelSuccess: (
-          String channel,
-          int uid,
-          int elapsed,
-        ) {
-          setState(() {
-            _localUserJoined = true;
-          });
         },
         userJoined: (int uid, int elapsed) {
           setState(() {
@@ -190,6 +261,7 @@ class _AudioCallViewState extends State<AudioCallView> {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -202,8 +274,12 @@ class _AudioCallViewState extends State<AudioCallView> {
             alignment: Alignment.topRight,
             child: Container(
               width: 100,
-              height: 150,
-              margin: const EdgeInsets.only(top: 40),
+              height: 200,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              margin: EdgeInsets.only(top: topPadding + 10, right: 10),
               child: Center(
                 child: RtcLocalView.SurfaceView(
                   channelId: widget.call?.channelId ?? '',
@@ -239,7 +315,7 @@ class _AudioCallViewState extends State<AudioCallView> {
             ),
             child: ResavationImage(image: widget.call?.receiverPic ?? ''),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 25),
           Text(
             'Calling ${widget.call?.receiverName ?? ''}, please wait',
             style: AppStyle.kBodyRegularBlack15.copyWith(color: kWhite),

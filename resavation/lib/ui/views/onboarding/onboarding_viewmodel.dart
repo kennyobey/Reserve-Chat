@@ -17,7 +17,7 @@ class OnboardingViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setOnboardingVisibility() async {
+  setOnboardingVisibility() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_visibility', false);
   }
@@ -26,8 +26,8 @@ class OnboardingViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.mainView);
   }
 
-  void goToSignInView() {
-    setOnboardingVisibility();
+  void goToSignInView() async {
+    await setOnboardingVisibility();
     _navigationService.navigateTo(Routes.logInView);
   }
 

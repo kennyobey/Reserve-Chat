@@ -21,7 +21,6 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
     required this.numberOfBathrooms,
     required this.squareFeet,
     this.isFavoriteTap = false,
-    required this.category,
     this.onTap,
   }) : super(key: key);
 
@@ -33,9 +32,9 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
   final String address;
   final int numberOfBedrooms;
   final int numberOfBathrooms;
-  final int squareFeet;
+  final double squareFeet;
   final bool isFavoriteTap;
-  final String? category;
+
   final void Function()? onTap;
 
   @override

@@ -80,8 +80,8 @@ class MessagesViewModel extends BaseViewModel {
             chatId: chatId,
             usersId: users,
             messageCount: {otherUserEmail: 0, userEmail: 0},
-            lastMessage:
-                ChatMessageModel(message: '', userId: '', timestamp: 0),
+            lastMessage: ChatMessageModel(
+                message: '', userId: '', timestamp: 0, imageUrl: ''),
             lastMessageTimeStamp: DateTime.now().millisecondsSinceEpoch,
             usersName: {
               otherUserEmail: otherUserName,

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:resavation/utility/assets.dart';
+import 'package:collection/collection.dart';
 
 List<Property> propertyFromJson(String str) {
   final data = json.decode(str);
@@ -15,277 +15,225 @@ List<Property> propertyFromJson(String str) {
 }
 
 class Property {
-  final int id;
-  final String image;
-  final int? amountPerYear;
-  final String location;
-  final String address;
-  final int numberOfBedrooms;
-  final int numberOfBathrooms;
-  final int squareFeet;
-  bool isFavoriteTap;
-  final String? category;
+  int? id;
+  String? createdAt;
 
-  ///
-  final String description;
-  final String ownerProfileImage;
-  final String ownerProfileName;
-  final String ownerAgentType;
-  final List<dynamic> houseRules;
+  String? updatedAt;
+  String? spaceType;
+  String? propertyStyle;
+  String? propertyStatus;
+  String? isSpaceServiced;
+  String? isSpaceFurnished;
+  String? isLiveInSPace;
+  int? bedroomCount;
+  int? bathTubCount;
+  int? carSlot;
+  String? imageUrl;
+  String? propertyName;
+  String? description;
+  String? country;
+  String? state;
+  String? city;
+  String? address;
+  dynamic paymentType;
+  double? surfaceArea;
+
+  int? spacePrice;
+  String? verificationStatus;
+  String? propertyCategory;
+  bool? favourite;
 
   Property({
-    this.id = -1,
-    this.ownerAgentType = '',
-    this.image = '',
-    this.amountPerYear = 0,
-    this.houseRules = const [],
-    this.description = '',
-    this.ownerProfileImage = '',
-    this.ownerProfileName = '',
-    this.location = '',
-    this.address = '',
-    this.numberOfBedrooms = -1,
-    this.numberOfBathrooms = -1,
-    this.squareFeet = -1,
-    this.isFavoriteTap = false,
-    this.category,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.spaceType,
+    this.propertyStyle,
+    this.propertyStatus,
+    this.isSpaceServiced,
+    this.isSpaceFurnished,
+    this.isLiveInSPace,
+    this.bedroomCount,
+    this.bathTubCount,
+    this.carSlot,
+    this.imageUrl,
+    this.propertyName,
+    this.description,
+    this.country,
+    this.state,
+    this.city,
+    this.address,
+    this.paymentType,
+    this.surfaceArea,
+    this.spacePrice,
+    this.verificationStatus,
+    this.propertyCategory,
+    this.favourite,
   });
 
-/*
-  Property.fromJson(Map<String, dynamic> json) {
-    if (json['message'] != null) {
-      message = <Message>[];
-      json['message'].forEach((v) {
-        message?.add(Message.fromJson(v));
-      });
-    }
-  }*/
+  @override
+  String toString() {
+    return 'Property(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, spaceType: $spaceType, propertyStyle: $propertyStyle, propertyStatus: $propertyStatus, isSpaceServiced: $isSpaceServiced, isSpaceFurnished: $isSpaceFurnished, isLiveInSPace: $isLiveInSPace, bedroomCount: $bedroomCount, bathTubCount: $bathTubCount, carSlot: $carSlot, imageUrl: $imageUrl, propertyName: $propertyName, description: $description, country: $country, state: $state, city: $city, address: $address, paymentType: $paymentType, surfaceArea: $surfaceArea, spacePrice: $spacePrice, verificationStatus: $verificationStatus, propertyCategory: $propertyCategory, favourite: $favourite)';
+  }
 
-  factory Property.fromJson(Map<String, dynamic> json) {
+  factory Property.fromMap(Map<String, dynamic> data) => Property(
+        id: data['id'] as int?,
+        createdAt: data['createdAt'] as String?,
+        updatedAt: data['updatedAt'] as String?,
+        spaceType: data['spaceType'] as String?,
+        propertyStyle: data['propertyStyle'] as String?,
+        propertyStatus: data['propertyStatus'] as String?,
+        isSpaceServiced: data['isSpaceServiced'] as String?,
+        isSpaceFurnished: data['isSpaceFurnished'] as String?,
+        isLiveInSPace: data['isLiveInSPace'] as String?,
+        bedroomCount: data['bedroomCount'] as int?,
+        bathTubCount: data['bathTubCount'] as int?,
+        carSlot: data['carSlot'] as int?,
+        imageUrl: data['imageUrl'] as String?,
+        propertyName: data['propertyName'] as String?,
+        description: data['description'] as String?,
+        country: data['country'] as String?,
+        state: data['state'] as String?,
+        city: data['city'] as String?,
+        address: data['address'] as String?,
+        paymentType: data['paymentType'] as dynamic,
+        surfaceArea: data['surfaceArea'] as double?,
+        //todo spacePrice: data['spacePrice'] as int?,
+        spacePrice: 50000,
+        verificationStatus: data['verificationStatus'] as String?,
+        propertyCategory: data['propertyCategory'] as String?,
+        favourite: data['favourite'] as bool?,
+      );
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        'spaceType': spaceType,
+        'propertyStyle': propertyStyle,
+        'propertyStatus': propertyStatus,
+        'isSpaceServiced': isSpaceServiced,
+        'isSpaceFurnished': isSpaceFurnished,
+        'isLiveInSPace': isLiveInSPace,
+        'bedroomCount': bedroomCount,
+        'bathTubCount': bathTubCount,
+        'carSlot': carSlot,
+        'imageUrl': imageUrl,
+        'propertyName': propertyName,
+        'description': description,
+        'country': country,
+        'state': state,
+        'city': city,
+        'address': address,
+        'paymentType': paymentType,
+        'surfaceArea': surfaceArea,
+        'spacePrice': spacePrice,
+        'verificationStatus': verificationStatus,
+        'propertyCategory': propertyCategory,
+        'favourite': favourite,
+      };
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Property].
+  factory Property.fromJson(String data) {
+    return Property.fromMap(json.decode(data) as Map<String, dynamic>);
+  }
+
+  /// `dart:convert`
+  ///
+  /// Converts [Property] to a JSON string.
+  String toJson() => json.encode(toMap());
+
+  Property copyWith({
+    int? id,
+    String? createdAt,
+    String? updatedAt,
+    String? spaceType,
+    String? propertyStyle,
+    String? propertyStatus,
+    String? isSpaceServiced,
+    String? isSpaceFurnished,
+    String? isLiveInSPace,
+    int? bedroomCount,
+    int? bathTubCount,
+    int? carSlot,
+    String? imageUrl,
+    String? propertyName,
+    String? description,
+    String? country,
+    String? state,
+    String? city,
+    String? address,
+    dynamic paymentType,
+    double? surfaceArea,
+    int? spacePrice,
+    String? verificationStatus,
+    String? propertyCategory,
+    bool? favourite,
+  }) {
     return Property(
-      id: json["id"] ?? '',
-      image: json["image"] ?? '',
-      amountPerYear: json["amount_per_year"] ?? -1,
-      location: json["location"] ?? '',
-      address: json["address"] ?? '',
-      numberOfBedrooms: json["no_of_bedroom"] ?? -1,
-      numberOfBathrooms: json["no_of_batroom"] ?? -1,
-      squareFeet: json["square_feet"] ?? -1,
-      isFavoriteTap: json["is_favourite"] ?? false,
-      category: json["category"] ?? '',
-      description: json["description"] ?? '',
-      ownerProfileImage: json["owner_profile_image"] ?? '',
-      ownerProfileName: json["owner_profile_name"] ?? '',
-      ownerAgentType: json["owner_agent_type"] ?? '',
-      houseRules: json["house_rules"] ?? '',
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      spaceType: spaceType ?? this.spaceType,
+      propertyStyle: propertyStyle ?? this.propertyStyle,
+      propertyStatus: propertyStatus ?? this.propertyStatus,
+      isSpaceServiced: isSpaceServiced ?? this.isSpaceServiced,
+      isSpaceFurnished: isSpaceFurnished ?? this.isSpaceFurnished,
+      isLiveInSPace: isLiveInSPace ?? this.isLiveInSPace,
+      bedroomCount: bedroomCount ?? this.bedroomCount,
+      bathTubCount: bathTubCount ?? this.bathTubCount,
+      carSlot: carSlot ?? this.carSlot,
+      imageUrl: imageUrl ?? this.imageUrl,
+      propertyName: propertyName ?? this.propertyName,
+      description: description ?? this.description,
+      country: country ?? this.country,
+      state: state ?? this.state,
+      city: city ?? this.city,
+      address: address ?? this.address,
+      paymentType: paymentType ?? this.paymentType,
+      surfaceArea: surfaceArea ?? this.surfaceArea,
+      spacePrice: spacePrice ?? this.spacePrice,
+      verificationStatus: verificationStatus ?? this.verificationStatus,
+      propertyCategory: propertyCategory ?? this.propertyCategory,
+      favourite: favourite ?? this.favourite,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-
-    data["id"] = id;
-    data["image"] = image;
-    data["amount_per_year"] = amountPerYear;
-    data["location"] = location;
-    data["address"] = address;
-    data["no_of_bedroom"] = numberOfBedrooms;
-    data["no_of_batroom"] = numberOfBathrooms;
-    data["square_feet"] = squareFeet;
-    data["is_favourite"] = isFavoriteTap;
-    data["category"] = category;
-    data["description"] = description;
-    data["owner_profile_image"] = ownerProfileImage;
-    data["owner_profile_name"] = ownerProfileName;
-    data["owner_agent_type"] = ownerAgentType;
-    data["house_rules"] = houseRules;
-
-    return data;
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    if (other is! Property) return false;
+    final mapEquals = const DeepCollectionEquality().equals;
+    return mapEquals(other.toMap(), toMap());
   }
-}
 
-final listOfProperties = <Property>[
-  Property(
-    id: 1,
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-    ownerAgentType: 'Property Owner',
-    ownerProfileImage: Assets.profile_image2,
-    ownerProfileName: 'Jimoh Samuel',
-    houseRules: [
-      "Timely Rent Payments and Late Fees.",
-      "Maintenance, Repairs, and Cleanliness.",
-      "Renters Insurance.",
-      "Pet Policies.",
-      "Quiet Hours.",
-      "Lease Renewals and Notice Periods.",
-      "Damage Deductions from the Security Deposit.",
-      "Consequences of Lease Breaking.",
-    ],
-    image: Assets.sitting_room_placeholder,
-    amountPerYear: 13050,
-    location: 'Murea Properties',
-    address: '57 Fajuyi Rd, 220212, Ife',
-    numberOfBathrooms: 10,
-    numberOfBedrooms: 5,
-    squareFeet: 200,
-    isFavoriteTap: true,
-    category: 'Apartment',
-  ),
-  Property(
-      id: 2,
-      image: Assets.house_placeholder,
-      amountPerYear: 230000,
-      houseRules: [
-        "Timely Rent Payments and Late Fees.",
-        "Maintenance, Repairs, and Cleanliness.",
-        "Renters Insurance.",
-        "Pet Policies.",
-        "Quiet Hours.",
-        "Lease Renewals and Notice Periods.",
-        "Damage Deductions from the Security Deposit.",
-        "Consequences of Lease Breaking.",
-      ],
-      location: 'Trinity Estate and Co',
-      address: 'No. 72, opposite Old Nitel building, Parakin Rd, 220101, Ife',
-      numberOfBathrooms: 10,
-      numberOfBedrooms: 5,
-      squareFeet: 200,
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-      ownerAgentType: 'Listing Agent',
-      ownerProfileImage: Assets.profile_image3,
-      ownerProfileName: 'Samuel Adeyeye',
-      isFavoriteTap: false,
-      category: 'Apartment'),
-  Property(
-      id: 3,
-      image: Assets.sitting_room_placeholder,
-      amountPerYear: 134200,
-      location: 'Banana Estate',
-      address: 'No. 72, opposite Old Nitel building, Parakin Rd, 220101, Ife',
-      numberOfBathrooms: 10,
-      numberOfBedrooms: 5,
-      squareFeet: 200,
-      houseRules: [
-        "Timely Rent Payments and Late Fees.",
-        "Maintenance, Repairs, and Cleanliness.",
-        "Renters Insurance.",
-        "Pet Policies.",
-        "Quiet Hours.",
-        "Lease Renewals and Notice Periods.",
-        "Damage Deductions from the Security Deposit.",
-        "Consequences of Lease Breaking.",
-      ],
-      isFavoriteTap: true,
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-      ownerAgentType: 'Property Owner',
-      ownerProfileImage: Assets.profile_image,
-      ownerProfileName: 'Jimoh Samuel',
-      category: 'Office Space'),
-  Property(
-      id: 4,
-      image: Assets.lagos_location_placeholder,
-      amountPerYear: 322000,
-      location: 'Eleko Estate',
-      address: '57B lagos street',
-      numberOfBathrooms: 10,
-      houseRules: [
-        "Timely Rent Payments and Late Fees.",
-        "Maintenance, Repairs, and Cleanliness.",
-        "Renters Insurance.",
-        "Pet Policies.",
-        "Quiet Hours.",
-        "Lease Renewals and Notice Periods.",
-        "Damage Deductions from the Security Deposit.",
-        "Consequences of Lease Breaking.",
-      ],
-      numberOfBedrooms: 5,
-      squareFeet: 200,
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-      ownerAgentType: 'Property Owner',
-      ownerProfileImage: Assets.profile_image2,
-      ownerProfileName: 'Jimoh Samuel',
-      isFavoriteTap: true,
-      category: 'Apartment'),
-  Property(
-      id: 5,
-      image: Assets.sitting_room_placeholder,
-      amountPerYear: 10000,
-      houseRules: [
-        "Timely Rent Payments and Late Fees.",
-        "Maintenance, Repairs, and Cleanliness.",
-        "Renters Insurance.",
-        "Pet Policies.",
-        "Quiet Hours.",
-        "Lease Renewals and Notice Periods.",
-        "Damage Deductions from the Security Deposit.",
-        "Consequences of Lease Breaking.",
-      ],
-      location: 'Eleko Estate',
-      address: '57B lagos street',
-      numberOfBathrooms: 10,
-      numberOfBedrooms: 5,
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-      ownerAgentType: 'Property Owner',
-      ownerProfileImage: Assets.profile_image2,
-      ownerProfileName: 'Jimoh Samuel',
-      squareFeet: 200,
-      isFavoriteTap: true,
-      category: 'Kitchen'),
-  Property(
-      id: 6,
-      image: Assets.sitting_room_placeholder,
-      amountPerYear: 10000,
-      houseRules: [
-        "Timely Rent Payments and Late Fees.",
-        "Maintenance, Repairs, and Cleanliness.",
-        "Renters Insurance.",
-        "Pet Policies.",
-        "Quiet Hours.",
-        "Lease Renewals and Notice Periods.",
-        "Damage Deductions from the Security Deposit.",
-        "Consequences of Lease Breaking.",
-      ],
-      location: 'Eleko Estate',
-      address: '57B lagos street',
-      numberOfBathrooms: 10,
-      numberOfBedrooms: 5,
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-      ownerAgentType: 'Property Owner',
-      ownerProfileImage: Assets.profile_image2,
-      ownerProfileName: 'Jimoh Samuel',
-      squareFeet: 200,
-      isFavoriteTap: true,
-      category: 'Apartment'),
-  Property(
-      id: 7,
-      image: Assets.sitting_room_placeholder,
-      houseRules: [
-        "Timely Rent Payments and Late Fees.",
-        "Maintenance, Repairs, and Cleanliness.",
-        "Renters Insurance.",
-        "Pet Policies.",
-        "Quiet Hours.",
-        "Lease Renewals and Notice Periods.",
-        "Damage Deductions from the Security Deposit.",
-        "Consequences of Lease Breaking.",
-      ],
-      amountPerYear: 10000,
-      location: 'Eleko Estate',
-      address: '57B lagos street',
-      numberOfBathrooms: 10,
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum nisi nec fringilla bibendum. Sed malesuada diam ut ipsum hendrerit, mattis feugiat leo molestie. Sed sit amet venenatis ipsum. Sed faucibus aliquet lacinia. Donec nec urna massa. Aliquam id mattis nibh. Duis feugiat maximus iaculis. Mauris volutpat dictum lorem, ac scelerisque purus consectetur sit amet.Duis laoreet, quam sit amet sodales hendrerit, elit nunc ullamcorper tellus, vitae dignissim tortor lorem vel magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean scelerisque facilisis nisi, ut eleifend metus volutpat et. Maecenas maximus malesuada tempus. Etiam aliquam lacinia tristique. Suspendisse vitae tortor gravida, vulputate nulla quis, sagittis sem. Phasellus ante ex, feugiat eu porta ut, ullamcorper in sem. ",
-      ownerAgentType: 'Property Owner',
-      ownerProfileImage: Assets.profile_image2,
-      ownerProfileName: 'Jimoh Samuel',
-      numberOfBedrooms: 5,
-      squareFeet: 200,
-      isFavoriteTap: true,
-      category: "Apartment"),
-];
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      createdAt.hashCode ^
+      updatedAt.hashCode ^
+      spaceType.hashCode ^
+      propertyStyle.hashCode ^
+      propertyStatus.hashCode ^
+      isSpaceServiced.hashCode ^
+      isSpaceFurnished.hashCode ^
+      isLiveInSPace.hashCode ^
+      bedroomCount.hashCode ^
+      bathTubCount.hashCode ^
+      carSlot.hashCode ^
+      imageUrl.hashCode ^
+      propertyName.hashCode ^
+      description.hashCode ^
+      country.hashCode ^
+      state.hashCode ^
+      city.hashCode ^
+      address.hashCode ^
+      paymentType.hashCode ^
+      surfaceArea.hashCode ^
+      spacePrice.hashCode ^
+      verificationStatus.hashCode ^
+      propertyCategory.hashCode ^
+      favourite.hashCode;
+}

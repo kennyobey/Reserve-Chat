@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/filter/amenity_count.dart';
+import 'package:resavation/model/filter/availability.dart' as avail;
+import 'package:resavation/model/filter/filter.dart';
+import 'package:resavation/model/filter/price_range.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,6 +19,7 @@ enum Availability {
 class FilterViewModel extends BaseViewModel {
   final oCcy = NumberFormat("#,##0.00", "en_US");
   final _navigationService = locator<NavigationService>();
+
   RangeValues _rangeValues = const RangeValues(10000, 1000000);
 
   RangeValues get rangeValue => _rangeValues;
@@ -24,41 +29,54 @@ class FilterViewModel extends BaseViewModel {
         '${String.fromCharCode(8358)}${oCcy.format(_rangeValues.end.round())}',
       );
 
-  Availability _duration = Availability.Shortlet;
+  Availability _availablity = Availability.Shortlet;
 
-  Availability get duration => _duration;
+  Availability get availibiality => _availablity;
 
-  void onDurationChanged(Availability? value) {
-    _duration = value!;
-    notifyListeners();
-  }
+  double _surfaceArea = 0;
 
-  double _sliderValue = 0;
+  int carCount = 0;
+  int batTubCount = 0;
+  int bedroomCount = 0;
 
-  double get sliderValue => _sliderValue;
+  double get surfaceArea => _surfaceArea;
 
-  List<int> selectFacilityIndex = [];
-
-  // drop-down button UI logic
-  String? selectedValue;
-  List<String> items = [
+  String? propertyType;
+  List<String> propertyTypes = [
     'Flat',
     'Bungalow',
     'Self Contain',
   ];
-  void onSelectedValueChange(value) {
-    selectedValue = value as String;
+
+  void onDurationChanged(Availability? value) {
+    _availablity = value!;
+    notifyListeners();
+  }
+
+  void onPropertyTypeChanged(value) {
+    propertyType = value as String;
 
     notifyListeners();
   }
 
-  bool isFacilitySelected(int index) => selectFacilityIndex.contains(index);
-
-  void onSelectFacilityTap(int index) {
-    if (selectFacilityIndex.contains(index)) {
-      selectFacilityIndex.remove(index);
+  void onIncrement(int position) {
+    if (position == 0) {
+      bedroomCount++;
+    } else if (position == 1) {
+      batTubCount++;
     } else {
-      selectFacilityIndex.add(index);
+      carCount++;
+    }
+    notifyListeners();
+  }
+
+  void onDecrement(int position) {
+    if (position == 0 && bedroomCount != 0) {
+      bedroomCount--;
+    } else if (position == 1 && batTubCount != 0) {
+      batTubCount--;
+    } else if (carCount != 0) {
+      carCount--;
     }
     notifyListeners();
   }
@@ -69,12 +87,40 @@ class FilterViewModel extends BaseViewModel {
   }
 
   void onSliderChanged(double value) {
-    _sliderValue = value;
+    _surfaceArea = value;
     notifyListeners();
   }
 
-  void goToMainView() {
-    _navigationService.back();
+  void applyFilter() {
+    final availiability = avail.Availability(
+      moreThanOneYear: _availablity == Availability.More,
+      shortLet: _availablity == Availability.Shortlet,
+      withinOneYear: _availablity == Availability.Year,
+      withinSixMonth: _availablity == Availability.Months,
+    );
+    final amenityCount = AmenityCount(
+      bathTubCount: batTubCount,
+      bedRoomCount: bedroomCount,
+      carSlotCount: carCount,
+    );
+    final priceRange = PriceRange(
+      min: _rangeValues.start.round(),
+      max: _rangeValues.end.round(),
+    );
+    final filter = Filter(
+      availability: availiability,
+      surfaceArea: surfaceArea,
+      priceRange: priceRange,
+      amenityCount: amenityCount,
+      propertyType: propertyType,
+    );
+
+    /*
+  final String? amenity;
+ 
+    */
+
+    _navigationService.back(result: filter);
   }
 
   void goToSearchView() {

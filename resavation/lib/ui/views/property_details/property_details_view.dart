@@ -7,15 +7,16 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dar
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_details/property_details_viewmodel.dart';
+import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../model/property_model.dart';
 import '../messages/messages_viewmodel.dart';
 
 class PropertyDetailsView extends StatelessWidget {
-  final Property? property;
+  final Property? passedProperty;
 
-  const PropertyDetailsView({Key? key, required this.property})
+  const PropertyDetailsView({Key? key, required this.passedProperty})
       : super(key: key);
 
   get orientation => null;
@@ -26,7 +27,7 @@ class PropertyDetailsView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         body: CustomScrollView(
           slivers: [
-            buildHeader(model),
+            buildHeader(model, context),
             buildDescription(model, context),
             buildAmenity(model),
             buildLocation(model),
@@ -34,7 +35,7 @@ class PropertyDetailsView extends StatelessWidget {
         ),
         bottomSheet: buildBottomBar(model),
       ),
-      viewModelBuilder: () => PropertyDetailsViewModel(),
+      viewModelBuilder: () => PropertyDetailsViewModel(passedProperty),
     );
   }
 
@@ -55,7 +56,7 @@ class PropertyDetailsView extends StatelessWidget {
               children: [
                 Text("Starting at", style: AppStyle.kBodySmallRegular12W500),
                 Text(
-                  '${String.fromCharCode(8358)} ${oCcy.format(property?.amountPerYear ?? 0)}',
+                  '${String.fromCharCode(8358)} ${oCcy.format(model.property?.spacePrice ?? 0)}',
                   style: AppStyle.kBodyRegularBlack14.copyWith(
                       color: Colors.black,
                       fontSize: 18,
@@ -66,7 +67,7 @@ class PropertyDetailsView extends StatelessWidget {
           ),
           ResavationElevatedButton(
             child: Text('Rent Now'),
-            onPressed: () => model.goToDatePickerView(property),
+            onPressed: () => model.goToDatePickerView(),
           ),
         ],
       ),
@@ -97,7 +98,7 @@ class PropertyDetailsView extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    property?.address ?? '',
+                    model.property?.address ?? '',
                     style: AppStyle.kBodyRegularBlack15,
                   ),
                 ),
@@ -116,7 +117,7 @@ class PropertyDetailsView extends StatelessWidget {
               style: AppStyle.kBodyRegularBlack16W600,
             ),
             verticalSpaceSmall,
-            ...?property?.houseRules
+            /*  ...?property?.houseRules
                 .map(
                   (rule) => Row(
                     children: [
@@ -128,7 +129,7 @@ class PropertyDetailsView extends StatelessWidget {
                     ],
                   ),
                 )
-                .toList(),
+                .toList(), */
             verticalSpaceMassive,
           ],
         ),
@@ -167,19 +168,19 @@ class PropertyDetailsView extends StatelessWidget {
               children: [
                 verticalSpaceSmall,
                 Text(
-                  property?.location ?? '',
+                  model.property?.propertyName ?? '',
                   style: AppStyle.kBodyRegularBlack16W600,
                 ),
                 Text(
-                  property?.address ?? '',
+                  model.property?.address ?? '',
                   style: AppStyle.kBodySmallRegular12W300,
                 ),
                 verticalSpaceSmall,
                 PropertyDetails(
-                  title: property?.category ?? '',
-                  numberOfBedrooms: property?.numberOfBedrooms ?? 0,
-                  numberOfBathrooms: property?.numberOfBathrooms ?? 0,
-                  squareFeet: property?.squareFeet ?? 0,
+                  title: model.property?.propertyCategory ?? '',
+                  numberOfBedrooms: model.property?.bedroomCount ?? 0,
+                  numberOfBathrooms: model.property?.bathTubCount ?? 0,
+                  squareFeet: model.property?.surfaceArea ?? 0,
                 ),
                 verticalSpaceMedium,
                 Row(
@@ -188,8 +189,7 @@ class PropertyDetailsView extends StatelessWidget {
                     InkWell(
                       child: CircleAvatar(
                         radius: 25, // Image radius
-                        backgroundImage:
-                            AssetImage(property?.ownerProfileImage ?? ''),
+                        backgroundImage: AssetImage(Assets.profile_image2),
                       ),
                       onTap: () => model.goToPropertyOwnersProfileView(),
                     ),
@@ -198,11 +198,11 @@ class PropertyDetailsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          property?.ownerProfileName ?? '',
+                          " Dummy David Strang",
                           style: AppStyle.kBodyRegularBlack16W600,
                         ),
                         Text(
-                          property?.ownerAgentType ?? '',
+                          "",
                           style: AppStyle.kBodyRegularBlack14,
                         ),
                       ],
@@ -216,7 +216,7 @@ class PropertyDetailsView extends StatelessWidget {
                         );
                         final chatModel = await MessagesViewModel.createChat(
                             'otitemitope6@gmail.com',
-                            property?.ownerProfileName ?? '',
+                            " property?.ownerProfileName ?? ''",
                             'https://firebasestorage.googleapis.com/v0/b/oh2020-a8512.appspot.com/o/images%2Fothers%2FEXCEEDING%20EXPECTATIONS%20DAY%202%2F49834?alt=media&token=6a9c3239-f222-44d1-ab9f-a87a9a3fd960');
                         model.gotToChatRoomView(chatModel);
                       },
@@ -236,7 +236,7 @@ class PropertyDetailsView extends StatelessWidget {
                         );
                         final chatModel = await MessagesViewModel.createChat(
                             'otitemitope6@gmail.com',
-                            property?.ownerProfileName ?? '',
+                            " property?.ownerProfileName ?? ''",
                             'https://firebasestorage.googleapis.com/v0/b/oh2020-a8512.appspot.com/o/images%2Fothers%2FEXCEEDING%20EXPECTATIONS%20DAY%202%2F49834?alt=media&token=6a9c3239-f222-44d1-ab9f-a87a9a3fd960');
                         model.gotToChatRoomView(chatModel);
                       },
@@ -254,7 +254,7 @@ class PropertyDetailsView extends StatelessWidget {
                   style: AppStyle.kBodyRegularBlack16W600,
                 ),
                 verticalSpaceSmall,
-                Text(property?.description ?? '',
+                Text(model.property?.description ?? '',
                     style: AppStyle.kBodySmallRegular12),
                 verticalSpaceMedium,
                 Text(
@@ -269,12 +269,23 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  SliverPersistentHeader buildHeader(PropertyDetailsViewModel model) {
+  SliverPersistentHeader buildHeader(
+      PropertyDetailsViewModel model, BuildContext context) {
     return SliverPersistentHeader(
-      floating: true,
-      delegate: PropertyDetailsHeader(
-          onBackTap: model.navigateBack, property: property),
-    );
+        floating: true,
+        delegate: PropertyDetailsHeader(
+          onBackTap: model.navigateBack,
+          property: model.property,
+          isFavoriteTap: model.property?.favourite ?? false,
+          onFavoriteTap: () async {
+            try {
+              await model.onFavouriteTap();
+            } catch (exception) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(exception.toString())));
+            }
+          },
+        ));
   }
 }
 

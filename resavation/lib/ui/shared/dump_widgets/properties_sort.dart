@@ -49,13 +49,13 @@ class SortProperty extends ViewModelWidget<SearchViewModel> {
                       ),
                     ))
                 .toList(),
-            value: model.selectedValue,
+            value: model.sortByType,
             onChanged: (value) {
-              model.onSelectedValueChange(value);
+              model.onSortByChanged(value);
             },
             icon: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-          ),
+              Icons.keyboard_arrow_down_rounded,
+            ),
           ),
         )
       ],
