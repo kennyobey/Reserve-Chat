@@ -6,11 +6,11 @@ import 'package:stacked_services/stacked_services.dart';
 
 class PropertyOwnerAppointmentItemViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  List<Property> get properties => listOfProperties;
+  // List<Property> get properties => listOfProperties;
+  List<Property> get properties => [];
 
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
-
   get goToPropertyDetails => null;
 
   void onNotificationSwitchChanged(bool? value) {

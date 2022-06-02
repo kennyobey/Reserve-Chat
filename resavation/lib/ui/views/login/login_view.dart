@@ -97,9 +97,8 @@ class _LogInViewState extends State<LogInView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Spacer(),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      onTap: model.goToResetPasswordView,
+                    TextButton(
+                      onPressed: model.goToResetPasswordView,
                       child: Text(
                         'Forgot Password?',
                         style: AppStyle.kBodySmallRegular.copyWith(
@@ -109,7 +108,7 @@ class _LogInViewState extends State<LogInView> {
                     ),
                   ],
                 ),
-                verticalSpaceMedium,
+                verticalSpaceSmall,
                 ResavationButton(
                   title: 'Log In',
                   isLoadingEnabled: model.isLoading,
@@ -121,8 +120,19 @@ class _LogInViewState extends State<LogInView> {
                     }
 
                     try {
-                      await model.onLoginButtonTap();
-                      model.goToMainView();
+                      final bool isUserVerified =
+                          await model.onLoginButtonTap();
+                      if (isUserVerified) {
+                        model.goToMainView();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'Account not verifed, please verify your account'),
+                          ),
+                        );
+                        model.goToVerifyAccount();
+                      }
                     } catch (exception) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

@@ -127,4 +127,8 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
       return Future.error(exception.toString());
     }
   }
+
+  void PropertyOwnerAcceptbuttonView() {
+    _navigationService.navigateTo(Routes.propertyOwnerAcceptbuttonView);
+  }
 }

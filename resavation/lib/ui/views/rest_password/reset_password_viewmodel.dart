@@ -22,6 +22,7 @@ class ResetPasswordViewModel extends BaseViewModel {
   final formKey = GlobalKey<FormState>();
 
   final stage1FormKey = GlobalKey<FormState>();
+  final stage2FormKey = GlobalKey<FormState>();
   final stage3FormKey = GlobalKey<FormState>();
 
   ///used to check if a valid mail is existing
@@ -86,7 +87,7 @@ class ResetPasswordViewModel extends BaseViewModel {
     notifyListeners();
     final String email = emailFieldController.text.trim();
     try {
-      await httpService.sendOTP(email: email);
+      await httpService.forgotPasswordOtp(email: email);
       isStage1Loading = false;
       notifyListeners();
     } catch (exception) {
@@ -97,7 +98,7 @@ class ResetPasswordViewModel extends BaseViewModel {
   }
 
   void goToLogin() {
-    _navigationService.navigateTo(Routes.logInView);
+    _navigationService.clearStackAndShow(Routes.logInView);
   }
 
   void goToSignUpView() {

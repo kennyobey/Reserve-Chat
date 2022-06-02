@@ -244,12 +244,7 @@ class _SignUpViewState extends State<SignUpView> {
 
             try {
               await model.sendDetailsToServer();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text(
-                        'Registration successful, kindly login to your account')),
-              );
-              model.goToLoginView();
+              model.goToSignUpConfirmation();
             } catch (exception) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(exception.toString())),

@@ -13,7 +13,7 @@ class PropertyCard extends StatelessWidget {
     this.onFavoriteTap,
     required this.id,
     this.amountPerYear,
-    required this.location,
+    required this.propertyName,
     this.address = '',
     required this.numberOfBedrooms,
     required this.numberOfBathrooms,
@@ -26,11 +26,11 @@ class PropertyCard extends StatelessWidget {
   final String image;
   final int id;
   final int? amountPerYear;
-  final String location;
+  final String propertyName;
   final String address;
   final int numberOfBedrooms;
   final int numberOfBathrooms;
-  final int squareFeet;
+  final double squareFeet;
   final bool isFavoriteTap;
   final void Function()? onTap;
 
@@ -83,7 +83,7 @@ class PropertyCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      location,
+                      propertyName,
                       style: AppStyle.kBodyRegular18W500,
                     ),
                     verticalSpaceTiny,

@@ -63,20 +63,30 @@ class ResetPasswordView extends StatelessWidget {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
+    final errorPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration?.copyWith(
+        border: Border.all(color: Colors.red),
+      ),
+    );
 
     return [
       Pinput(
         defaultPinTheme: defaultPinTheme,
+        errorPinTheme: errorPinTheme,
         focusedPinTheme: focusedPinTheme,
         submittedPinTheme: submittedPinTheme,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         controller: model.otpFieldController,
-        /* validator: (s) {
-        return s == '2222' ? null : 'Pin is incorrect';
-      },*/
         pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
         showCursor: true,
-        // onCompleted: (pin) => print(pin),
+        validator: (s) {
+          if (s == null || s.isEmpty) {
+            return "Please enter the pin you recieved";
+          } else if (s.trim().length < 4) {
+            return "Please enter the complete pin";
+          }
+          return null;
+        },
       ),
       verticalSpaceSmall,
     ];
@@ -275,30 +285,37 @@ class ResetPasswordView extends StatelessWidget {
   Widget buildStage2Widget(ResetPasswordViewModel model, BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          verticalSpaceMedium,
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              "Enter the OTP that was sent to your account.",
-              style: AppStyle.kBodyRegularBlack14,
-              textAlign: TextAlign.center,
+      child: Form(
+        key: model.stage2FormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            verticalSpaceMedium,
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Enter the OTP that was sent to your account.",
+                style: AppStyle.kBodyRegularBlack14,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          verticalSpaceLarge,
-          ...buildOTPField(model),
-          verticalSpaceLarge,
-          ResavationButton(
-            title: 'Proceed',
-            width: MediaQuery.of(context).size.width,
-            onTap: () async {
-              //todo navigate to the next screen . add a will pop scope to page
-              model.onPageChanged(2);
-            },
-          ),
-        ],
+            verticalSpaceLarge,
+            ...buildOTPField(model),
+            verticalSpaceLarge,
+            ResavationButton(
+              title: 'Proceed',
+              width: MediaQuery.of(context).size.width,
+              onTap: () {
+                final isValid = model.stage2FormKey.currentState?.validate();
+                if ((isValid ?? false) == false) {
+                  return;
+                }
+
+                model.onPageChanged(2);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

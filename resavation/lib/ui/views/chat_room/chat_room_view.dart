@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:resavation/model/chat_message_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/audio_call/pickup_layout.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
@@ -28,67 +29,69 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     return ViewModelBuilder<ChatRoomViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: buildAppBar(model),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 20),
-          child: Column(
-            children: [
-              Expanded(
-                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: ChatRoomViewModel.getChatMessages(
-                      widget.chatModel?.chatId ?? ''),
-                  builder: (ctx, asyncDataSnapshot) {
-                    if (asyncDataSnapshot.hasError) {
-                      return buildErrorBody(ctx);
-                    }
-                    if (asyncDataSnapshot.hasData) {
-                      final queryData = asyncDataSnapshot.data;
-                      final List<ChatMessageModel> allChatModel = queryData
-                              ?.docs
-                              .map((documentSnapshot) =>
-                                  ChatMessageModel.fromJson(
-                                      documentSnapshot.data()))
-                              .toList() ??
-                          [];
+        body: Column(
+          children: [
+            Expanded(
+              child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: ChatRoomViewModel.getChatMessages(
+                    widget.chatModel?.chatId ?? ''),
+                builder: (ctx, asyncDataSnapshot) {
+                  if (asyncDataSnapshot.hasError) {
+                    return buildErrorBody(ctx);
+                  }
+                  if (asyncDataSnapshot.hasData) {
+                    final queryData = asyncDataSnapshot.data;
+                    final List<ChatMessageModel> allChatModel = queryData?.docs
+                            .map((documentSnapshot) =>
+                                ChatMessageModel.fromJson(
+                                    documentSnapshot.data()))
+                            .toList() ??
+                        [];
 
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              padding: const EdgeInsets.all(0),
-                              physics: const BouncingScrollPhysics(),
-                              controller: model.scrollController,
-                              itemBuilder: (_, index) {
-                                final chatMessageModel = allChatModel[index];
-                                return MessageBox(
-                                  message: chatMessageModel.message,
-                                  time: ChatRoomViewModel.getDetailedDate(
-                                      chatMessageModel.timestamp),
-                                  isRight: ChatRoomViewModel.isUSerChat(
-                                      chatMessageModel.userId),
-                                );
-                              },
-                              itemCount: allChatModel.length,
-                            ),
-                            /*    ListView.builder(
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 5, top: 10),
+                            physics: const BouncingScrollPhysics(),
+                            controller: model.scrollController,
+                            itemBuilder: (_, index) {
+                              final chatMessageModel = allChatModel[index];
+                              return MessageBox(
+                                message: chatMessageModel.message,
+                                imageUrl: chatMessageModel.imageUrl,
+                                onTap: () => model.showImage(
+                                    chatMessageModel.imageUrl, context),
+                                time: ChatRoomViewModel.getDetailedDate(
+                                    chatMessageModel.timestamp),
+                                isRight: ChatRoomViewModel.isUSerChat(
+                                    chatMessageModel.userId),
+                              );
+                            },
+                            itemCount: allChatModel.length,
+                          ),
+                          /*    ListView.builder(
                               itemCount: demeChatMessages.length,
                               itemBuilder: (context, index) =>
                                   Message(message: demeChatMessages[index]),
                             ),*/
-                          ),
-                          const SizedBox(height: 5),
-                          ChatInputField(widget.chatModel),
-                          const SizedBox(height: 5),
-                        ],
-                      );
-                    } else {
-                      return buildLoadingWidget();
-                    }
-                  },
-                ),
+                        ),
+                        const SizedBox(height: 5),
+                        ChatInputField(
+                          chatModel: widget.chatModel,
+                          onMessageSent: model.onMessageSent,
+                        ),
+                        const SizedBox(height: 5),
+                      ],
+                    );
+                  } else {
+                    return buildLoadingWidget();
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       viewModelBuilder: () => ChatRoomViewModel(),
@@ -165,37 +168,38 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         ],
       ),
       actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: InkWell(
-            onTap: () {
-              model.startCall(
-                otherUserEmail: otherUserEmail,
-                otherUserName: otherUserName,
-                otherUserImage: otherUserImage,
-                chatID: widget.chatModel?.chatId ?? '',
-              );
-            },
+        InkWell(
+          onTap: () {
+            model.startCall(
+              otherUserEmail: otherUserEmail,
+              otherUserName: otherUserName,
+              otherUserImage: otherUserImage,
+              chatID: widget.chatModel?.chatId ?? '',
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Icon(
-              Icons.phone,
+              Icons.call,
               color: kBlack,
             ),
           ),
         ),
         InkWell(
           onTap: () {
-            model.goToVideoCallView();
+            model.startCall(
+              otherUserEmail: otherUserEmail,
+              otherUserName: otherUserName,
+              otherUserImage: otherUserImage,
+              chatID: widget.chatModel?.chatId ?? '',
+            );
           },
-          child: Icon(
-            Icons.videocam_outlined,
-            color: kBlack,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Icon(
-            Icons.search,
-            color: kBlack,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.videocam_outlined,
+              color: kBlack,
+            ),
           ),
         ),
       ],
@@ -206,12 +210,16 @@ class _ChatRoomViewState extends State<ChatRoomView> {
 class MessageBox extends StatelessWidget {
   final String time;
   final String message;
+  final String imageUrl;
   final bool isRight;
+  final VoidCallback onTap;
 
   const MessageBox({
     Key? key,
     required this.message,
+    required this.imageUrl,
     required this.time,
+    required this.onTap,
     required this.isRight,
   }) : super(key: key);
 
@@ -221,7 +229,7 @@ class MessageBox extends StatelessWidget {
     final bodyText2 = textTheme.bodyText2!.copyWith(
       fontSize: 14,
       overflow: TextOverflow.clip,
-      color: isRight ? Colors.black : Colors.white,
+      color: isRight ? Colors.white : Colors.black,
       fontWeight: FontWeight.w400,
     );
 
@@ -248,11 +256,11 @@ class MessageBox extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 5,
-              horizontal: 10,
+              horizontal: 5,
             ),
             constraints: BoxConstraints(maxWidth: width * 0.7),
             decoration: BoxDecoration(
-              color: isRight ? Colors.grey.withOpacity(0.5) : Colors.blue,
+              color: isRight ? kChatTextColor : kPrimaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.only(
                 topLeft: (isRight)
                     ? const Radius.circular(10)
@@ -264,9 +272,47 @@ class MessageBox extends StatelessWidget {
                 bottomRight: const Radius.circular(10),
               ),
             ),
-            child: Text(
-              message,
-              style: bodyText2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (imageUrl.isNotEmpty)
+                  Container(
+                    width: double.infinity,
+                    height: 130,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: (isRight)
+                            ? const Radius.circular(10)
+                            : const Radius.circular(1),
+                        topRight: (isRight)
+                            ? const Radius.circular(1)
+                            : const Radius.circular(10),
+                        bottomLeft: const Radius.circular(10),
+                        bottomRight: const Radius.circular(10),
+                      ),
+                    ),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      onTap: onTap,
+                      child: Image.network(
+                        imageUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                if (message.isNotEmpty && imageUrl.isNotEmpty)
+                  const SizedBox(
+                    height: 8,
+                  ),
+                if (message.isNotEmpty)
+                  Text(
+                    message,
+                    style: bodyText2,
+                  ),
+              ],
             ),
           ),
           if (!isRight) const SizedBox(width: 8),

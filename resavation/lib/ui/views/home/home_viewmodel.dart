@@ -33,7 +33,7 @@ class HomeViewModel extends BaseViewModel {
   LoginModel get userData => _userService.userData;
 
   void setPositionAsSearch() {
-    _userService.changePositionToSearch();
+    _userService.changePositionToSearch('');
   }
 
   void showComingSoon() {
@@ -59,12 +59,16 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyDetailsView);
   }
 
-  void goToPropertySearch() {
-    _userService.changePositionToSearch();
+  void goToPropertySearch(String search) {
+    _userService.changePositionToSearch(search);
   }
 
-  void goToProfileProductListView() {
-    _navigationService.navigateTo(Routes.profileProductListView);
+  void goToCategoriesView() {
+    _navigationService.navigateTo(Routes.categoriesListView);
+  }
+
+  void goToCitiesView() {
+    _navigationService.navigateTo(Routes.citiesListView);
   }
 
   void goToEditProfileView() {

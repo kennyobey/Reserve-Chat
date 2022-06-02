@@ -81,7 +81,7 @@ class BookingSubmissionView extends StatelessWidget {
           PaymentDetails(
               title: 'Subtotal',
               percentage:
-                  '${String.fromCharCode(8358)} ${oCcy.format(property?.amountPerYear ?? 0)}'),
+                  '${String.fromCharCode(8358)} ${oCcy.format(property?.spacePrice ?? 0)}'),
           PaymentDetails(
             title: 'Extra Price',
             percentage: '0',
@@ -94,7 +94,7 @@ class BookingSubmissionView extends StatelessWidget {
           PaymentDetails(
             title: 'Payment Amount',
             percentage:
-                '${String.fromCharCode(8358)} ${oCcy.format(property?.amountPerYear ?? 0)}',
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.spacePrice ?? 0)}',
             isTotal: true,
           ),
         ],
@@ -168,7 +168,7 @@ class BookingSubmissionView extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                property?.location ?? '',
+                property?.city ?? '',
                 style: AppStyle.kBodyRegularBlack14,
               ),
             ],
@@ -227,7 +227,7 @@ class BookingSubmissionView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  property?.location ?? '',
+                  property?.city ?? '',
                   style: AppStyle.kBodyRegularBlack15W500,
                 ),
                 verticalSpaceSmall,
@@ -240,7 +240,7 @@ class BookingSubmissionView extends StatelessWidget {
           ),
           Container(
             child: ResavationImage(
-              image: property?.image ?? '',
+              image: property?.imageUrl ?? '',
             ),
             height: 120,
             width: 120,
@@ -262,7 +262,7 @@ class BookingSubmissionView extends StatelessWidget {
       width: width - 20,
       onTap: () async {
         String email = model.email;
-        int price = property?.amountPerYear ?? 0;
+        int price = property?.spacePrice ?? 0;
         bool userPaid =
             await MakePayment(ctx: context, email: email, price: price)
                 .chargeCardAndMakePayment();
