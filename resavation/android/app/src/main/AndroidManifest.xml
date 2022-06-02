@@ -61,11 +61,6 @@
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyBRB6De8wyZ4RhQ_bBkZ2eTggtMunOWL5Y"/>
 
-            <!--id capture-->
-    <activity android:name="com.smileid.smileidui.SIDIDCaptureActivity" />
-    <!--selfie capture-->
-    <activity android:name="com.smileid.smileidui.SIDSelfieCaptureActivity" />
-    <!--selfie review screen-->
-    <activity android:name="com.smileid.smileidui.SIDReviewActivity" />
+           
     </application>
 </manifest>

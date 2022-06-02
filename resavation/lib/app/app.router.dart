@@ -19,6 +19,7 @@ import '../model/property_model.dart';
 import '../ui/views/audio_call/audio_call_view.dart';
 import '../ui/views/booking_submission/booking_submission_view.dart';
 import '../ui/views/chat_room/chat_room_view.dart';
+import '../ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
 import '../ui/views/date_picker/date_picker_view.dart';
 import '../ui/views/edit_profile/edit_profile_view.dart';
@@ -117,6 +118,7 @@ class Routes {
       '/property-owner-my-property-view';
   static const String propertyOwnerTrackListView =
       '/property-owner-track-list-view';
+  static const String coWorkingSpaceAboutView = '/co-working-space-about-view';
   //PropertyOwnerTrackListView
   static const all = <String>{
     startupView,
@@ -162,7 +164,8 @@ class Routes {
     propertyOwnerSettingsView,
     propertyOwnerAcceptbuttonView,
     propertyOwnerMyPropertyView,
-    propertyOwnerTrackListView
+    propertyOwnerTrackListView,
+    coWorkingSpaceAboutView
   };
 }
 
@@ -228,6 +231,7 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerMyPropertyView),
     RouteDef(Routes.propertyOwnerTrackListView,
         page: PropertyOwnerTrackListView),
+    RouteDef(Routes.coWorkingSpaceAboutView, page: CoWorkingSpaceAboutView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -549,6 +553,12 @@ class StackedRouter extends RouterBase {
     PropertyOwnerTrackListView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const PropertyOwnerTrackListView(),
+        settings: data,
+      );
+    },
+    CoWorkingSpaceAboutView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => CoWorkingSpaceAboutView(),
         settings: data,
       );
     },

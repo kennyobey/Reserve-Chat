@@ -21,7 +21,7 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin: 'com.smileidentity.smile-id-android'
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -81,6 +81,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation "com.algolia:algoliasearch-client-kotlin:1.+"
     implementation "io.ktor:ktor-client-okhttp:1.+"
-    implementation 'com.smileidentity:smile-id-ui:0.1.45-SNAPSHOT'
-    implementation 'com.smileidentity:smile-id-sdk:7.2.49-SNAPSHOT'
+    
 }
