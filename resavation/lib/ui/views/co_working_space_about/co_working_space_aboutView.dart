@@ -13,13 +13,17 @@ import 'package:stacked/stacked.dart';
 import '../messages/messages_viewmodel.dart';
 import 'co_working_space_aboutViewModel.dart';
 
-class CoWorkingSpaceAboutView extends StatelessWidget {
+class CoWorkingSpaceAboutView extends StatefulWidget {
   CoWorkingSpaceAboutView({
     Key? key,
   }) : super(key: key);
 
-  get orientation => null;
+  @override
+  State<CoWorkingSpaceAboutView> createState() =>
+      _CoWorkingSpaceAboutViewState();
+}
 
+class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CoWorkingSpaceAboutViewModel>.reactive(
@@ -30,9 +34,10 @@ class CoWorkingSpaceAboutView extends StatelessWidget {
             buildDescription(model, context),
             buildAmenity(model),
             buildLocation(model),
+            planButton(context, model),
           ],
         ),
-        bottomSheet: buildBottomBar(model),
+        bottomSheet: planButton(context, model),
       ),
       viewModelBuilder: () => CoWorkingSpaceAboutViewModel(),
     );
@@ -48,25 +53,25 @@ class CoWorkingSpaceAboutView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Starting at", style: AppStyle.kBodySmallRegular12W500),
-                Text(
-                  '${String.fromCharCode(8358)} ${oCcy.format(model.property?.spacePrice ?? 0)}',
-                  style: AppStyle.kBodyRegularBlack14.copyWith(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
-                )
-              ],
-            ),
-          ),
+          // Expanded(
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Text("Starting at", style: AppStyle.kBodySmallRegular12W500),
+          //       Text(
+          //         '${String.fromCharCode(8358)} ${oCcy.format(model.property?.spacePrice ?? 0)}',
+          //         style: AppStyle.kBodyRegularBlack14.copyWith(
+          //             color: Colors.black,
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.w600),
+          //       )
+          //     ],
+          //   ),
+          // ),
           ResavationElevatedButton(
-            child: Text('Rent Now'),
-            onPressed: () => model.goToDatePickerView(),
+            child: Text('Confirm'),
+            onPressed: () {},
           ),
         ],
       ),
@@ -116,6 +121,14 @@ class CoWorkingSpaceAboutView extends StatelessWidget {
               style: AppStyle.kBodyRegularBlack16W600,
             ),
             verticalSpaceSmall,
+            Text(
+              'No Party',
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            Text(
+              'No Smoking',
+              style: AppStyle.kBodyRegularBlack14,
+            ),
             /*  ...?property?.houseRules
                 .map(
                   (rule) => Row(
@@ -322,6 +335,111 @@ class AmenitiesItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ],
+      ),
+    );
+  }
+}
+
+Widget planButton(BuildContext context, CoWorkingSpaceAboutViewModel model) {
+  return ResavationElevatedButton(
+      child: Container(child: Text("Choose Plan")),
+      onPressed: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  buildNumberOfDays(model),
+                  ListTile(
+                    leading: new Icon(Icons.share),
+                    title: new Text('Share'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            });
+      });
+}
+
+PlanSelection buildNumberOfDays(CoWorkingSpaceAboutViewModel model) {
+  return PlanSelection(
+    title: "Number Of bedrooms",
+    value: model.numberOfDays,
+    onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
+    onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
+  );
+}
+
+class PlanSelection extends StatelessWidget {
+  const PlanSelection(
+      {Key? key,
+      this.title,
+      this.onNegativeTap,
+      this.onPositiveTap,
+      this.value})
+      : super(key: key);
+  final String? title;
+  final int? value;
+  final Function()? onNegativeTap;
+  final Function()? onPositiveTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title!,
+              style: AppStyle.kBodySmallRegular12,
+            ),
+            Row(
+              children: [
+                IncrementPlans(
+                  icon: Icons.remove,
+                  onTap: onNegativeTap,
+                ),
+                Text(value.toString()),
+                IncrementPlans(
+                  icon: Icons.add,
+                  onTap: onPositiveTap,
+                ),
+              ],
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// widget used to increase/decrease the plans value
+class IncrementPlans extends StatelessWidget {
+  const IncrementPlans({Key? key, this.icon, this.onTap}) : super(key: key);
+
+  final IconData? icon;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: kGray),
+              borderRadius: BorderRadius.circular(10.0)),
+          child: Icon(
+            icon,
+            color: kGray,
+            size: 12,
+          ),
+        ),
       ),
     );
   }

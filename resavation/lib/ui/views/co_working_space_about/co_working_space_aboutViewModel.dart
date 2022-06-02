@@ -17,6 +17,8 @@ class CoWorkingSpaceAboutViewModel extends BaseViewModel {
   int get pagePosition => _pagePosition;
   Property? property;
 
+  get numberOfBathrooms => null;
+
   PropertyDetailsViewModel() {
     this.property = property;
     notifyListeners();
@@ -33,7 +35,7 @@ class CoWorkingSpaceAboutViewModel extends BaseViewModel {
 
   // List<Property> get properties => listOfProperties;
   List<Property> get properties => [];
-  List<Amenity> get amenities => ListOfAmenities;
+  List<Amenity> get amenities => ListOfAmenitiesCoworking;
 
   void navigateBack() {
     _navigationService.back();
@@ -73,6 +75,51 @@ class CoWorkingSpaceAboutViewModel extends BaseViewModel {
 
   void goToPropertyOwnersProfileView() {
     _navigationService.navigateTo(Routes.propertyOwnerProfileView);
+  }
+
+  // plan selection logic
+  int numberOfDays = 0;
+  int numberOfWeeks = 0;
+  int numberOfMonths = 0;
+
+//No of days
+  void onPositiveNumberOfDaysTap() {
+    numberOfDays++;
+    notifyListeners();
+  }
+
+  void onNegativeNumberOfDaysTap() {
+    if (numberOfDays != 0) {
+      numberOfDays--;
+    }
+    notifyListeners();
+  }
+
+  //No of weeks
+  void onPositiveNumberOfMonthsTap() {
+    numberOfWeeks++;
+    notifyListeners();
+  }
+
+  void onNegativeNumberOfMonthsTap() {
+    if (numberOfWeeks != 0) {
+      numberOfWeeks--;
+    }
+    notifyListeners();
+  }
+
+  //No Of Months
+
+  void onPositiveNumberOfWeeksTap() {
+    numberOfMonths++;
+    notifyListeners();
+  }
+
+  void onNegativeNumberOfWeeksTap() {
+    if (numberOfMonths != 0) {
+      numberOfMonths--;
+    }
+    notifyListeners();
   }
 
   //Google Map
