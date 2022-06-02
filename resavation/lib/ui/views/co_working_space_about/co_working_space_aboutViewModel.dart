@@ -126,4 +126,6 @@ class CoWorkingSpaceAboutViewModel extends BaseViewModel {
   void goToMapView() {
     _navigationService.navigateTo(Routes.mapView);
   }
+
+  setSpaceFurnished(bool? isFurnished) {}
 }

@@ -13,6 +13,8 @@ import 'package:stacked/stacked.dart';
 import '../messages/messages_viewmodel.dart';
 import 'co_working_space_aboutViewModel.dart';
 
+enum RadioPlans { daily, monthly, weekly }
+
 class CoWorkingSpaceAboutView extends StatefulWidget {
   CoWorkingSpaceAboutView({
     Key? key,
@@ -24,6 +26,8 @@ class CoWorkingSpaceAboutView extends StatefulWidget {
 }
 
 class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
+  RadioPlans _plans = RadioPlans.daily;
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CoWorkingSpaceAboutViewModel>.reactive(
@@ -346,29 +350,33 @@ Widget planButton(BuildContext context, CoWorkingSpaceAboutViewModel model) {
         showModalBottomSheet(
             context: context,
             builder: (context) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("Choose your Plan"),
-                    ],
-                  ),
-                  verticalSpaceRegular,
-                  buildNumberOfDays(model),
-                  verticalSpaceTiny,
-                  buildNumberOfWeeks(model),
-                  verticalSpaceTiny,
-                  buildNumberOfMonths(model),
-                  verticalSpaceRegular,
-                  ResavationElevatedButton(
-                    child: Text('Continue to Checkout'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+              return Container(
+                margin: EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Choose your Plan",
+                      style: AppStyle.kBodyRegularBlack16W600,
+                    ),
+                    verticalSpaceRegular,
+                    buildNumberOfDays(model),
+                    verticalSpaceTiny,
+                    buildNumberOfWeeks(model),
+                    verticalSpaceTiny,
+                    buildNumberOfMonths(model),
+                    verticalSpaceRegular,
+                    Center(
+                      child: ResavationElevatedButton(
+                        child: Text('Continue to Checkout'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               );
             });
       });
@@ -381,6 +389,10 @@ PlanSelection buildNumberOfDays(CoWorkingSpaceAboutViewModel model) {
     value: model.numberOfDays,
     onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
     onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
+    widget: Radio(
+        value: RadioPlans.daily,
+        groupValue: _plans,
+        onChanged: (RadioPlans) {}),
   );
 }
 
@@ -391,8 +403,14 @@ PlanSelection buildNumberOfWeeks(CoWorkingSpaceAboutViewModel model) {
     value: model.numberOfDays,
     onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
     onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
+    widget: Radio(
+        value: RadioPlans.daily,
+        groupValue: _plans,
+        onChanged: (RadioPlans) {}),
   );
 }
+
+mixin _plans {}
 
 PlanSelection buildNumberOfMonths(CoWorkingSpaceAboutViewModel model) {
   return PlanSelection(
@@ -401,34 +419,40 @@ PlanSelection buildNumberOfMonths(CoWorkingSpaceAboutViewModel model) {
     value: model.numberOfDays,
     onPositiveTap: () => model.onPositiveNumberOfDaysTap(),
     onNegativeTap: () => model.onNegativeNumberOfDaysTap(),
+    widget: Radio(
+        value: RadioPlans.daily,
+        groupValue: _plans,
+        onChanged: (RadioPlans) {}),
   );
 }
 
 class PlanSelection extends StatelessWidget {
-  const PlanSelection(
-      {Key? key,
-      this.title,
-      this.amount,
-      this.onNegativeTap,
-      this.onPositiveTap,
-      this.value})
-      : super(key: key);
+  const PlanSelection({
+    Key? key,
+    this.title,
+    this.amount,
+    this.onNegativeTap,
+    this.onPositiveTap,
+    this.value,
+    this.widget,
+  }) : super(key: key);
   final String? amount;
   final String? title;
   final int? value;
   final Function()? onNegativeTap;
   final Function()? onPositiveTap;
+  final Widget? widget;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5),
-      height: 60,
+      height: 80,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey,
         ),
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(0.0),
       ),
       margin: EdgeInsets.symmetric(horizontal: 8),
       child: Column(
@@ -456,12 +480,22 @@ class PlanSelection extends StatelessWidget {
                     icon: Icons.add,
                     onTap: onPositiveTap,
                   ),
+                  Container(
+                    child: widget,
+                  )
                 ],
               )
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildSpaceFurnished(
+      BuildContext context, CoWorkingSpaceAboutViewModel model) {
+    return FilterListTile(
+      onChanged: model.setSpaceFurnished,
     );
   }
 }
@@ -490,6 +524,66 @@ class IncrementPlans extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FilterListTile extends StatefulWidget {
+  final Function(bool?) onChanged;
+
+  const FilterListTile({Key? key, required this.onChanged}) : super(key: key);
+
+  @override
+  State<FilterListTile> createState() => _FilterListTileState();
+}
+
+class _FilterListTileState extends State<FilterListTile> {
+  bool? _groupValue;
+  late List<FocusNode> _focusNodes;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNodes = Iterable<int>.generate(3).map((e) => FocusNode()).toList();
+
+    _focusNodes[0].requestFocus();
+  }
+
+  Widget buildRadio(bool value, FocusNode focusNode) {
+    return Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Radio<bool>(
+                groupValue: _groupValue,
+                value: value,
+                onChanged: (bool? value) {
+                  widget.onChanged(value);
+                  setState(() {
+                    _groupValue = value;
+                  });
+                },
+                hoverColor: kWhite,
+                activeColor: kPrimaryColor,
+                focusColor: kPrimaryColor,
+                splashRadius: 25,
+                toggleable: true,
+                visualDensity: VisualDensity.compact,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                focusNode: focusNode),
+          ],
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        buildRadio(true, _focusNodes[0]),
+        buildRadio(true, _focusNodes[0]),
+        buildRadio(true, _focusNodes[0]),
+      ],
     );
   }
 }
