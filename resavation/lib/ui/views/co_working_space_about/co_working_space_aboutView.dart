@@ -6,16 +6,15 @@ import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_details/property_details_viewmodel.dart';
+
 import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../model/property_model.dart';
 import '../messages/messages_viewmodel.dart';
 import 'co_working_space_aboutViewModel.dart';
 
-class CoWorkingSpaceView extends StatelessWidget {
-  CoWorkingSpaceView({
+class CoWorkingSpaceAboutView extends StatelessWidget {
+  CoWorkingSpaceAboutView({
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +22,7 @@ class CoWorkingSpaceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CoWorkingSpaceViewModel>.reactive(
+    return ViewModelBuilder<CoWorkingSpaceAboutViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -35,11 +34,11 @@ class CoWorkingSpaceView extends StatelessWidget {
         ),
         bottomSheet: buildBottomBar(model),
       ),
-      viewModelBuilder: () => CoWorkingSpaceViewModel(),
+      viewModelBuilder: () => CoWorkingSpaceAboutViewModel(),
     );
   }
 
-  Container buildBottomBar(CoWorkingSpaceViewModel model) {
+  Container buildBottomBar(CoWorkingSpaceAboutViewModel model) {
     final oCcy = NumberFormat("#,##0.00", "en_US");
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -74,7 +73,7 @@ class CoWorkingSpaceView extends StatelessWidget {
     );
   }
 
-  SliverList buildLocation(CoWorkingSpaceViewModel model) {
+  SliverList buildLocation(CoWorkingSpaceAboutViewModel model) {
     return SliverList(
         delegate: SliverChildListDelegate([
       Padding(
@@ -137,7 +136,7 @@ class CoWorkingSpaceView extends StatelessWidget {
     ]));
   }
 
-  SliverGrid buildAmenity(CoWorkingSpaceViewModel model) {
+  SliverGrid buildAmenity(CoWorkingSpaceAboutViewModel model) {
     return SliverGrid.count(
       crossAxisCount: 2,
       mainAxisSpacing: 0,
@@ -155,7 +154,7 @@ class CoWorkingSpaceView extends StatelessWidget {
   }
 
   SliverList buildDescription(
-      CoWorkingSpaceViewModel model, BuildContext context) {
+      CoWorkingSpaceAboutViewModel model, BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -168,16 +167,16 @@ class CoWorkingSpaceView extends StatelessWidget {
               children: [
                 verticalSpaceSmall,
                 Text(
-                  model.property?.propertyName ?? '',
+                  model.property?.propertyName ?? 'Eleko Estate',
                   style: AppStyle.kBodyRegularBlack16W600,
                 ),
                 Text(
-                  model.property?.address ?? '',
+                  model.property?.address ?? '11, Cheveron Drive, Lekki',
                   style: AppStyle.kBodySmallRegular12W300,
                 ),
                 verticalSpaceSmall,
                 PropertyDetails(
-                  title: model.property?.propertyCategory ?? '',
+                  title: model.property?.propertyCategory ?? 'Eleko Estate',
                   numberOfBedrooms: model.property?.bedroomCount ?? 0,
                   numberOfBathrooms: model.property?.bathTubCount ?? 0,
                   squareFeet: model.property?.surfaceArea ?? 0,
@@ -198,11 +197,11 @@ class CoWorkingSpaceView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          " Dummy David Strang",
+                          "Adeyemo Stephen",
                           style: AppStyle.kBodyRegularBlack16W600,
                         ),
                         Text(
-                          "",
+                          "Co Working Space",
                           style: AppStyle.kBodyRegularBlack14,
                         ),
                       ],
@@ -254,7 +253,9 @@ class CoWorkingSpaceView extends StatelessWidget {
                   style: AppStyle.kBodyRegularBlack16W600,
                 ),
                 verticalSpaceSmall,
-                Text(model.property?.description ?? '',
+                Text(
+                    model.property?.description ??
+                        'dfnjcnkewnkldmlckmlkmfntklnvklndejkncfdjxcnskjnfknxjnsdfjnjnvdnklcndlmedxkmvklermklmkslkdfnjnvknlkanelkfnklnvlkfmglkmdklfmlkmflkvmflf',
                     style: AppStyle.kBodySmallRegular12),
                 verticalSpaceMedium,
                 Text(
@@ -270,7 +271,7 @@ class CoWorkingSpaceView extends StatelessWidget {
   }
 
   SliverPersistentHeader buildHeader(
-      CoWorkingSpaceViewModel model, BuildContext context) {
+      CoWorkingSpaceAboutViewModel model, BuildContext context) {
     return SliverPersistentHeader(
         floating: true,
         delegate: PropertyDetailsHeader(
