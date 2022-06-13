@@ -27,7 +27,6 @@ dependencies:
   built_value: ^8.1.3
   analyzer: ^3.4.1
   flutter_polyline_points: ^1.0.0
-
   # ui
   country_picker: ^2.0.12
   google_fonts: ^3.0.1
