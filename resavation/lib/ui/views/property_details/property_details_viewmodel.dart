@@ -64,11 +64,11 @@ class PropertyDetailsViewModel extends BaseViewModel {
   }
 
   void goToDatePickerView() {
-    _navigationService.navigateTo(Routes.datePickerView, arguments: property);
+    _navigationService.navigateTo(Routes.datePickerView, arguments: DatePickerViewArguments(property: property));
   }
 
   void gotToChatRoomView(ChatModel? model) {
-    _navigationService.navigateTo(Routes.chatRoomView, arguments: model);
+    _navigationService.navigateTo(Routes.chatRoomView, arguments: ChatRoomViewArguments(chatModel: model));
   }
 
   void goToPropertyOwnersProfileView() {

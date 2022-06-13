@@ -57,8 +57,9 @@ class CategoriesListViewModel extends BaseViewModel {
     }
   }
 
+
   void goToSearchView(String search) {
-    _navigationService.navigateTo(Routes.searchView, arguments: search);
+    _navigationService.navigateTo(Routes.searchView, arguments: SearchViewArguments(passedQuery: search),);
   }
 
   void onSelectedValueChange(String? value) {

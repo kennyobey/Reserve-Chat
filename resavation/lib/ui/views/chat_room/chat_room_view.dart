@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/model/chat_message_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/views/audio_call/pickup_layout.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
 import 'package:resavation/ui/views/chat_room/widgets/avatar_card_widget.dart';
@@ -168,7 +169,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         ],
       ),
       actions: [
-        InkWell(
+/*         InkWell(
           onTap: () {
             model.startCall(
               otherUserEmail: otherUserEmail,
@@ -184,7 +185,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
               color: kBlack,
             ),
           ),
-        ),
+        ), */
         InkWell(
           onTap: () {
             model.startCall(
@@ -295,11 +296,8 @@ class MessageBox extends StatelessWidget {
                     child: InkWell(
                       splashColor: Colors.transparent,
                       onTap: onTap,
-                      child: Image.network(
-                        imageUrl,
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
+                      child: ResavationImage(
+                        image: imageUrl,
                       ),
                     ),
                   ),

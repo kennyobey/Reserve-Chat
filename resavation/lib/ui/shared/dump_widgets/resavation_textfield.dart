@@ -21,7 +21,7 @@ class ResavationTextField extends StatefulWidget {
     this.controller,
     this.validator,
     this.onChanged,
-    this.maxline,
+    this.maxline = 1,
   }) : super(key: key);
 
   final void Function()? onTap;
@@ -55,16 +55,17 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Material(
-        elevation: widget.elevation != null ? widget.elevation! : 0.0,
+        elevation: widget.elevation != null ? widget.elevation! : 0,
+        color: Colors.transparent,
         child: TextFormField(
           onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
+          maxLines: widget.maxline,
           textInputAction: widget.textInputAction,
           controller: widget.controller,
           validator: widget.validator,
           obscureText: _obscureText,
           style: style,
-          //  maxLines: widget.maxline,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(color: kGray, width: 0.5),

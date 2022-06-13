@@ -1,6 +1,5 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:resavation/ui/shared/colors.dart';
 
 class SelectCountry extends StatelessWidget {
   const SelectCountry({
@@ -18,7 +17,7 @@ class SelectCountry extends StatelessWidget {
       child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              border: Border.all(color: kBlack54, width: 1.0)),
+              border: Border.all(color: Colors.grey, width: 1.0)),
           width: MediaQuery.of(context).size.width,
           height: 42,
           child: Padding(

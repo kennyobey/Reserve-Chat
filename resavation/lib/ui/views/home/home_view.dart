@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 
 import 'widget/home_top_categories.dart';
 import 'widget/home_top_cities.dart';
+import 'widget/home_user_appointment.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -61,6 +62,8 @@ class HomeView extends StatelessWidget {
           HomeTopCategories(),
           verticalSpaceMedium,
           HomeTopCites(),
+          verticalSpaceMedium,
+          HomeUserAppointment(),
           verticalSpaceMedium,
         ],
       ),

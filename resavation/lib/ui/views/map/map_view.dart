@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
-import 'package:resavation/ui/shared/text_styles.dart';
+
 import 'package:resavation/ui/views/map/map_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class MapView extends StatelessWidget {
   const MapView({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,8 @@ class MapView extends StatelessWidget {
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
               initialCameraPosition: model.initialCameraPosition,
-              onMapCreated: (controller) => model.googleMapController = controller,
+              onMapCreated: (controller) =>
+                  model.googleMapController = controller,
               markers: {
                 if (model.origin != null) model.origin!,
                 if (model.destination != null) model.destination!
@@ -107,7 +107,6 @@ class MapView extends StatelessWidget {
               ),
           ],
         ),
-
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Colors.black,

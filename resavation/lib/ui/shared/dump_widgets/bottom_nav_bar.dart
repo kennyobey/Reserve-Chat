@@ -10,45 +10,8 @@ class BottomNavBar extends ViewModelWidget<MainViewModel> {
     Key? key,
   }) : super(key: key);
 
-  BottomNavigationBar buildBottomNavigationBar(MainViewModel model) {
-    return BottomNavigationBar(
-      selectedItemColor: kPrimaryColor,
-      iconSize: 28,
-      type: BottomNavigationBarType.fixed,
-      currentIndex: model.currentIndex,
-      onTap: model.setIndex,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            model.returnUserType()
-                ? Icons.favorite_border
-                : Icons.calendar_view_month_outlined,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(model.returnUserType() ? Icons.search : Icons.analytics),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings_outlined),
-          label: '',
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context, MainViewModel model) {
-    /*   var textTheme = Theme.of(context).textTheme;
-
-    final bodyText2 =
-    textTheme.bodyText2!.copyWith(fontSize: 16, color: kButtonColor);
-*/
     return BottomNavigationBar(
       items: [
         buildItem(

@@ -6,14 +6,18 @@ import 'package:resavation/utility/assets.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ResavationImage extends StatelessWidget {
-  const ResavationImage({Key? key, required this.image}) : super(key: key);
+  const ResavationImage({
+    Key? key,
+    required this.image,
+    this.boxFit = BoxFit.cover,
+  }) : super(key: key);
   final String image;
-
+  final BoxFit boxFit;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: image,
-      fit: BoxFit.cover,
+      fit: boxFit,
       placeholder: (context, url) => Container(
         alignment: Alignment.center,
         color: kDarkBlue,
