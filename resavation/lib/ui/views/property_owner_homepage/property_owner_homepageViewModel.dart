@@ -36,4 +36,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void PropertyOwnerTrackListView() {
     _navigationService.navigateTo(Routes.propertyOwnerTrackListView);
   }
+
+  void CoWorkingSpaceAboutView() {
+    _navigationService.navigateTo(Routes.coWorkingSpaceAboutView);
+  }
 }

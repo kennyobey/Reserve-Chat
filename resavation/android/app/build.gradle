@@ -81,4 +81,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation "com.algolia:algoliasearch-client-kotlin:1.+"
     implementation "io.ktor:ktor-client-okhttp:1.+"
+    
 }
