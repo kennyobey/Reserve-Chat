@@ -19,8 +19,8 @@ import '../ui/views/audio_call/audio_call_view.dart';
 import '../ui/views/booking_submission/booking_submission_view.dart';
 import '../ui/views/categories_list/categories_list_view.dart';
 import '../ui/views/chat_room/chat_room_view.dart';
-import '../ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import '../ui/views/cities_list/cities_list_view.dart';
+import '../ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
 import '../ui/views/date_picker/date_picker_view.dart';
 import '../ui/views/edit_profile/edit_profile_view.dart';
@@ -64,6 +64,7 @@ class Routes {
   static const String startupView = '/';
   static const String mainView = '/main-view';
   static const String appointmentBookingPage = '/appointment-booking-page';
+  static const String coWorkingSpaceAboutView = '/co-working-space-about-view';
   static const String appointmentListView = '/appointment-list-view';
   static const String onboardingView = '/onboarding-view';
   static const String signUpView = '/sign-up-view';
@@ -118,14 +119,13 @@ class Routes {
       '/property-owner-my-property-view';
   static const String propertyOwnerTrackListView =
       '/property-owner-track-list-view';
-  static const String coWorkingSpaceAboutView = '/co-working-space-about-view';
-  //PropertyOwnerTrackListView
   static const String categoriesListView = '/categories-list-view';
   static const String citiesListView = '/cities-list-view';
   static const all = <String>{
     startupView,
     mainView,
     appointmentBookingPage,
+    coWorkingSpaceAboutView,
     appointmentListView,
     onboardingView,
     signUpView,
@@ -166,7 +166,6 @@ class Routes {
     signUpConfirmationView,
     propertyOwnerMyPropertyView,
     propertyOwnerTrackListView,
-    coWorkingSpaceAboutView
     categoriesListView,
     citiesListView,
   };
@@ -179,6 +178,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.mainView, page: MainView),
     RouteDef(Routes.appointmentBookingPage, page: AppointmentBookingPage),
+    RouteDef(Routes.coWorkingSpaceAboutView, page: CoWorkingSpaceAboutView),
     RouteDef(Routes.appointmentListView, page: AppointmentListView),
     RouteDef(Routes.onboardingView, page: OnboardingView),
     RouteDef(Routes.signUpView, page: SignUpView),
@@ -230,7 +230,6 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerMyPropertyView),
     RouteDef(Routes.propertyOwnerTrackListView,
         page: PropertyOwnerTrackListView),
-    RouteDef(Routes.coWorkingSpaceAboutView, page: CoWorkingSpaceAboutView),
     RouteDef(Routes.categoriesListView, page: CategoriesListView),
     RouteDef(Routes.citiesListView, page: CitiesListView),
   ];
@@ -258,6 +257,15 @@ class StackedRouter extends RouterBase {
           key: args.key,
           appointmentBookingDetails: args.appointmentBookingDetails,
         ),
+        settings: data,
+      );
+    },
+    CoWorkingSpaceAboutView: (data) {
+      var args = data.getArgs<CoWorkingSpaceAboutViewArguments>(
+        orElse: () => CoWorkingSpaceAboutViewArguments(),
+      );
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => CoWorkingSpaceAboutView(key: args.key),
         settings: data,
       );
     },
@@ -314,6 +322,7 @@ class StackedRouter extends RouterBase {
         builder: (context) => AudioCallView(
           key: args.key,
           call: args.call,
+          reciever: args.reciever,
         ),
         settings: data,
       );
@@ -557,9 +566,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    CoWorkingSpaceAboutView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => CoWorkingSpaceAboutView(),
     CategoriesListView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const CategoriesListView(),
@@ -572,9 +578,8 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-      );
-  }
-
+  };
+}
 
 /// ************************************************************************
 /// Arguments holder classes
@@ -587,6 +592,11 @@ class AppointmentBookingPageArguments {
   AppointmentBookingPageArguments({this.key, this.appointmentBookingDetails});
 }
 
+/// CoWorkingSpaceAboutView arguments holder class
+class CoWorkingSpaceAboutViewArguments {
+  final Key? key;
+  CoWorkingSpaceAboutViewArguments({this.key});
+}
 
 /// ChatRoomView arguments holder class
 class ChatRoomViewArguments {
@@ -599,7 +609,8 @@ class ChatRoomViewArguments {
 class AudioCallViewArguments {
   final Key? key;
   final CallModel? call;
-  AudioCallViewArguments({this.key, required this.call});
+  final bool reciever;
+  AudioCallViewArguments({this.key, required this.call, this.reciever = false});
 }
 
 /// PropertyOwnerAddPhotosView arguments holder class
@@ -679,5 +690,4 @@ class SignUpConfirmationViewArguments {
   final Key? key;
   final String email;
   SignUpConfirmationViewArguments({this.key, required this.email});
-}
 }

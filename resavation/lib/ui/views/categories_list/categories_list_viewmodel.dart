@@ -1,6 +1,5 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/property_model.dart';
 import 'package:resavation/model/top_categories_model/content.dart';
 import 'package:resavation/model/top_categories_model/top_categories_model.dart';
 import 'package:stacked/stacked.dart';
@@ -57,9 +56,11 @@ class CategoriesListViewModel extends BaseViewModel {
     }
   }
 
-
   void goToSearchView(String search) {
-    _navigationService.navigateTo(Routes.searchView, arguments: SearchViewArguments(passedQuery: search),);
+    _navigationService.navigateTo(
+      Routes.searchView,
+      arguments: SearchViewArguments(passedQuery: search),
+    );
   }
 
   void onSelectedValueChange(String? value) {

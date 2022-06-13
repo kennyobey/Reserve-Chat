@@ -10,6 +10,7 @@ import 'package:resavation/ui/views/booking_submission/booking_submission_view.d
 import 'package:resavation/ui/views/categories_list/categories_list_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
 import 'package:resavation/ui/views/cities_list/cities_list_view.dart';
+import 'package:resavation/ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import 'package:resavation/ui/views/confirmation/confirmation_view.dart';
 import 'package:resavation/ui/views/date_picker/date_picker_view.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_view.dart';
@@ -58,6 +59,7 @@ import '../services/uploadpropertyService.dart';
     AdaptiveRoute(page: StartupView, initial: true),
     AdaptiveRoute(page: MainView),
     AdaptiveRoute(page: AppointmentBookingPage),
+    AdaptiveRoute(page: CoWorkingSpaceAboutView),
     AdaptiveRoute(page: AppointmentListView),
     AdaptiveRoute(page: OnboardingView),
     AdaptiveRoute(
