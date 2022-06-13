@@ -24,7 +24,7 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.replaceWith(Routes.propertyDetailsView,
-        arguments: property);
+        arguments: PropertyDetailsViewArguments(passedProperty: property));
   }
 
   void navigateBack() {

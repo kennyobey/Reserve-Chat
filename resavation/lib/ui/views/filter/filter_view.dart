@@ -213,17 +213,6 @@ class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
 
   @override
   Widget build(BuildContext context, model) {
-    ListTile(
-      title: Text(
-        title,
-      ),
-      trailing: Radio<Availability>(
-        value: value,
-        groupValue: model.availibiality,
-        onChanged: model.onDurationChanged,
-      ),
-    );
-
     final isActive =
         (model.availibiality.name.toLowerCase() == value.name.toLowerCase());
     return GestureDetector(

@@ -4,7 +4,7 @@ import 'package:stacked/stacked.dart';
 
 class UserTypeService with ReactiveServiceMixin {
   RxValue<LoginModel> _userData = RxValue<LoginModel>(LoginModel());
-  RxValue<bool> _isTenant = RxValue<bool>(false);
+  RxValue<bool> _isTenant = RxValue<bool>(true);
   RxValue<int> _currentIndex = RxValue<int>(0);
   bool get isTenant => _isTenant.value;
 
@@ -23,7 +23,9 @@ class UserTypeService with ReactiveServiceMixin {
 
   setUserData(LoginModel data) {
     _userData.value = data;
-    _isTenant.value = data.roles[0] == "ROLE_USER";
+    if (data.roles.isNotEmpty) {
+      _isTenant.value = data.roles[0] == "ROLE_USER";
+    }
   }
 
   serCurrentIndex(int index) {

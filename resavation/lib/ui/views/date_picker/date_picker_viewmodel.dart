@@ -24,10 +24,12 @@ class DatePickerViewModel extends BaseViewModel {
 
   void goToBookingSubmissionView(Property? property) {
     _navigationService.navigateTo(Routes.bookingSubmissionView,
-        arguments: <String, dynamic>{
+        arguments: BookingSubmissionViewArguments(bookingData:  <String, dynamic>{
           "property": property,
           "start_date": selectedDate
-        });
+        } ));
+
+      
   }
 
   void setSelectedDate(DateTime date) {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class MultiSelectDialog extends StatelessWidget {
   /// List to display the answer.
   final List<String> answers;
+  final List<String> previousAnswers;
 
   /// Widget to display the question.
   final Widget question;
@@ -14,19 +15,24 @@ class MultiSelectDialog extends StatelessWidget {
 
   /// Map that holds selected option with a boolean value
   /// i.e. { 'a' : false}.
-  static Map<String, bool>? mappedItem;
+  ///
+  Map<String, bool>? mappedItem;
 
-  MultiSelectDialog({required this.answers, required this.question});
+  MultiSelectDialog(
+      {required this.answers,
+      required this.question,
+      required this.previousAnswers});
 
   /// Function that converts the list answer to a map.
   Map<String, bool> initMap() {
     return mappedItem = Map.fromIterable(answers,
         key: (k) => k.toString(),
         value: (v) {
-          if (v != true && v != false)
+          if (previousAnswers.contains(v)) {
+            return true;
+          } else {
             return false;
-          else
-            return v as bool;
+          }
         });
   }
 

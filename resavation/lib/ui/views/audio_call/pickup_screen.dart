@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/audio_call/permission_checker.dart';
 
 import '../../../model/call_model.dart';
@@ -37,35 +38,58 @@ class PickupScreen extends StatelessWidget {
               ),
               child: ResavationImage(image: call.callerPic),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 30),
             Text(
               'Incoming call from ${call.callerName}',
-              style: AppStyle.kBodyRegularBlack15,
+              style: AppStyle.kBodyRegularBlack16W600,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.call_end),
-                  color: Colors.redAccent,
-                  onPressed: () async {
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () async {
                     await callMethods.endCall(call: call);
                   },
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.redAccent,
+                    ),
+                    child:
+                        Icon(Icons.call_end_rounded, size: 30, color: kWhite),
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.call),
-                  color: Colors.green,
-                  onPressed: () async => await PermissionChecker
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () async => await PermissionChecker
                           .cameraAndMicrophonePermissionsGranted()
                       ? Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AudioCallView(call: call),
+                            builder: (context) =>
+                                AudioCallView(call: call, reciever: true),
                           ),
                         )
                       : {},
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.green,
+                    ),
+                    child: Icon(Icons.call_rounded, size: 30, color: kWhite),
+                  ),
                 ),
               ],
             ),

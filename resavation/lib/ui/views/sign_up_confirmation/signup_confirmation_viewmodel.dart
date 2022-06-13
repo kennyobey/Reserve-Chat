@@ -9,7 +9,8 @@ class SignUpConfirmationViewModel extends BaseViewModel {
   final _httpService = locator<HttpService>();
 
   void goToVerifyUser(String email) {
-    _navigationService.replaceWith(Routes.verifyUserAccount, arguments: email);
+    _navigationService.replaceWith(Routes.verifyUserAccount,
+        arguments: VerifyUserAccountArguments(email: email));
   }
 
   resendCode(String email) async {

@@ -1,23 +1,14 @@
-import 'package:analyzer/file_system/file_system.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:observable_ish/observable_ish.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/services/core/image_picker_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../services/core/http_service.dart';
-import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
-
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
 
   // void upoloadPropertyToServer() async {
   //   httpService.uploadProperty();
@@ -77,9 +68,9 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   // }
 
   void goToPropertyOwnerPaymentView() {
-    propertyOwnerUploadModel.imageUrl = "";
-    _navigationService.navigateTo(Routes.propertyOwnerPaymentView,
-        arguments: propertyOwnerUploadModel);
+    _navigationService.navigateTo(
+      Routes.propertyOwnerPaymentView,
+    );
   }
 }
 

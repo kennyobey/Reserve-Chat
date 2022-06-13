@@ -10,6 +10,7 @@ import 'package:resavation/model/property_search/property_search.dart';
 import 'package:resavation/model/registration_model.dart';
 import 'package:resavation/model/top_cities_model/top_cities_model.dart';
 import 'package:resavation/model/upload_property_model.dart';
+import 'package:resavation/services/core/upload_type_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 
 import '../../model/top_categories_model/top_categories_model.dart';
@@ -92,7 +93,8 @@ class HttpService {
 
       if (response.statusCode <= 299) {
         String responseString = response.body;
-        var loginModel = loginModelFromJson(responseString);
+
+        final loginModel = loginModelFromJson(responseString);
         userTypeService.setUserData(loginModel);
         return true;
       } else if (response.statusCode == 400) {
@@ -532,116 +534,63 @@ class HttpService {
     }
   }
 
-  Future<UploadProperty?> uploadProperty({
-    String? address,
-    List<bool>? amenities,
-    bool? airConditional,
-    bool? airDryer,
-    bool? fireAlarm,
-    bool? tv,
-    bool? washingMachine,
-    bool? wifi,
-    Map<String, String>? availability,
-    String? from,
-    String? to,
-    int? bathTubCount,
-    int? bedroomCount,
-    int? carSlots,
-    String? city,
-    String? country,
-    String? description,
-    String? imageUrl,
-    List<String>? listingOption,
-    bool? liveInSPace,
-    String? propertyName,
-    String? roomType,
-    List<bool>? rules,
-    bool? noHouseParty,
-    bool? noPet,
-    bool? noSmoking,
-    bool? spaceFurnished,
-    int? spacePrice,
-    bool? spaceServiced,
-    String? spaceType,
-    String? state,
-    Map<String, int>? subscription,
-    int? annualPrice,
-    int? biannualPrice,
-    int? monthlyPrice,
-    int? quarterlyPrice,
-    int? surfaceArea,
-    Map<String, String>? userDetails,
-    String? dateOfBirth,
-    String? firstName,
-    String? gender,
-    String? lastName,
-    String? phoneNumber,
+  uploadProperty({
+    required UploadTypeService uploadTypeService,
+    required List<String> images,
   }) async {
-    var response =
-        await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
-            headers: <String, String>{'Content-Type': 'application/json'},
-            body: jsonEncode({
-              "address": address,
-              "amenities": {
-                "airConditional": true,
-                "airDryer": true,
-                "fireAlarm": true,
-                "tv": true,
-                "washingMachine": true,
-                "wifi": true
-              },
-              "availability": {"from": from, "to": to},
-              "bathTubCount": bathTubCount,
-              "bedroomCount": bedroomCount,
-              "carSlots": carSlots,
-              "city": city,
-              "country": country,
-              "description": description,
-              "imageUrl": imageUrl,
-              "listingOption": listingOption,
-              "liveInSPace": liveInSPace,
-              "propertyName": propertyName,
-              "roomType": roomType,
-              "rules": rules,
-              "noHouseParty": true,
-              "noPet": true,
-              "noSmoking": true,
-              "spaceFurnished": spaceFurnished,
-              "spacePrice": spacePrice,
-              "spaceServiced": spaceServiced,
-              "spaceType": spaceType,
-              "state": state,
-              "subscription": {
-                "annualPrice": annualPrice,
-                "biannualPrice": biannualPrice,
-                "monthlyPrice": monthlyPrice,
-                "quarterlyPrice": quarterlyPrice
-              },
-              "surfaceArea": surfaceArea,
-              "userDetails": {
-                "address": address,
-                "city": city,
-                "country": country,
-                "dateOfBirth": dateOfBirth,
-                "firstName": firstName,
-                "gender": gender,
-                "lastName": lastName,
-                "phoneNumber": phoneNumber,
-                "state": state
-              }
-            }));
+    final body = <String, dynamic>{
+      "propertyCategory": uploadTypeService.propertyCategory,
+      "propertyDetails": {
+        "address": uploadTypeService.address,
+        "amenities": uploadTypeService.amenities,
+        "availability": {
+          "from": uploadTypeService.startDate?.millisecondsSinceEpoch,
+          "to": uploadTypeService.endDate?.millisecondsSinceEpoch,
+        },
+        "bathTubCount": uploadTypeService.noOfBathroom,
+        "bedroomCount": uploadTypeService.noOfBedroom,
+        "carSlots": uploadTypeService.numberOfCarSLot,
+        "city": uploadTypeService.city,
+        "country": uploadTypeService.country,
+        "description": uploadTypeService.propertyDescription,
+        "imageUrl": images,
+        "liveInSPace": uploadTypeService.liveInSpace,
+        "propertyName": uploadTypeService.propertyName,
+        "propertyStatus": uploadTypeService.propertyStatus,
+        "propertyStyle": uploadTypeService.propertyStyle,
+        "propertyType": uploadTypeService.propertyType,
+        "roomType": uploadTypeService.spaceType,
+        "rules": uploadTypeService.rules,
+        "spaceFurnished": uploadTypeService.isSpaceFurnished,
+        "spacePrice": 0,
+        "spaceServiced": uploadTypeService.isSpaceServiced,
+        "state": uploadTypeService.state,
+        "subscription": {
+          "annualPrice": uploadTypeService.annualPrice,
+          "biannualPrice": uploadTypeService.biannualPrice,
+          "monthlyPrice": uploadTypeService.monthlyPrice,
+          "quarterlyPrice": uploadTypeService.quarterlyPrice
+        },
+        "surfaceArea": uploadTypeService.surfaceArea
+      }
+    };
 
-    print('From the uploading session: ${response.body}');
-    if (response.statusCode == 200) {
-      String responseString = response.body;
-      return uploadPropertyFromJson(responseString);
-    } else if (response.statusCode == 400) {
-      String responseString = response.body;
-      userTypeService.error.value = "";
-      print(responseString);
-      throw Exception(userTypeService.error.value);
-    } else
-      throw Exception("Failed to upload property");
+    try {
+      final response = await http.post(
+          Uri.http(requestSite, "/api/v1/properties/upload"),
+          headers: <String, String>{'Content-Type': 'application/json'},
+          body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        // String responseString = response.body;
+
+      } else if (response.statusCode == 400) {
+        String responseString = response.body;
+        return Future.error(responseString);
+      } else
+        return Future.error("Failed to upload property");
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
 
   Future<String> getCallToken(

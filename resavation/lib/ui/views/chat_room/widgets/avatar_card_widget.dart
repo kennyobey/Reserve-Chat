@@ -43,10 +43,11 @@ class AvatarCard extends StatelessWidget {
                     name,
                     style: AppStyle.kBodyBoldBlack,
                   ),
-                  Text(
+
+                  /*   Text(
                     'Online',
                     style: AppStyle.kBodyRegularBlack14,
-                  ),
+                  ), */
                 ],
               ),
             ),

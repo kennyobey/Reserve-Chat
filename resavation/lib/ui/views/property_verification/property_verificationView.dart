@@ -9,8 +9,7 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_verification/property_verificationViewModel.dart';
 
 import 'package:stacked/stacked.dart';
-
-import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
+ 
 
 class PropertyVerificationView extends StatefulWidget {
   const PropertyVerificationView({Key? key}) : super(key: key);
@@ -21,8 +20,7 @@ class PropertyVerificationView extends StatefulWidget {
 }
 
 class _PropertyVerificationViewState extends State<PropertyVerificationView> {
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
+ 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyVerificationViewModel>.reactive(

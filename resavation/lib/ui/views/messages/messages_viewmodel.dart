@@ -36,7 +36,10 @@ class MessagesViewModel extends BaseViewModel {
 
   void goToChatRoomView(ChatModel chatModel) {
     resetChatCount(chatModel);
-    _navigationService.navigateTo(Routes.chatRoomView, arguments: chatModel);
+    _navigationService.navigateTo(
+      Routes.chatRoomView,
+      arguments: ChatRoomViewArguments(chatModel: chatModel),
+    );
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getChats() {

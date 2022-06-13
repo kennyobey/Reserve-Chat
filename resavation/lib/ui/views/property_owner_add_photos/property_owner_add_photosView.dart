@@ -1,24 +1,23 @@
 // ignore_for_file: deprecated_member_use, must_be_immutable
 
-import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/chat_room/widgets/buttom_sheet_widget.dart';
 import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosViewModel.dart';
-import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
 
+import '../../shared/dump_widgets/resavation_app_bar.dart';
+
 class PropertyOwnerAddPhotosView extends StatefulWidget {
-  PropertyOwnerAddPhotosView(
-      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
-      : super(key: key);
+  PropertyOwnerAddPhotosView({Key? key}) : super(key: key);
 
   @override
   State<PropertyOwnerAddPhotosView> createState() =>
@@ -27,76 +26,244 @@ class PropertyOwnerAddPhotosView extends StatefulWidget {
 
 class _PropertyOwnerAddPhotosViewState
     extends State<PropertyOwnerAddPhotosView> {
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
+  Column buildEmptyBody(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+    final bodyText1 = textTheme.bodyText1!
+        .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
+    final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Text(
+          'No image(s) yet!',
+          style: bodyText1,
+        ),
+        const SizedBox(
+          height: 5,
+          width: double.infinity,
+        ),
+        Text(
+          'Kindly click the add(+) button below',
+          textAlign: TextAlign.center,
+          style: bodyText2,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerAddPhotosViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: kPrimaryColor,
+            onPressed: () async {
+              try {
+                await model.addPhoto();
+              } catch (exception) {
+                ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      exception.toString(),
+                    ),
+                  ),
+                );
+              }
+            },
+            child: Icon(Icons.add),
+          ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: ResavationElevatedButton(
+                    child: Text("Back"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                horizontalSpaceMedium,
+                Expanded(
+                  child: ResavationElevatedButton(
+                      child: Text("Next"),
+                      onPressed: () {
+                        if (model.selectedImages.isNotEmpty) {
+                          model.goToPropertyOwnerPaymentView();
+                        } else {
+                          ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                            SnackBar(
+                              content: Text('Please select one or more images'),
+                            ),
+                          );
+                        }
+                      }),
+                )
+              ],
+            ),
+          ),
+          appBar: ResavationAppBar(
+            title: "Add Image(s)",
+            centerTitle: false,
+            backEnabled: false,
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 15,
+              horizontal: 10,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                verticalSpaceMedium,
-                Center(
-                  child: Text(
-                    'Add Photos',
-                    style: AppStyle.kHeading0,
-                  ),
-                ),
-                verticalSpaceMedium,
+                verticalSpaceSmall,
                 Text(
-                  'Add photo to your listings',
-                  style: AppStyle.kHeading0,
+                  'Add image(s) to your listings',
+                  style: AppStyle.kBodyRegularBlack16W600,
                 ),
-                verticalSpaceMedium,
+                verticalSpaceTiny,
                 Text(
-                  'Photos help prospective tenant imagine staying in your place',
-                  style: AppStyle.kBodyRegularBlack14,
-                ),
-                Text(
-                  'You can add as many photo as you want',
+                  'Image(s) help prospective tenant imagine staying in your place\nYou can add as many image(s) as you want',
                   style: AppStyle.kBodyRegularBlack14,
                 ),
                 verticalSpaceMedium,
-                verticalSpaceRegular,
-                ResavationButton(
-                  onTap: () {
-                    model.goToPropertyOwnerAddCoverPhotosView();
-                  },
-                  title: 'Add photos',
-                  titleColor: kWhite,
-                  buttonColor: kPrimaryColor,
-                  //  borderColor: kp,
+                Expanded(
+                  child: model.selectedImages.isEmpty
+                      ? buildEmptyBody(context)
+                      : GridView.builder(
+                          itemCount: model.selectedImages.length,
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 0,
+                            childAspectRatio: 1 / 1,
+                            mainAxisSpacing: 0,
+                          ),
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (_, index) {
+                            final image = model.selectedImages[index];
+                            return ImageItem(
+                              image: image,
+                              clearImage: () => model.clearImage(image),
+                            );
+                          },
+                        ),
                 ),
-                // if (file != null) fileDetails(file!),
-              ],
-            ),
-          ),
-          bottomSheet: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ResavationElevatedButton(
-                  child: Text("Back"),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                ResavationElevatedButton(
-                  child: Text("Next"),
-                  onPressed: () => model.goToPropertyOwnerAddCoverPhotosView(),
-                )
+                verticalSpaceMedium,
               ],
             ),
           ),
         ),
       ),
       viewModelBuilder: () => PropertyOwnerAddPhotosViewModel(),
+    );
+  }
+}
+
+class ImageItem extends StatelessWidget {
+  const ImageItem({
+    Key? key,
+    required this.image,
+    required this.clearImage,
+  }) : super(key: key);
+
+  final XFile image;
+  final Function() clearImage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      margin: EdgeInsets.all(5),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      elevation: 1,
+      child: InkWell(
+        onTap: () => showImage(context),
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Image.file(
+            File(image.path),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  showImage(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 5,
+      child: Stack(
+        children: [
+          Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            height: size.height * 0.8,
+            width: size.width * 0.9,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            child: PhotoView.customChild(
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              maxScale: PhotoViewComputedScale.covered * 2.5,
+              child: Image.file(
+                File(image.path),
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 5,
+            right: 5,
+            child: InkWell(
+              splashColor: Colors.transparent,
+              onTap: () {
+                Navigator.of(context).pop();
+                clearImage();
+              },
+              child: Container(
+                height: 30,
+                width: 30,
+                alignment: Alignment.center,
+                child: Icon(Icons.cancel_outlined, color: kWhite),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Image Viewer",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
     );
   }
 }

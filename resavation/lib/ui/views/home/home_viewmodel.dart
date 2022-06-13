@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/appointment.dart';
 import 'package:resavation/model/login_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/http_service.dart';
@@ -75,7 +76,19 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.editProfileView);
   }
 
+  void goToAppointmentList() {
+    _navigationService.navigateTo(Routes.appointmentListView);
+  }
+
   void goToMessage() {
-    _navigationService.navigateTo(Routes.messagesView);
+    _navigationService.navigateTo(Routes.appointmentBookingPage,
+        arguments: AppointmentBookingPageArguments(
+            appointmentBookingDetails: AppointmentBookingDetails(
+          location: '',
+          ownerEmail: 'otitemitope6@gmail.com',
+          ownerName: 'Otit ',
+          propertyName: 'lorem ispidium',
+        )));
+    // _navigationService.navigateTo(Routes.messagesView);
   }
 }

@@ -82,6 +82,6 @@ class SignUpViewModel extends BaseViewModel {
   void goToSignUpConfirmation() {
     final String email = emailFieldController.text.trim();
     _navigationService.navigateTo(Routes.signUpConfirmationView,
-        arguments: email);
+        arguments: SignUpConfirmationViewArguments(email: email));
   }
 }

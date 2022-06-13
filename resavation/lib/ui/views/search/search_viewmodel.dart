@@ -142,7 +142,7 @@ class SearchViewModel extends BaseViewModel {
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
       Routes.propertyDetailsView,
-      arguments: property,
+      arguments: PropertyDetailsViewArguments(passedProperty: property),
     );
   }
 

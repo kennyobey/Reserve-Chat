@@ -92,7 +92,7 @@ class ChatRoomViewModel extends BaseViewModel {
       call.hasDialled = true;
 
       if (callMade) {
-        _navigationService.navigateTo(Routes.audioCallView, arguments: call);
+        _navigationService.navigateTo(Routes.audioCallView, arguments: AudioCallViewArguments(call: call));
       }
     }
   }

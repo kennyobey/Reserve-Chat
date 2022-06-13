@@ -1,10 +1,15 @@
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/image_picker_service.dart';
+import 'package:resavation/services/core/upload_type_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
+import 'package:resavation/ui/views/appointment_booking/appointment_booking.dart';
+import 'package:resavation/ui/views/appointment_list/appointment_list_view.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/booking_submission/booking_submission_view.dart';
+import 'package:resavation/ui/views/categories_list/categories_list_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
+import 'package:resavation/ui/views/cities_list/cities_list_view.dart';
 import 'package:resavation/ui/views/confirmation/confirmation_view.dart';
 import 'package:resavation/ui/views/date_picker/date_picker_view.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_view.dart';
@@ -27,17 +32,21 @@ import 'package:resavation/ui/views/property_owner_edit_profile/property_owner_e
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageView.dart';
 import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
 import 'package:resavation/ui/views/property_owner_identification_verification/property_owner_identification_verificationView.dart';
+import 'package:resavation/ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_view.dart';
 import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
+import 'package:resavation/ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
 import 'package:resavation/ui/views/property_owner_verification/property_owner_verificationView.dart';
 import 'package:resavation/ui/views/property_verification/property_verificationView.dart';
 import 'package:resavation/ui/views/rest_password/reset_password_view.dart';
 import 'package:resavation/ui/views/search/search_view.dart';
 import 'package:resavation/ui/views/settings/settings_view.dart';
+import 'package:resavation/ui/views/sign_up_confirmation/signup_confirmation_view.dart';
 import 'package:resavation/ui/views/signup/signup_view.dart';
 import 'package:resavation/ui/views/startup/startup_view.dart';
+import 'package:resavation/ui/views/verify_user_account/verify_user_account.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -48,6 +57,8 @@ import '../services/uploadpropertyService.dart';
   routes: [
     AdaptiveRoute(page: StartupView, initial: true),
     AdaptiveRoute(page: MainView),
+    AdaptiveRoute(page: AppointmentBookingPage),
+    AdaptiveRoute(page: AppointmentListView),
     AdaptiveRoute(page: OnboardingView),
     AdaptiveRoute(
       page: SignUpView,
@@ -88,10 +99,17 @@ import '../services/uploadpropertyService.dart';
     AdaptiveRoute(page: PropertyOwnerIdentificationView),
     AdaptiveRoute(page: PropertyOwnerVerificationView),
     AdaptiveRoute(page: PropertyOwnerSettingsView),
+    AdaptiveRoute(page: VerifyUserAccount),
+    AdaptiveRoute(page: SignUpConfirmationView),
+    AdaptiveRoute(page: PropertyOwnerMyPropertyView),
+    AdaptiveRoute(page: PropertyOwnerTrackListView),
+    AdaptiveRoute(page: CategoriesListView),
+    AdaptiveRoute(page: CitiesListView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: HttpService),
+    LazySingleton(classType: UploadTypeService),
     LazySingleton(classType: SnackbarService),
     LazySingleton(classType: CustomSnackbarService),
     LazySingleton(classType: UserTypeService),
