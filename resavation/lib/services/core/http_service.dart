@@ -1,15 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
-
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
+import 'package:resavation/model/filter/filter.dart';
 import 'package:resavation/model/login_model.dart';
-import 'package:resavation/model/property_model.dart';
-import 'package:resavation/model/property_search/property_search.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/registration_model.dart';
-import 'package:resavation/model/top_cities_model/top_cities_model.dart';
-import 'package:resavation/model/upload_property_model.dart';
+import 'package:resavation/model/search_model/search_model.dart';
+import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:resavation/services/core/upload_type_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 
@@ -40,8 +40,6 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in sending OTP");
     }
@@ -69,8 +67,6 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in confirming OTP");
     }
@@ -105,8 +101,6 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Failed to login user");
     }
@@ -145,8 +139,6 @@ class HttpService {
         return Future.error((json.decode(response.body)['message']) ??
             'Failed to register user');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Failed to register user");
     }
@@ -177,8 +169,6 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in changing your password");
     }
@@ -199,15 +189,13 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in sending OTP");
     }
   }
 
 //////
-  Future<PropertySearch> getAllProperties(
+  Future<SearchModel> getAllProperties(
       {required int page, required int size}) async {
     try {
       var response = await http.get(
@@ -222,13 +210,61 @@ class HttpService {
       );
 
       if (response.statusCode <= 299) {
-        return PropertySearch.fromJson(response.body);
+        return SearchModel.fromJson(response.body);
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
     } catch (exception) {
-      debugPrint(exception.toString() + ": ttt");
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
 
+  Future<SearchModel> getSearchProperty(
+      {required String location, required int page, required int size}) async {
+    try {
+      final response = await http.get(
+        Uri.http(requestSite, "/api/v1/properties/filter", <String, String>{
+          "location": location,
+          "page": page.toString(),
+          "size": size.toString(),
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+
+      if (response.statusCode <= 299) {
+        return SearchModel.fromJson(response.body);
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<SearchModel> getFilteredProperty(
+      {required Filter filter, required int page, required int size}) async {
+    try {
+      var response = await http.post(
+        Uri.http(requestSite, "/api/v1/properties/filter", <String, String>{
+          "page": page.toString(),
+          "size": size.toString(),
+        }),
+        body: filter.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+
+      if (response.statusCode <= 299) {
+        return SearchModel.fromJson(response.body);
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }
   }
@@ -251,8 +287,6 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }
@@ -281,7 +315,7 @@ class HttpService {
     }
   }
 
-  Future<PropertySearch> getAllFavouriteProperties(
+  Future<SearchModel> getAllFavouriteProperties(
       {required int page, required int size}) async {
     try {
       var response = await http.get(
@@ -296,136 +330,10 @@ class HttpService {
         },
       );
       if (response.statusCode <= 299) {
-        return PropertySearch.fromJson(response.body);
+        return SearchModel.fromJson(response.body);
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<List<Property>> filterProperties({
-    required int page,
-    required int size,
-  }) async {
-    try {
-      var response = await http.post(
-        Uri.http(
-            requestSite, "api/v1/properties/favourite/fetch", <String, String>{
-          "page": page.toString(),
-          "size": size.toString(),
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            "amenity": "string",
-            "amenityCount": {
-              "bathTubCount": 0,
-              "bedRoomCount": 0,
-              "carSlotCount": 0
-            },
-            "availability": {
-              "moreThanOneYear": true,
-              "shortLet": true,
-              "withinOneYear": true,
-              "withinSixMonth": true
-            },
-            "priceRange": {"max": 0, "min": 0},
-            "propertyType": "string",
-            "surfaceArea": 0
-          },
-        ),
-      );
-      if (response.statusCode <= 299) {
-        return propertyFromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } on SocketException {
-      return Future.error("No stable connection");
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<List<Property>> searchProperty({
-    required int page,
-    required int size,
-    required String location,
-  }) async {
-    try {
-      var response = await http.get(
-        Uri.http(requestSite, "api/v1/properties/search", <String, String>{
-          "page": page.toString(),
-          "size": size.toString(),
-          "location": location,
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      if (response.statusCode <= 299) {
-        return propertyFromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } on SocketException {
-      return Future.error("No stable connection");
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<List<Property>> getPropertyStatus() async {
-    try {
-      var response = await http.get(
-        Uri.http(
-          requestSite,
-          "api/v1/properties/status",
-        ),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      if (response.statusCode <= 299) {
-        return propertyFromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } on SocketException {
-      return Future.error("No stable connection");
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<List<Property>> getPropertyStyle() async {
-    try {
-      var response = await http.get(
-        Uri.http(
-          requestSite,
-          "api/v1/properties/styles",
-        ),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      if (response.statusCode <= 299) {
-        return propertyFromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }
@@ -457,7 +365,7 @@ class HttpService {
     }
   }
 
-  Future<TopCitiesModel> getTopCitiesWithHighestProperties(
+  Future<TopStatesModel> getTopStatesWithHighestProperties(
       {int page = 0, int size = 8}) async {
     try {
       var response = await http.get(
@@ -471,34 +379,10 @@ class HttpService {
         },
       );
       if (response.statusCode <= 299) {
-        return TopCitiesModel.fromJson(response.body);
+        return TopStatesModel.fromJson(response.body);
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<List<Property>> getPropertyTypes() async {
-    try {
-      var response = await http.get(
-        Uri.http(
-          requestSite,
-          "api/v1/properties/types",
-        ),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      if (response.statusCode <= 299) {
-        return propertyFromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }
@@ -527,8 +411,6 @@ class HttpService {
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
-    } on SocketException {
-      return Future.error("No stable connection");
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }
@@ -539,39 +421,52 @@ class HttpService {
     required List<String> images,
   }) async {
     final body = <String, dynamic>{
-      "propertyCategory": uploadTypeService.propertyCategory,
+      "propertyCategory": uploadTypeService.propertyCategory ?? '',
       "propertyDetails": {
-        "address": uploadTypeService.address,
+        "address": uploadTypeService.address ?? '',
         "amenities": uploadTypeService.amenities,
         "availability": {
-          "from": uploadTypeService.startDate?.millisecondsSinceEpoch,
-          "to": uploadTypeService.endDate?.millisecondsSinceEpoch,
+          "from": uploadTypeService.startDate != null
+              ? DateFormat('dd-MM-yyyy').format(uploadTypeService.startDate!)
+              : '',
+          "to": uploadTypeService.endDate != null
+              ? DateFormat('dd-MM-yyyy').format(uploadTypeService.endDate!)
+              : '',
         },
         "bathTubCount": uploadTypeService.noOfBathroom,
         "bedroomCount": uploadTypeService.noOfBedroom,
         "carSlots": uploadTypeService.numberOfCarSLot,
-        "city": uploadTypeService.city,
-        "country": uploadTypeService.country,
-        "description": uploadTypeService.propertyDescription,
+        "city": uploadTypeService.city ?? '',
+        "country": 'Nigeria',
+        "description": uploadTypeService.propertyDescription ?? '',
         "imageUrl": images,
-        "liveInSPace": uploadTypeService.liveInSpace,
-        "propertyName": uploadTypeService.propertyName,
-        "propertyStatus": uploadTypeService.propertyStatus,
-        "propertyStyle": uploadTypeService.propertyStyle,
-        "propertyType": uploadTypeService.propertyType,
-        "roomType": uploadTypeService.spaceType,
+        "liveInSPace": uploadTypeService.liveInSpace ?? false,
+        "propertyName": uploadTypeService.propertyName ?? '',
+        "roomType": uploadTypeService.spaceType ?? '',
         "rules": uploadTypeService.rules,
-        "spaceFurnished": uploadTypeService.isSpaceFurnished,
-        "spacePrice": 0,
-        "spaceServiced": uploadTypeService.isSpaceServiced,
-        "state": uploadTypeService.state,
+        "spaceFurnished": uploadTypeService.isSpaceFurnished ?? false,
+        "spaceServiced": uploadTypeService.isSpaceServiced ?? false,
+        "commercialPropertyType":
+            uploadTypeService.commercialPropertyType ?? '',
+        "retailPropertyType": uploadTypeService.retailPropertyType ?? '',
+        "industrialPropertyType":
+            uploadTypeService.industrialPropertyType ?? '',
+        "residentialPropertyType":
+            uploadTypeService.residentialPropertyType ?? '',
+        "propertyStyle": uploadTypeService.propertyStyle ?? '',
+        "serviceType": (uploadTypeService.isSpaceServiced ?? false)
+            ? "Serviced"
+            : 'Not Serviced',
+        "propertyStatus": uploadTypeService.propertyStatus ?? '',
+        "spacePrice": uploadTypeService.spacePrice ?? 0.0,
+        "state": uploadTypeService.state ?? '',
         "subscription": {
-          "annualPrice": uploadTypeService.annualPrice,
-          "biannualPrice": uploadTypeService.biannualPrice,
-          "monthlyPrice": uploadTypeService.monthlyPrice,
-          "quarterlyPrice": uploadTypeService.quarterlyPrice
+          "annualPrice": uploadTypeService.annualPrice ?? 0.0,
+          "biannualPrice": uploadTypeService.biannualPrice ?? 0.0,
+          "monthlyPrice": uploadTypeService.monthlyPrice ?? 0.0,
+          "quarterlyPrice": uploadTypeService.quarterlyPrice ?? 0.0
         },
-        "surfaceArea": uploadTypeService.surfaceArea
+        "surfaceArea": uploadTypeService.surfaceArea ?? 0
       }
     };
 
@@ -580,14 +475,12 @@ class HttpService {
           Uri.http(requestSite, "/api/v1/properties/upload"),
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode(body));
-      if (response.statusCode == 200) {
-        // String responseString = response.body;
 
-      } else if (response.statusCode == 400) {
-        String responseString = response.body;
-        return Future.error(responseString);
-      } else
+      if (response.statusCode == 200) {
+        return;
+      } else {
         return Future.error("Failed to upload property");
+      }
     } catch (exception) {
       return Future.error(exception.toString());
     }
@@ -598,8 +491,6 @@ class HttpService {
       required bool isSender,
       required int userId}) async {
     try {
-      //https://agora-tokens-server.herokuapp.com/rtc/$callId/publisher/uid/2076
-      //https://agora-tokens-server.herokuapp.com/rtc/otitem/audience/uid/56gf
       var response = await http.get(
         Uri.http(
           'agora-tokens-server.herokuapp.com',
@@ -614,8 +505,231 @@ class HttpService {
       } else {
         return Future.error("Error occurred in communicating with the server");
       }
-    } on SocketException {
-      return Future.error("No stable connection");
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  /////////////////
+  Future<List<String>> getCommercialPropertyTypes() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/commercial",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyTypes'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getIndustrialPropertyTypes() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/industrial",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyTypes'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getResidentialPropertyTypes() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/residential",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyTypes'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getRetailPropertyTypes() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/retail",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyTypes'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getPropertyStatus() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/status",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyStatus'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getPropertyStyle() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/styles",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyStyles'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getPropertyCategories() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/categories",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['propertyTypes'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  Future<List<String>> getStates() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/properties/states",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        return (decodedMessage['states'] as List<dynamic>?)
+                ?.map(
+                  (e) => e.toString(),
+                )
+                .toList() ??
+            [];
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }

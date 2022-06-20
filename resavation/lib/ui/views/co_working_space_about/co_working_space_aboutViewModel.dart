@@ -1,7 +1,7 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
-import 'package:resavation/model/property_model.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/ui/views/messages/messages_view.dart';
 import 'package:stacked/stacked.dart';

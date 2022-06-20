@@ -25,7 +25,7 @@ class PropertyCard extends StatelessWidget {
   final void Function()? onFavoriteTap;
   final String image;
   final int id;
-  final int? amountPerYear;
+  final double? amountPerYear;
   final String propertyName;
   final String address;
   final int numberOfBedrooms;
@@ -108,7 +108,7 @@ class PropertyCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}/year',
+                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}',
                       style: AppStyle.kBodySmallRegular12W500.copyWith(
                         color: kPrimaryColor,
                       ),

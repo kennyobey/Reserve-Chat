@@ -9,7 +9,7 @@ class IdentityVerification extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<IdentityVerificationViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
-        child:  Scaffold(
+        child: Scaffold(
           body: Container(),
         ),
       ),

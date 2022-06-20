@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:resavation/model/maps_direction_model.dart';
 import 'package:resavation/ui/views/map/map_viewmodel.dart';
 
-class DirectionsRepository extends MapViewModel{
+class DirectionsRepository extends MapViewModel {
   static const String _baseUrl =
       'https://maps.googleapis.com/maps/api/directions/json?';
 

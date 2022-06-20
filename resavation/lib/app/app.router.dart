@@ -12,19 +12,20 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../model/appointment.dart';
 import '../model/call_model.dart';
-import '../model/property_model.dart';
+import '../model/filter/filter.dart';
+import '../model/propety_model/property_model.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
 import '../ui/views/audio_call/audio_call_view.dart';
 import '../ui/views/booking_submission/booking_submission_view.dart';
 import '../ui/views/categories_list/categories_list_view.dart';
 import '../ui/views/chat_room/chat_room_view.dart';
-import '../ui/views/cities_list/cities_list_view.dart';
 import '../ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
 import '../ui/views/date_picker/date_picker_view.dart';
 import '../ui/views/edit_profile/edit_profile_view.dart';
 import '../ui/views/filter/filter_view.dart';
+import '../ui/views/filter_display/filter_display.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/main/main_view.dart';
 import '../ui/views/map/map_view.dart';
@@ -57,6 +58,8 @@ import '../ui/views/settings/settings_view.dart';
 import '../ui/views/sign_up_confirmation/signup_confirmation_view.dart';
 import '../ui/views/signup/signup_view.dart';
 import '../ui/views/startup/startup_view.dart';
+import '../ui/views/states_list/states_list_view.dart';
+import '../ui/views/top_items/top_item_view.dart';
 import '../ui/views/verify_user_account/verify_user_account.dart';
 import '../ui/views/video_call/video_call_view.dart';
 
@@ -101,6 +104,7 @@ class Routes {
   static const String searchView = '/search-view';
   static const String editProfileView = '/edit-profile-view';
   static const String messagesView = '/messages-view';
+  static const String filterDisplay = '/filter-display';
   static const String propertyOwnerSpaceTypeView =
       '/property-owner-space-type-view';
   static const String propertyOwnerDetailsView = '/property-owner-details-view';
@@ -111,6 +115,7 @@ class Routes {
       '/property-owner-identification-view';
   static const String propertyOwnerVerificationView =
       '/property-owner-verification-view';
+  static const String topItemView = '/top-item-view';
   static const String propertyOwnerSettingsView =
       '/property-owner-settings-view';
   static const String verifyUserAccount = '/verify-user-account';
@@ -120,7 +125,7 @@ class Routes {
   static const String propertyOwnerTrackListView =
       '/property-owner-track-list-view';
   static const String categoriesListView = '/categories-list-view';
-  static const String citiesListView = '/cities-list-view';
+  static const String statesListView = '/states-list-view';
   static const all = <String>{
     startupView,
     mainView,
@@ -155,19 +160,21 @@ class Routes {
     searchView,
     editProfileView,
     messagesView,
+    filterDisplay,
     propertyOwnerSpaceTypeView,
     propertyOwnerDetailsView,
     propertyOwnerPaymentView,
     propertyOwnerAmenitiesView,
     propertyOwnerIdentificationView,
     propertyOwnerVerificationView,
+    topItemView,
     propertyOwnerSettingsView,
     verifyUserAccount,
     signUpConfirmationView,
     propertyOwnerMyPropertyView,
     propertyOwnerTrackListView,
     categoriesListView,
-    citiesListView,
+    statesListView,
   };
 }
 
@@ -213,6 +220,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.searchView, page: SearchView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
     RouteDef(Routes.messagesView, page: MessagesView),
+    RouteDef(Routes.filterDisplay, page: FilterDisplay),
     RouteDef(Routes.propertyOwnerSpaceTypeView,
         page: PropertyOwnerSpaceTypeView),
     RouteDef(Routes.propertyOwnerDetailsView, page: PropertyOwnerDetailsView),
@@ -223,6 +231,7 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerIdentificationView),
     RouteDef(Routes.propertyOwnerVerificationView,
         page: PropertyOwnerVerificationView),
+    RouteDef(Routes.topItemView, page: TopItemView),
     RouteDef(Routes.propertyOwnerSettingsView, page: PropertyOwnerSettingsView),
     RouteDef(Routes.verifyUserAccount, page: VerifyUserAccount),
     RouteDef(Routes.signUpConfirmationView, page: SignUpConfirmationView),
@@ -231,7 +240,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerTrackListView,
         page: PropertyOwnerTrackListView),
     RouteDef(Routes.categoriesListView, page: CategoriesListView),
-    RouteDef(Routes.citiesListView, page: CitiesListView),
+    RouteDef(Routes.statesListView, page: StatesListView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -412,7 +421,8 @@ class StackedRouter extends RouterBase {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => BookingSubmissionView(
           key: args.key,
-          bookingData: args.bookingData,
+          property: args.property,
+          startDate: args.startDate,
         ),
         settings: data,
       );
@@ -460,14 +470,8 @@ class StackedRouter extends RouterBase {
       );
     },
     SearchView: (data) {
-      var args = data.getArgs<SearchViewArguments>(
-        orElse: () => SearchViewArguments(),
-      );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => SearchView(
-          key: args.key,
-          passedQuery: args.passedQuery,
-        ),
+        builder: (context) => const SearchView(),
         settings: data,
       );
     },
@@ -480,6 +484,16 @@ class StackedRouter extends RouterBase {
     MessagesView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const MessagesView(),
+        settings: data,
+      );
+    },
+    FilterDisplay: (data) {
+      var args = data.getArgs<FilterDisplayArguments>(nullOk: false);
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => FilterDisplay(
+          key: args.key,
+          filter: args.filter,
+        ),
         settings: data,
       );
     },
@@ -528,6 +542,17 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    TopItemView: (data) {
+      var args = data.getArgs<TopItemViewArguments>(nullOk: false);
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => TopItemView(
+          key: args.key,
+          itemName: args.itemName,
+          isStates: args.isStates,
+        ),
+        settings: data,
+      );
+    },
     PropertyOwnerSettingsView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const PropertyOwnerSettingsView(),
@@ -572,9 +597,9 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    CitiesListView: (data) {
+    StatesListView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const CitiesListView(),
+        builder: (context) => const StatesListView(),
         settings: data,
       );
     },
@@ -628,7 +653,7 @@ class PropertyOwnerAddCoverPhotosViewArguments {
 /// DatePickerView arguments holder class
 class DatePickerViewArguments {
   final Key? key;
-  final Property? property;
+  final Property property;
   DatePickerViewArguments({this.key, required this.property});
 }
 
@@ -642,8 +667,10 @@ class PropertyDetailsViewArguments {
 /// BookingSubmissionView arguments holder class
 class BookingSubmissionViewArguments {
   final Key? key;
-  final Map<String, dynamic>? bookingData;
-  BookingSubmissionViewArguments({this.key, required this.bookingData});
+  final Property property;
+  final DateTime startDate;
+  BookingSubmissionViewArguments(
+      {this.key, required this.property, required this.startDate});
 }
 
 /// ProfileProductListView arguments holder class
@@ -653,11 +680,11 @@ class ProfileProductListViewArguments {
   ProfileProductListViewArguments({this.key, this.onSortByTap});
 }
 
-/// SearchView arguments holder class
-class SearchViewArguments {
+/// FilterDisplay arguments holder class
+class FilterDisplayArguments {
   final Key? key;
-  final String? passedQuery;
-  SearchViewArguments({this.key, this.passedQuery = ''});
+  final Filter filter;
+  FilterDisplayArguments({this.key, required this.filter});
 }
 
 /// PropertyOwnerSpaceTypeView arguments holder class
@@ -676,6 +703,15 @@ class PropertyOwnerPaymentViewArguments {
 class PropertyOwnerAmenitiesViewArguments {
   final Key? key;
   PropertyOwnerAmenitiesViewArguments({this.key});
+}
+
+/// TopItemView arguments holder class
+class TopItemViewArguments {
+  final Key? key;
+  final String itemName;
+  final bool isStates;
+  TopItemViewArguments(
+      {this.key, required this.itemName, required this.isStates});
 }
 
 /// VerifyUserAccount arguments holder class

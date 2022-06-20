@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/model/property_model.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
@@ -11,8 +11,7 @@ import 'package:stacked/stacked.dart';
 import '../../shared/colors.dart';
 
 class SearchView extends StatefulWidget {
-  final String? passedQuery;
-  const SearchView({Key? key, this.passedQuery = ''}) : super(key: key);
+  const SearchView({Key? key}) : super(key: key);
 
   @override
   State<SearchView> createState() => _SearchViewState();
@@ -86,8 +85,7 @@ class _SearchViewState extends State<SearchView> {
               ],
             ),
           )),
-      viewModelBuilder: () =>
-          SearchViewModel(passedQuery: widget.passedQuery ?? ''),
+      viewModelBuilder: () => SearchViewModel(),
     );
   }
 
@@ -103,6 +101,25 @@ class _SearchViewState extends State<SearchView> {
       child: SizedBox(
         height: 40,
         width: 40,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: Colors.blue,
+          valueColor: AlwaysStoppedAnimation(kWhite),
+        ),
+      ),
+    );
+  }
+
+  Widget buildOldLoadingWidget() {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(
+        top: 5,
+        bottom: 5,
+      ),
+      child: SizedBox(
+        height: 25,
+        width: 25,
         child: CircularProgressIndicator.adaptive(
           backgroundColor: Colors.blue,
           valueColor: AlwaysStoppedAnimation(kWhite),
@@ -143,7 +160,7 @@ class _SearchViewState extends State<SearchView> {
     final properties = model.properties;
     if (model.isLoading) {
       return buildLoadingWidget();
-    } else if (model.hasError) {
+    } else if (model.hasErrorOnData) {
       return buildErrorBody();
     } else if (properties.isEmpty) {
       return buildEmptyBody();
@@ -152,40 +169,48 @@ class _SearchViewState extends State<SearchView> {
     }
   }
 
-  ListView buildBodyItem(List<Property> properties, SearchViewModel model) {
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        final property = properties[index];
+  Widget buildBodyItem(List<Property> properties, SearchViewModel model) {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (ctx, index) {
+              final property = properties[index];
 
-        return PropertyCard(
-          id: property.id ?? -1,
-          onTap: () => model.goToPropertyDetails(property),
-          image: property.imageUrl ?? '',
-          amountPerYear: property.spacePrice ?? 0,
-          propertyName: property.propertyName ?? '',
-          address: property.address ?? '',
-          numberOfBathrooms: property.bathTubCount ?? 0,
-          numberOfBedrooms: property.bedroomCount ?? 0,
-          squareFeet: property.surfaceArea ?? 0.0,
-          isFavoriteTap: property.favourite ?? false,
-          onFavoriteTap: () async {
-            try {
-              await model.onFavoriteTap(property);
-            } catch (exception) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(exception.toString())));
-            }
-          },
-        );
-      },
-      padding: const EdgeInsets.all(0),
-      physics: const BouncingScrollPhysics(),
-      itemCount: properties.length,
+              return PropertyCard(
+                id: property.id ?? -1,
+                onTap: () => model.goToPropertyDetails(property),
+                image: property.propertyImages?[0].imageUrl ?? '',
+                amountPerYear: property.spacePrice ?? 0,
+                propertyName: property.propertyName ?? '',
+                address: property.address ?? '',
+                numberOfBathrooms: property.bathTubCount ?? 0,
+                numberOfBedrooms: property.bedroomCount ?? 0,
+                squareFeet: property.surfaceArea ?? 0.0,
+                isFavoriteTap: property.favourite ?? false,
+                onFavoriteTap: () async {
+                  try {
+                    await model.onFavoriteTap(property);
+                  } catch (exception) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(exception.toString())));
+                  }
+                },
+              );
+            },
+            controller: model.scrollController,
+            padding: const EdgeInsets.all(0),
+            physics: const BouncingScrollPhysics(),
+            itemCount: properties.length,
+          ),
+        ),
+        if (model.isLoadingOldData) buildOldLoadingWidget(),
+      ],
     );
   }
 
   Column buildEmptyBody() {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);

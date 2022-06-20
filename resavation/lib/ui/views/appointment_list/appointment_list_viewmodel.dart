@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 
 class AppointmentListViewModel extends BaseViewModel {
   bool isLoading = false;
-  bool hasError = false;
+  bool hasErrorOnData = false;
 
   final _userService = locator<UserTypeService>();
 
@@ -24,7 +24,7 @@ class AppointmentListViewModel extends BaseViewModel {
 
   void getData() async {
     isLoading = true;
-    hasError = false;
+    hasErrorOnData = false;
     notifyListeners();
     try {
       final queryData = await getTenantAppointments(userData.email, limit: 30);
@@ -38,11 +38,11 @@ class AppointmentListViewModel extends BaseViewModel {
           .toList();
 
       isLoading = false;
-      hasError = false;
+      hasErrorOnData = false;
       notifyListeners();
     } catch (exception) {
       isLoading = false;
-      hasError = true;
+      hasErrorOnData = true;
       notifyListeners();
     }
   }

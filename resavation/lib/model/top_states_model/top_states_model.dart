@@ -6,8 +6,8 @@ import 'content.dart';
 import 'pageable.dart';
 import 'sort.dart';
 
-class TopCitiesModel {
-  List<TopCitiesContent>? content;
+class TopStatesModel {
+  List<TopStatesContent>? content;
   bool? empty;
   bool? first;
   bool? last;
@@ -19,7 +19,7 @@ class TopCitiesModel {
   int? totalElements;
   int? totalPages;
 
-  TopCitiesModel({
+  TopStatesModel({
     this.content,
     this.empty,
     this.first,
@@ -38,10 +38,10 @@ class TopCitiesModel {
     return 'TopCitiesModel(content: $content, empty: $empty, first: $first, last: $last, number: $number, numberOfElements: $numberOfElements, pageable: $pageable, size: $size, sort: $sort, totalElements: $totalElements, totalPages: $totalPages)';
   }
 
-  factory TopCitiesModel.fromMap(Map<String, dynamic> data) {
-    return TopCitiesModel(
+  factory TopStatesModel.fromMap(Map<String, dynamic> data) {
+    return TopStatesModel(
       content: (data['content'] as List<dynamic>?)
-          ?.map((e) => TopCitiesContent.fromMap(e as Map<String, dynamic>))
+          ?.map((e) => TopStatesContent.fromMap(e as Map<String, dynamic>))
           .toList(),
       empty: data['empty'] as bool?,
       first: data['first'] as bool?,
@@ -76,18 +76,18 @@ class TopCitiesModel {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [TopCitiesModel].
-  factory TopCitiesModel.fromJson(String data) {
-    return TopCitiesModel.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [TopStatesModel].
+  factory TopStatesModel.fromJson(String data) {
+    return TopStatesModel.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [TopCitiesModel] to a JSON string.
+  /// Converts [TopStatesModel] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  TopCitiesModel copyWith({
-    List<TopCitiesContent>? content,
+  TopStatesModel copyWith({
+    List<TopStatesContent>? content,
     bool? empty,
     bool? first,
     bool? last,
@@ -99,7 +99,7 @@ class TopCitiesModel {
     int? totalElements,
     int? totalPages,
   }) {
-    return TopCitiesModel(
+    return TopStatesModel(
       content: content ?? this.content,
       empty: empty ?? this.empty,
       first: first ?? this.first,
@@ -117,7 +117,7 @@ class TopCitiesModel {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TopCitiesModel) return false;
+    if (other is! TopStatesModel) return false;
     final mapEquals = const DeepCollectionEquality().equals;
     return mapEquals(other.toMap(), toMap());
   }

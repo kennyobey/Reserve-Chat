@@ -12,14 +12,13 @@ class SettingsViewModel extends BaseViewModel {
   bool _notificationSwitchValue = false;
   bool get notificationSwitchValue => _notificationSwitchValue;
 
-
   // to check the current state of the user
-  bool returnUserType(){
-    return  _userTypeService.isTenant;
+  bool returnUserType() {
+    return _userTypeService.isTenant;
   }
 
   /// updates the user to a property owner
-  updateUserType(){
+  updateUserType() {
     _userTypeService.userType();
     print(_userTypeService.isTenant);
     notifyListeners();

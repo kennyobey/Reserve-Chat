@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:resavation/model/property_model.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/services/core/paystack_payment.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
@@ -13,17 +13,14 @@ import 'package:resavation/ui/views/booking_submission/booking_submission_viewmo
 import 'package:stacked/stacked.dart';
 
 class BookingSubmissionView extends StatelessWidget {
-  final Map<String, dynamic>? bookingData;
+  final Property property;
+  final DateTime startDate;
 
-  /*
-   <String,dynamic>{
-      "property": property,
-      "start_date":selectedDate
-    }
-   */
-
-  const BookingSubmissionView({Key? key, required this.bookingData})
-      : super(key: key);
+  const BookingSubmissionView({
+    Key? key,
+    required this.property,
+    required this.startDate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +66,7 @@ class BookingSubmissionView extends StatelessWidget {
 
   Padding buildTotal() {
     final oCcy = NumberFormat("#,##0.00", "en_US");
-    final Property? property = bookingData?["property"];
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -81,7 +78,7 @@ class BookingSubmissionView extends StatelessWidget {
           PaymentDetails(
               title: 'Subtotal',
               percentage:
-                  '${String.fromCharCode(8358)} ${oCcy.format(property?.spacePrice ?? 0)}'),
+                  '${String.fromCharCode(8358)} ${oCcy.format(property.spacePrice ?? 0)}'),
           PaymentDetails(
             title: 'Extra Price',
             percentage: '0',
@@ -94,7 +91,7 @@ class BookingSubmissionView extends StatelessWidget {
           PaymentDetails(
             title: 'Payment Amount',
             percentage:
-                '${String.fromCharCode(8358)} ${oCcy.format(property?.spacePrice ?? 0)}',
+                '${String.fromCharCode(8358)} ${oCcy.format(property.spacePrice ?? 0)}',
             isTotal: true,
           ),
         ],
@@ -150,9 +147,7 @@ class BookingSubmissionView extends StatelessWidget {
   }
 
   Padding buildItem2(BuildContext context) {
-    final Property? property = bookingData?["property"];
-    final DateTime? startDate = bookingData?["start_date"];
-    final DateTime? endDate = startDate?.add(Duration(days: 365));
+    final DateTime? endDate = startDate.add(Duration(days: 365));
 
     final startDateAsString = dateAsString(startDate);
     final endDateAsString = dateAsString(endDate);
@@ -168,7 +163,7 @@ class BookingSubmissionView extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                property?.city ?? '',
+                property.city ?? '',
                 style: AppStyle.kBodyRegularBlack14,
               ),
             ],
@@ -217,7 +212,6 @@ class BookingSubmissionView extends StatelessWidget {
   }
 
   Padding buildDescription() {
-    final Property? property = bookingData?["property"];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
@@ -227,12 +221,12 @@ class BookingSubmissionView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  property?.city ?? '',
+                  property.city ?? '',
                   style: AppStyle.kBodyRegularBlack15W500,
                 ),
                 verticalSpaceSmall,
                 Text(
-                  property?.address ?? '',
+                  property.address ?? '',
                   style: AppStyle.kBodySmallRegular,
                 ),
               ],
@@ -240,7 +234,7 @@ class BookingSubmissionView extends StatelessWidget {
           ),
           Container(
             child: ResavationImage(
-              image: property?.imageUrl ?? '',
+              image: property.propertyImages?[0].imageUrl ?? '',
             ),
             height: 120,
             width: 120,
@@ -256,13 +250,12 @@ class BookingSubmissionView extends StatelessWidget {
 
   ResavationButton buildContinueButton(
       double width, BuildContext context, BookingSubmissionViewModel model) {
-    final Property? property = bookingData?["property"];
     return ResavationButton(
       title: 'Continue',
       width: width - 20,
       onTap: () async {
         String email = model.email;
-        int price = property?.spacePrice ?? 0;
+        int price = 0;
         bool userPaid =
             await MakePayment(ctx: context, email: email, price: price)
                 .chargeCardAndMakePayment();

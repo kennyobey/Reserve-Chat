@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
@@ -8,6 +9,7 @@ class ResavationTextField extends StatefulWidget {
     this.onTap,
     this.label,
     this.icon,
+    this.onlyNumbers = false,
     this.elevation,
     this.hintText,
     this.hintTextStyle,
@@ -34,6 +36,7 @@ class ResavationTextField extends StatefulWidget {
   final Color? color;
   final Color? fillColors;
   final bool obscureText;
+  final bool onlyNumbers;
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
@@ -60,6 +63,10 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
         child: TextFormField(
           onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
+          inputFormatters: [
+            if (widget.onlyNumbers)
+              FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+          ],
           maxLines: widget.maxline,
           textInputAction: widget.textInputAction,
           controller: widget.controller,

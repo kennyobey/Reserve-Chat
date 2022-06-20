@@ -81,10 +81,9 @@ class MessagesView extends StatelessWidget {
                       userEmail: model.getUserEmail,
                     );
                   },
-                  separatorBuilder: (_,__){
+                  separatorBuilder: (_, __) {
                     return const Divider();
-                  }
-                  );
+                  });
             }
           } else {
             return buildLoadingWidget();

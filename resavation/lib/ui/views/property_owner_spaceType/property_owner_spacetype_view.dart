@@ -32,12 +32,57 @@ class _PropertyOwnerSpaceTypeViewState
     super.initState;
   }
 
+  Column buildErrorBody() {
+    final textTheme = Theme.of(context).textTheme;
+    final bodyText1 = textTheme.bodyText1!
+        .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
+    final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Text(
+          'Error occurred!',
+          style: bodyText1,
+        ),
+        const SizedBox(
+          height: 5,
+          width: double.infinity,
+        ),
+        Text(
+          'An error occurred while fetching data, please try again later',
+          textAlign: TextAlign.center,
+          style: bodyText2,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
+
+  Center buildLoadingWidget() {
+    return const Center(
+      child: SizedBox(
+        height: 40,
+        width: 40,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: Colors.blue,
+          valueColor: AlwaysStoppedAnimation(kWhite),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerSpaceTypeViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: ResavationAppBar(title: "Space Type"),
-        body: buildBody(model),
+        body: model.isLoading
+            ? buildLoadingWidget()
+            : model.hasErrorOnData
+                ? buildErrorBody()
+                : buildBody(model),
       ),
       viewModelBuilder: () => PropertyOwnerSpaceTypeViewModel(),
     );
@@ -369,7 +414,7 @@ class _PropertyOwnerSpaceTypeViewState
                   ),
                 )
                 .toList(),
-            value: model.uploadTypeService.propertyType,
+            value: model.propertyTypeValue,
             onChanged: (value) {
               model.onPropertyTypeValueChange(value);
             },

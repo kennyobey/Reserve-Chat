@@ -4,7 +4,11 @@ class UploadTypeService {
   ///stage 1 data
   String? propertyStatus;
   String? propertyCategory;
-  String? propertyType;
+  String? commercialPropertyType;
+  String? retailPropertyType;
+  String? industrialPropertyType;
+  String? residentialPropertyType;
+
   String? spaceType;
   bool? isSpaceServiced;
   bool? isSpaceFurnished;
@@ -20,13 +24,22 @@ class UploadTypeService {
   String? state;
   String? city;
   String? address;
-  String? country;
-  int? surfaceArea;
+  double? surfaceArea;
 
   //add stage 3 data here
   List<XFile>? selectedImages;
+/*
+{
+  "message": "Please Enter valid state name",
+  "success": false,
+  "httpStatus": "BAD_REQUEST",
+  "timestamp": "2022-06-15T06:34:46.242307Z"
+}
+
+*/
 
   //Stage 4 data
+  int? spacePrice;
   int? annualPrice;
   int? biannualPrice;
   int? monthlyPrice;
@@ -40,7 +53,10 @@ class UploadTypeService {
   bool verifyStage1() {
     return (propertyStatus != null) &&
         (propertyCategory != null) &&
-        (propertyType != null) &&
+        (commercialPropertyType != null ||
+            retailPropertyType != null ||
+            industrialPropertyType != null ||
+            residentialPropertyType != null) &&
         (spaceType != null) &&
         (isSpaceServiced != null) &&
         (isSpaceFurnished != null) &&
@@ -51,7 +67,10 @@ class UploadTypeService {
   clearStage1() {
     propertyStatus = null;
     propertyCategory = null;
-    propertyType = null;
+    commercialPropertyType = null;
+    retailPropertyType = null;
+    industrialPropertyType = null;
+    residentialPropertyType = null;
     spaceType = null;
     isSpaceFurnished = null;
     isSpaceServiced = null;
@@ -71,7 +90,6 @@ class UploadTypeService {
     state = null;
     city = null;
     address = null;
-    country = null;
     clearStage3();
   }
 
@@ -81,6 +99,7 @@ class UploadTypeService {
   }
 
   clearStage4() {
+    spacePrice = null;
     annualPrice = null;
     biannualPrice = null;
     monthlyPrice = null;

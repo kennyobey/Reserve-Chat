@@ -15,7 +15,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
     required this.image,
     this.onFavoriteTap,
     this.amountPerYear,
-    required this.location,
+    required this.name,
     this.address = '',
     required this.numberOfBedrooms,
     required this.numberOfBathrooms,
@@ -27,8 +27,8 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
   final void Function()? onFavoriteTap;
   final int id;
   final String image;
-  final int? amountPerYear;
-  final String location;
+  final double? amountPerYear;
+  final String name;
   final String address;
   final int numberOfBedrooms;
   final int numberOfBathrooms;
@@ -83,7 +83,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          location,
+                          name,
                           style: AppStyle.kBodyRegular18W500,
                         ),
                         InkWell(
@@ -111,7 +111,7 @@ class FavoriteCard extends ViewModelWidget<FavoriteViewModel> {
                     ),
                     verticalSpaceSmall,
                     Text(
-                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}/year',
+                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}',
                       style: AppStyle.kBodySmallRegular12W500.copyWith(
                         color: kPrimaryColor,
                       ),

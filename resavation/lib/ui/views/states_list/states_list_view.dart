@@ -1,34 +1,34 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:resavation/model/top_cities_model/content.dart';
+import 'package:resavation/model/top_states_model/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/cities_list/cities_list_viewmodel.dart';
 import 'package:resavation/ui/views/home/widget/items.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../shared/colors.dart';
+import 'states_list_viewmodel.dart';
 
-class CitiesListView extends StatelessWidget {
-  const CitiesListView({Key? key}) : super(key: key);
+class StatesListView extends StatelessWidget {
+  const StatesListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CitiesListViewModel>.reactive(
+    return ViewModelBuilder<StatesListViewModel>.reactive(
       builder: (context, model, child) {
         return Scaffold(
           appBar: buildAppBar(),
           body: buildBody(model, context),
         );
       },
-      viewModelBuilder: () => CitiesListViewModel(),
+      viewModelBuilder: () => StatesListViewModel(),
     );
   }
 
   ResavationAppBar buildAppBar() {
     return ResavationAppBar(
-      title: "Cities",
+      title: "States",
+      backEnabled: true,
       centerTitle: false,
     );
   }
@@ -72,7 +72,7 @@ class CitiesListView extends StatelessWidget {
       children: [
         const Spacer(),
         Text(
-          'No cities yet!',
+          'No States yet!',
           style: bodyText1,
         ),
         const SizedBox(
@@ -80,7 +80,7 @@ class CitiesListView extends StatelessWidget {
           width: double.infinity,
         ),
         Text(
-          'Kindly check back later for updated cities',
+          'Kindly check back later for updated States',
           textAlign: TextAlign.center,
           style: bodyText2,
         ),
@@ -102,59 +102,34 @@ class CitiesListView extends StatelessWidget {
     );
   }
 
-  Padding buildBody(CitiesListViewModel model, BuildContext context) {
-    final topCities = model.topCities;
+  Padding buildBody(StatesListViewModel model, BuildContext context) {
+    final topStates = model.topStates;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
-          verticalSpaceTiny,
           const Divider(),
+          verticalSpaceTiny,
           Row(
             children: [
               Text(
-                topCities.length.toString(),
+                topStates.length.toString(),
                 style: AppStyle.kSubHeading.copyWith(
                   color: kPrimaryColor,
                 ),
               ),
               Text(
-                ' Cities',
+                ' States',
                 style: AppStyle.kSubHeading,
               ),
               Spacer(),
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  hint: Text(
-                    "sort by",
-                    style: AppStyle.kBodySmallRegular,
-                  ),
-                  items: model.items
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  value: model.selectedValue,
-                  onChanged: (String? value) {
-                    model.onSelectedValueChange(value);
-                  },
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                  ),
-                ),
-              )
             ],
           ),
+          verticalSpaceTiny,
           const Divider(),
           verticalSpaceSmall,
           Expanded(
-            child: buildBodyItem(topCities, model, context),
+            child: buildBodyItem(topStates, model, context),
           ),
           verticalSpaceMedium,
         ],
@@ -162,29 +137,30 @@ class CitiesListView extends StatelessWidget {
     );
   }
 
-  Widget buildBodyItem(List<TopCitiesContent> topCities,
-      CitiesListViewModel model, BuildContext context) {
+  Widget buildBodyItem(List<TopStatesContent> topStates,
+      StatesListViewModel model, BuildContext context) {
     if (model.isLoading) {
       return buildLoadingWidget();
-    } else if (model.hasError) {
+    } else if (model.hasErrorOnData) {
       return buildErrorBody(context);
-    } else if (topCities.isEmpty) {
+    } else if (topStates.isEmpty) {
       return buildEmptyBody(context);
     } else {
       return ListView.builder(
         itemBuilder: (ctx, index) {
-          final topCity = topCities[index];
+          final topCity = topStates[index];
 
-          return LongCategoriesAndCitiesCard(
+          return LongCategoriesAndStatesCard(
             onTap: () => model.goToSearchView(topCity.cityName ?? ''),
             image: "",
             title: topCity.cityName ?? '',
-            count: "${topCity.numberOfProperties ?? ''} cities",
+            count: "${topCity.numberOfProperties ?? ''} items",
           );
         },
         padding: const EdgeInsets.all(0),
+        controller: model.scrollController,
         physics: const BouncingScrollPhysics(),
-        itemCount: topCities.length,
+        itemCount: topStates.length,
       );
     }
   }

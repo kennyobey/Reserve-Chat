@@ -74,7 +74,6 @@ class PropertyOwnerAddCoverPhotosViewModel extends BaseViewModel {
   }
 }
 
-
 //image_picker: ^0.6.7+14
 //firebase_storage: ^5.0.1
 

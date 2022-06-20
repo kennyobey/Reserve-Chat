@@ -9,12 +9,12 @@ import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
 import 'package:resavation/ui/views/booking_submission/booking_submission_view.dart';
 import 'package:resavation/ui/views/categories_list/categories_list_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
-import 'package:resavation/ui/views/cities_list/cities_list_view.dart';
 import 'package:resavation/ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import 'package:resavation/ui/views/confirmation/confirmation_view.dart';
 import 'package:resavation/ui/views/date_picker/date_picker_view.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_view.dart';
 import 'package:resavation/ui/views/filter/filter_view.dart';
+import 'package:resavation/ui/views/filter_display/filter_display.dart';
 import 'package:resavation/ui/views/login/login_view.dart';
 import 'package:resavation/ui/views/main/main_view.dart';
 import 'package:resavation/ui/views/map/map_view.dart';
@@ -47,12 +47,13 @@ import 'package:resavation/ui/views/settings/settings_view.dart';
 import 'package:resavation/ui/views/sign_up_confirmation/signup_confirmation_view.dart';
 import 'package:resavation/ui/views/signup/signup_view.dart';
 import 'package:resavation/ui/views/startup/startup_view.dart';
+import 'package:resavation/ui/views/top_items/top_item_view.dart';
 import 'package:resavation/ui/views/verify_user_account/verify_user_account.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../services/uploadpropertyService.dart';
+import '../ui/views/states_list/states_list_view.dart';
 
 @StackedApp(
   routes: [
@@ -94,19 +95,21 @@ import '../services/uploadpropertyService.dart';
     AdaptiveRoute(page: SearchView),
     AdaptiveRoute(page: EditProfileView),
     AdaptiveRoute(page: MessagesView),
+    AdaptiveRoute(page: FilterDisplay),
     AdaptiveRoute(page: PropertyOwnerSpaceTypeView),
     AdaptiveRoute(page: PropertyOwnerDetailsView),
     AdaptiveRoute(page: PropertyOwnerPaymentView),
     AdaptiveRoute(page: PropertyOwnerAmenitiesView),
     AdaptiveRoute(page: PropertyOwnerIdentificationView),
     AdaptiveRoute(page: PropertyOwnerVerificationView),
+    AdaptiveRoute(page: TopItemView),
     AdaptiveRoute(page: PropertyOwnerSettingsView),
     AdaptiveRoute(page: VerifyUserAccount),
     AdaptiveRoute(page: SignUpConfirmationView),
     AdaptiveRoute(page: PropertyOwnerMyPropertyView),
     AdaptiveRoute(page: PropertyOwnerTrackListView),
     AdaptiveRoute(page: CategoriesListView),
-    AdaptiveRoute(page: CitiesListView),
+    AdaptiveRoute(page: StatesListView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
@@ -116,7 +119,6 @@ import '../services/uploadpropertyService.dart';
     LazySingleton(classType: CustomSnackbarService),
     LazySingleton(classType: UserTypeService),
     LazySingleton(classType: ImagePickerService),
-    LazySingleton(classType: UploadPropertyServiceService),
   ],
   logger: StackedLogger(),
 )

@@ -20,6 +20,8 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     'Annually'
   ];
 
+  String? displayPrice;
+
   final TextEditingController propertyannualPriceController =
       TextEditingController();
   final TextEditingController propertybiannualPriceController =
@@ -57,7 +59,15 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
 
   void setSelectedSubscriptions(List<String> subscriptions) {
     selectedSubscriptions = subscriptions;
+    displayPrice = null;
     notifyListeners();
+  }
+
+  void setDisplayPrice(price) {
+    if (price is String) {
+      displayPrice = price;
+      notifyListeners();
+    }
   }
 
   Future<void> selectStartDate(DateTime? pickedDate) async {
@@ -75,6 +85,20 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerAmenitiesView() {
+    if (displayPrice == 'Annually') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertyannualPriceController.text);
+    } else if (displayPrice == 'Biannually') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertybiannualPriceController.text);
+    } else if (displayPrice == 'Quarterly') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertyquaterlylPriceController.text);
+    } else if (displayPrice == 'Monthly') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertymonthlyPriceController.text);
+    }
+
     if (selectedSubscriptions.contains('Annually')) {
       propertyOwnerUploadModel.annualPrice =
           int.tryParse(propertyannualPriceController.text);

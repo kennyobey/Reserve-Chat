@@ -1,17 +1,10 @@
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:resavation/app/app.locator.dart';
-import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter/material.dart';
 import '../../../model/login_model.dart';
 import '../../../services/core/http_service.dart';
 import '../../../services/core/upload_type_service.dart';
-import 'package:resavation/ui/shared/spacing.dart';
-import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/text_styles.dart';
 
 import '../../../services/core/user_type_service.dart';
 

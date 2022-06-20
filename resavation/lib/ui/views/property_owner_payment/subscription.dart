@@ -77,3 +77,65 @@ class MultiSelectDialog extends StatelessWidget {
     );
   }
 }
+
+class SingleSelectDialog extends StatefulWidget {
+  final String? initialAnswer;
+  final List<String> choices;
+
+  /// Widget to display the question.
+  final Widget question;
+
+  SingleSelectDialog({
+    required this.question,
+    required this.initialAnswer,
+    required this.choices,
+  });
+
+  @override
+  State<SingleSelectDialog> createState() => _SingleSelectDialogState();
+}
+
+class _SingleSelectDialogState extends State<SingleSelectDialog> {
+  /// List to display the answer.
+  String? answer;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        answer = widget.initialAnswer;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: widget.question,
+      children: [
+        ...widget.choices.map((String choice) {
+          return CheckboxListTile(
+            title: Text(choice), // Displays the option
+            value: choice == answer, // Displays checked or unchecked value
+            controlAffinity: ListTileControlAffinity.platform,
+            onChanged: (value) => setState(() {
+              answer = choice;
+            }),
+          );
+        }).toList(),
+        Align(
+          alignment: Alignment.center,
+          child: ElevatedButton(
+            style: ButtonStyle(visualDensity: VisualDensity.comfortable),
+            child: Text('Submit'),
+            onPressed: () {
+              // Close the Dialog & return selectedItems
+              Navigator.pop(context, answer);
+            },
+          ),
+        )
+      ],
+    );
+  }
+}

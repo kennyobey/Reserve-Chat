@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -10,11 +11,15 @@ import '../../../services/core/upload_type_service.dart';
 
 class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _httpService = locator<HttpService>();
   final uploadTypeService = locator<UploadTypeService>();
   final registrationFormKey = GlobalKey<FormState>();
   late Timer timer;
 
   bool isCategoryEnabled = false;
+
+  bool hasErrorOnData = false;
+  bool isLoading = true;
 
   List<String> spaceType = [
     'Town House',
@@ -32,56 +37,31 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
 
 // drop-down button UI logic for Listing Option
   String? propertyStyleValue;
-  List<String> propertyStyleOption = [
-    'Shared Space',
-    'Entire Space',
-    // 'Serviced',
-    // 'Self Servced',
-    // 'Shared',
-    'Short Let'
-  ];
+  String? propertyTypeValue;
+  List<String> propertyStyleOption = ['---Empty---'];
 
-  List<String> propertyStatus = ['For Sale', 'For Rent'];
+  List<String> propertyStatus = ['---Empty---'];
 
-  final List<String> propertyCategories = [
-    'Residential',
-    'Commercial',
-    'Industrial',
-    'Retail',
-  ];
+  List<String> propertyCategories = ['---Empty---'];
 
-  final List<String> propertyType1 = [
-    'Duplex',
-    'Detached House',
-    'Terraced House',
-    'Pent House',
-    'Apartment',
-    'Bungalow',
-    'Mansion',
-  ];
-  final List<String> propertyType2 = [
-    'Co-working space',
-    'Private Office',
-  ];
-  final List<String> propertyType3 = [
-    'Warehouse',
-    'Factory',
-  ];
-  final List<String> propertyType4 = [
-    'Building',
-    'Shop',
-  ];
+  List<String> propertyTypeResidental = ['---Empty---'];
+
+  List<String> propertyTypeCommercial = ['---Empty---'];
+
+  List<String> propertyTypeIndustrial = ['---Empty---'];
+
+  List<String> propertyTypeRetail = ['---Empty---'];
 
   List<String> get getPropertyTypeList {
     final propertyCategory = uploadTypeService.propertyCategory;
     if (propertyCategory == propertyCategories[0]) {
-      return propertyType1;
+      return propertyTypeResidental;
     } else if (propertyCategory == propertyCategories[1]) {
-      return propertyType2;
+      return propertyTypeCommercial;
     } else if (propertyCategory == propertyCategories[2]) {
-      return propertyType3;
+      return propertyTypeIndustrial;
     } else if (propertyCategory == propertyCategories[3]) {
-      return propertyType4;
+      return propertyTypeRetail;
     }
 
     return ['Error Occurred'];
@@ -97,6 +77,26 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
 
   PropertyOwnerSpaceTypeViewModel() {
     uploadTypeService.clearStage1();
+    getData();
+  }
+
+  getData() async {
+    isLoading = true;
+    hasErrorOnData = false;
+    notifyListeners();
+    try {
+      propertyTypeCommercial = await _httpService.getCommercialPropertyTypes();
+      propertyTypeIndustrial = await _httpService.getIndustrialPropertyTypes();
+      propertyTypeResidental = await _httpService.getResidentialPropertyTypes();
+      propertyTypeRetail = await _httpService.getRetailPropertyTypes();
+      propertyCategories = await _httpService.getPropertyCategories();
+      propertyStatus = await _httpService.getPropertyStatus();
+      propertyStyleOption = await _httpService.getPropertyStyle();
+    } catch (exception) {
+      hasErrorOnData = true;
+    }
+    isLoading = false;
+    notifyListeners();
   }
 
   setLiveInSpace(bool liveInSpace) {
@@ -134,13 +134,28 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void onPropertyTypeValueChange(value) {
-    uploadTypeService.propertyType = value;
+    final propertyCategory = uploadTypeService.propertyCategory;
+    if (propertyCategory == propertyCategories[0]) {
+      uploadTypeService.residentialPropertyType = value;
+    } else if (propertyCategory == propertyCategories[1]) {
+      uploadTypeService.commercialPropertyType = value;
+    } else if (propertyCategory == propertyCategories[2]) {
+      uploadTypeService.industrialPropertyType = value;
+    } else if (propertyCategory == propertyCategories[3]) {
+      uploadTypeService.retailPropertyType = value;
+    }
+    propertyTypeValue = value;
     notifyListeners();
   }
 
   void onPropertyCategoriesValueChange(value) {
     uploadTypeService.propertyCategory = value;
-    uploadTypeService.propertyType = null;
+    uploadTypeService.commercialPropertyType = null;
+    uploadTypeService.retailPropertyType = null;
+    propertyTypeValue = null;
+    uploadTypeService.industrialPropertyType = null;
+    uploadTypeService.residentialPropertyType = null;
+
     isCategoryEnabled = value != null;
     notifyListeners();
   }

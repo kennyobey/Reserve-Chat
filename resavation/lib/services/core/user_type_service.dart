@@ -9,7 +9,6 @@ class UserTypeService with ReactiveServiceMixin {
   bool get isTenant => _isTenant.value;
 
   int get currentIndex => _currentIndex.value;
-  String searchQuery = '';
 
   /// reactive service logic for to show invalid email or password
   RxValue<String> error = RxValue<String>("");
@@ -54,14 +53,8 @@ class UserTypeService with ReactiveServiceMixin {
     _isTenant.value = !_isTenant.value;
   }
 
-  void changePositionToSearch(String searchQuery) {
-    this.searchQuery = searchQuery;
+  void changePositionToSearch() {
     _currentIndex.value = 2;
-    notifyListeners();
-  }
-
-  void clearSearchQuery() {
-    searchQuery = '';
     notifyListeners();
   }
 }

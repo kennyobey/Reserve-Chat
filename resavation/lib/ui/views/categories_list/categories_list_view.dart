@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/model/top_categories_model/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
@@ -108,8 +107,8 @@ class CategoriesListView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
-          verticalSpaceTiny,
           const Divider(),
+          verticalSpaceTiny,
           Row(
             children: [
               Text(
@@ -123,34 +122,9 @@ class CategoriesListView extends StatelessWidget {
                 style: AppStyle.kSubHeading,
               ),
               Spacer(),
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  hint: Text(
-                    "sort by",
-                    style: AppStyle.kBodySmallRegular,
-                  ),
-                  items: model.items
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  value: model.selectedValue,
-                  onChanged: (String? value) {
-                    model.onSelectedValueChange(value);
-                  },
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                  ),
-                ),
-              )
             ],
           ),
+          verticalSpaceTiny,
           const Divider(),
           verticalSpaceSmall,
           Expanded(
@@ -166,7 +140,7 @@ class CategoriesListView extends StatelessWidget {
       CategoriesListViewModel model, BuildContext context) {
     if (model.isLoading) {
       return buildLoadingWidget();
-    } else if (model.hasError) {
+    } else if (model.hasErrorOnData) {
       return buildErrorBody(context);
     } else if (topCategories.isEmpty) {
       return buildEmptyBody(context);
@@ -175,16 +149,17 @@ class CategoriesListView extends StatelessWidget {
         itemBuilder: (ctx, index) {
           final topCategory = topCategories[index];
 
-          return LongCategoriesAndCitiesCard(
+          return LongCategoriesAndStatesCard(
             onTap: () =>
                 model.goToSearchView(topCategory.propertyCategory ?? ''),
             image: "",
             title: topCategory.propertyCategory ?? '',
-            count: "${topCategory.numberOfProperties ?? ''} category",
+            count: "${topCategory.numberOfProperties ?? ''} items",
           );
         },
         padding: const EdgeInsets.all(0),
         physics: const BouncingScrollPhysics(),
+        controller: model.scrollController,
         itemCount: topCategories.length,
       );
     }

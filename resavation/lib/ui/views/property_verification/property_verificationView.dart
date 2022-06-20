@@ -9,7 +9,6 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_verification/property_verificationViewModel.dart';
 
 import 'package:stacked/stacked.dart';
- 
 
 class PropertyVerificationView extends StatefulWidget {
   const PropertyVerificationView({Key? key}) : super(key: key);
@@ -20,7 +19,6 @@ class PropertyVerificationView extends StatefulWidget {
 }
 
 class _PropertyVerificationViewState extends State<PropertyVerificationView> {
- 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyVerificationViewModel>.reactive(

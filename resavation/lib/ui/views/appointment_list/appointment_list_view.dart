@@ -185,7 +185,7 @@ class AppointmentListView extends StatelessWidget {
       AppointmentListViewModel model, BuildContext context) {
     if (model.isLoading) {
       return buildLoadingWidget();
-    } else if (model.hasError) {
+    } else if (model.hasErrorOnData) {
       return buildErrorBody(context);
     } else if (userAppointments.isEmpty) {
       return buildEmptyBody(context);

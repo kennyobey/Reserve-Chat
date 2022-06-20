@@ -8,7 +8,7 @@ import 'package:resavation/ui/views/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import 'widget/home_top_categories.dart';
-import 'widget/home_top_cities.dart';
+import 'widget/home_top_states.dart';
 import 'widget/home_user_appointment.dart';
 
 class HomeView extends StatelessWidget {
@@ -61,7 +61,7 @@ class HomeView extends StatelessWidget {
           verticalSpaceMedium,
           HomeTopCategories(),
           verticalSpaceMedium,
-          HomeTopCites(),
+          HomeTopStates(),
           verticalSpaceMedium,
           HomeUserAppointment(),
           verticalSpaceMedium,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/model/property_model.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/dump_widgets/favorite_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/views/favorite/favorite_viewmodel.dart';
@@ -36,8 +36,27 @@ class FavoriteView extends StatelessWidget {
     );
   }
 
+  Widget buildOldLoadingWidget() {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(
+        top: 5,
+        bottom: 5,
+      ),
+      child: SizedBox(
+        height: 25,
+        width: 25,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: Colors.blue,
+          valueColor: AlwaysStoppedAnimation(kWhite),
+        ),
+      ),
+    );
+  }
+
   Column buildEmptyBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -65,7 +84,7 @@ class FavoriteView extends StatelessWidget {
   }
 
   Column buildErrorBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -96,7 +115,7 @@ class FavoriteView extends StatelessWidget {
     final properties = model.properties;
     if (model.isLoading) {
       return buildLoadingWidget();
-    } else if (model.hasError) {
+    } else if (model.hasErrorOnData) {
       return buildErrorBody(context);
     } else if (properties.isEmpty) {
       return buildEmptyBody(context);
@@ -105,32 +124,41 @@ class FavoriteView extends StatelessWidget {
     }
   }
 
-  ListView buildBodyItem(List<Property> properties, FavoriteViewModel model) {
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        final property = properties[index];
-        return FavoriteCard(
-          id: property.id ?? -1,
-          onTap: () => model.goToPropertyDetails(property),
-          image: property.imageUrl ?? '',
-          amountPerYear: property.spacePrice ?? 0,
-          location: property.city ?? '',
-          address: property.address ?? '',
-          numberOfBathrooms: property.bathTubCount ?? 0,
-          numberOfBedrooms: property.bedroomCount ?? 0,
-          squareFeet: property.surfaceArea ?? 0.0,
-          isFavoriteTap: property.favourite ?? false,
-        );
-      },
-      itemCount: properties.length,
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(0),
+  Widget buildBodyItem(List<Property> properties, FavoriteViewModel model) {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            controller: model.scrollController,
+            itemBuilder: (ctx, index) {
+              final property = properties[index];
+              return FavoriteCard(
+                id: property.id ?? -1,
+                onTap: () => model.goToPropertyDetails(property),
+                image: property.propertyImages?[0].imageUrl ?? '',
+                amountPerYear: property.spacePrice ?? 0.0,
+                name: property.propertyName ?? '',
+                address: property.address ?? '',
+                numberOfBathrooms: property.bathTubCount ?? 0,
+                numberOfBedrooms: property.bedroomCount ?? 0,
+                squareFeet: property.surfaceArea ?? 0,
+                isFavoriteTap: property.favourite ?? false,
+              );
+            },
+            itemCount: properties.length,
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(0),
+          ),
+        ),
+        if (model.isLoadingOldData) buildOldLoadingWidget(),
+      ],
     );
   }
 
   ResavationAppBar buildAppBar() {
     return ResavationAppBar(
       title: "Favorite",
+      backEnabled: false,
       centerTitle: false,
     );
   }

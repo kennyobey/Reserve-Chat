@@ -48,8 +48,8 @@ class CategoryCard extends StatelessWidget {
   }
 }
 
-class LongCategoriesAndCitiesCard extends StatelessWidget {
-  const LongCategoriesAndCitiesCard({
+class LongCategoriesAndStatesCard extends StatelessWidget {
+  const LongCategoriesAndStatesCard({
     Key? key,
     required this.onTap,
     required this.image,

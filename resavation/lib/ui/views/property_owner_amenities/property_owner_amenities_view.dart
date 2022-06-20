@@ -248,9 +248,6 @@ class _PropertyOwnerAmenitiesViewState
     );
 
     Reference sFirebaseStorageRef = FirebaseStorage.instance.ref();
-    final uniqueId = DateTime.now().millisecondsSinceEpoch;
-    Reference firebaseStorageRef = sFirebaseStorageRef.child(
-        'users/${model.userData.email}/productImages/${model.propertyOwnerUploadModel.propertyName}-$uniqueId');
 
     final List<String> images = [];
 
@@ -258,6 +255,10 @@ class _PropertyOwnerAmenitiesViewState
 
     for (final image in rawImages) {
       try {
+        final uniqueId = DateTime.now().millisecondsSinceEpoch;
+        Reference firebaseStorageRef = sFirebaseStorageRef.child(
+            'users/${model.userData.email}/productImages/${model.propertyOwnerUploadModel.propertyName}/${model.propertyOwnerUploadModel.propertyName}-$uniqueId');
+
         UploadTask uploadTask = firebaseStorageRef.putFile(File(image.path));
         final TaskSnapshot taskSnapshot = await uploadTask;
         String url = await taskSnapshot.ref.getDownloadURL();
@@ -266,7 +267,7 @@ class _PropertyOwnerAmenitiesViewState
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Error occurred uplaoding image(s)',
+              'Error occurred uploading image(s)',
             ),
           ),
         );

@@ -5,7 +5,6 @@ import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -107,8 +106,8 @@ class PropertyOwnerProfileView extends StatelessWidget {
                             return PropertyCard(
                               id: property.id ?? -1,
                               onTap: () => model.goToPropertyDetails(property),
-                              image: property.imageUrl ?? '',
-                              amountPerYear: property.spacePrice ?? 0,
+                              image: property.propertyImages?[0].imageUrl ?? '',
+                              amountPerYear: 0,
                               propertyName: property.city ?? '',
                               address: property.address ?? '',
                               numberOfBathrooms: property.bathTubCount ?? 0,

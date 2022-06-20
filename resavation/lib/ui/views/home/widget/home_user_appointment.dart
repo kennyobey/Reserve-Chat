@@ -13,7 +13,7 @@ class HomeUserAppointment extends ViewModelWidget<HomeViewModel> {
   const HomeUserAppointment({Key? key}) : super(key: key);
 
   Column buildErrorBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -46,7 +46,7 @@ class HomeUserAppointment extends ViewModelWidget<HomeViewModel> {
   }
 
   Column buildEmptyBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);

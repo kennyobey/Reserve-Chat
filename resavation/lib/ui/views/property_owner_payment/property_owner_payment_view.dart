@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -86,23 +85,32 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                     child: Text("Next"),
                     onPressed: () {
                       if (model.selectedSubscriptions.isNotEmpty) {
-                        if (model.isVerified()) {
-                          if (model.startDate.millisecondsSinceEpoch <
-                              model.endDate.millisecondsSinceEpoch) {
-                            model.goToPropertyOwnerAmenitiesView();
+                        if (model.displayPrice != null &&
+                            model.displayPrice!.isNotEmpty) {
+                          if (model.isVerified()) {
+                            if (model.startDate.millisecondsSinceEpoch <
+                                model.endDate.millisecondsSinceEpoch) {
+                              model.goToPropertyOwnerAmenitiesView();
+                            } else {
+                              ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Kindly select a valid availability period'),
+                                ),
+                              );
+                            }
                           } else {
                             ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                    'Kindly select a valid availability period'),
+                                    'Kindly enter the price for each plan '),
                               ),
                             );
                           }
                         } else {
                           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                             const SnackBar(
-                              content:
-                                  Text('Kindly enter the price for each plan'),
+                              content: Text('Please select your display price'),
                             ),
                           );
                         }
@@ -225,7 +233,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
       ),
       verticalSpaceTiny,
       ResavationTextField(
-        hintText: '# 600,000',
+        onlyNumbers: true,
         textInputAction: TextInputAction.next,
         keyboardType: TextInputType.number,
         controller: model.propertyannualPriceController,
@@ -241,7 +249,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
       ),
       verticalSpaceTiny,
       ResavationTextField(
-        hintText: '# 600,000',
+        onlyNumbers: true,
         textInputAction: TextInputAction.next,
         keyboardType: TextInputType.number,
         controller: model.propertybiannualPriceController,
@@ -258,7 +266,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
       ),
       verticalSpaceTiny,
       ResavationTextField(
-        hintText: '# 100,000',
+        onlyNumbers: true,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.next,
         controller: model.propertymonthlyPriceController,
@@ -275,7 +283,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
       ),
       verticalSpaceTiny,
       ResavationTextField(
-        hintText: '# 300,000',
+        onlyNumbers: true,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.next,
         controller: model.propertyquaterlylPriceController,
@@ -301,6 +309,60 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
         ...buildBiannualField(model),
       if (model.selectedSubscriptions.contains('Annually'))
         ...buildAnnualFIeld(model),
+      const Divider(),
+      verticalSpaceSmall,
+      Text(
+        "Display Price",
+        style: AppStyle.kBodyRegularBlack15W500,
+      ),
+      verticalSpaceSmall,
+      const Divider(),
+      verticalSpaceSmall,
+      Text(
+        'Please choose one of the subscription costs as your preferred pricing; this price will be shown to the user first. ',
+        style: AppStyle.kBodyRegularBlack14,
+      ),
+      verticalSpaceTiny,
+      InkWell(
+        splashColor: Colors.transparent,
+        onTap: () async {
+          final price = await showDialog<String?>(
+                context: context,
+                builder: (_) => SingleSelectDialog(
+                  question: Text('Select Display Price'),
+                  initialAnswer: model.displayPrice,
+                  choices: model.selectedSubscriptions,
+                ),
+              ) ??
+              [];
+          model.setDisplayPrice(price);
+        },
+        child: Container(
+          width: double.infinity,
+          padding:
+              const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey, width: 1),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Row(children: [
+            Expanded(
+              child: Text(
+                  model.displayPrice == null || model.displayPrice!.isEmpty
+                      ? 'Select Display Price'
+                      : model.displayPrice!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: true,
+                  textAlign: TextAlign.start),
+            ),
+            Icon(
+              Icons.arrow_drop_down_rounded,
+              color: Colors.grey,
+            ),
+          ]),
+        ),
+      ),
     ];
   }
 }
