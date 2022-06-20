@@ -79,8 +79,8 @@ class ProfileProductListView extends StatelessWidget {
                       return PropertyCard(
                         id: property.id ?? -1,
                         onTap: () => model.goToPropertyDetails(property),
-                        image: property.imageUrl ?? '',
-                        amountPerYear: property.spacePrice,
+                        image: property.propertyImages?[0].imageUrl ?? '',
+                        amountPerYear: 0,
                         propertyName: property.city ?? '',
                         address: property.address ?? '',
                         numberOfBathrooms: property.bathTubCount ?? 0,

@@ -10,7 +10,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 
-
 class StartupView extends StatefulWidget {
   const StartupView({Key? key}) : super(key: key);
 
@@ -102,13 +101,13 @@ class _StartupViewState extends State<StartupView>
     super.dispose();
   }
 
-  void route() async{
+  void route() async {
     final prefs = await SharedPreferences.getInstance();
-    final visibility =  prefs.getBool('onboarding_visibility')??true;
+    final visibility = prefs.getBool('onboarding_visibility') ?? true;
     final service = locator<NavigationService>();
-    if(visibility) {
+    if (visibility) {
       service.replaceWith(Routes.onboardingView);
-    }else{
+    } else {
       service.replaceWith(Routes.logInView);
     }
   }

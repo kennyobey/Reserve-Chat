@@ -1,19 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/property_model.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
+import 'package:resavation/model/search_model/search_model.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:resavation/model/property_search/property_search.dart';
 
 class FavoriteViewModel extends BaseViewModel {
   bool isLoading = false;
-  bool hasError = false;
+  bool isLoadingOldData = false;
+  bool hasErrorOnData = false;
+  bool allLoaded = false;
   int page = 0;
   int size = 8;
   final _navigationService = locator<NavigationService>();
+  final ScrollController scrollController = ScrollController();
   final _httpService = locator<HttpService>();
-  List<PropertySearch> propertySearches = [];
+  List<SearchModel> propertySearches = [];
 
   List<Property> get properties {
     final List<Property> allProperty = [];
@@ -29,22 +33,63 @@ class FavoriteViewModel extends BaseViewModel {
     getData();
   }
 
-  void getData() async {
+  attachScrollListener() {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels <=
+          scrollController.position.maxScrollExtent - 10) {
+        return;
+      }
+      if (!isLoading &&
+          !allLoaded &&
+          properties.isNotEmpty &&
+          !isLoadingOldData) {
+        getOldData();
+      }
+    });
+  }
+
+  getData() async {
+    page = 0;
     isLoading = true;
-    hasError = false;
+    allLoaded = false;
+    hasErrorOnData = false;
     notifyListeners();
     try {
       final propertySearch =
           await _httpService.getAllFavouriteProperties(page: page, size: size);
+      allLoaded =
+          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
       propertySearches.add(propertySearch);
-      isLoading = false;
-      hasError = false;
-      notifyListeners();
+
+      hasErrorOnData = false;
+      attachScrollListener();
     } catch (exception) {
-      isLoading = false;
-      hasError = true;
-      notifyListeners();
+      hasErrorOnData = true;
     }
+    isLoadingOldData = false;
+    isLoading = false;
+    notifyListeners();
+  }
+
+  getOldData() async {
+    page++;
+    isLoadingOldData = true;
+
+    notifyListeners();
+    try {
+      final propertySearch =
+          await _httpService.getAllFavouriteProperties(page: page, size: size);
+
+      allLoaded =
+          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
+
+      propertySearches.add(propertySearch);
+    } catch (exception) {
+      allLoaded = true;
+    }
+    isLoadingOldData = false;
+
+    notifyListeners();
   }
 
   changeFavoriteIcon(int propertyId) async {
@@ -62,6 +107,6 @@ class FavoriteViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(Routes.propertyDetailsView,
-        arguments: property);
+        arguments: PropertyDetailsViewArguments(passedProperty: property));
   }
 }

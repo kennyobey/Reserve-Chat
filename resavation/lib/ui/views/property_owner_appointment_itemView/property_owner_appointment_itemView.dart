@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -52,68 +51,68 @@ class PropertyOwnerAppointmentItemView extends StatelessWidget {
 }
 
 class AppointmentView extends StatelessWidget {
-@override
-  Widget build(BuildContext context)  {
-  //const maxLines = 5;
-  var model;
-  var image;
-  return Container(
-    padding: EdgeInsets.all(12.0),
-    decoration: BoxDecoration(
-      border: Border.all(color: kGray),
-      borderRadius: new BorderRadius.circular(5.0),
-      //color: kBlack,
-    ),
-    width: MediaQuery.of(context).size.width,
-    height: 146.0,
-    child: Center(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 150,
-            width: 140,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6), //or 15.0
-              child: Image.asset(
-                Assets.profile_image4,
-                // width: 60,
-                // height: 60,
+  @override
+  Widget build(BuildContext context) {
+    //const maxLines = 5;
+    var model;
+    var image;
+    return Container(
+      padding: EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: kGray),
+        borderRadius: new BorderRadius.circular(5.0),
+        //color: kBlack,
+      ),
+      width: MediaQuery.of(context).size.width,
+      height: 146.0,
+      child: Center(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 150,
+              width: 140,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6), //or 15.0
+                child: Image.asset(
+                  Assets.profile_image4,
+                  // width: 60,
+                  // height: 60,
+                ),
               ),
             ),
-          ),
-          // ResavationImage(
-          //   image: image,
-          // ),
-          // Icon(Icons.receipt_sharp, size: 100, color: Colors.black),
-          Spacer(),
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Adeyemo Stephen',
-              style: AppStyle.kBodyRegular,
-            ),
-            Text(
-              'No 1, Eleko Estate .....',
-              style: AppStyle.kBodyRegular.copyWith(color: kGray),
-            ),
-            Text(
-              'Inspection: Virtual',
-              style: AppStyle.kBodyRegular,
-            ),
-            FlatButton(
-              height: 5,
-              child: Text(
-                'Cancel',
+            // ResavationImage(
+            //   image: image,
+            // ),
+            // Icon(Icons.receipt_sharp, size: 100, color: Colors.black),
+            Spacer(),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                'Adeyemo Stephen',
                 style: AppStyle.kBodyRegular,
               ),
-              color: kWhite,
-              textColor: kBlack,
-              onPressed: () {},
-            ),
-          ])
-        ],
+              Text(
+                'No 1, Eleko Estate .....',
+                style: AppStyle.kBodyRegular.copyWith(color: kGray),
+              ),
+              Text(
+                'Inspection: Virtual',
+                style: AppStyle.kBodyRegular,
+              ),
+              FlatButton(
+                height: 5,
+                child: Text(
+                  'Cancel',
+                  style: AppStyle.kBodyRegular,
+                ),
+                color: kWhite,
+                textColor: kBlack,
+                onPressed: () {},
+              ),
+            ])
+          ],
+        ),
       ),
-    ),
-  );
+    );
   }
 }

@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 
-class TopCitiesContent {
+class TopStatesContent {
   String? cityName;
   String? createdAt;
   int? id;
   int? numberOfProperties;
   String? updatedAt;
 
-  TopCitiesContent({
+  TopStatesContent({
     this.cityName,
     this.createdAt,
     this.id,
@@ -22,8 +22,8 @@ class TopCitiesContent {
     return 'Content(cityName: $cityName, createdAt: $createdAt, id: $id, numberOfProperties: $numberOfProperties, updatedAt: $updatedAt)';
   }
 
-  factory TopCitiesContent.fromMap(Map<String, dynamic> data) =>
-      TopCitiesContent(
+  factory TopStatesContent.fromMap(Map<String, dynamic> data) =>
+      TopStatesContent(
         cityName: data['cityName'] as String?,
         createdAt: data['createdAt'] as String?,
         id: data['id'] as int?,
@@ -41,24 +41,24 @@ class TopCitiesContent {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [TopCitiesContent].
-  factory TopCitiesContent.fromJson(String data) {
-    return TopCitiesContent.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [TopStatesContent].
+  factory TopStatesContent.fromJson(String data) {
+    return TopStatesContent.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [TopCitiesContent] to a JSON string.
+  /// Converts [TopStatesContent] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  TopCitiesContent copyWith({
+  TopStatesContent copyWith({
     String? cityName,
     String? createdAt,
     int? id,
     int? numberOfProperties,
     String? updatedAt,
   }) {
-    return TopCitiesContent(
+    return TopStatesContent(
       cityName: cityName ?? this.cityName,
       createdAt: createdAt ?? this.createdAt,
       id: id ?? this.id,
@@ -70,7 +70,7 @@ class TopCitiesContent {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! TopCitiesContent) return false;
+    if (other is! TopStatesContent) return false;
     final mapEquals = const DeepCollectionEquality().equals;
     return mapEquals(other.toMap(), toMap());
   }

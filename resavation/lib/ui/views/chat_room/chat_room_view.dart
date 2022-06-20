@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:resavation/model/chat_message_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/views/audio_call/pickup_layout.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
 import 'package:resavation/ui/views/chat_room/widgets/avatar_card_widget.dart';
@@ -147,17 +147,18 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     final otherUserImage =
         widget.chatModel?.usersProfileImage[otherUserEmail] ?? '';
     return AppBar(
-      elevation: 0.0,
+      elevation: 2.0,
       iconTheme: IconThemeData(
         color: Colors.black, //change your color here
       ),
       backgroundColor: kWhite,
+      leading: null,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           BackButton(
-            color: Colors.black,
+            color: Color.fromARGB(255, 19, 10, 10),
           ),
           Expanded(
             child: AvatarCard(
@@ -168,7 +169,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         ],
       ),
       actions: [
-        InkWell(
+/*         InkWell(
           onTap: () {
             model.startCall(
               otherUserEmail: otherUserEmail,
@@ -184,7 +185,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
               color: kBlack,
             ),
           ),
-        ),
+        ), */
         InkWell(
           onTap: () {
             model.startCall(
@@ -235,7 +236,7 @@ class MessageBox extends StatelessWidget {
 
     final width = MediaQuery.of(context).size.width;
 
-    var date = Text(
+    final date = Text(
       time,
       style: Theme.of(context).textTheme.headline1!.copyWith(
             fontSize: 10,
@@ -245,14 +246,11 @@ class MessageBox extends StatelessWidget {
     );
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.end,
+      child: Column(
+        crossAxisAlignment:
+            isRight ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          if (isRight) const Spacer(),
-          if (isRight) date,
-          if (isRight) const SizedBox(width: 8),
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 5,
@@ -261,15 +259,8 @@ class MessageBox extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: width * 0.7),
             decoration: BoxDecoration(
               color: isRight ? kChatTextColor : kPrimaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.only(
-                topLeft: (isRight)
-                    ? const Radius.circular(10)
-                    : const Radius.circular(1),
-                topRight: (isRight)
-                    ? const Radius.circular(1)
-                    : const Radius.circular(10),
-                bottomLeft: const Radius.circular(10),
-                bottomRight: const Radius.circular(10),
+              borderRadius: BorderRadius.all(
+                const Radius.circular(5),
               ),
             ),
             child: Column(
@@ -281,25 +272,15 @@ class MessageBox extends StatelessWidget {
                     height: 130,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: (isRight)
-                            ? const Radius.circular(10)
-                            : const Radius.circular(1),
-                        topRight: (isRight)
-                            ? const Radius.circular(1)
-                            : const Radius.circular(10),
-                        bottomLeft: const Radius.circular(10),
-                        bottomRight: const Radius.circular(10),
+                      borderRadius: BorderRadius.all(
+                        const Radius.circular(5),
                       ),
                     ),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       onTap: onTap,
-                      child: Image.network(
-                        imageUrl,
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
+                      child: ResavationImage(
+                        image: imageUrl,
                       ),
                     ),
                   ),
@@ -315,9 +296,8 @@ class MessageBox extends StatelessWidget {
               ],
             ),
           ),
-          if (!isRight) const SizedBox(width: 8),
-          if (!isRight) date,
-          if (!isRight) const Spacer(),
+          const SizedBox(height: 3),
+          date,
         ],
       ),
     );

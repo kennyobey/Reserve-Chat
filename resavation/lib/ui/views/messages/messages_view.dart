@@ -69,7 +69,7 @@ class MessagesView extends StatelessWidget {
             if (allChats.isEmpty) {
               return buildEmptyBody(ctx);
             } else {
-              return ListView.builder(
+              return ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(0),
                   itemCount: allChats.length,
@@ -80,6 +80,9 @@ class MessagesView extends StatelessWidget {
                       chatModel: chatModel,
                       userEmail: model.getUserEmail,
                     );
+                  },
+                  separatorBuilder: (_, __) {
+                    return const Divider();
                   });
             }
           } else {
@@ -175,6 +178,7 @@ class MessagesCard extends StatelessWidget {
     final otherUserImage = chatModel.usersProfileImage[otherUserEmail] ?? '';
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
+      margin: EdgeInsets.only(top: 5, bottom: 5),
       child: InkWell(
         splashColor: Colors.transparent,
         onTap: () => onTap(chatModel),
@@ -194,7 +198,7 @@ class MessagesCard extends StatelessWidget {
     int count,
   ) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(

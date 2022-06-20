@@ -16,12 +16,12 @@ import '../../../services/core/user_type_service.dart';
 class EditProfileViewModel extends BaseViewModel {
   final _snackbarService = locator<CustomSnackbarService>();
   final _navigationService = locator<NavigationService>();
-  final _userService = locator<UserTypeService>();
+
   final _httpService = locator<HttpService>();
 
   final userFirstNameController = TextEditingController();
   final userLastNameController = TextEditingController();
-
+  final _userService = locator<UserTypeService>();
   LoginModel get userData => _userService.userData;
   void showComingSoon() {
     _snackbarService.showComingSoon();

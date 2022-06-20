@@ -4,50 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/services/core/http_service.dart';
-import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../services/core/upload_type_service.dart';
+
 class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final httpService = locator<HttpService>();
-  final userTypeService = locator<UserTypeService>();
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
-
-  setLiveInSpace(bool? liveInSpace) {
-    propertyOwnerUploadModel.liveInSpace = liveInSpace;
-  }
-
-  setSpaceServiced(bool? isServiced) {
-    propertyOwnerUploadModel.isSpaceServiced = isServiced;
-  }
-
-  setSpaceFurnished(bool? isFurnished) {
-    propertyOwnerUploadModel.isSpaceFurnished = isFurnished;
-  }
-
-  // void upoloadPropertyToServer() async {
-  //   httpService.uploadProperty(
-  //       spaceServiced: false,
-  //       spaceFurnished: false,
-  //       liveInSPace: false,
-  //       listingOption: [],
-  //       bathTubCount: numberOfBathrooms,
-  //       bedroomCount: numberOfBedrooms,
-  //       carSlots: numberOfCarSlot);
-  // }
-
-  // Global Keys to use with the form text fields
+  final _httpService = locator<HttpService>();
+  final uploadTypeService = locator<UploadTypeService>();
   final registrationFormKey = GlobalKey<FormState>();
   late Timer timer;
 
-  bool _notificationSwitchValue = false;
+  bool isCategoryEnabled = false;
 
-  bool get notificationSwitchValue => _notificationSwitchValue;
+  bool hasErrorOnData = false;
+  bool isLoading = true;
 
-  // drop-down button UI logic for spaceType
-  String? selectedProperty;
   List<String> spaceType = [
     'Town House',
     'Plot of Land',
@@ -63,192 +36,181 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   ];
 
 // drop-down button UI logic for Listing Option
-  String? listingOptionValue;
-  List<String> listingOption = [
-    'Shared Space',
-    'Entire Space',
-    'Serviced',
-    'Self Servced',
-    'Shared',
-    'Short Let'
-  ];
+  String? propertyStyleValue;
+  String? propertyTypeValue;
+  List<String> propertyStyleOption = ['---Empty---'];
 
-  // drop-down button UI logic for property status
-  String? propertyStatusValue;
-  List<String> propertyStatus = ['For Sale', 'For Rent'];
+  List<String> propertyStatus = ['---Empty---'];
 
-  void onSelectedPropertyChange(value) {
-    selectedProperty = value as String;
-    propertyOwnerUploadModel.propertyType = selectedProperty;
+  List<String> propertyCategories = ['---Empty---'];
+
+  List<String> propertyTypeResidental = ['---Empty---'];
+
+  List<String> propertyTypeCommercial = ['---Empty---'];
+
+  List<String> propertyTypeIndustrial = ['---Empty---'];
+
+  List<String> propertyTypeRetail = ['---Empty---'];
+
+  List<String> get getPropertyTypeList {
+    final propertyCategory = uploadTypeService.propertyCategory;
+    if (propertyCategory == propertyCategories[0]) {
+      return propertyTypeResidental;
+    } else if (propertyCategory == propertyCategories[1]) {
+      return propertyTypeCommercial;
+    } else if (propertyCategory == propertyCategories[2]) {
+      return propertyTypeIndustrial;
+    } else if (propertyCategory == propertyCategories[3]) {
+      return propertyTypeRetail;
+    }
+
+    return ['Error Occurred'];
+  }
+
+  bool? isSpaceServiced;
+  bool? isSpaceFurnished;
+
+  bool? liveInSpace;
+  int noOfBedroom = 0;
+  int noOfBathroom = 0;
+  int numberOfCarSLot = 0;
+
+  PropertyOwnerSpaceTypeViewModel() {
+    uploadTypeService.clearStage1();
+    getData();
+  }
+
+  getData() async {
+    isLoading = true;
+    hasErrorOnData = false;
+    notifyListeners();
+    try {
+      propertyTypeCommercial = await _httpService.getCommercialPropertyTypes();
+      propertyTypeIndustrial = await _httpService.getIndustrialPropertyTypes();
+      propertyTypeResidental = await _httpService.getResidentialPropertyTypes();
+      propertyTypeRetail = await _httpService.getRetailPropertyTypes();
+      propertyCategories = await _httpService.getPropertyCategories();
+      propertyStatus = await _httpService.getPropertyStatus();
+      propertyStyleOption = await _httpService.getPropertyStyle();
+    } catch (exception) {
+      hasErrorOnData = true;
+    }
+    isLoading = false;
     notifyListeners();
   }
 
-  void onListingOptionValueChange(value) {
-    listingOptionValue = value as String;
-    propertyOwnerUploadModel.listingOption = listingOptionValue;
+  setLiveInSpace(bool liveInSpace) {
+    this.liveInSpace = liveInSpace;
+    uploadTypeService.liveInSpace = liveInSpace;
+    notifyListeners();
+  }
+
+  setSpaceServiced(bool isServiced) {
+    this.isSpaceServiced = isServiced;
+    uploadTypeService.isSpaceServiced = isServiced;
+    notifyListeners();
+  }
+
+  setSpaceFurnished(bool isFurnished) {
+    this.isSpaceFurnished = isFurnished;
+    uploadTypeService.isSpaceFurnished = isFurnished;
+    notifyListeners();
+  }
+
+  void onSelectedSpaceTypeChange(value) {
+    uploadTypeService.spaceType = value;
+    notifyListeners();
+  }
+
+  void onPropertyStyleValueChange(value) {
+    propertyStyleValue = value as String;
+    uploadTypeService.propertyStyle = propertyStyleValue;
     notifyListeners();
   }
 
   void onPropertyStatusValueChange(value) {
-    propertyStatusValue = value;
-    propertyOwnerUploadModel.propertyStatus = propertyStatusValue;
+    uploadTypeService.propertyStatus = value;
     notifyListeners();
   }
 
-  //is your space serviced UI logic
-  bool isServiced = false;
-
-  void onSpaceServicedRadioChange(bool? value) {
-    isServiced == value!;
-    if (isServiced == "Yes") {
-      print("fjfffk ${true.toString()}");
-    } else {
-      print("Somethij");
+  void onPropertyTypeValueChange(value) {
+    final propertyCategory = uploadTypeService.propertyCategory;
+    if (propertyCategory == propertyCategories[0]) {
+      uploadTypeService.residentialPropertyType = value;
+    } else if (propertyCategory == propertyCategories[1]) {
+      uploadTypeService.commercialPropertyType = value;
+    } else if (propertyCategory == propertyCategories[2]) {
+      uploadTypeService.industrialPropertyType = value;
+    } else if (propertyCategory == propertyCategories[3]) {
+      uploadTypeService.retailPropertyType = value;
     }
+    propertyTypeValue = value;
     notifyListeners();
   }
 
-  // is your furnished  UI logic
-  String isFurnished = "";
+  void onPropertyCategoriesValueChange(value) {
+    uploadTypeService.propertyCategory = value;
+    uploadTypeService.commercialPropertyType = null;
+    uploadTypeService.retailPropertyType = null;
+    propertyTypeValue = null;
+    uploadTypeService.industrialPropertyType = null;
+    uploadTypeService.residentialPropertyType = null;
 
-  void onSpaceFurnishedRadioChange(String value) {
-    isFurnished = value.toString();
+    isCategoryEnabled = value != null;
     notifyListeners();
   }
-
-  // do you leave in this space  UI logic
-  String leaveHere = "";
-
-  void onLeaveHereRadioChange(String value) {
-    leaveHere = value.toString();
-    notifyListeners();
-  }
-
-  // Amenities selection logic
-  int numberOfBedrooms = 0;
-  int numberOfBathrooms = 0;
-  int numberOfCarSlot = 0;
 
   // method for each amenities tap
   void onPositiveBedRoomTap() {
-    numberOfBedrooms++;
-    propertyOwnerUploadModel.noOfBedroom = numberOfBedrooms;
+    noOfBedroom++;
+    uploadTypeService.noOfBedroom = noOfBedroom;
     notifyListeners();
   }
 
   void onNegativeBedRoomTap() {
-    if (numberOfBedrooms != 0) {
-      numberOfBedrooms--;
-      propertyOwnerUploadModel.noOfBedroom = numberOfBedrooms;
+    if (noOfBedroom != 0) {
+      noOfBedroom--;
+      uploadTypeService.noOfBedroom = noOfBedroom;
+
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void onPositiveBathRoomTap() {
-    numberOfBathrooms++;
-    propertyOwnerUploadModel.noOfBathroom = numberOfBathrooms;
+    noOfBathroom++;
+    uploadTypeService.noOfBathroom = noOfBathroom;
+
     notifyListeners();
   }
 
   void onNegativeBathRoomTap() {
-    if (numberOfBathrooms != 0) {
-      numberOfBathrooms--;
-      propertyOwnerUploadModel.noOfBathroom = numberOfBathrooms;
+    if (noOfBathroom != 0) {
+      noOfBathroom--;
+      uploadTypeService.noOfBathroom = noOfBathroom;
+
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void onPositiveCarSlotTap() {
-    numberOfCarSlot++;
-    propertyOwnerUploadModel.numberOfCarSLot = numberOfCarSlot;
+    numberOfCarSLot++;
+    uploadTypeService.numberOfCarSLot = numberOfCarSLot;
+
     notifyListeners();
   }
 
   void onNegativeCarSlotTap() {
-    if (numberOfCarSlot != 0) {
-      numberOfCarSlot--;
-      propertyOwnerUploadModel.numberOfCarSLot = numberOfCarSlot;
+    if (numberOfCarSLot != 0) {
+      numberOfCarSLot--;
+      uploadTypeService.numberOfCarSLot = numberOfCarSLot;
+
+      notifyListeners();
     }
-
-    notifyListeners();
-  }
-
-  void goToPropertyOwnerHomePageView() {
-    _navigationService.navigateTo(Routes.propertyOwnerHomePageView);
   }
 
   void goToPropertyOwnerDetailsView() {
-    _navigationService.navigateTo(Routes.propertyOwnerDetailsView,
-        arguments: propertyOwnerUploadModel);
+    _navigationService.navigateTo(
+      Routes.propertyOwnerDetailsView,
+    );
   }
-}
-
-class PropertyOwnerUploadModel {
-  ///stage 1 data
-  String? propertyType;
-  bool? isSpaceServiced;
-  bool? isSpaceFurnished;
-  String? listingOption;
-  String? propertyStatus;
-  bool? liveInSpace;
-  int? noOfBedroom;
-  int? noOfBathroom;
-  int? numberOfCarSLot;
-
-  ///stage 2 data
-  String? propertyName;
-  String? propertyDescription;
-  String? location;
-  String? state;
-  String? city;
-  String? address;
-
-  //add stage 3 data here
-  String? imageUrl;
-
-  //Stage 4 data
-  int? annualPrice;
-  int? biannualPrice;
-  int? monthlyPrice;
-  int? quarterlyPrice;
-  String? from;
-  String? to;
-
-  //Stage 5 data
-  List<String>? amenities;
-  bool? airConditional;
-  bool? airDryer;
-  bool? fireAlarm;
-  bool? tv;
-  bool? washingMachine;
-  bool? wifi;
-
-  /// Rules
-  List<String>? rules;
-  bool? noHouseParty;
-  bool? noPet;
-  bool? noSmoking;
-
-  PropertyOwnerUploadModel({
-    this.propertyType,
-    this.isSpaceServiced,
-    this.isSpaceFurnished,
-    this.listingOption,
-    this.propertyStatus,
-    this.liveInSpace,
-    this.noOfBedroom,
-    this.noOfBathroom,
-    this.numberOfCarSLot,
-    this.propertyName,
-    this.propertyDescription,
-    this.location,
-    this.state,
-    this.city,
-    this.address,
-    this.imageUrl,
-    this.annualPrice,
-    this.biannualPrice,
-    this.monthlyPrice,
-    this.quarterlyPrice,
-  });
 }

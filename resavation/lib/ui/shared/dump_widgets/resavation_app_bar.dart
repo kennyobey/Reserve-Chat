@@ -1,16 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
 class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ResavationAppBar(
-      {Key? key, this.title, this.actions, this.centerTitle = true})
+      {Key? key,
+      this.title,
+      this.actions,
+      this.centerTitle = true,
+      this.backEnabled = true})
       : super(key: key);
 
   final String? title;
   final List<Widget>? actions;
   final bool centerTitle;
+  final bool backEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +27,9 @@ class ResavationAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       centerTitle: centerTitle,
+      automaticallyImplyLeading: Navigator.canPop(context) && backEnabled,
       // iconTheme: IconThemeData(color: ),
-      leading: Navigator.canPop(context)
+      leading: Navigator.canPop(context) && backEnabled
           ? BackButton(
               color: kDarkBlue,
             )

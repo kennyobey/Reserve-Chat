@@ -12,7 +12,7 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
   const HomeTopCategories({Key? key}) : super(key: key);
 
   Column buildErrorBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -45,7 +45,7 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
   }
 
   Column buildEmptyBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -88,7 +88,6 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
         }
 
         if (snapshot.hasData) {
-          //show body here
           final List<TopCategoriesContent> allContent =
               snapshot.data?.content ?? [];
           return buildSuccessBody(allContent, model, context);
@@ -150,7 +149,8 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
                     image: '',
                     category: content.propertyCategory ?? '',
                     onTap: () {
-                      model.goToPropertySearch(content.propertyCategory ?? '');
+                      model.goToTopItemsView(
+                          content.propertyCategory ?? '', false);
                     },
                   ),
                   horizontalSpaceSmall,

@@ -17,7 +17,7 @@ class VideoCallView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<VideoCallViewModel>.reactive(
       builder: (context, model, child) => SafeArea(
-        child:  Scaffold(
+        child: Scaffold(
           body: Stack(
             children: [
               Padding(
@@ -25,8 +25,14 @@ class VideoCallView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Stephen", style: AppStyle.kHeading1,),
-                    Text("Duration 05:00 min", style: AppStyle.kBodySmallRegular,)
+                    Text(
+                      "Stephen",
+                      style: AppStyle.kHeading1,
+                    ),
+                    Text(
+                      "Duration 05:00 min",
+                      style: AppStyle.kBodySmallRegular,
+                    )
                   ],
                 ),
               ),
@@ -39,8 +45,7 @@ class VideoCallView extends StatelessWidget {
                 right: MediaQuery.of(context).size.width * 0.1,
                 child: Container(
                   decoration: BoxDecoration(
-                      border: Border.all(color: kDarkBlue, width: 3)
-                  ),
+                      border: Border.all(color: kDarkBlue, width: 3)),
                   width: 130,
                   height: 164,
                   child: GestureDetector(
@@ -58,13 +63,13 @@ class VideoCallView extends StatelessWidget {
             ],
           ),
           bottomSheet: Padding(
-            padding:  EdgeInsets.only(bottom: 30),
+            padding: EdgeInsets.only(bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //TODO refactor code here
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     model.initPlatformState();
                   },
                   child: Container(
@@ -72,11 +77,18 @@ class VideoCallView extends StatelessWidget {
                     height: 38,
                     decoration: BoxDecoration(
                         color: kChatTextColor,
-                        borderRadius: BorderRadius.circular(20)
-                    ),
+                        borderRadius: BorderRadius.circular(20)),
                     child: Padding(
-                      padding:  EdgeInsets.all(5.0),
-                      child: (model.muteAudio) ? Icon(Icons.mic,color: kWhite,): Icon(Icons.mic_off,color: kWhite,),
+                      padding: EdgeInsets.all(5.0),
+                      child: (model.muteAudio)
+                          ? Icon(
+                              Icons.mic,
+                              color: kWhite,
+                            )
+                          : Icon(
+                              Icons.mic_off,
+                              color: kWhite,
+                            ),
                     ),
                   ),
                 ),
@@ -84,19 +96,20 @@ class VideoCallView extends StatelessWidget {
                   width: 20,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                   },
                   child: Container(
                     width: 36,
                     height: 38,
                     decoration: BoxDecoration(
-                        color: kRed,
-                        borderRadius: BorderRadius.circular(20)
-                    ),
+                        color: kRed, borderRadius: BorderRadius.circular(20)),
                     child: Padding(
-                      padding:  EdgeInsets.all(5.0),
-                      child: Icon(Icons.call, color: kWhite,),
+                      padding: EdgeInsets.all(5.0),
+                      child: Icon(
+                        Icons.call,
+                        color: kWhite,
+                      ),
                     ),
                   ),
                 ),
@@ -104,7 +117,7 @@ class VideoCallView extends StatelessWidget {
                   width: 20,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     model.initPlatformState();
                   },
                   child: Container(
@@ -112,11 +125,18 @@ class VideoCallView extends StatelessWidget {
                     height: 38,
                     decoration: BoxDecoration(
                         color: kChatTextColor,
-                        borderRadius: BorderRadius.circular(20)
-                    ),
+                        borderRadius: BorderRadius.circular(20)),
                     child: Padding(
-                      padding:  EdgeInsets.all(5.0),
-                      child: (model.muteVideo) ? Icon(Icons.videocam_outlined,color: kWhite,): Icon(Icons.videocam_off_outlined,color: kWhite,),
+                      padding: EdgeInsets.all(5.0),
+                      child: (model.muteVideo)
+                          ? Icon(
+                              Icons.videocam_outlined,
+                              color: kWhite,
+                            )
+                          : Icon(
+                              Icons.videocam_off_outlined,
+                              color: kWhite,
+                            ),
                     ),
                   ),
                 ),
@@ -162,5 +182,3 @@ class VideoCallView extends StatelessWidget {
 //     }
 //   }
 }
-
-

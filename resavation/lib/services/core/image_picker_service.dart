@@ -1,5 +1,4 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
 class ImagePickerService with ReactiveServiceMixin {
@@ -7,21 +6,18 @@ class ImagePickerService with ReactiveServiceMixin {
   final ImagePicker imgPicker = ImagePicker();
   //late RxValue<List<XFile>?>  imageFiles;
 
-  RxValue<bool> _isTenant = RxValue<bool>(false);
+  // RxValue<bool> _isTenant = RxValue<bool>(false);
 
-  openImages() async {
+  Future<List<XFile>> openImages() async {
     try {
       var pickedFiles = await imgPicker.pickMultiImage();
       if (pickedFiles != null) {
-        RxValue<List<XFile>?> imageFiles = RxValue<List<XFile>?>(pickedFiles);
-
-        notifyListeners();
+        return pickedFiles;
       } else {
-        print("No image is selected.");
+        return Future.error('Please select one or more images');
       }
     } catch (e) {
-      print("error while picking file.");
+      return Future.error("An error occurred while picking images");
     }
-    notifyListeners();
   }
 }

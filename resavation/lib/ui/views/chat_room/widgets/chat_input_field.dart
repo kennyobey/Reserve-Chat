@@ -188,17 +188,18 @@ class ChatInputField extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 1000),
       alignment: Alignment.center,
-      margin: EdgeInsets.only(bottom: model.isMessageEmpty ? 10 : 8),
-      child: model.isMessageEmpty
+      margin: EdgeInsets.only(bottom: /* model.isMessageEmpty ? 10 : */ 8),
+      child: /*  model.isMessageEmpty
           ? Icon(Icons.mic, color: kPrimaryColor)
-          : InkWell(
-              onTap: () => sendChatMessage(model, context),
-              child: Icon(
-                Icons.send,
-                color: kPrimaryColor,
-                size: 22,
-              ),
-            ),
+          :  */
+          InkWell(
+        onTap: () => sendChatMessage(model, context),
+        child: Icon(
+          Icons.send,
+          color: kPrimaryColor,
+          size: 22,
+        ),
+      ),
     );
   }
 

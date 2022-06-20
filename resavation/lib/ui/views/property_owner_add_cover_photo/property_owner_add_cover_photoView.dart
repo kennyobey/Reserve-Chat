@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,13 +7,9 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoViewModel.dart';
 
 import 'package:stacked/stacked.dart';
-import '../../shared/dump_widgets/resavation_elevated_button.dart';
-import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 
 class PropertyOwnerAddCoverPhotosView extends StatefulWidget {
-  PropertyOwnerAddCoverPhotosView(
-      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
-      : super(key: key);
+  PropertyOwnerAddCoverPhotosView({Key? key}) : super(key: key);
 
   @override
   State<PropertyOwnerAddCoverPhotosView> createState() =>
@@ -25,9 +19,6 @@ class PropertyOwnerAddCoverPhotosView extends StatefulWidget {
 class _PropertyOwnerAddCoverPhotosViewState
     extends State<PropertyOwnerAddCoverPhotosView> {
   final uploadFormKey = GlobalKey<FormState>();
-
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +54,6 @@ class _PropertyOwnerAddCoverPhotosViewState
                             childAspectRatio: 2 / 2.2),
                         itemBuilder: (_, index) {
                           List<String> data = model.imageContainer;
-                          print(".........$data");
                           return coverPhoto(
                               imageUrl: data[index],
                               isCover: (index == 0) ? true : false);

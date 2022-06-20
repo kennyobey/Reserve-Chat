@@ -7,11 +7,10 @@ import 'package:stacked_services/stacked_services.dart';
 class VideoCallViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
-
   String APP_ID = '2998731ccff54ea78cf2d71a5af4b66d';
   String channelName = 'res1';
-  static const Token = '0062998731ccff54ea78cf2d71a5af4b66dIAAAHZGfXdNsay43RHeQR65mgdClxuSVEmFoZo8Ya7T4Ic+UovsAAAAAEAATtvR92RQdYgEAAQDTFB1i';
-
+  static const Token =
+      '0062998731ccff54ea78cf2d71a5af4b66dIAAAHZGfXdNsay43RHeQR65mgdClxuSVEmFoZo8Ya7T4Ic+UovsAAAAAEAATtvR92RQdYgEAAQDTFB1i';
 
   bool joined = false;
   int remoteUid = 0;
@@ -25,12 +24,12 @@ class VideoCallViewModel extends BaseViewModel {
     // Create RTC client instance
   }
 
-  void swapView(){
+  void swapView() {
     swap = !swap;
     notifyListeners();
   }
-  Future<void> initPlatformState() async {
 
+  Future<void> initPlatformState() async {
     //
     // await [Permission.camera, Permission.microphone].request();
     //
@@ -73,8 +72,5 @@ class VideoCallViewModel extends BaseViewModel {
   // Future<void> muteVideoStream() async{
   //
   // }
-
-
-
 
 }

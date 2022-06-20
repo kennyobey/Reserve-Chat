@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../../model/top_cities_model/content.dart';
-import '../../../../model/top_cities_model/top_cities_model.dart';
+import '../../../../model/top_states_model/content.dart';
 import '../../../shared/spacing.dart';
 
 import '../home_viewmodel.dart';
 import 'items.dart';
 
-class HomeTopCites extends ViewModelWidget<HomeViewModel> {
-  const HomeTopCites({Key? key}) : super(key: key);
+class HomeTopStates extends ViewModelWidget<HomeViewModel> {
+  const HomeTopStates({Key? key}) : super(key: key);
 
   Column buildErrorBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -45,7 +45,7 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
   }
 
   Column buildEmptyBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -79,8 +79,8 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
 
   Widget buildBody(HomeViewModel model) {
     final topCitiesFuture =
-        model.httpService.getTopCitiesWithHighestProperties();
-    return FutureBuilder<TopCitiesModel>(
+        model.httpService.getTopStatesWithHighestProperties();
+    return FutureBuilder<TopStatesModel>(
       future: topCitiesFuture,
       builder: ((context, snapshot) {
         if (snapshot.hasError) {
@@ -88,7 +88,7 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
         }
 
         if (snapshot.hasData) {
-          final List<TopCitiesContent> allContent =
+          final List<TopStatesContent> allContent =
               snapshot.data?.content ?? [];
           return buildSuccessBody(allContent, model, context);
         } else {
@@ -100,11 +100,11 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
 
   SingleChildScrollView buildLoadingBody(BuildContext context) {
     final allContent = [
-      TopCitiesContent(cityName: 'Loading...'),
-      TopCitiesContent(cityName: 'Loading...'),
-      TopCitiesContent(cityName: 'Loading...'),
-      TopCitiesContent(cityName: 'Loading...'),
-      TopCitiesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -128,7 +128,7 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildSuccessBody(List<TopCitiesContent> allContent,
+  Widget buildSuccessBody(List<TopStatesContent> allContent,
       HomeViewModel model, BuildContext context) {
     return allContent.isEmpty
         ? buildEmptyBody(context)
@@ -144,7 +144,7 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
                     numberOfProperties: content.numberOfProperties ?? 0,
                     location: content.cityName ?? '',
                     onTap: () {
-                      model.goToPropertySearch(content.cityName ?? '');
+                      model.goToTopItemsView(content.cityName ?? '', true);
                     },
                   ),
                   horizontalSpaceSmall,
@@ -160,9 +160,9 @@ class HomeTopCites extends ViewModelWidget<HomeViewModel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleListTile(
-          onTap: model.goToCitiesView,
+          onTap: model.goToStatesView,
           visibility: true,
-          title: 'Top Cities',
+          title: 'Top States',
         ),
         verticalSpaceSmall,
         buildBody(model),

@@ -27,7 +27,7 @@ class AudioMessage extends StatelessWidget {
           Expanded(
             child: Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                  const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
               child: Stack(
                 clipBehavior: Clip.none,
                 alignment: Alignment.center,

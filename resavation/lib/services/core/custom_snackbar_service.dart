@@ -7,5 +7,4 @@ class CustomSnackbarService {
   Future<void> showComingSoon() async {
     _snackbarService.showSnackbar(message: 'This Feature is coming soon');
   }
-
 }

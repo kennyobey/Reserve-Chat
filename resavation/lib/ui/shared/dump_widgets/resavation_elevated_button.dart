@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 
 class ResavationElevatedButton extends StatelessWidget {
-  const ResavationElevatedButton({Key? key, this.child, this.onPressed}) : super(key: key);
+  const ResavationElevatedButton({Key? key, this.child, this.onPressed})
+      : super(key: key);
 
   final Widget? child;
   final Function()? onPressed;

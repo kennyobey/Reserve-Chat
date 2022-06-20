@@ -34,7 +34,7 @@ class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
       builder: (context, model, child) => Scaffold(
         body: CustomScrollView(
           slivers: [
-            buildHeader(model, context),
+            // buildHeader(model, context),
             buildDescription(model, context),
             buildAmenity(model),
             buildLocation(model),
@@ -195,7 +195,7 @@ class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
                   title: model.property?.propertyCategory ?? 'Eleko Estate',
                   numberOfBedrooms: model.property?.bedroomCount ?? 0,
                   numberOfBathrooms: model.property?.bathTubCount ?? 0,
-                  squareFeet: model.property?.surfaceArea ?? 0,
+                  squareFeet: (model.property?.surfaceArea ?? 0) + .0,
                 ),
                 verticalSpaceMedium,
                 Row(
@@ -286,13 +286,13 @@ class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
     );
   }
 
-  SliverPersistentHeader buildHeader(
+/*   SliverPersistentHeader buildHeader(
       CoWorkingSpaceAboutViewModel model, BuildContext context) {
     return SliverPersistentHeader(
         floating: true,
         delegate: PropertyDetailsHeader(
           onBackTap: model.navigateBack,
-          property: model.property,
+          propertyImages: model.property?.propertyImages ?? [],
           isFavoriteTap: model.property?.favourite ?? false,
           onFavoriteTap: () async {
             try {
@@ -303,7 +303,7 @@ class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
             }
           },
         ));
-  }
+  } */
 }
 
 class AmenitiesItem extends StatelessWidget {

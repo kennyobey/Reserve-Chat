@@ -15,7 +15,6 @@ const Color kGray = Color(0xFFC4C4C4);
 const Color kTransparent = Colors.transparent;
 const Color kLightButtonColor = Color(0xFF407BFF);
 
-
 const Color kChatTextColor = Color(0xFF796E6E);
 const kSecondaryColor = Color(0xFFFE9901);
 const kContentColorLightTheme = Color(0xFF1D1D35);

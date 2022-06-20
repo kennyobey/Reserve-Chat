@@ -199,7 +199,7 @@ class ChatInputFieldViewModel extends BaseViewModel {
             File(imagePath),
             width: double.infinity,
             height: double.infinity,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
       ),

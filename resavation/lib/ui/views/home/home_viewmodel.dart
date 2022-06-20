@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/appointment.dart';
 import 'package:resavation/model/login_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/http_service.dart';
@@ -26,30 +27,14 @@ class Category {
 
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _snackbarService = locator<CustomSnackbarService>();
   final httpService = locator<HttpService>();
   final _userService = locator<UserTypeService>();
 
   LoginModel get userData => _userService.userData;
 
   void setPositionAsSearch() {
-    _userService.changePositionToSearch('');
+    _userService.changePositionToSearch();
   }
-
-  void showComingSoon() {
-    _snackbarService.showComingSoon();
-  }
-
-  List<TopCity> topCities = [
-    TopCity('Abuja', 50, Assets.abuja_location_placeholder),
-    TopCity('Lagos', 20, Assets.lagos_location_placeholder),
-    TopCity('Kaduna', 20, Assets.kaduna_location_placeholder),
-  ];
-
-  List<Category> categories = [
-    Category('Apartment', Assets.house_placeholder, true),
-    Category('Office Space', Assets.office_placeholder, true),
-  ];
 
   void goToFilterView() {
     _navigationService.navigateTo(Routes.filterView);
@@ -59,20 +44,27 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyDetailsView);
   }
 
-  void goToPropertySearch(String search) {
-    _userService.changePositionToSearch(search);
+  void goToTopItemsView(String itemName, bool isStates) {
+    _navigationService.navigateTo(
+      Routes.topItemView,
+      arguments: TopItemViewArguments(itemName: itemName, isStates: isStates),
+    );
   }
 
   void goToCategoriesView() {
     _navigationService.navigateTo(Routes.categoriesListView);
   }
 
-  void goToCitiesView() {
-    _navigationService.navigateTo(Routes.citiesListView);
+  void goToStatesView() {
+    _navigationService.navigateTo(Routes.statesListView);
   }
 
   void goToEditProfileView() {
     _navigationService.navigateTo(Routes.editProfileView);
+  }
+
+  void goToAppointmentList() {
+    _navigationService.navigateTo(Routes.appointmentListView);
   }
 
   void goToMessage() {

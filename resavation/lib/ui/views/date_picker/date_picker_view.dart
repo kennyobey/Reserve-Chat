@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -8,10 +9,8 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/date_picker/date_picker_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../model/property_model.dart';
-
 class DatePickerView extends StatelessWidget {
-  final Property? property;
+  final Property property;
   const DatePickerView({Key? key, required this.property}) : super(key: key);
 
   @override
@@ -63,7 +62,7 @@ class DatePickerView extends StatelessWidget {
                           title: 'Annual',
                           value: ChoiceOfPayment.Annual,
                           subTitle: 'Every year you pay',
-                          amount: property?.spacePrice ?? 0,
+                          amount: 0,
                         ),
                       ],
                     ),

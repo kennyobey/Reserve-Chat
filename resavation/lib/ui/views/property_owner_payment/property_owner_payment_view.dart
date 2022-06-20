@@ -1,25 +1,57 @@
-// ignore_for_file: deprecated_member_use
-
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_viewModel.dart';
 import 'package:resavation/ui/views/property_owner_payment/subscription.dart';
 import 'package:stacked/stacked.dart';
-import '../property_owner_amenities/widgets/amenities_item_widget.dart';
-import '../property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
+
+import '../../shared/dump_widgets/resavation_app_bar.dart';
+import '../../shared/dump_widgets/resavation_elevated_button.dart';
+
+class DateContainer extends StatelessWidget {
+  final String label;
+
+  final DateTime initialDate;
+  final DateTime firstDate;
+  final DateTime lastDate;
+  final Function(DateTime) onPressed;
+  const DateContainer({
+    Key? key,
+    required this.label,
+    required this.initialDate,
+    required this.firstDate,
+    required this.lastDate,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(),
+        verticalSpaceSmall,
+        Text(
+          label,
+          style: AppStyle.kBodyRegularBlack15W500,
+        ),
+        verticalSpaceSmall,
+        const Divider(),
+        verticalSpaceSmall,
+        CalendarDatePicker(
+          initialDate: initialDate,
+          firstDate: firstDate,
+          lastDate: lastDate,
+          onDateChanged: onPressed,
+        ),
+      ],
+    );
+  }
+}
 
 class PropertyOwnerPaymentView extends StatefulWidget {
-  PropertyOwnerPaymentView(
-      {Key? key, required PropertyOwnerUploadModel propertyOwnerUploadModel})
-      : super(key: key);
-
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
+  PropertyOwnerPaymentView({Key? key}) : super(key: key);
 
   @override
   State<PropertyOwnerPaymentView> createState() =>
@@ -27,278 +59,164 @@ class PropertyOwnerPaymentView extends StatefulWidget {
 }
 
 class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
-  final uploadFormKey = GlobalKey<FormState>();
-
-  var items;
-
-  get date => null;
-  List<String> flavours = [];
-
-  // var selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerPaymentViewModel>.reactive(
-      builder: (context, model, child) => SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 15,
-            ),
-            child: SingleChildScrollView(
-              child: Form(
-                key: uploadFormKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Step 2',
-                        style: AppStyle.kHeading0,
-                      ),
-                    ),
-                    verticalSpaceMedium,
-                    Text(
-                      'Payment Type',
-                      style: AppStyle.kBodySmallRegular12W500,
-                    ),
-                    verticalSpaceTiny,
-                    // ResavationTextField(
-                    //   hintText: 'Ease Subscription',
-                    //   textInputAction: TextInputAction.next,
-                    //   controller: model.propertySubscriptionController,
-                    //   validator: (value) {
-                    //     if (value == null || value.isEmpty) {
-                    //       return 'Please enter property subscription';
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
-                    Text(
-                      'Choose your ease subscription type',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                    Text(
-                      '(You can select more than one)',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                    verticalSpaceTiny,
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: kWhite),
-                          child: Text(
-                            'Subscription Plan',
-                            style: AppStyle.kBodySmallRegular12
-                                .copyWith(color: kBlack),
-                          ),
-                          onPressed: () async {
-                            flavours = await showDialog<List<String>>(
-                                    context: context,
-                                    builder: (_) => MultiSelectDialog(
-                                            question: Text(
-                                                'Select Your Subcription Type'),
-                                            answers: [
-                                              'Monthly',
-                                              'Quarterly',
-                                              'Biannually',
-                                              'Annually'
-                                            ])) ??
-                                [];
-                            print(flavours);
-                            // Logic to save selected flavours in the database
-                          }),
-                    ),
-                    // DropdownButtonHideUnderline(
-                    //   child: DropdownButton2(
-                    //       hint: Text(
-                    //         "Select Property ",
-                    //         style: AppStyle.kBodyRegular,
-                    //       ),
-                    //       items: model.subscriptionType
-                    //           .map(
-                    //             (item) => DropdownMenuItem<String>(
-                    //               value: item,
-                    //               child: Column(
-                    //                 children: [
-                    //                   AmenitiesItem(
-                    //                     label: item,
-                    //                     checkboxValue: model.hasHairDryer,
-                    //                     onChanged: model.onCheckChanged5,
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //           )
-                    //           .toList(),
-                    //       value: model.selectedValue1,
-                    //       onChanged: (value) {
-                    //         model.onSelectedValueChange1(value);
-                    //       },
-                    //       icon: const Icon(
-                    //         Icons.keyboard_arrow_down_rounded,
-                    //       ),
-                    //       buttonWidth: 330,
-                    //       buttonPadding: EdgeInsets.only(left: 18, right: 20),
-                    //       buttonDecoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(8),
-                    //         border: Border.all(
-                    //             //color: Colors.black26,
-                    //             ),
-                    //       )),
-                    // ),
-                    verticalSpaceTiny,
-                    Text(
-                      'Availability Period',
-                      style: AppStyle.kBodySmallRegular12W500,
-                    ),
-                    verticalSpaceRegular,
-                    //               Text(
-                    //   "${selectedDate.toString()}".split(' ')[0],
-                    //   style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        DateContainer(
-                          label: 'From',
-                          date: "${model.selectedDate.toLocal()}".split(' ')[0],
-                          onPressed: () {
-                            model.selecStarttDate(context);
-                          },
-                        ),
-                        horizontalSpaceRegular,
-                        DateContainer(
-                          label: 'To',
-                          date:
-                              "${model.selectedDate2.toLocal()}".split(' ')[0],
-                          onPressed: () {
-                            model.selectEndDate(context);
-                          },
-                        ),
-                      ],
-                    ),
-                    verticalSpaceMedium,
-                    Text(
-                      'Space Price',
-                      style: AppStyle.kBodySmallRegular12W500,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      'What is the monthly rent of this unit?',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                    verticalSpaceTiny,
-                    ResavationTextField(
-                      keyboardType: TextInputType.number,
-                      hintText: '# 100,000',
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        model.incrementPrice(input: value);
-                      },
-                      // controller: model.propertymonthlyPriceController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter property subscription';
-                        }
-                        return null;
-                      },
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      'What is the quarterlet rent of this unit?',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                    verticalSpaceTiny,
-                    ResavationTextField(
-                      hintText: '# 300,000',
-                      textInputAction: TextInputAction.next,
-                      controller: model.propertyquaterlylPriceController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter property subscription';
-                        }
-                        return null;
-                      },
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      'What is the biannual rent of this unit?',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                    verticalSpaceTiny,
-                    ResavationTextField(
-                      hintText: '# 600,000',
-                      textInputAction: TextInputAction.next,
-                      controller: model.propertybiannualPriceController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter property subscription';
-                        }
-                        return null;
-                      },
-                    ),
-                    verticalSpaceTiny,
-                    verticalSpaceTiny,
-                    Text(
-                      'What is the annual rent of this unit?',
-                      style: AppStyle.kBodySmallRegular12,
-                    ),
-                    verticalSpaceTiny,
-                    ResavationTextField(
-                      hintText: '# 600,000',
-                      textInputAction: TextInputAction.next,
-                      controller: model.propertyannualPriceController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter property subscription';
-                        }
-                        return null;
-                      },
-                    ),
-                    verticalSpaceTiny,
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FlatButton(
-                          child: Text(
-                            'Back',
-                            style: AppStyle.kBodyRegularBlack14W500,
-                          ),
-                          color: kWhite,
-                          textColor: kBlack,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        Spacer(),
-                        FlatButton(
-                            child: Text(
-                              'Next',
-                              style: AppStyle.kBodyRegular,
-                            ),
-                            color: kPrimaryColor,
-                            textColor: Colors.white,
-                            onPressed: () async {
-                              if (uploadFormKey.currentState!.validate()) {
-                                model.goToPropertyOwnerAmenitiesView();
-                                // print(model.selectedValue1);
-                                // print(model.isServiced);
-                                // print(model.selectedDate);
-                                // print(model.propertyannualPriceController);
-                                // print(model.propertybiannualPriceController);
-                                // print(model.propertyquaterlylPriceController);
-                                // print(model.propertymonthlyPriceController);
-                              } else {
-                                model.upoloadPropertyToServer();
-                              }
-                            }),
-                      ],
-                    ),
-                  ],
+      builder: (context, model, child) => Scaffold(
+        appBar: ResavationAppBar(
+          title: "Step 2",
+          centerTitle: false,
+          backEnabled: false,
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ResavationElevatedButton(
+                  child: Text("Back"),
+                  onPressed: () => Navigator.pop(context),
                 ),
               ),
+              horizontalSpaceMedium,
+              Expanded(
+                child: ResavationElevatedButton(
+                    child: Text("Next"),
+                    onPressed: () {
+                      if (model.selectedSubscriptions.isNotEmpty) {
+                        if (model.displayPrice != null &&
+                            model.displayPrice!.isNotEmpty) {
+                          if (model.isVerified()) {
+                            if (model.startDate.millisecondsSinceEpoch <
+                                model.endDate.millisecondsSinceEpoch) {
+                              model.goToPropertyOwnerAmenitiesView();
+                            } else {
+                              ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Kindly select a valid availability period'),
+                                ),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Kindly enter the price for each plan '),
+                              ),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select your display price'),
+                            ),
+                          );
+                        }
+                      } else {
+                        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('Please select your subscription plan'),
+                          ),
+                        );
+                      }
+                    }
+                    //=> model.goToPropertyOwnerAddPhotosView(),
+                    ),
+              )
+            ],
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Payment Type',
+                  style: AppStyle.kBodyRegularBlack16W600,
+                ),
+                verticalSpaceTiny,
+                Text(
+                  'Choose your ease subscription type (You can select more than one) ',
+                  style: AppStyle.kBodyRegularBlack14,
+                ),
+                verticalSpaceTiny,
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () async {
+                    final subscriptions = await showDialog<List<String>>(
+                          context: context,
+                          builder: (_) => MultiSelectDialog(
+                            question: Text('Select Your Subcription Plan(s)'),
+                            answers: model.subscriptionType,
+                            previousAnswers: model.selectedSubscriptions,
+                          ),
+                        ) ??
+                        [];
+                    model.setSelectedSubscriptions(subscriptions);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                        top: 10, left: 8, right: 8, bottom: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(children: [
+                      Expanded(
+                        child: Text(model.getTitle(),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: true,
+                            textAlign: TextAlign.start),
+                      ),
+                      Icon(
+                        Icons.arrow_drop_down_rounded,
+                        color: Colors.grey,
+                      ),
+                    ]),
+                  ),
+                ),
+                verticalSpaceSmall,
+                if (model.selectedSubscriptions.isNotEmpty)
+                  ...buildSpacePrice(model),
+                verticalSpaceMedium,
+                /*       const Divider(),
+                verticalSpaceSmall,
+                Text(
+                  'Availability Period',
+                  style: AppStyle.kBodyRegularBlack14W500,
+                ),
+                verticalSpaceSmall,
+                const Divider(),
+                verticalSpaceSmall, */
+
+                DateContainer(
+                  label: 'Availability Period (Start)',
+                  initialDate: model.startDate,
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(model.startDate.year + 5),
+                  onPressed: model.selectStartDate,
+                ),
+                verticalSpaceSmall,
+                DateContainer(
+                  label: 'Availability Period (End)',
+                  initialDate: model.startDate,
+                  firstDate: model.startDate,
+                  lastDate: DateTime(model.startDate.year + 5),
+                  onPressed: model.selectEndDate,
+                ),
+                verticalSpaceSmall,
+                const Divider(),
+                verticalSpaceMassive,
+              ],
             ),
           ),
         ),
@@ -306,133 +224,145 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
       viewModelBuilder: () => PropertyOwnerPaymentViewModel(),
     );
   }
-}
 
-class Date {}
+  List<Widget> buildAnnualFIeld(PropertyOwnerPaymentViewModel model) {
+    return [
+      Text(
+        'What is the annual rent of this unit?',
+        style: AppStyle.kBodySmallRegular12W500,
+      ),
+      verticalSpaceTiny,
+      ResavationTextField(
+        onlyNumbers: true,
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.number,
+        controller: model.propertyannualPriceController,
+      ),
+    ];
+  }
 
-class DateContainer extends StatelessWidget {
-  const DateContainer({
-    Key? key,
-    required this.label,
-    required this.date,
-    required this.onPressed,
-  }) : super(key: key);
+  List<Widget> buildBiannualField(PropertyOwnerPaymentViewModel model) {
+    return [
+      Text(
+        'What is the biannual rent of this unit?',
+        style: AppStyle.kBodySmallRegular12W500,
+      ),
+      verticalSpaceTiny,
+      ResavationTextField(
+        onlyNumbers: true,
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.number,
+        controller: model.propertybiannualPriceController,
+      ),
+      verticalSpaceTiny,
+    ];
+  }
 
-  final String label;
-  final String date;
-  final Function() onPressed;
+  List<Widget> buildMonthlyField(PropertyOwnerPaymentViewModel model) {
+    return [
+      Text(
+        'What is the monthly rent of this unit?',
+        style: AppStyle.kBodySmallRegular12W500,
+      ),
+      verticalSpaceTiny,
+      ResavationTextField(
+        onlyNumbers: true,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.next,
+        controller: model.propertymonthlyPriceController,
+      ),
+      verticalSpaceTiny,
+    ];
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: onPressed,
+  List<Widget> buildQuartely(PropertyOwnerPaymentViewModel model) {
+    return [
+      Text(
+        'What is the quarterlet rent of this unit?',
+        style: AppStyle.kBodySmallRegular12W500,
+      ),
+      verticalSpaceTiny,
+      ResavationTextField(
+        onlyNumbers: true,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.next,
+        controller: model.propertyquaterlylPriceController,
+      ),
+      verticalSpaceTiny,
+    ];
+  }
+
+  List<Widget> buildSpacePrice(PropertyOwnerPaymentViewModel model) {
+    return [
+      Text(
+        'Space Price',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      const Divider(),
+      verticalSpaceSmall,
+      if (model.selectedSubscriptions.contains('Monthly'))
+        ...buildMonthlyField(model),
+      if (model.selectedSubscriptions.contains('Quarterly'))
+        ...buildQuartely(model),
+      if (model.selectedSubscriptions.contains('Biannually'))
+        ...buildBiannualField(model),
+      if (model.selectedSubscriptions.contains('Annually'))
+        ...buildAnnualFIeld(model),
+      const Divider(),
+      verticalSpaceSmall,
+      Text(
+        "Display Price",
+        style: AppStyle.kBodyRegularBlack15W500,
+      ),
+      verticalSpaceSmall,
+      const Divider(),
+      verticalSpaceSmall,
+      Text(
+        'Please choose one of the subscription costs as your preferred pricing; this price will be shown to the user first. ',
+        style: AppStyle.kBodyRegularBlack14,
+      ),
+      verticalSpaceTiny,
+      InkWell(
+        splashColor: Colors.transparent,
+        onTap: () async {
+          final price = await showDialog<String?>(
+                context: context,
+                builder: (_) => SingleSelectDialog(
+                  question: Text('Select Display Price'),
+                  initialAnswer: model.displayPrice,
+                  choices: model.selectedSubscriptions,
+                ),
+              ) ??
+              [];
+          model.setDisplayPrice(price);
+        },
         child: Container(
-          padding: EdgeInsets.only(top: 2, left: 20),
+          width: double.infinity,
+          padding:
+              const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 10),
           decoration: BoxDecoration(
-              border: Border.all(color: kGray),
-              borderRadius: BorderRadius.circular(5)),
-          width: 138,
-          height: 53,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: AppStyle.kBodyRegularBlack14.copyWith(color: kGray),
-              ),
-              Text(date,
-                  style: AppStyle.kBodySmallRegular12.copyWith(color: kBlack)),
-            ],
+            border: Border.all(color: Colors.grey, width: 1),
+            borderRadius: BorderRadius.circular(5),
           ),
+          child: Row(children: [
+            Expanded(
+              child: Text(
+                  model.displayPrice == null || model.displayPrice!.isEmpty
+                      ? 'Select Display Price'
+                      : model.displayPrice!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: true,
+                  textAlign: TextAlign.start),
+            ),
+            Icon(
+              Icons.arrow_drop_down_rounded,
+              color: Colors.grey,
+            ),
+          ]),
         ),
       ),
-    );
+    ];
   }
-}
-
-showAlertDialog(BuildContext context) {
-  // set up the button
-  Widget okButton = TextButton(
-    child: Text("OK"),
-    onPressed: () {},
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("My title"),
-    content: Text("This is my message."),
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
-
-void pickDate(BuildContext context) {
-  var alertdialog = Dialog(
-      child: Container(
-    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20.0),
-    ),
-    width: double.infinity,
-    height: 420,
-    child: Center(
-      child: Column(
-        children: [
-          CalendarDatePicker(
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2025),
-            onDateChanged: (DateTime) {
-              String date = DateTime.toString();
-              print("The picked date is $date");
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FlatButton(
-                  child: Text(
-                    'Cancel',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  color: kWhite,
-                  textColor: kPrimaryColor,
-                  onPressed: () {},
-                ),
-                horizontalSpaceTiny,
-                FlatButton(
-                  child: Text(
-                    'Ok',
-                    style: AppStyle.kBodySmallRegular12W500,
-                  ),
-                  color: kWhite,
-                  textColor: kPrimaryColor,
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    ),
-  ));
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertdialog;
-      });
 }

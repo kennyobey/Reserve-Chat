@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
@@ -8,6 +9,7 @@ class ResavationTextField extends StatefulWidget {
     this.onTap,
     this.label,
     this.icon,
+    this.onlyNumbers = false,
     this.elevation,
     this.hintText,
     this.hintTextStyle,
@@ -21,7 +23,7 @@ class ResavationTextField extends StatefulWidget {
     this.controller,
     this.validator,
     this.onChanged,
-    this.maxline,
+    this.maxline = 1,
   }) : super(key: key);
 
   final void Function()? onTap;
@@ -34,6 +36,7 @@ class ResavationTextField extends StatefulWidget {
   final Color? color;
   final Color? fillColors;
   final bool obscureText;
+  final bool onlyNumbers;
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
@@ -55,16 +58,21 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Material(
-        elevation: widget.elevation != null ? widget.elevation! : 0.0,
+        elevation: widget.elevation != null ? widget.elevation! : 0,
+        color: Colors.transparent,
         child: TextFormField(
           onChanged: widget.onChanged,
           keyboardType: widget.keyboardType,
+          inputFormatters: [
+            if (widget.onlyNumbers)
+              FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+          ],
+          maxLines: widget.maxline,
           textInputAction: widget.textInputAction,
           controller: widget.controller,
           validator: widget.validator,
           obscureText: _obscureText,
           style: style,
-          //  maxLines: widget.maxline,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(color: kGray, width: 0.5),

@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/upload_property_model.dart';
-import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../services/core/http_service.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
+
+import '../../../services/core/upload_type_service.dart';
 
 class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final httpService = locator<HttpService>();
-  DateTime selectedDate = DateTime.now();
-  DateTime selectedDate2 = DateTime.now();
+  final propertyOwnerUploadModel = locator<UploadTypeService>();
 
-  final PropertyOwnerUploadModel propertyOwnerUploadModel =
-      PropertyOwnerUploadModel();
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
 
-  bool hasWifi = false;
+  List<String> subscriptionType = [
+    'Monthly',
+    'Quarterly',
+    'Biannually',
+    'Annually'
+  ];
 
-  get selectedAnimals => "Subscription";
+  String? displayPrice;
 
-  void onHasWifiChange(bool? value) {
-    hasWifi = value!;
-    notifyListeners();
-  }
-
-  final TextEditingController propertySubscriptionController =
-      TextEditingController();
   final TextEditingController propertyannualPriceController =
       TextEditingController();
   final TextEditingController propertybiannualPriceController =
@@ -37,110 +31,102 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final TextEditingController propertyquaterlylPriceController =
       TextEditingController();
 
-  void upoloadPropertyToServer() async {
-    var annualPrice = propertyannualPriceController.text;
-    var biannualPrice = propertybiannualPriceController.text;
-    var monthlylPrice = propertymonthlyPriceController.text;
-    var quaterlylPrice = propertyquaterlylPriceController.text;
+  List<String> selectedSubscriptions = [];
 
-    // httpService.uploadProperty(subscription: {
-    //   annualPrice: 0,
-    //   biannualPrice: 0,
-    //   quaterlylPrice: 0,
-    //   monthlylPrice: 0
-    // });
+  PropertyOwnerPaymentViewModel() {
+    propertyOwnerUploadModel.clearStage4();
   }
 
-  void incrementPrice({required String input}) {
-    propertyquaterlylPriceController.text = (int.parse(input) * 4).toString();
-    propertybiannualPriceController.text = (int.parse(input) * 6).toString();
-    propertyannualPriceController.text = (int.parse(input) * 12).toString();
+  bool isVerified() {
+    bool isVerified = true;
+    if (selectedSubscriptions.contains('Annually')) {
+      isVerified = isVerified && propertyannualPriceController.text.isNotEmpty;
+    }
+    if (selectedSubscriptions.contains('Biannually')) {
+      isVerified =
+          isVerified && propertybiannualPriceController.text.isNotEmpty;
+    }
+    if (selectedSubscriptions.contains('Quarterly')) {
+      isVerified =
+          isVerified && propertyquaterlylPriceController.text.isNotEmpty;
+    }
+    if (selectedSubscriptions.contains('Monthly')) {
+      isVerified = isVerified && propertymonthlyPriceController.text.isNotEmpty;
+    }
+
+    return isVerified;
+  }
+
+  void setSelectedSubscriptions(List<String> subscriptions) {
+    selectedSubscriptions = subscriptions;
+    displayPrice = null;
     notifyListeners();
   }
 
-// drop-down button UI logic for spaceType
-  String? selectedValue1;
-  List<Object>? subscriptionType = [
-    'Monthly',
-    'Quarterly',
-    'Biannually',
-    'Annually'
-  ];
-  bool _hasHairDryer = false;
-  bool get hasHairDryer => _hasHairDryer;
-
-  void onCheckChanged5(bool? value) {
-    _hasHairDryer = value ?? false;
-    notifyListeners();
-  }
-
-  String isServiced = "";
-
-  Future<void> selecStarttDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      selectedDate = picked;
-      print("The picked date for date 1 is $selectedDate");
-      propertyOwnerUploadModel.from = selectedDate as String?;
+  void setDisplayPrice(price) {
+    if (price is String) {
+      displayPrice = price;
       notifyListeners();
     }
   }
 
-  Future<void> selectEndDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate2,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate2) {
-      selectedDate2 = picked;
-      print("The picked date for date 2 is $selectedDate2");
-      propertyOwnerUploadModel.from = selectedDate2 as String?;
+  Future<void> selectStartDate(DateTime? pickedDate) async {
+    if (pickedDate != null && pickedDate != startDate) {
+      startDate = pickedDate;
       notifyListeners();
     }
   }
 
-  void onSelectedValueChange1(value) {
-    selectedValue1 = value as String;
-
-    notifyListeners();
+  Future<void> selectEndDate(DateTime? pickedDate) async {
+    if (pickedDate != null && pickedDate != endDate) {
+      endDate = pickedDate;
+      notifyListeners();
+    }
   }
 
   void goToPropertyOwnerAmenitiesView() {
-    // propertyOwnerUploadModel.annualPrice =
-    //     propertyannualPriceController.text as int?;
-    // propertyOwnerUploadModel.biannualPrice =
-    //     propertybiannualPriceController.text as int?;
-    // propertyOwnerUploadModel.quarterlyPrice =
-    //     propertyquaterlylPriceController.text as int?;
-    // propertyOwnerUploadModel.monthlyPrice =
-    //     propertymonthlyPriceController.text as int?;
-    // propertyOwnerUploadModel.from = selectedDate as String?;
-    // propertyOwnerUploadModel.to = selectedDate2 as String?;
-    _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView,
-        arguments: propertyOwnerUploadModel);
+    if (displayPrice == 'Annually') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertyannualPriceController.text);
+    } else if (displayPrice == 'Biannually') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertybiannualPriceController.text);
+    } else if (displayPrice == 'Quarterly') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertyquaterlylPriceController.text);
+    } else if (displayPrice == 'Monthly') {
+      propertyOwnerUploadModel.spacePrice =
+          int.tryParse(propertymonthlyPriceController.text);
+    }
+
+    if (selectedSubscriptions.contains('Annually')) {
+      propertyOwnerUploadModel.annualPrice =
+          int.tryParse(propertyannualPriceController.text);
+    }
+    if (selectedSubscriptions.contains('Biannually')) {
+      propertyOwnerUploadModel.biannualPrice =
+          int.tryParse(propertybiannualPriceController.text);
+    }
+    if (selectedSubscriptions.contains('Quarterly')) {
+      propertyOwnerUploadModel.quarterlyPrice =
+          int.tryParse(propertyquaterlylPriceController.text);
+    }
+    if (selectedSubscriptions.contains('Monthly')) {
+      propertyOwnerUploadModel.monthlyPrice =
+          int.tryParse(propertymonthlyPriceController.text);
+    }
+
+    propertyOwnerUploadModel.startDate = startDate;
+    propertyOwnerUploadModel.endDate = endDate;
+
+    _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView);
   }
 
-  void goToPropertyOwnerDatePickerView() {
-    _navigationService.navigateTo(Routes.propertyOwnerDatePickerView);
+  String getTitle() {
+    if (selectedSubscriptions.isEmpty) {
+      return 'Select Your Subcription Plan(s)';
+    } else {
+      return selectedSubscriptions.join(', ').toString();
+    }
   }
-
-  // void showMultiSelect(BuildContext context) async {
-  //   await showDialog(
-  //     context: context,
-  //     builder: (ctx) {
-  //       return MultiSelectDialog(
-  //         items: items,
-  //         initialValue: selectedAnimals,
-  //         onConfirm: (values) {
-  //           selectedSub = subTypes;
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
 }

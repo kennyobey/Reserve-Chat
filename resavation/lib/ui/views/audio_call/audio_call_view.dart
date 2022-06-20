@@ -20,10 +20,11 @@ class AudioCallView extends StatelessWidget {
   final _httpLocator = locator<HttpService>();
   final _userService = locator<UserTypeService>();
   final CallModel? call;
-
+  final bool reciever;
   AudioCallView({
     Key? key,
     required this.call,
+    this.reciever = false,
   }) : super(key: key);
 
   @override
@@ -43,6 +44,7 @@ class AudioCallView extends StatelessWidget {
             final token = asyncDataSnapshot.data ?? '';
             return AudioCallViewBody(
               call: call,
+              reciever: reciever,
               token: token,
             );
           } else {
@@ -98,10 +100,11 @@ class AudioCallView extends StatelessWidget {
 class AudioCallViewBody extends StatefulWidget {
   final CallModel? call;
   final String token;
-
+  final bool reciever;
   AudioCallViewBody({
     required this.call,
     required this.token,
+    required this.reciever,
   });
 
   @override
@@ -117,7 +120,7 @@ class _AudioCallViewBodyState extends State<AudioCallViewBody> {
 
   final _userTypeService = locator<UserTypeService>();
   late StreamSubscription callStreamSubscription;
-
+  bool hasPicked = false;
   bool muted = false;
 
   @override
@@ -167,6 +170,7 @@ class _AudioCallViewBodyState extends State<AudioCallViewBody> {
         },
         userJoined: (int uid, int elapsed) {
           setState(() {
+            hasPicked = true;
             _remoteUid = uid;
           });
         },
@@ -184,6 +188,12 @@ class _AudioCallViewBodyState extends State<AudioCallViewBody> {
           setState(() {
             _remoteUid = null;
           });
+
+          if (reason == UserOfflineReason.Dropped) {
+            callMethods.endCall(
+              call: widget.call!,
+            );
+          }
         },
       ),
     );
@@ -296,8 +306,10 @@ class _AudioCallViewBodyState extends State<AudioCallViewBody> {
     if (_remoteUid != null) {
       return RtcRemoteView.SurfaceView(
         uid: _remoteUid!,
-        channelId: widget.call?.callerId ?? '',
+        channelId: widget.call?.channelId ?? '',
       );
+    } else if (hasPicked || widget.reciever) {
+      return const SizedBox();
     } else {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,

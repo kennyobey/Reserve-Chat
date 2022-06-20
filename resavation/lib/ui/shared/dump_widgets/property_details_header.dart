@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:resavation/model/propety_model/property_image.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/utility/assets.dart';
 
-import '../../../model/property_model.dart';
-
-class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
-  final Property? property;
+class PropertyDetailsHeader extends StatelessWidget {
+  final List<PropertyImage> propertyImages;
 
   PropertyDetailsHeader({
     Key? key,
     this.onBackTap,
     this.onFavoriteTap,
-    required this.property,
+    required this.propertyImages,
     this.isFavoriteTap = false,
   });
 
@@ -28,16 +28,16 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
   final CarouselController _controller = CarouselController();
 
   @override
-  Widget build(BuildContext context, shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context) {
     var queryData = MediaQuery.of(context);
     final topPadding = queryData.padding.top;
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Hero(
-          tag: (property?.id ?? -1).toString(),
-          child: CarouselSlider(
+    return SizedBox(
+      height: 300,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CarouselSlider(
             options: CarouselOptions(
               height: double.infinity,
               enableInfiniteScroll: true,
@@ -47,23 +47,28 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
               },
               autoPlay: true,
             ),
-            items: Assets.imgList
-                .map((item) => Padding(
+            items: propertyImages
+                .map((item) => Container(
                       padding: const EdgeInsets.only(right: 5),
-                      child: ResavationImage(image: item),
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: ResavationImage(
+                        image: item.imageUrl ?? '',
+                        boxFit: BoxFit.cover,
+                      ),
                     ))
                 .toList(),
           ),
-        ),
-        Positioned(
-          child: buildIndicators(_fetchingStream.stream),
-          bottom: 5,
-          left: 0,
-          right: 0,
-        ),
-        buildBackButton(topPadding),
-        buildFavouriteButton(topPadding),
-      ],
+          Positioned(
+            child: buildIndicators(_fetchingStream.stream),
+            bottom: 5,
+            left: 0,
+            right: 0,
+          ),
+          buildBackButton(topPadding),
+          buildFavouriteButton(topPadding),
+        ],
+      ),
     );
   }
 
@@ -74,11 +79,12 @@ class PropertyDetailsHeader extends SliverPersistentHeaderDelegate {
           final index = asyncDataSnapshot.data ?? 0;
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: Assets.imgList.asMap().entries.map((entry) {
-              final isSelected = index == entry.key;
+            children: propertyImages.map((entry) {
+              final isSelected = index == propertyImages.indexOf(entry);
               return InkWell(
                 splashColor: Colors.transparent,
-                onTap: () => _controller.animateToPage(entry.key),
+                onTap: () =>
+                    _controller.animateToPage(propertyImages.indexOf(entry)),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: 6.0,

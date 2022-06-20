@@ -6,6 +6,7 @@ import 'package:resavation/model/filter/amenity_count.dart';
 import 'package:resavation/model/filter/availability.dart' as avail;
 import 'package:resavation/model/filter/filter.dart';
 import 'package:resavation/model/filter/price_range.dart';
+import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -18,7 +19,36 @@ enum Availability {
 
 class FilterViewModel extends BaseViewModel {
   final oCcy = NumberFormat("#,##0.00", "en_US");
+  bool hasErrorOnData = false;
+  bool isLoading = false;
+
   final _navigationService = locator<NavigationService>();
+  final _httpService = locator<HttpService>();
+
+  FilterViewModel() {
+    getPropertyType();
+  }
+
+  getPropertyType() async {
+    hasErrorOnData = false;
+    isLoading = false;
+    notifyListeners();
+    try {
+      final types = await Future.wait([
+        _httpService.getRetailPropertyTypes(),
+        _httpService.getCommercialPropertyTypes(),
+        _httpService.getIndustrialPropertyTypes(),
+        _httpService.getResidentialPropertyTypes(),
+      ]);
+      propertyTypes = types.expand((x) => x).toList();
+
+      hasErrorOnData = false;
+    } catch (exception) {
+      hasErrorOnData = true;
+    }
+    isLoading = false;
+    notifyListeners();
+  }
 
   RangeValues _rangeValues = const RangeValues(10000, 1000000);
 
@@ -29,34 +59,33 @@ class FilterViewModel extends BaseViewModel {
         '${String.fromCharCode(8358)}${oCcy.format(_rangeValues.end.round())}',
       );
 
-  Availability _availablity = Availability.Shortlet;
+  List<Availability> availablities = [];
 
-  Availability get availibiality => _availablity;
-
-  double _surfaceArea = 0;
+  double surfaceArea = 0;
 
   int carCount = 0;
   int batTubCount = 0;
   int bedroomCount = 0;
 
-  double get surfaceArea => _surfaceArea;
-
   String? propertyType;
-  List<String> propertyTypes = [
-    'Flat',
-    'Bungalow',
-    'Self Contain',
-  ];
+  List<String> propertyTypes = ['--Empty--'];
 
   void onDurationChanged(Availability? value) {
-    _availablity = value!;
-    notifyListeners();
+    if (value != null) {
+      if (availablities.contains(value)) {
+        availablities.remove(value);
+      } else {
+        availablities.add(value);
+      }
+      notifyListeners();
+    }
   }
 
   void onPropertyTypeChanged(value) {
-    propertyType = value as String;
-
-    notifyListeners();
+    if (value is String) {
+      propertyType = value;
+      notifyListeners();
+    }
   }
 
   void onIncrement(int position) {
@@ -87,40 +116,39 @@ class FilterViewModel extends BaseViewModel {
   }
 
   void onSliderChanged(double value) {
-    _surfaceArea = value;
+    surfaceArea = value;
     notifyListeners();
   }
 
   void applyFilter() {
     final availiability = avail.Availability(
-      moreThanOneYear: _availablity == Availability.More,
-      shortLet: _availablity == Availability.Shortlet,
-      withinOneYear: _availablity == Availability.Year,
-      withinSixMonth: _availablity == Availability.Months,
+      moreThanOneYear: availablities.contains(Availability.More),
+      withinOneYear: availablities.contains(Availability.Year),
+      withinSixMonth: availablities.contains(Availability.Months),
+      shortLet: availablities.contains(Availability.Shortlet),
     );
     final amenityCount = AmenityCount(
       bathTubCount: batTubCount,
       bedRoomCount: bedroomCount,
       carSlotCount: carCount,
     );
+
     final priceRange = PriceRange(
       min: _rangeValues.start.round(),
       max: _rangeValues.end.round(),
     );
     final filter = Filter(
       availability: availiability,
-      surfaceArea: surfaceArea,
+      surfaceArea: surfaceArea == 0 ? null : surfaceArea,
       priceRange: priceRange,
       amenityCount: amenityCount,
       propertyType: propertyType,
     );
 
-    /*
-  final String? amenity;
- 
-    */
-
-    _navigationService.back(result: filter);
+    _navigationService.replaceWith(
+      Routes.filterDisplay,
+      arguments: FilterDisplayArguments(filter: filter),
+    );
   }
 
   void goToSearchView() {

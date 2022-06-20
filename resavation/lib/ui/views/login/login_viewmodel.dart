@@ -68,6 +68,6 @@ class LogInViewModel extends BaseViewModel {
   void goToVerifyAccount() {
     final String email = emailController.text.trim();
     _navigationService.navigateTo(Routes.signUpConfirmationView,
-        arguments: email);
+        arguments: SignUpConfirmationViewArguments(email: email));
   }
 }

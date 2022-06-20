@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/filter/filter_viewmodel.dart';
@@ -10,6 +10,46 @@ import 'package:stacked/stacked.dart';
 
 class FilterView extends StatelessWidget {
   const FilterView({Key? key}) : super(key: key);
+  Widget buildLoadingWidget() {
+    return Center(
+      child: SizedBox(
+        height: 40,
+        width: 40,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: Colors.blue,
+          valueColor: AlwaysStoppedAnimation(kWhite),
+        ),
+      ),
+    );
+  }
+
+  Widget buildErrorBody(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final bodyText1 = textTheme.bodyText1!
+        .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
+    final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Text(
+          'Error occurred!',
+          style: bodyText1,
+        ),
+        const SizedBox(
+          height: 5,
+          width: double.infinity,
+        ),
+        Text(
+          'An error occured while fetching data, please try again later',
+          textAlign: TextAlign.center,
+          style: bodyText2,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +58,36 @@ class FilterView extends StatelessWidget {
         appBar: ResavationAppBar(
           title: "Filter",
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-            bottom: 15,
-          ),
-          child: Column(
-            children: [
-              buildBody(model),
-              verticalSpaceSmall,
-              buildApplyButton(model)
-            ],
-          ),
-        ),
+        body: model.isLoading
+            ? buildLoadingWidget()
+            : model.hasErrorOnData
+                ? buildErrorBody(context)
+                : Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      bottom: 15,
+                    ),
+                    child: Column(
+                      children: [
+                        buildBody(model),
+                        verticalSpaceSmall,
+                        buildApplyButton(model)
+                      ],
+                    ),
+                  ),
       ),
       viewModelBuilder: () => FilterViewModel(),
     );
   }
 
-  ResavationButton buildApplyButton(FilterViewModel model) {
-    return ResavationButton(
-      title: 'Apply',
+  Widget buildApplyButton(FilterViewModel model) {
+    return SizedBox(
       width: double.infinity,
-      onTap: model.applyFilter,
+      child: ResavationElevatedButton(
+        child: Text('Apply'),
+        onPressed: model.applyFilter,
+      ),
     );
   }
 
@@ -213,73 +259,17 @@ class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
 
   @override
   Widget build(BuildContext context, model) {
-    ListTile(
+    final isActive = model.availablities.contains(value);
+    return CheckboxListTile(
       title: Text(
         title,
-      ),
-      trailing: Radio<Availability>(
-        value: value,
-        groupValue: model.availibiality,
-        onChanged: model.onDurationChanged,
-      ),
-    );
-
-    final isActive =
-        (model.availibiality.name.toLowerCase() == value.name.toLowerCase());
-    return GestureDetector(
-      onTap: () {
+        style: AppStyle.kBodyRegularBlack14,
+      ), // Displays the option
+      value: isActive, // Displays checked or unchecked value
+      controlAffinity: ListTileControlAffinity.platform,
+      onChanged: (_) {
         model.onDurationChanged(value);
       },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        padding: EdgeInsets.only(right: 20, left: isActive ? 20 : 10),
-        margin: const EdgeInsets.only(bottom: 5, left: 3, right: 3),
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: (isActive) ? kPrimaryColor : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color:
-                    (isActive) ? kBlack.withOpacity(0.2) : Colors.transparent,
-                blurRadius: 0.5,
-                offset: Offset(1, 1),
-              )
-            ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: AppStyle.kBodyRegularBlack14
-                  .copyWith(color: isActive ? kWhite : kBlack),
-            ),
-            Container(
-              // margin: const EdgeInsets.only(right: 20),
-              height: 18,
-              width: 18,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: const Color(0xff3e3e3e).withOpacity(0.4),
-                  width: 1,
-                ),
-              ),
-              child: Container(
-                margin: const EdgeInsets.all(1.3),
-                height: 12,
-                width: 12,
-                decoration: BoxDecoration(
-                  color: (isActive) ? kSecondaryColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 }
