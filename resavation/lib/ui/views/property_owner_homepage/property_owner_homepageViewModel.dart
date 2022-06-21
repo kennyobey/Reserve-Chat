@@ -40,4 +40,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void CoWorkingSpaceAboutView() {
     _navigationService.navigateTo(Routes.coWorkingSpaceAboutView);
   }
+
+  void UserProfilePageView() {
+    _navigationService.navigateTo(Routes.userProfilePageView);
+  }
 }

@@ -12,6 +12,7 @@ import 'package:resavation/ui/views/property_owner_homepage/property_owner_homep
 import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/dump_widgets/list_space_button.dart';
 import '../../shared/dump_widgets/resavation_image.dart';
 
 class PropertyOwnerHomePageView extends StatelessWidget {
@@ -61,12 +62,22 @@ class PropertyOwnerHomePageView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: kGray),
-                  borderRadius: BorderRadius.circular(5.0),
-                  color: kBlack,
+                padding: EdgeInsets.all(15.0),
+                decoration: new BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/Rectangle 228.png"),
+                  ),
+
+                  //resavation\assets\images\lady image.jpg
                 ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(color: kGray),
+                //   borderRadius: BorderRadius.circular(5.0),
+                //   color: kBlack,
+                // ),
                 width: double.infinity,
                 height: 135.0,
                 child: Column(
@@ -78,11 +89,12 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       style: TextStyle(color: kWhite),
                     ),
                     verticalSpaceSmall,
-                    ResavationElevatedButton(
+                    ListSpaceResavationElevatedButton(
                       child: Text("List your space"),
                       onPressed: () {
                         //  model.PropertyOwnerTrackListView();
-                        model.goToPropertyOwnerSpaceTypeView();
+                        // model.goToPropertyOwnerSpaceTypeView();
+                        model.UserProfilePageView();
                       },
 
                       //  borderColor: kp,
@@ -223,7 +235,7 @@ class ListingCard extends StatelessWidget {
                   height: 30,
                   child: FlatButton(
                     child: Text(
-                      'Accept',
+                      'View',
                       style: TextStyle(fontSize: 12.0),
                     ),
                     color: Colors.blueAccent,
@@ -240,12 +252,15 @@ class ListingCard extends StatelessWidget {
   void bookApartment(BuildContext context) {
     var alertdialog = Dialog(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
+        width: MediaQuery.of(context).size.height * 0.45,
+        height: MediaQuery.of(context).size.height * 0.28,
+        margin: EdgeInsets.symmetric(vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        width: double.infinity,
-        height: 240,
+        // width: double.infinity,
+        //height: 240,
         child: Center(
           child: Column(
             children: [
@@ -313,13 +328,6 @@ class ListingCard extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),
-              verticalSpaceSmall,
-              ResavationButton(
-                title: "Identity Document",
-                buttonColor: kWhite,
-                titleColor: kBlack,
-                borderColor: kGray,
               ),
               verticalSpaceSmall,
               Row(

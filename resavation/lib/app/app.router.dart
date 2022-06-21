@@ -60,6 +60,7 @@ import '../ui/views/signup/signup_view.dart';
 import '../ui/views/startup/startup_view.dart';
 import '../ui/views/states_list/states_list_view.dart';
 import '../ui/views/top_items/top_item_view.dart';
+import '../ui/views/user_profile_page/user_profile_pageView.dart';
 import '../ui/views/verify_user_account/verify_user_account.dart';
 import '../ui/views/video_call/video_call_view.dart';
 
@@ -126,6 +127,8 @@ class Routes {
       '/property-owner-track-list-view';
   static const String categoriesListView = '/categories-list-view';
   static const String statesListView = '/states-list-view';
+  static const String userProfilePageView = '/user-Profile-page-view';
+
   static const all = <String>{
     startupView,
     mainView,
@@ -175,6 +178,7 @@ class Routes {
     propertyOwnerTrackListView,
     categoriesListView,
     statesListView,
+    userProfilePageView
   };
 }
 
@@ -241,6 +245,7 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerTrackListView),
     RouteDef(Routes.categoriesListView, page: CategoriesListView),
     RouteDef(Routes.statesListView, page: StatesListView),
+    RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -600,6 +605,12 @@ class StackedRouter extends RouterBase {
     StatesListView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const StatesListView(),
+        settings: data,
+      );
+    },
+    UserProfilePageView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const UserProfilePageView(),
         settings: data,
       );
     },
