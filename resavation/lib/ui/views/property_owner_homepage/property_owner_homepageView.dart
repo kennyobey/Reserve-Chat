@@ -68,7 +68,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage("assets/images/Rectangle 228.png"),
+                    image: AssetImage("assets/images/Group 59.png"),
                   ),
 
                   //resavation\assets\images\lady image.jpg
@@ -93,8 +93,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       child: Text("List your space"),
                       onPressed: () {
                         //  model.PropertyOwnerTrackListView();
-                        // model.goToPropertyOwnerSpaceTypeView();
-                        model.UserProfilePageView();
+                        model.goToPropertyOwnerSpaceTypeView();
                       },
 
                       //  borderColor: kp,
@@ -134,11 +133,23 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                 ),
               ),
               verticalSpaceRegular,
-              ListingCard(),
+              ListingCard(
+                onTap: () {
+                  model.UserProfilePageView();
+                },
+              ),
               verticalSpaceTiny,
-              ListingCard(),
+              ListingCard(
+                onTap: () {
+                  model.UserProfilePageView();
+                },
+              ),
               verticalSpaceTiny,
-              ListingCard(),
+              ListingCard(
+                onTap: () {
+                  model.UserProfilePageView();
+                },
+              ),
             ],
           ),
         ),
@@ -196,68 +207,83 @@ class ResavationListSpace extends StatelessWidget {
 }
 
 class ListingCard extends StatelessWidget {
-  get image => null;
+  ListingCard({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
+
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
           border: Border.all(color: kGray),
           borderRadius: new BorderRadius.circular(5.0),
         ),
         width: MediaQuery.of(context).size.width,
         height: 80,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ListTile(
-                leading: Container(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6), //or 15.0
-                    child: Image.asset(
-                      Assets.profile_image4,
-                      width: 80,
-                      height: 80,
-                    ),
-                  ),
+        child: ListTile(
+          contentPadding: EdgeInsets.zero,
+          // minVerticalPadding: 0,
+          leading: Container(
+            height: 75,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6), //or 15.0
+              child: GestureDetector(
+                child: Image.asset(
+                  Assets.profile_image4,
+                  fit: BoxFit.fill,
+                  //width: 80,
+                  height: 80,
                 ),
-                title: Text(
-                  "Adeyemo Stphen",
-                  style: AppStyle.kBodySmallRegular11W500,
-                ),
-                subtitle: Text(
-                  "SeedBuilderHub",
-                  style: AppStyle.kBodySmallRegular10W400,
-                ),
-                trailing: Container(
-                  width: 80,
-                  height: 30,
-                  child: FlatButton(
-                    child: Text(
-                      'View',
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-                    color: Colors.blueAccent,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      bookApartment(context);
-                    },
-                  ),
-                ),
-              )
-            ]));
+                onTap: onTap,
+              ),
+            ),
+          ),
+          title: Text(
+            "Adeyemo Stphen",
+            style: AppStyle.kBodySmallRegular11W500,
+          ),
+          subtitle: Text(
+            "SeedBuilderHub",
+            style: AppStyle.kBodySmallRegular10W400,
+          ),
+          trailing: Container(
+            width: 80,
+            height: 30,
+            child: FlatButton(
+              child: Text(
+                'View',
+                style: TextStyle(fontSize: 12.0),
+              ),
+              color: Colors.blueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                bookApartment(context);
+              },
+            ),
+          ),
+        )
+
+        //  Column(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       ])
+        );
   }
 
   void bookApartment(BuildContext context) {
     var alertdialog = Dialog(
       child: Container(
         width: MediaQuery.of(context).size.height * 0.45,
-        height: MediaQuery.of(context).size.height * 0.28,
-        margin: EdgeInsets.symmetric(vertical: 5),
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20),
+        height: 150,
+        margin: EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
+
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: new BorderRadius.circular(15.0),
         ),
         // width: double.infinity,
         //height: 240,
@@ -265,18 +291,21 @@ class ListingCard extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     children: [
                       Container(
-                        height: 100,
+                        // color: Colors.red,
+                        height: 90,
                         width: 100,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6), //or 15.0
+                          borderRadius: BorderRadius.circular(12), //or 15.0
                           child: Image.asset(
                             Assets.profile_image4,
-                            width: 50,
-                            height: 50,
+                            fit: BoxFit.contain,
+                            // width: 80,
+                            // height: 80,
                           ),
                         ),
                       ),
@@ -329,7 +358,6 @@ class ListingCard extends StatelessWidget {
                   ),
                 ],
               ),
-              verticalSpaceSmall,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,

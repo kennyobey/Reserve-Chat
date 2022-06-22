@@ -15,7 +15,7 @@ class ListSpaceResavationElevatedButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: kWhite, // background
-        onPrimary: kPrimaryColor, // foreground
+        onPrimary: kBlack, // foreground
       ),
       child: child,
       onPressed: onPressed,

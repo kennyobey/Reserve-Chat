@@ -76,13 +76,14 @@ class UserProfilePageView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            height: 70.0,
+                            height: 60.0,
                             width: MediaQuery.of(context).size.width,
                             child: Center(
                               child: Text(
                                 "I am a traveler and just a happy person \n Welcome",
-                                style: AppStyle.kBodyRegular
+                                style: AppStyle.kBodyRegularBlack15
                                     .copyWith(color: kBlack),
+                                textAlign: TextAlign.center,
                               ),
                             )),
                       ),
