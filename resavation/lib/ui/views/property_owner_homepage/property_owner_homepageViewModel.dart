@@ -6,11 +6,17 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../model/login_model.dart';
 import '../../../services/core/user_type_service.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:developer';
+
 class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserTypeService>();
+  final requestSite = "resavation-backend.herokuapp.com";
 
   LoginModel get userData => _userService.userData;
+  final userTypeService = locator<UserTypeService>();
 
   void goToPropertyOwnerIdentificationVerificationView() {
     _navigationService
@@ -43,5 +49,28 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
 
   void UserProfilePageView() {
     _navigationService.navigateTo(Routes.userProfilePageView);
+  }
+
+  getBookedProperty() async {
+    print("object");
+    try {
+      var response = await http.get(
+        Uri.http(requestSite, "/api/v1/owner/property/booked/all"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      log(response.body);
+      // if (response.statusCode == 200) {
+      //   return fromJson(response.body);
+      // } else {
+      //   return Future.error(json.decode(response.body)['message'] ?? '');
+      // }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+    notifyListeners();
   }
 }

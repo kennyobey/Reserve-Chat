@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -15,9 +16,15 @@ import 'package:stacked/stacked.dart';
 import '../../shared/dump_widgets/list_space_button.dart';
 import '../../shared/dump_widgets/resavation_image.dart';
 
-class PropertyOwnerHomePageView extends StatelessWidget {
+class PropertyOwnerHomePageView extends StatefulWidget {
   const PropertyOwnerHomePageView({Key? key}) : super(key: key);
 
+  @override
+  State<PropertyOwnerHomePageView> createState() =>
+      _PropertyOwnerHomePageViewState();
+}
+
+class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerHomePageViewModel>.reactive(
@@ -93,7 +100,8 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                       child: Text("List your space"),
                       onPressed: () {
                         //  model.PropertyOwnerTrackListView();
-                        model.goToPropertyOwnerSpaceTypeView();
+                        //model.goToPropertyOwnerSpaceTypeView();
+                        model.getBookedProperty();
                       },
 
                       //  borderColor: kp,
@@ -135,7 +143,7 @@ class PropertyOwnerHomePageView extends StatelessWidget {
               verticalSpaceRegular,
               ListingCard(
                 onTap: () {
-                  model.UserProfilePageView();
+                  model.getBookedProperty();
                 },
               ),
               verticalSpaceTiny,
