@@ -762,21 +762,22 @@ class HttpService {
   //     return Future.error("Error occurred in communicating with the server");
   //   }
   // }
-  getBookedProperty() async {
+  Future<SearchModel> getBookedProperty() async {
     try {
       var response = await http.get(
         Uri.http(requestSite, "/api/v1/owner/property/booked/all",
             <String, String>{}),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
         },
       );
-      log(response.body);
-      // if (response.statusCode == 200) {
-      //   return fromJson(response.body);
-      // } else {
-      //   return Future.error(json.decode(response.body)['message'] ?? '');
-      // }
+      //log(response.body);
+      if (response.statusCode <= 299) {
+        return SearchModel.fromJson(response.body);
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
     }
