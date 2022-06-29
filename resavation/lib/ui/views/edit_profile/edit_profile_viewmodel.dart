@@ -21,6 +21,7 @@ class EditProfileViewModel extends BaseViewModel {
 
   final userFirstNameController = TextEditingController();
   final userLastNameController = TextEditingController();
+  //final userEmailController = TextEditingController();
   final _userService = locator<UserTypeService>();
   LoginModel get userData => _userService.userData;
   void showComingSoon() {
@@ -30,6 +31,8 @@ class EditProfileViewModel extends BaseViewModel {
   void goToMainView() {
     _navigationService.navigateTo(Routes.mainView);
   }
+
+  List gender = ['Male', 'Female'];
 
   Future<String> showFilePicker() async {
     try {
