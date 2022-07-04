@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:stacked/stacked.dart';
 import '../../../model/appointment.dart';
 import '../../shared/colors.dart';
-import '../../shared/dump_widgets/resavation_image.dart';
 import '../../shared/spacing.dart';
 import 'appointment_booking_viewmodel.dart';
 import '../../shared/text_styles.dart';
 
 class AppointmentBookingPage extends StatefulWidget {
-  final AppointmentBookingDetails? appointmentBookingDetails;
+  final AppointmentBookingDetails appointmentBookingDetails;
   const AppointmentBookingPage({
     Key? key,
-    this.appointmentBookingDetails,
+    required this.appointmentBookingDetails,
   }) : super(key: key);
 
   @override
@@ -25,6 +25,11 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AppointmentBookingViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
+        appBar: ResavationAppBar(
+          title: 'Book Appointment',
+          centerTitle: false,
+          backEnabled: true,
+        ),
         body: buildBody(model),
       ),
       viewModelBuilder: () => AppointmentBookingViewModel(),
@@ -32,84 +37,82 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
   }
 
   Widget buildBody(AppointmentBookingViewModel model) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Divider(),
-                    verticalSpaceSmall,
-                    Text(
-                      'Pick Appointment Date',
-                      style: AppStyle.kBodyRegularBlack15W500,
-                    ),
-                    verticalSpaceSmall,
-                    const Divider(),
-                    verticalSpaceSmall,
-                    CalendarDatePicker(
-                      initialDate: model.initialData,
-                      firstDate: model.initialData,
-                      lastDate: DateTime(model.initialData.year + 1),
-                      onDateChanged: model.onDateChanged,
-                    ),
-                    verticalSpaceSmall,
-                    const Divider(),
-                    verticalSpaceSmall,
-                    Text(
-                      'Pick Appointment Time',
-                      style: AppStyle.kBodyRegularBlack15W500,
-                    ),
-                    verticalSpaceSmall,
-                    const Divider(),
-                    verticalSpaceSmall,
-                    buildBodyItem(model),
-                  ],
-                ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(),
+                  verticalSpaceSmall,
+                  Text(
+                    'Pick Appointment Date',
+                    style: AppStyle.kBodyRegularBlack15W500,
+                  ),
+                  verticalSpaceSmall,
+                  const Divider(),
+                  verticalSpaceSmall,
+                  CalendarDatePicker(
+                    initialDate: model.initialData,
+                    firstDate: model.initialData,
+                    lastDate: DateTime(model.initialData.year + 1),
+                    onDateChanged: model.onDateChanged,
+                  ),
+                  verticalSpaceSmall,
+                  const Divider(),
+                  verticalSpaceSmall,
+                  Text(
+                    'Pick Appointment Time',
+                    style: AppStyle.kBodyRegularBlack15W500,
+                  ),
+                  verticalSpaceSmall,
+                  const Divider(),
+                  verticalSpaceSmall,
+                  buildBodyItem(model),
+                ],
               ),
             ),
-            verticalSpaceSmall,
-            SizedBox(
-              width: double.infinity,
-              child: ResavationElevatedButton(
-                child: Text("Book Appointment"),
-                onPressed: () async {
-                  if (model.selectedAppointment == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content:
-                            Text('Please select an appointment date and time'),
-                      ),
-                    );
-                    return;
-                  }
+          ),
+          verticalSpaceSmall,
+          SizedBox(
+            width: double.infinity,
+            child: ResavationElevatedButton(
+              child: Text("Book Appointment"),
+              onPressed: () async {
+                if (model.selectedAppointment == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Please select an appointment date and time'),
+                    ),
+                  );
+                  return;
+                }
 
-                  final result = await showPickAppointmentDialog();
-                  if (result == true) {
-                    model.pickAppointment(
-                      location: widget.appointmentBookingDetails?.location,
-                      ownerEmail: widget.appointmentBookingDetails?.ownerEmail,
-                      ownerName: widget.appointmentBookingDetails?.ownerName,
-                      propertyName:
-                          widget.appointmentBookingDetails?.propertyName,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            'Appointment sent, please check back later for confirmation status'),
-                      ),
-                    );
-                  }
-                },
-              ),
+                final result = await showPickAppointmentDialog();
+                if (result == true) {
+                  model.pickAppointment(
+                    location: widget.appointmentBookingDetails.location,
+                    ownerEmail: widget.appointmentBookingDetails.ownerEmail,
+                    ownerName: widget.appointmentBookingDetails.ownerName,
+                    propertyName: widget.appointmentBookingDetails.propertyName,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          'Appointment sent, please check back later for confirmation status'),
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -117,7 +120,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
   Widget buildBodyItem(AppointmentBookingViewModel model) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: getOwnerAppointmentSchedule(
-        widget.appointmentBookingDetails?.ownerEmail ?? '',
+        widget.appointmentBookingDetails.ownerEmail,
         model.selectedStartDate.millisecondsSinceEpoch,
         model.selectedEndDate.millisecondsSinceEpoch,
       ),

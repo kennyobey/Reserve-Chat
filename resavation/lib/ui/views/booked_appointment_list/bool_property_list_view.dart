@@ -1,90 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/model/propety_model/property_model.dart';
-import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
-import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
+import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
-import 'package:resavation/ui/shared/smart_widgets/find_your_location.dart';
 import 'package:resavation/ui/shared/spacing.dart';
-import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/search/search_viewmodel.dart';
+import 'package:resavation/ui/views/home/widget/home_user_booked_property.dart';
+import '../../shared/text_styles.dart';
+import 'book_property_list_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../shared/colors.dart';
 
-class SearchView extends StatefulWidget {
-  const SearchView({Key? key}) : super(key: key);
+class BookedPropertyListView extends StatefulWidget {
+  const BookedPropertyListView({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<SearchView> createState() => _SearchViewState();
+  State<BookedPropertyListView> createState() => _BookedPropertyListViewState();
 }
 
-class _SearchViewState extends State<SearchView> {
-  // AlgoliaAPI algoliaAPI = AlgoliaAPI();
-  // String _searchText = "";
-  // List<SearchHit> _hitsList = [];
-
-/*   Future<void> _getSearchResult(String query) async {
-    try {
-      final response = await algoliaAPI.search(query);
-      if (response != null) {
-        final hitsList = (response['hits'] as List).map((json) {
-          return SearchHit.fromJson(json);
-        }).toList();
-        setState(() {
-          _hitsList = hitsList;
-        });
-      } else {
-        setState(() {
-          _hitsList = [];
-        });
-      }
-    } catch (exception) {
-      setState(() {
-        _hitsList = [];
-      });
-    }
-  } */
-
-  @override
-  void initState() {
-    super.initState();
-    /*    _textFieldController.addListener(() {
-      if (_searchText != _textFieldController.text) {
-        setState(() {
-          _searchText = _textFieldController.text;
-        });
-        _getSearchResult(_searchText);
-      }
-    });
-    _getSearchResult(''); */
-  }
-
+class _BookedPropertyListViewState extends State<BookedPropertyListView> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SearchViewModel>.reactive(
+    return ViewModelBuilder<BookedPropertyListViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
           appBar: buildAppBar(),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               children: [
-                FindYourLocation(
-                  onTap: model.goToFilterView,
-                  onFieldSubmitted: model.searchProperty,
-                ),
-                verticalSpaceSmall,
                 const Divider(),
                 verticalSpaceTiny,
                 Row(
                   children: [
                     Text(
-                      model.properties.length.toString(),
+                      model.contents.length.toString(),
                       style: AppStyle.kSubHeading.copyWith(
                         color: kPrimaryColor,
                       ),
                     ),
                     Text(
-                      ' Properties',
+                      '  item(s)',
                       style: AppStyle.kSubHeading,
                     ),
                     Spacer(),
@@ -99,13 +54,14 @@ class _SearchViewState extends State<SearchView> {
               ],
             ),
           )),
-      viewModelBuilder: () => SearchViewModel(),
+      viewModelBuilder: () => BookedPropertyListViewModel(),
     );
   }
 
   ResavationAppBar buildAppBar() {
     return ResavationAppBar(
-      title: "Search",
+      title: 'Booked Property',
+      backEnabled: true,
       centerTitle: false,
     );
   }
@@ -170,52 +126,38 @@ class _SearchViewState extends State<SearchView> {
     );
   }
 
-  Widget buildBody(SearchViewModel model) {
-    final properties = model.properties;
+  Widget buildBody(BookedPropertyListViewModel model) {
+    final contents = model.contents;
     if (model.isLoading) {
       return buildLoadingWidget();
     } else if (model.hasErrorOnData) {
       return buildErrorBody();
-    } else if (properties.isEmpty) {
+    } else if (contents.isEmpty) {
       return buildEmptyBody();
     } else {
-      return buildBodyItem(properties, model);
+      return buildBodyItem(contents, model);
     }
   }
 
-  Widget buildBodyItem(List<Property> properties, SearchViewModel model) {
+  Widget buildBodyItem(
+      List<BookedPropertyContent> contents, BookedPropertyListViewModel model) {
     return Column(
       children: [
         Expanded(
           child: ListView.builder(
             itemBuilder: (ctx, index) {
-              final property = properties[index];
-
-              return PropertyCard(
-                id: property.id ?? -1,
-                onTap: () => model.goToPropertyDetails(property),
-                image: property.propertyImages?[0].imageUrl ?? '',
-                amountPerYear: property.spacePrice ?? 0,
-                propertyName: property.propertyName ?? '',
-                address: property.address ?? '',
-                numberOfBathrooms: property.bathTubCount ?? 0,
-                numberOfBedrooms: property.bedroomCount ?? 0,
-                squareFeet: property.surfaceArea ?? 0.0,
-                isFavoriteTap: property.favourite ?? false,
-                onFavoriteTap: () async {
-                  try {
-                    await model.onFavoriteTap(property);
-                  } catch (exception) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(exception.toString())));
-                  }
+              final content = contents[index];
+              return BookedPropertyCard(
+                content: content,
+                onTap: () {
+                  model.goToPropertyDetails(content);
                 },
               );
             },
             controller: model.scrollController,
             padding: const EdgeInsets.all(0),
             physics: const BouncingScrollPhysics(),
-            itemCount: properties.length,
+            itemCount: contents.length,
           ),
         ),
         if (model.isLoadingOldData) buildOldLoadingWidget(),
@@ -251,29 +193,3 @@ class _SearchViewState extends State<SearchView> {
     );
   }
 }
-
-/* class AlgoliaAPI {
-  static const platform = const MethodChannel('com.algolia/api');
-
-  Future<dynamic> search(String query) async {
-    try {
-      var response =
-          await platform.invokeMethod('search', ['instant_search', query]);
-      return jsonDecode(response);
-    } on PlatformException catch (_) {
-      return null;
-    }
-  }
-} */
-
-/* class SearchHit {
-  final String name;
-  final String image;
-
-  SearchHit(this.name, this.image);
-
-  static SearchHit fromJson(Map<String, dynamic> json) {
-    return SearchHit(json['name'], json['image']);
-  }
-}
- */

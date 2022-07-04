@@ -5,17 +5,27 @@ import 'package:resavation/services/core/image_picker_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../../services/core/upload_type_service.dart';
+import 'package:resavation/services/core/upload_service.dart';
 
 class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _imagePickerService = locator<ImagePickerService>();
-  final propertyOwnerUploadModel = locator<UploadTypeService>();
+  final propertyOwnerUploadModel = locator<UploadService>();
 
   List<XFile> selectedImages = [];
 
   PropertyOwnerAddPhotosViewModel() {
-    propertyOwnerUploadModel.clearStage3();
+    if (propertyOwnerUploadModel.isRestoringData) {
+      setUpPreviousData();
+    } else {
+      propertyOwnerUploadModel.clearStage3();
+    }
+  }
+
+  setUpPreviousData() {
+    selectedImages.addAll(propertyOwnerUploadModel.selectedImages ?? []);
+
+    notifyListeners();
   }
 
   addPhoto() async {
@@ -30,6 +40,7 @@ class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
 
   void goToPropertyOwnerPaymentView() {
     propertyOwnerUploadModel.selectedImages = selectedImages;
+
     _navigationService.navigateTo(Routes.propertyOwnerPaymentView);
   }
 
