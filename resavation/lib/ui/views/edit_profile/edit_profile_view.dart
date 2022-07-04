@@ -79,7 +79,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                       ),
                       verticalSpaceMedium,
-
                       verticalSpaceMedium,
                       Text(
                         'Personal Information Data',
@@ -142,13 +141,15 @@ class _EditProfileViewState extends State<EditProfileView> {
                         'Gender',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      // buildGender(model),
-                      // verticalSpaceSmall,
+                      verticalSpaceSmall,
+                      buildGender(model),
                       verticalSpaceSmall,
                       Text(
                         'Occupation',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
+                      verticalSpaceSmall,
+                      buildOccupation(model),
                       verticalSpaceMedium,
                       Text(
                         'Personal Address Data',
@@ -194,7 +195,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
                       verticalSpaceSmall,
-
                       Text(
                         'Postal Code',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -204,14 +204,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                         hintText: "224466",
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
-
                       verticalSpaceMedium,
                       Text(
                         'Next of Kin Data',
                         style: AppStyle.kHeading3,
                       ),
                       verticalSpaceSmall,
-
                       Text(
                         'First Name',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -222,7 +220,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
                       verticalSpaceSmall,
-
                       Text(
                         'Last Name',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -233,7 +230,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
                       verticalSpaceSmall,
-
                       Text(
                         'Email',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -243,9 +239,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                         hintText: "adeyemo********8@gmail.com",
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
-
                       verticalSpaceSmall,
-
                       Text(
                         'Phone number',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -255,21 +249,14 @@ class _EditProfileViewState extends State<EditProfileView> {
                         hintText: "+2347088996756",
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
-
                       verticalSpaceSmall,
-
                       Text(
                         'Gender',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Male",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-
                       verticalSpaceSmall,
-
+                      buildGender(model),
+                      verticalSpaceSmall,
                       Text(
                         'Relationship',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -419,15 +406,15 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   Widget buildGender(EditProfileViewModel model) {
-    String? selectedValue;
+    String defaultGender = "male";
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Select your gender",
+            "Male",
             style: AppStyle.kBodyRegular,
           ),
           items: model.gender
-              .map((item) => DropdownMenuItem(
+              .map((item) => DropdownMenuItem<String>(
                     value: item,
                     child: Text(
                       item,
@@ -435,8 +422,44 @@ class _EditProfileViewState extends State<EditProfileView> {
                     ),
                   ))
               .toList(),
-          value: model.gender,
-          onChanged: (value) {},
+          value: model.selectedGenderValue.toString(),
+          onChanged: (value) {
+            model.onSelectedGender(value);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+          ),
+          buttonWidth: double.infinity,
+          buttonPadding: EdgeInsets.only(left: 18, right: 20),
+          buttonDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.black26,
+            ),
+          )),
+    );
+  }
+
+  Widget buildOccupation(EditProfileViewModel model) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+          hint: Text(
+            "Male",
+            style: AppStyle.kBodyRegular,
+          ),
+          items: model.occupation
+              .map((item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: AppStyle.kBodyRegular,
+                    ),
+                  ))
+              .toList(),
+          value: model.selectedOccupationValue.toString(),
+          onChanged: (value) {
+            model.onSelectedOccupation(value);
+          },
           icon: const Icon(
             Icons.keyboard_arrow_down_rounded,
           ),

@@ -100,8 +100,8 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
                       child: Text("List your space"),
                       onPressed: () {
                         //  model.PropertyOwnerTrackListView();
-                        //model.goToPropertyOwnerSpaceTypeView();
-                        model.getBookedProperty();
+                        model.goToPropertyOwnerSpaceTypeView();
+                        //model.getBookedProperty();
                       },
 
                       //  borderColor: kp,
