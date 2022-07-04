@@ -1,4 +1,5 @@
 import 'package:resavation/services/core/custom_snackbar_service.dart';
+import 'package:resavation/services/core/dojah_verification.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/image_picker_service.dart';
 import 'package:resavation/services/core/upload_service.dart';
@@ -50,6 +51,8 @@ import 'package:resavation/ui/views/sign_up_confirmation/signup_confirmation_vie
 import 'package:resavation/ui/views/signup/signup_view.dart';
 import 'package:resavation/ui/views/startup/startup_view.dart';
 import 'package:resavation/ui/views/top_items/top_item_view.dart';
+import 'package:resavation/ui/views/user_profile/user_profile_view.dart';
+import 'package:resavation/ui/views/user_profile_page/user_profile_pageView.dart';
 import 'package:resavation/ui/views/verify_user_account/verify_user_account.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -83,6 +86,9 @@ import '../ui/views/states_list/states_list_view.dart';
     AdaptiveRoute(page: BookedPropertyListView),
     AdaptiveRoute(page: VideoCallView),
     AdaptiveRoute(page: MakePaymentView),
+    AdaptiveRoute(page: UserProfileView),
+    AdaptiveRoute(page: VerificationPage),
+    AdaptiveRoute(page: UserProfilePageView),
 
     ///
     AdaptiveRoute(page: ResetPasswordView),

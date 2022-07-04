@@ -15,7 +15,6 @@ import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:resavation/services/core/upload_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 
-import '../../model/property_cotroller_model/booked_propety_model.dart';
 import '../../model/top_categories_model/top_categories_model.dart';
 
 class HttpService {

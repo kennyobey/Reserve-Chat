@@ -16,6 +16,7 @@ import '../model/call_model.dart';
 import '../model/filter/filter.dart';
 import '../model/propety_model/property_model.dart';
 import '../model/propety_model/user.dart';
+import '../services/core/dojah_verification.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
 import '../ui/views/audio_call/audio_call_view.dart';
@@ -99,6 +100,9 @@ class Routes {
   static const String bookedPropertyListView = '/booked-property-list-view';
   static const String videoCallView = '/video-call-view';
   static const String makePaymentView = '/make-payment-view';
+  static const String userProfileView = '/user-profile-view';
+  static const String verificationPage = '/verification-page';
+  static const String userProfilePageView = '/user-profile-page-view';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
   static const String datePickerView = '/date-picker-view';
@@ -135,12 +139,6 @@ class Routes {
       '/property-owner-track-list-view';
   static const String categoriesListView = '/categories-list-view';
   static const String statesListView = '/states-list-view';
-  static const String userProfilePageView = '/user-Profile-page-view';
-  static const String verificationPage = '/verification-page-view';
-  static const String userProfileView = '/user-profile-view';
-
-  //UserProfileView
-
   static const all = <String>{
     startupView,
     mainView,
@@ -163,6 +161,9 @@ class Routes {
     bookedPropertyListView,
     videoCallView,
     makePaymentView,
+    userProfileView,
+    verificationPage,
+    userProfilePageView,
     resetPasswordView,
     filterView,
     datePickerView,
@@ -192,9 +193,6 @@ class Routes {
     propertyOwnerTrackListView,
     categoriesListView,
     statesListView,
-    userProfilePageView,
-    verificationPage,
-    userProfileView
   };
 }
 
@@ -228,6 +226,9 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.bookedPropertyListView, page: BookedPropertyListView),
     RouteDef(Routes.videoCallView, page: VideoCallView),
     RouteDef(Routes.makePaymentView, page: MakePaymentView),
+    RouteDef(Routes.userProfileView, page: UserProfileView),
+    RouteDef(Routes.verificationPage, page: VerificationPage),
+    RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
     RouteDef(Routes.datePickerView, page: DatePickerView),
@@ -263,11 +264,7 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerTrackListView),
     RouteDef(Routes.categoriesListView, page: CategoriesListView),
     RouteDef(Routes.statesListView, page: StatesListView),
-    RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
-    RouteDef(Routes.verificationPage, page: VerificationPage),
-    RouteDef(Routes.userProfileView, page: UserProfileView),
   ];
-
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
@@ -422,6 +419,24 @@ class StackedRouter extends RouterBase {
           planAmount: args.planAmount,
           subscriptionCode: args.subscriptionCode,
         ),
+        settings: data,
+      );
+    },
+    UserProfileView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const UserProfileView(),
+        settings: data,
+      );
+    },
+    VerificationPage: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const VerificationPage(),
+        settings: data,
+      );
+    },
+    UserProfilePageView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const UserProfilePageView(),
         settings: data,
       );
     },
@@ -648,24 +663,6 @@ class StackedRouter extends RouterBase {
     StatesListView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const StatesListView(),
-        settings: data,
-      );
-    },
-    UserProfilePageView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfilePageView(),
-        settings: data,
-      );
-    },
-    VerificationPage: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const VerificationPage(),
-        settings: data,
-      );
-    },
-    UserProfileView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfileView(),
         settings: data,
       );
     },
