@@ -94,4 +94,8 @@ class UserProfileViewModel extends BaseViewModel {
   void goToVerificationPage() {
     _navigationService.navigateTo(Routes.verificationPage);
   }
+
+  void goToEditProfileView() {
+    _navigationService.navigateTo(Routes.editProfileView);
+  }
 }

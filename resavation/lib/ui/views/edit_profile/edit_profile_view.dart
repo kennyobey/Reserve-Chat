@@ -79,16 +79,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                       ),
                       verticalSpaceMedium,
-                      ResavationButton(
-                        width: MediaQuery.of(context).size.width,
-                        title: 'Verify',
-                        buttonColor: Colors.green,
-                        borderColor: Colors.transparent,
-                        titleColor: kWhite,
-                        onTap: () {
-                          model.goToVerificationPage();
-                        },
-                      ),
+
                       verticalSpaceMedium,
                       Text(
                         'Personal Information Data',

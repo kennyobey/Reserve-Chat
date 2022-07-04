@@ -63,86 +63,84 @@ class _VerificationPageState extends State<VerificationPage> {
         body: Center(
             child: Column(children: <Widget>[
           Container(
-            child: Center(
-              child: TextButton(
-                child: ResavationButton(
-                  width: MediaQuery.of(context).size.width,
-                  title: 'Click Here To Verify',
-                  buttonColor: Colors.transparent,
-                  borderColor: kPrimaryColor,
-                  titleColor: kPrimaryColor,
-                ),
-                onPressed: () {
-                  final userData = {
-                    "first_name": "Kehinde",
-                    "last_name": "Ade",
-                    "dob": "1998-03-08",
-                    "residence_country": "Nigeria"
-                  };
-
-                  final configObj = {
-                    "debug": "true",
-                    // "mobile": true,
-                    // "otp": false,
-                    // "selfie": true,
-                    // "aml": false,
-                    // "webhook": true,
-                    "review_process": "Automatic",
-                    "pages": [
-                      //  { "page": "phone-number", "config": { "verification": true } },
-                      {
-                        "page": "government-data",
-                        "config": {
-                          "bvn": false,
-                          "nin": true,
-                          "dl": false,
-                          "mobile": false,
-                          "otp": false,
-                          "selfie": false
-                        }
-                      },
-
-                      {
-                        "page": "selfie",
-                        "config": {"verification": true}
-                      },
-
-                      // {"page": "address"},
-                      // {
-                      //   "page": "id",
-                      //   "config": {"passport": false, "dl": true}
-                      // }
-                    ]
-                  };
-
-                  final metaData = {
-                    "user_id": "81828289191919193882",
-                  };
-
-                  const referenceId = "123456789012a";
-
-                  DojahFinancial? _dojahFinancial;
-                  //Use your appId and publicKey
-                  _dojahFinancial = DojahFinancial(
-                    appId: appId,
-                    publicKey: publicKey,
-                    type: "custom",
-                    userData: userData,
-                    metaData: metaData,
-                    config: configObj,
-                    // referenceId: referenceId
-                  );
-
-                  print(json.encode(configObj));
-                  print(json.encode(configObj));
-                  print(userData);
-                  print(configObj);
-                  _dojahFinancial.open(context,
-                      onSuccess: (result) => print(result),
-                      // onClose: (close) => print("Widget Closed"),
-                      onError: (error) => print(error));
-                },
+            child: TextButton(
+              child: ResavationButton(
+                width: MediaQuery.of(context).size.width,
+                title: 'Click Here To Verify',
+                buttonColor: Colors.transparent,
+                borderColor: kPrimaryColor,
+                titleColor: kPrimaryColor,
               ),
+              onPressed: () {
+                final userData = {
+                  "first_name": "Kehinde",
+                  "last_name": "Ade",
+                  "dob": "1998-03-08",
+                  "residence_country": "Nigeria"
+                };
+
+                final configObj = {
+                  "debug": "true",
+                  // "mobile": true,
+                  // "otp": false,
+                  // "selfie": true,
+                  // "aml": false,
+                  // "webhook": true,
+                  "review_process": "Automatic",
+                  "pages": [
+                    //  { "page": "phone-number", "config": { "verification": true } },
+                    {
+                      "page": "government-data",
+                      "config": {
+                        "bvn": false,
+                        "nin": true,
+                        "dl": false,
+                        "mobile": false,
+                        "otp": false,
+                        "selfie": false
+                      }
+                    },
+
+                    {
+                      "page": "selfie",
+                      "config": {"verification": true}
+                    },
+
+                    // {"page": "address"},
+                    // {
+                    //   "page": "id",
+                    //   "config": {"passport": false, "dl": true}
+                    // }
+                  ]
+                };
+
+                final metaData = {
+                  "user_id": "81828289191919193882",
+                };
+
+                const referenceId = "123456789012a";
+
+                DojahFinancial? _dojahFinancial;
+                //Use your appId and publicKey
+                _dojahFinancial = DojahFinancial(
+                  appId: appId,
+                  publicKey: publicKey,
+                  type: "custom",
+                  userData: userData,
+                  metaData: metaData,
+                  config: configObj,
+                  // referenceId: referenceId
+                );
+
+                print(json.encode(configObj));
+                print(json.encode(configObj));
+                print(userData);
+                print(configObj);
+                _dojahFinancial.open(context,
+                    onSuccess: (result) => print(result),
+                    // onClose: (close) => print("Widget Closed"),
+                    onError: (error) => print(error));
+              },
             ),
           ),
           // Container(
