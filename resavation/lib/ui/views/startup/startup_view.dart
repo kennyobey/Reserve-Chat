@@ -104,6 +104,7 @@ class _StartupViewState extends State<StartupView>
   void route() async {
     final prefs = await SharedPreferences.getInstance();
     final visibility = prefs.getBool('onboarding_visibility') ?? true;
+
     final service = locator<NavigationService>();
     if (visibility) {
       service.replaceWith(Routes.onboardingView);

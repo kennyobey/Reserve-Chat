@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 
 class TopStatesContent {
   String? cityName;
+  String? state;
   String? createdAt;
   int? id;
   int? numberOfProperties;
@@ -11,6 +12,7 @@ class TopStatesContent {
 
   TopStatesContent({
     this.cityName,
+    this.state,
     this.createdAt,
     this.id,
     this.numberOfProperties,
@@ -26,6 +28,7 @@ class TopStatesContent {
       TopStatesContent(
         cityName: data['cityName'] as String?,
         createdAt: data['createdAt'] as String?,
+        state: data['state'] as String?,
         id: data['id'] as int?,
         numberOfProperties: data['numberOfProperties'] as int?,
         updatedAt: data['updatedAt'] as String?,
@@ -34,6 +37,7 @@ class TopStatesContent {
   Map<String, dynamic> toMap() => {
         'cityName': cityName,
         'createdAt': createdAt,
+        'state': state,
         'id': id,
         'numberOfProperties': numberOfProperties,
         'updatedAt': updatedAt,
@@ -53,6 +57,7 @@ class TopStatesContent {
 
   TopStatesContent copyWith({
     String? cityName,
+    String? state,
     String? createdAt,
     int? id,
     int? numberOfProperties,
@@ -60,6 +65,7 @@ class TopStatesContent {
   }) {
     return TopStatesContent(
       cityName: cityName ?? this.cityName,
+      state: state ?? this.state,
       createdAt: createdAt ?? this.createdAt,
       id: id ?? this.id,
       numberOfProperties: numberOfProperties ?? this.numberOfProperties,

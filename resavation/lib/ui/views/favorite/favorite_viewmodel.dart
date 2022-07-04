@@ -14,6 +14,7 @@ class FavoriteViewModel extends BaseViewModel {
   bool allLoaded = false;
   int page = 0;
   int size = 8;
+
   final _navigationService = locator<NavigationService>();
   final ScrollController scrollController = ScrollController();
   final _httpService = locator<HttpService>();
