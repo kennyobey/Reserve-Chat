@@ -13,7 +13,7 @@ import '../../../model/login_model.dart';
 import '../../../services/core/http_service.dart';
 import '../../../services/core/user_type_service.dart';
 
-class EditProfileViewModel extends BaseViewModel {
+class UserProfileViewModel extends BaseViewModel {
   final _snackbarService = locator<CustomSnackbarService>();
   final _navigationService = locator<NavigationService>();
 

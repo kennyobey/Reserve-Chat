@@ -12,17 +12,19 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-class EditProfileView extends StatefulWidget {
-  const EditProfileView({Key? key}) : super(key: key);
+import 'user_profile_viewModel.dart';
+
+class UserProfileView extends StatefulWidget {
+  const UserProfileView({Key? key}) : super(key: key);
 
   @override
-  State<EditProfileView> createState() => _EditProfileViewState();
+  State<UserProfileView> createState() => _UserProfileViewState();
 }
 
-class _EditProfileViewState extends State<EditProfileView> {
+class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<EditProfileViewModel>.reactive(
+    return ViewModelBuilder<UserProfileViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -54,16 +56,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                           badgeContent: IconButton(
                               icon: Icon(Icons.camera_alt_sharp),
                               onPressed: () async {
-                                try {
-                                  final imageLocation =
-                                      await model.showFilePicker();
-                                  showImageDialog(imageLocation, model);
-                                } catch (exception) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(exception.toString())),
-                                  );
-                                }
+                                // try {
+                                //   final imageLocation =
+                                //       await model.showFilePicker();
+                                //   showImageDialog(imageLocation, model);
+                                // } catch (exception) {
+                                //   ScaffoldMessenger.of(context).showSnackBar(
+                                //     SnackBar(
+                                //         content: Text(exception.toString())),
+                                //   );
+                                // }
                               }),
                           child: Container(
                             width: 150,
@@ -334,7 +336,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           ),
         ),
       ),
-      viewModelBuilder: () => EditProfileViewModel(),
+      viewModelBuilder: () => UserProfileViewModel(),
     );
   }
 
