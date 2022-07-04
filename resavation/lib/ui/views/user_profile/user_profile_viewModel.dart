@@ -13,14 +13,11 @@ import '../../../model/login_model.dart';
 import '../../../services/core/http_service.dart';
 import '../../../services/core/user_type_service.dart';
 
-class EditProfileViewModel extends BaseViewModel {
+class UserProfileViewModel extends BaseViewModel {
   final _snackbarService = locator<CustomSnackbarService>();
   final _navigationService = locator<NavigationService>();
 
   final _httpService = locator<HttpService>();
-
-  String? selectedGenderValue = 'Male';
-  String? selectedOccupationValue = 'Student';
 
   final userFirstNameController = TextEditingController();
   final userLastNameController = TextEditingController();
@@ -31,22 +28,11 @@ class EditProfileViewModel extends BaseViewModel {
     _snackbarService.showComingSoon();
   }
 
-  void onSelectedGender(value) {
-    gender = value;
-    notifyListeners();
-  }
-
-  void onSelectedOccupation(value) {
-    gender = value;
-    notifyListeners();
-  }
-
   void goToMainView() {
     _navigationService.navigateTo(Routes.mainView);
   }
 
-  List<String> gender = ['Male', 'Female'];
-  List<String> occupation = ['Student', 'Self Employed', 'Employed'];
+  List gender = ['Male', 'Female'];
 
   Future<String> showFilePicker() async {
     try {
@@ -109,7 +95,7 @@ class EditProfileViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.verificationPage);
   }
 
-  void goToUserProfileView() {
-    _navigationService.navigateTo(Routes.userProfileView);
+  void goToEditProfileView() {
+    _navigationService.navigateTo(Routes.editProfileView);
   }
 }

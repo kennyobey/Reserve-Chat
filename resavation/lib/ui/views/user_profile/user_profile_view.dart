@@ -12,17 +12,19 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-class EditProfileView extends StatefulWidget {
-  const EditProfileView({Key? key}) : super(key: key);
+import 'user_profile_viewModel.dart';
+
+class UserProfileView extends StatefulWidget {
+  const UserProfileView({Key? key}) : super(key: key);
 
   @override
-  State<EditProfileView> createState() => _EditProfileViewState();
+  State<UserProfileView> createState() => _UserProfileViewState();
 }
 
-class _EditProfileViewState extends State<EditProfileView> {
+class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<EditProfileViewModel>.reactive(
+    return ViewModelBuilder<UserProfileViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -31,7 +33,7 @@ class _EditProfileViewState extends State<EditProfileView> {
             color: Colors.black,
           ),
           title: Text(
-            'Edit Profile',
+            'User Profile',
             style: AppStyle.kHeading0,
           ),
         ),
@@ -51,20 +53,15 @@ class _EditProfileViewState extends State<EditProfileView> {
                         child: Badge(
                           badgeColor: kWhite,
                           position: BadgePosition.bottomEnd(),
-                          badgeContent: IconButton(
-                              icon: Icon(Icons.camera_alt_sharp),
-                              onPressed: () async {
-                                try {
-                                  final imageLocation =
-                                      await model.showFilePicker();
-                                  showImageDialog(imageLocation, model);
-                                } catch (exception) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(exception.toString())),
-                                  );
-                                }
-                              }),
+                          badgeContent: ResavationButton(
+                            fontSize: 13,
+                            title: "Edit Profile",
+                            height: 30,
+                            width: 90,
+                            onTap: () {
+                              model.goToEditProfileView();
+                            },
+                          ),
                           child: Container(
                             width: 150,
                             height: 150,
@@ -79,6 +76,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                       ),
                       verticalSpaceMedium,
+                      ResavationButton(
+                        width: MediaQuery.of(context).size.width,
+                        title: 'Verify',
+                        buttonColor: Colors.green,
+                        borderColor: Colors.transparent,
+                        titleColor: kWhite,
+                        onTap: () {
+                          model.goToVerificationPage();
+                        },
+                      ),
                       verticalSpaceMedium,
                       Text(
                         'Personal Information Data',
@@ -86,55 +93,69 @@ class _EditProfileViewState extends State<EditProfileView> {
                       ),
                       verticalSpaceSmall,
                       Text(
-                        'Last Name',
+                        'Full legal first and middle names',
                         style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: model.userData.lastName,
-                        controller: model.userLastNameController,
-                        hintTextStyle: AppStyle.kSubHeading,
                       ),
                       verticalSpaceSmall,
                       Text(
-                        'First Name',
+                        'Stephen ',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
+                      ),
+                      verticalSpaceSmall,
+                      Text(
+                        'Last names',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: model.userData.firstName,
-                        controller: model.userFirstNameController,
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Adeyemo',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'About Me',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "I am a student of UNIBEN",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'I am a final student of Agric Science, Obafemi Awolowo University, Ile-ife, Nigeria.',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Date of birth',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "22/01/2022",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'August 24, 1990',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
-                        'Phone Number',
+                        'Email',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "2347032867019",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'adeyemo********8@gmail.com',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
+                      ),
+                      verticalSpaceSmall,
+                      Text(
+                        'Phone number',
+                        style: AppStyle.kBodyRegularBlack14W500,
+                      ),
+                      verticalSpaceSmall,
+                      Text(
+                        '07089898989',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -142,67 +163,80 @@ class _EditProfileViewState extends State<EditProfileView> {
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       verticalSpaceSmall,
-                      buildGender(model),
+                      Text(
+                        'Male',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
+                      ),
                       verticalSpaceSmall,
                       Text(
                         'Occupation',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       verticalSpaceSmall,
-                      buildOccupation(model),
+                      Text(
+                        'Student',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
+                      ),
                       verticalSpaceMedium,
                       Text(
                         'Personal Address Data',
                         style: AppStyle.kHeading3,
                       ),
+                      verticalSpaceSmall,
                       Text(
                         'Country',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Nigeria',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'State',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Oyo',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'City',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Ibadan",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Ibadan',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Address',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "No 1 Festus Idahosa Street, Molete, Ibadan.",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        "No 1 Festus Idahosa Street, Molete, Ibadan.",
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Postal Code',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "224466",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      Text(
+                        '224466',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceMedium,
                       Text(
@@ -214,40 +248,44 @@ class _EditProfileViewState extends State<EditProfileView> {
                         'First Name',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Stephen",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Stephen',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Last Name',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Adeyemo",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Adeyemo',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Email',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "adeyemo********8@gmail.com",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'adeyemo********8@gmail.com',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
                         'Phone number',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "+2347088996756",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        '+2347088996756',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -255,64 +293,69 @@ class _EditProfileViewState extends State<EditProfileView> {
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
                       verticalSpaceSmall,
-                      buildGender(model),
+                      Text(
+                        'Male',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
+                      ),
                       verticalSpaceSmall,
                       Text(
                         'Relationship',
                         style: AppStyle.kBodyRegularBlack14W500,
                       ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Uncle",
-                        hintTextStyle: AppStyle.kSubHeading,
+                      verticalSpaceSmall,
+                      Text(
+                        'Uncle',
+                        style: AppStyle.kBodyRegularBlack14W500
+                            .copyWith(color: kGray),
                       ),
                     ],
                   ),
                 ),
               ),
               verticalSpaceMedium,
-              Row(
-                children: [
-                  Expanded(
-                    child: ResavationButton(
-                      title: 'Cancel',
-                      onTap: model.goToMainView,
-                      buttonColor: kWhite,
-                      titleColor: kBlack,
-                      borderColor: kGray,
-                    ),
-                  ),
-                  horizontalSpaceSmall,
-                  Expanded(
-                    child: ResavationButton(
-                      title: 'Save',
-                      onTap: () async {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Updating profile please wait')),
-                        );
-                        try {
-                          await model.updateProfile();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Profile Updated')),
-                          );
-                          model.goToMainView();
-                        } catch (exception) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(exception.toString())),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: ResavationButton(
+              //         title: 'Cancel',
+              //         onTap: model.goToMainView,
+              //         buttonColor: kWhite,
+              //         titleColor: kBlack,
+              //         borderColor: kGray,
+              //       ),
+              //     ),
+              //     horizontalSpaceSmall,
+              //     Expanded(
+              //       child: ResavationButton(
+              //         title: 'Save',
+              //         onTap: () async {
+              //           ScaffoldMessenger.of(context).showSnackBar(
+              //             SnackBar(
+              //                 content: Text('Updating profile please wait')),
+              //           );
+              //           try {
+              //             await model.updateProfile();
+              //             ScaffoldMessenger.of(context).showSnackBar(
+              //               SnackBar(content: Text('Profile Updated')),
+              //             );
+              //             model.goToMainView();
+              //           } catch (exception) {
+              //             ScaffoldMessenger.of(context).showSnackBar(
+              //               SnackBar(content: Text(exception.toString())),
+              //             );
+              //           }
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
               verticalSpaceMedium,
             ],
           ),
         ),
       ),
-      viewModelBuilder: () => EditProfileViewModel(),
+      viewModelBuilder: () => UserProfileViewModel(),
     );
   }
 
@@ -406,15 +449,15 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   Widget buildGender(EditProfileViewModel model) {
-    String defaultGender = "male";
+    String? selectedValue;
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Male",
+            "Select your gender",
             style: AppStyle.kBodyRegular,
           ),
           items: model.gender
-              .map((item) => DropdownMenuItem<String>(
+              .map((item) => DropdownMenuItem(
                     value: item,
                     child: Text(
                       item,
@@ -422,44 +465,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                     ),
                   ))
               .toList(),
-          value: model.selectedGenderValue.toString(),
-          onChanged: (value) {
-            model.onSelectedGender(value);
-          },
-          icon: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-          ),
-          buttonWidth: double.infinity,
-          buttonPadding: EdgeInsets.only(left: 18, right: 20),
-          buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.black26,
-            ),
-          )),
-    );
-  }
-
-  Widget buildOccupation(EditProfileViewModel model) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-          hint: Text(
-            "Male",
-            style: AppStyle.kBodyRegular,
-          ),
-          items: model.occupation
-              .map((item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: AppStyle.kBodyRegular,
-                    ),
-                  ))
-              .toList(),
-          value: model.selectedOccupationValue.toString(),
-          onChanged: (value) {
-            model.onSelectedOccupation(value);
-          },
+          value: model.gender,
+          onChanged: (value) {},
           icon: const Icon(
             Icons.keyboard_arrow_down_rounded,
           ),
