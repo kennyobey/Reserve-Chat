@@ -5,13 +5,11 @@ import 'amenity.dart';
 import 'availability_periods.dart';
 import 'property_image.dart';
 import 'property_rule.dart';
-import 'user.dart';
 
 class Property {
   int? id;
   DateTime? createdAt;
   DateTime? updatedAt;
-  User? user;
   String? propertyType;
   String? propertyStyle;
   String? propertyStatus;
@@ -44,7 +42,6 @@ class Property {
     this.id,
     this.createdAt,
     this.updatedAt,
-    this.user,
     this.propertyType,
     this.propertyStyle,
     this.propertyStatus,
@@ -87,9 +84,6 @@ class Property {
         updatedAt: data['updatedAt'] == null
             ? null
             : DateTime.parse(data['updatedAt'] as String),
-        user: data['user'] == null
-            ? null
-            : User.fromMap(data['user'] as Map<String, dynamic>),
         propertyType: data['propertyType'] as String?,
         propertyStyle: data['propertyStyle'] as String?,
         propertyStatus: data['propertyStatus'] as String?,
@@ -131,9 +125,50 @@ class Property {
         favourite: data['favourite'] as bool?,
       );
 
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'createdAt': createdAt?.toIso8601String(),
+        'updatedAt': updatedAt?.toIso8601String(),
+        'propertyType': propertyType,
+        'propertyStyle': propertyStyle,
+        'propertyStatus': propertyStatus,
+        'isSpaceServiced': isSpaceServiced,
+        'isSpaceFurnished': isSpaceFurnished,
+        'isLiveInSPace': isLiveInSPace,
+        'bedroomCount': bedroomCount,
+        'bathTubCount': bathTubCount,
+        'carSlot': carSlot,
+        'propertyName': propertyName,
+        'description': description,
+        'country': country,
+        'state': state,
+        'city': city,
+        'address': address,
+        'serviceType': serviceType,
+        'paymentType': paymentType,
+        'surfaceArea': surfaceArea,
+        'spacePrice': spacePrice,
+        'verificationStatus': verificationStatus,
+        'propertyCategory': propertyCategory,
+        'propertyRule': propertyRule?.map((e) => e.toMap()).toList(),
+        'propertyImages': propertyImages?.map((e) => e.toMap()).toList(),
+        'amenities': amenities?.map((e) => e.toMap()).toList(),
+        'availabilityPeriods': availabilityPeriods?.toMap(),
+        'subscription': subscription?.toMap(),
+        'favourite': favourite,
+      };
+
+  /// `dart:convert`
+  ///
+  /// Parses the string and returns the resulting Json object as [Content].
   factory Property.fromJson(String data) {
     return Property.fromMap(json.decode(data) as Map<String, dynamic>);
   }
+
+  /// `dart:convert`
+  ///
+  /// Converts [Content] to a JSON string.
+  String toJson() => json.encode(toMap());
 
   Property copyWith({
     int? id,

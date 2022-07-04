@@ -115,13 +115,6 @@ class AppointmentBookingViewModel extends BaseViewModel {
         ),
       );
 
-  AppointmentBookingViewModel() {
-    final currentTime = DateTime.now();
-    _selectedDate =
-        DateTime(currentTime.year, currentTime.month, currentTime.day);
-    initialData =
-        DateTime(currentTime.year, currentTime.month, currentTime.day);
-  }
   bool isAppointmentSelected(Appointment appointment) {
     if (selectedAppointment == null) {
       return false;

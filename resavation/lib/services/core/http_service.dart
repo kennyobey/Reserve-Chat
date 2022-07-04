@@ -1,15 +1,16 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
-import 'package:resavation/model/booked_property/booked_property.dart';
 import 'package:resavation/model/filter/filter.dart';
 import 'package:resavation/model/login_model.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/registration_model.dart';
 import 'package:resavation/model/search_model/search_model.dart';
 import 'package:resavation/model/top_states_model/top_states_model.dart';
-import 'package:resavation/services/core/upload_service.dart';
+import 'package:resavation/services/core/upload_type_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 
 import '../../model/top_categories_model/top_categories_model.dart';
@@ -17,40 +18,9 @@ import '../../model/top_categories_model/top_categories_model.dart';
 class HttpService {
   final userTypeService = locator<UserTypeService>();
 
-  final requestSite = "resavation-backend.herokuapp.com";
+  //final _httpService = locator<HttpService>();
 
-  Future<String> getPaymentLink({
-    required String email,
-    required int amount,
-    required String subscriptionCode,
-    required String authorization,
-  }) async {
-    try {
-      var response = await http.post(
-        Uri.https('api.paystack.co', "transaction/initialize"),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $authorization'
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            "email": email,
-            "amount": amount.toString(),
-            "plan": subscriptionCode,
-          },
-        ),
-      );
-      debugPrint(response.statusCode.toString());
-      if (response.statusCode <= 299) {
-        final decodedData = json.decode(response.body);
-        return decodedData['data']['authorization_url'] ?? '';
-      } else {
-        return Future.error('An error occurred in setting up payment');
-      }
-    } catch (exception) {
-      return Future.error("An error occurred in setting up payment");
-    }
-  }
+  final requestSite = "resavation-backend.herokuapp.com";
 
   resendOTP({required String email}) async {
     try {
@@ -229,82 +199,7 @@ class HttpService {
       {required int page, required int size}) async {
     try {
       var response = await http.get(
-        Uri.http(requestSite, "api/v1/user/property", <String, String>{
-          "page": page.toString(),
-          "size": size.toString(),
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-
-      if (response.statusCode <= 299) {
-        return SearchModel.fromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<SearchModel> getPropertiesByCategories(
-      {required String category, required int page, required int size}) async {
-    try {
-      final response = await http.get(
-        Uri.http(requestSite, "api/v1/properties/filter", <String, String>{
-          "category": category,
-          "page": page.toString(),
-          "size": size.toString(),
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-
-      if (response.statusCode <= 299) {
-        return SearchModel.fromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<SearchModel> getPropertiesByStates(
-      {required String state, required int page, required int size}) async {
-    try {
-      final response = await http.get(
-        Uri.http(requestSite, "api/v1/properties/search", <String, String>{
-          "key": state,
-          "page": page.toString(),
-          "size": size.toString(),
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-
-      if (response.statusCode <= 299) {
-        return SearchModel.fromJson(response.body);
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<SearchModel> getLandOwnerListings(
-      {required int propertyId, required int page, required int size}) async {
-    try {
-      final response = await http.get(
-        Uri.http(requestSite,
-            "api/v1/user/property/owner/$propertyId", <String, String>{
+        Uri.http(requestSite, "api/v1/properties", <String, String>{
           "page": page.toString(),
           "size": size.toString(),
         }),
@@ -325,11 +220,11 @@ class HttpService {
   }
 
   Future<SearchModel> getSearchProperty(
-      {required String text, required int page, required int size}) async {
+      {required String location, required int page, required int size}) async {
     try {
       final response = await http.get(
-        Uri.http(requestSite, "api/v1/properties/search", <String, String>{
-          "key": text,
+        Uri.http(requestSite, "/api/v1/properties/filter", <String, String>{
+          "location": location,
           "page": page.toString(),
           "size": size.toString(),
         }),
@@ -400,7 +295,7 @@ class HttpService {
   togglePropertyAsFavourite({required int propertyId}) async {
     try {
       var response = await http.post(
-          Uri.http(requestSite, "api/v1/user/property/favourite/alter"),
+          Uri.http(requestSite, "api/v1/properties/favourite/alter"),
           headers: <String, String>{
             'Content-Type': 'application/json;charset=UTF-8',
             'Authorization': userTypeService.authorization
@@ -423,9 +318,9 @@ class HttpService {
   Future<SearchModel> getAllFavouriteProperties(
       {required int page, required int size}) async {
     try {
-      final response = await http.get(
-        Uri.http(requestSite,
-            "api/v1/user/property/favourite/fetch", <String, String>{
+      var response = await http.get(
+        Uri.http(
+            requestSite, "api/v1/properties/favourite/fetch", <String, String>{
           "page": page.toString(),
           "size": size.toString(),
         }),
@@ -437,36 +332,10 @@ class HttpService {
       if (response.statusCode <= 299) {
         return SearchModel.fromJson(response.body);
       } else {
-        return Future.error(
-            json.decode(response.body)['message'] ?? 'Error Occurred');
+        return Future.error(json.decode(response.body)['message'] ?? '');
       }
     } catch (exception) {
       return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  Future<BookedProperty> getAllTenantsBookedProperty(
-      {required int page, required int size}) async {
-    try {
-      final response = await http.get(
-        Uri.http(requestSite, "api/v1/user/property/booked", <String, String>{
-          "page": page.toString(),
-          "size": size.toString(),
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      if (response.statusCode <= 299) {
-        return BookedProperty.fromJson(response.body);
-      } else {
-        return Future.error(
-            json.decode(response.body)['message'] ?? 'Error Occurred');
-      }
-    } catch (exception) {
-      return Future.error(exception.toString());
-      // return Future.error("Error occurred in communicating with the server");
     }
   }
 
@@ -548,7 +417,7 @@ class HttpService {
   }
 
   uploadProperty({
-    required UploadService uploadTypeService,
+    required UploadTypeService uploadTypeService,
     required List<String> images,
   }) async {
     final body = <String, dynamic>{
@@ -602,51 +471,15 @@ class HttpService {
     };
 
     try {
-      final response =
-          await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
-              headers: <String, String>{
-                'Content-Type': 'application/json',
-                'Authorization': userTypeService.authorization
-              },
-              body: jsonEncode(body));
+      final response = await http.post(
+          Uri.http(requestSite, "/api/v1/properties/upload"),
+          headers: <String, String>{'Content-Type': 'application/json'},
+          body: jsonEncode(body));
 
       if (response.statusCode == 200) {
         return;
       } else {
         return Future.error("Failed to upload property");
-      }
-    } catch (exception) {
-      return Future.error(exception.toString());
-    }
-  }
-
-  bookProperty({
-    required double amount,
-    required int id,
-    required String paymentType,
-    required DateTime checkInDate,
-  }) async {
-    final body = <String, dynamic>{
-      "amount": amount,
-      "checkInDate": DateFormat('dd-MM-yyyy').format(checkInDate),
-      "paymentType": paymentType,
-      "propertyId": id
-    };
-
-    try {
-      final response = await http.post(
-        Uri.http(requestSite, "api/v1/user/property/book"),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': userTypeService.authorization
-        },
-        body: jsonEncode(body),
-      );
-
-      if (response.statusCode == 200) {
-        return;
-      } else {
-        return Future.error("Failed to book property");
       }
     } catch (exception) {
       return Future.error(exception.toString());
@@ -888,7 +721,7 @@ class HttpService {
       );
       if (response.statusCode <= 299) {
         final decodedMessage = json.decode(response.body);
-        return (decodedMessage['stateType'] as List<dynamic>?)
+        return (decodedMessage['states'] as List<dynamic>?)
                 ?.map(
                   (e) => e.toString(),
                 )

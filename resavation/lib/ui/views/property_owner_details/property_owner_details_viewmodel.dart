@@ -6,11 +6,11 @@ import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'package:resavation/services/core/upload_service.dart';
+import '../../../services/core/upload_type_service.dart';
 
 class PropertyOwnerDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final uploadTypeService = locator<UploadService>();
+  final uploadTypeService = locator<UploadTypeService>();
   final _httpService = locator<HttpService>();
   final uploadFormKey = GlobalKey<FormState>();
 
@@ -28,11 +28,7 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
   bool isLoading = true;
 
   PropertyOwnerDetailsViewModel() {
-    if (uploadTypeService.isRestoringData) {
-      setUpPreviousData();
-    } else {
-      uploadTypeService.clearStage2();
-    }
+    uploadTypeService.clearStage2();
     getData();
   }
 
@@ -70,18 +66,6 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
     uploadTypeService.city = propertyCityController.text.trim();
 
     _navigationService.navigateTo(Routes.propertyOwnerAddPhotosView);
-  }
-
-  setUpPreviousData() {
-    propertyNameController.text = uploadTypeService.propertyName ?? '';
-    propertyDescriptionController.text =
-        uploadTypeService.propertyDescription ?? '';
-    propertyAddressController.text = uploadTypeService.address ?? '';
-    surfaceAreaController.text =
-        (uploadTypeService.surfaceArea ?? 0).toString();
-    selectedState = uploadTypeService.state;
-    propertyCityController.text = uploadTypeService.city ?? '';
-    notifyListeners();
   }
 
   //Google Map

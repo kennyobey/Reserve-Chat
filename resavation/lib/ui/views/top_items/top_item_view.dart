@@ -27,38 +27,37 @@ class _TopItemViewState extends State<TopItemView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopItemViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
-        appBar: buildAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              const Divider(),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Text(
-                    model.properties.length.toString(),
-                    style: AppStyle.kSubHeading.copyWith(
-                      color: kPrimaryColor,
+          appBar: buildAppBar(),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                const Divider(),
+                verticalSpaceTiny,
+                Row(
+                  children: [
+                    Text(
+                      model.properties.length.toString(),
+                      style: AppStyle.kSubHeading.copyWith(
+                        color: kPrimaryColor,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '  item(s)',
-                    style: AppStyle.kSubHeading,
-                  ),
-                  Spacer(),
-                ],
-              ),
-              verticalSpaceTiny,
-              const Divider(),
-              verticalSpaceSmall,
-              Expanded(
-                child: buildBody(model),
-              ),
-            ],
-          ),
-        ),
-      ),
+                    Text(
+                      '  item(s)',
+                      style: AppStyle.kSubHeading,
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                verticalSpaceTiny,
+                const Divider(),
+                verticalSpaceSmall,
+                Expanded(
+                  child: buildBody(model),
+                ),
+              ],
+            ),
+          )),
       viewModelBuilder: () => TopItemViewModel(
         itemName: widget.itemName,
         isStates: widget.isStates,
@@ -70,7 +69,7 @@ class _TopItemViewState extends State<TopItemView> {
     return ResavationAppBar(
       title: widget.itemName,
       backEnabled: true,
-      centerTitle: false,
+      centerTitle: true,
     );
   }
 

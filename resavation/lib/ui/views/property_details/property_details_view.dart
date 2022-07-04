@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_details/property_details_viewmodel.dart';
-
+import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
+
+import '../messages/messages_viewmodel.dart';
 
 class PropertyDetailsView extends StatelessWidget {
   final Property? passedProperty;
-  final BookedPropertyContent? propertyContent;
 
-  const PropertyDetailsView(
-      {Key? key, required this.passedProperty, this.propertyContent})
+  const PropertyDetailsView({Key? key, required this.passedProperty})
       : super(key: key);
 
   @override
@@ -45,19 +43,6 @@ class PropertyDetailsView extends StatelessWidget {
   }
 
   Widget buildBottomBar(PropertyDetailsViewModel model, BuildContext context) {
-    if (propertyContent == null) {
-      return buildBottomBar1(model);
-    } else if (propertyContent?.status == true) {
-      return buildBottomBar2(model, context);
-    } else {
-      return const SizedBox(
-        height: 0,
-        width: double.infinity,
-      );
-    }
-  }
-
-  Padding buildBottomBar1(PropertyDetailsViewModel model) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -66,106 +51,19 @@ class PropertyDetailsView extends StatelessWidget {
           Expanded(
             child: ResavationElevatedButton(
               child: Text("Book Appointment"),
-              onPressed: () => model.goToBookAppointmentPage(),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
           horizontalSpaceMedium,
           Expanded(
             child: ResavationElevatedButton(
-              child: Text("Book Property"),
+              child: Text("Pay Now"),
               onPressed: () => model.goToDatePickerView(),
             ),
           )
         ],
       ),
     );
-  }
-
-  Widget buildBottomBar2(PropertyDetailsViewModel model, BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      child: ResavationElevatedButton(
-        child: Text("Make Payment"),
-        onPressed: () {
-          showPaymentDialog(model, context);
-        },
-      ),
-    );
-  }
-
-  showPaymentDialog(
-      PropertyDetailsViewModel model, BuildContext context) async {
-    Dialog dialog = Dialog(
-      backgroundColor: Colors.black,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      elevation: 5,
-      child: Material(
-          child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Property Payment',
-              style: AppStyle.kBodyRegularBlack16W600,
-            ),
-            verticalSpaceTiny,
-            Text(
-              'Please note that you would be enrolled in a payment plan and ${propertyContent?.paymentType} payments of NGN ${propertyContent?.amount} would be made.\n\nBefore charging, you will always receive a confirmation email that allows you to cancel at any time. ',
-              textAlign: TextAlign.start,
-              style: AppStyle.kBodyRegularBlack14,
-            ),
-            verticalSpaceSmall,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                  child: Text(
-                    'Proceed',
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: Text(
-                    'Cancel',
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      )),
-    );
-
-    final shouldPay = await showGeneralDialog<bool>(
-      context: context,
-      barrierLabel: "Property Payment",
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 500),
-      pageBuilder: (_, __, ___) => dialog,
-      transitionBuilder: (_, anim, __, child) => FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
-        child: child,
-      ),
-    );
-
-    if (shouldPay == true) {
-      model.goToMakePayment(propertyContent);
-    }
   }
 
   Widget buildLocation(PropertyDetailsViewModel model) {
@@ -294,67 +192,64 @@ class PropertyDetailsView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               InkWell(
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: ResavationImage(
-                      image: passedProperty?.user?.imageUrl ?? ''),
+                child: CircleAvatar(
+                  radius: 25, // Image radius
+                  backgroundImage: AssetImage(Assets.profile_image2),
                 ),
-                onTap: () =>
-                    model.goToPropertyOwnersProfileView(passedProperty?.user),
+                onTap: () => model.goToPropertyOwnersProfileView(),
               ),
               horizontalSpaceSmall,
-              InkWell(
-                onTap: () {
-                  model.goToPropertyOwnersProfileView(passedProperty?.user);
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      (passedProperty?.user?.firstName ?? '') +
-                          ' ' +
-                          (passedProperty?.user?.lastName ?? ''),
-                      style: AppStyle.kBodyRegularBlack16W600,
-                    ),
-                    Text(
-                      'View Profile',
-                      style: AppStyle.kBodyRegularBlack14
-                          .copyWith(color: kPrimaryColor),
-                    ),
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    " Dummy David Strang",
+                    style: AppStyle.kBodyRegularBlack16W600,
+                  ),
+                  Text(
+                    "",
+                    style: AppStyle.kBodyRegularBlack14,
+                  ),
+                ],
               ),
               const Spacer(),
+              GestureDetector(
+                onTap: () async {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Settig up chatroom, please wait')),
+                  );
+                  final chatModel = await MessagesViewModel.createChat(
+                      'otitemitope6@gmail.com',
+                      " property?.ownerProfileName ?? ''",
+                      'https://firebasestorage.googleapis.com/v0/b/oh2020-a8512.appspot.com/o/images%2Fothers%2FEXCEEDING%20EXPECTATIONS%20DAY%202%2F49834?alt=media&token=6a9c3239-f222-44d1-ab9f-a87a9a3fd960');
+                  model.gotToChatRoomView(chatModel);
+                },
+                child: Icon(
+                  Icons.message_rounded,
+                  color: Colors.black38,
+                  size: 20,
+                ),
+              ),
               horizontalSpaceSmall,
               GestureDetector(
                 onTap: () async {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Setting up chatroom, please wait')),
                   );
-                  final error = await model.gotToChatRoomView();
-                  if (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            'You can not create a chat room with your self'),
-                      ),
-                    );
-                  }
+                  final chatModel = await MessagesViewModel.createChat(
+                      'otitemitope6@gmail.com',
+                      " property?.ownerProfileName ?? ''",
+                      'https://firebasestorage.googleapis.com/v0/b/oh2020-a8512.appspot.com/o/images%2Fothers%2FEXCEEDING%20EXPECTATIONS%20DAY%202%2F49834?alt=media&token=6a9c3239-f222-44d1-ab9f-a87a9a3fd960');
+                  model.gotToChatRoomView(chatModel);
                 },
                 child: Icon(
-                  Icons.message_rounded,
-                  size: 25,
-                  color: kBlack,
+                  Icons.call,
+                  size: 20,
+                  color: Colors.black38,
                 ),
               ),
             ],
           ),
-          verticalSpaceMedium,
           PropertyDetailItem(
               title: 'Description',
               description: model.property?.description ?? ''),
@@ -413,6 +308,43 @@ class PropertyDetailsView extends StatelessWidget {
               .showSnackBar(SnackBar(content: Text(exception.toString())));
         }
       },
+    );
+  }
+}
+
+class AmenitiesItem extends StatelessWidget {
+  const AmenitiesItem({
+    Key? key,
+    this.title = '',
+    required this.iconData,
+  }) : super(key: key);
+  final String title;
+  final IconData iconData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Icon(
+            iconData,
+            color: kGray,
+          ),
+          horizontalSpaceSmall,
+          Text(
+            title,
+            style: AppStyle.kBodySmallRegular12W500,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -4,8 +4,8 @@ class AvailabilityPeriods {
   int? id;
   DateTime? createdAt;
   DateTime? updatedAt;
-  DateTime? startDate;
-  DateTime? endDate;
+  String? startDate;
+  String? endDate;
 
   AvailabilityPeriods({
     this.id,
@@ -29,10 +29,18 @@ class AvailabilityPeriods {
       updatedAt: data['updatedAt'] == null
           ? null
           : DateTime.parse(data['updatedAt'] as String),
-      startDate: DateTime.parse(data['startDate'] as String),
-      endDate: DateTime.parse(data['endDate'] as String),
+      startDate: data['startDate'] as String?,
+      endDate: data['endDate'] as String?,
     );
   }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'createdAt': createdAt?.toIso8601String(),
+        'updatedAt': updatedAt?.toIso8601String(),
+        'startDate': startDate,
+        'endDate': endDate,
+      };
 
   /// `dart:convert`
   ///
@@ -42,12 +50,17 @@ class AvailabilityPeriods {
         json.decode(data) as Map<String, dynamic>);
   }
 
+  /// `dart:convert`
+  ///
+  /// Converts [AvailabilityPeriods] to a JSON string.
+  String toJson() => json.encode(toMap());
+
   AvailabilityPeriods copyWith({
     int? id,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? startDate,
-    DateTime? endDate,
+    String? startDate,
+    String? endDate,
   }) {
     return AvailabilityPeriods(
       id: id ?? this.id,

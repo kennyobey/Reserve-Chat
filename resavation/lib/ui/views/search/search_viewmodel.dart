@@ -32,12 +32,19 @@ class SearchViewModel extends BaseViewModel {
     return allProperty;
   }
 
+  TextEditingController textFieldController = TextEditingController();
+
   @override
   void dispose() {
+    textFieldController.dispose();
     super.dispose();
   }
 
   SearchViewModel() {
+    textFieldController.addListener(() {
+      searchProperty(textFieldController.text);
+    });
+
     getInitData();
   }
   attachScrollListener({String query = ''}) {
@@ -127,38 +134,45 @@ class SearchViewModel extends BaseViewModel {
 
   // method behind searching
   void searchProperty(String query) async {
-    if (query.isEmpty) {
-      getInitData();
-    } else {
-      page = 0;
-      propertySearches.clear();
-      isLoading = true;
-      isLoadingFromSearch = true;
-      allLoaded = false;
+    page = 0;
+    propertySearches.clear();
+    isLoading = true;
+    isLoadingFromSearch = true;
+    allLoaded = false;
+    hasErrorOnData = false;
+    notifyListeners();
+
+    try {
+      final propertySearch = await httpService.getSearchProperty(
+          location: query, page: page, size: size);
+      allLoaded =
+          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
+      propertySearches.add(propertySearch);
+
       hasErrorOnData = false;
-      notifyListeners();
-
-      try {
-        final propertySearch = await httpService.getSearchProperty(
-          text: query,
-          page: page,
-          size: size,
-        );
-        allLoaded =
-            (propertySearch.last ?? false) || (propertySearch.empty ?? false);
-        propertySearches.add(propertySearch);
-
-        hasErrorOnData = false;
-        attachScrollListener(
-          query: query,
-        );
-      } catch (exception) {
-        hasErrorOnData = true;
-      }
-      isLoading = false;
-      isLoadingOldData = false;
-      notifyListeners();
+      attachScrollListener(
+        query: query,
+      );
+    } catch (exception) {
+      hasErrorOnData = true;
     }
+    isLoading = false;
+    isLoadingOldData = false;
+    notifyListeners();
+  }
+
+  // drop-down button logic
+  String? sortByType;
+  List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+  ];
+
+  void onSortByChanged(value) {
+    sortByType = value as String;
+    notifyListeners();
   }
 
   onFavoriteTap(Property selectedProperty) async {

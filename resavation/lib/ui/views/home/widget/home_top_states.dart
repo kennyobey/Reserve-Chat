@@ -100,11 +100,11 @@ class HomeTopStates extends ViewModelWidget<HomeViewModel> {
 
   SingleChildScrollView buildLoadingBody(BuildContext context) {
     final allContent = [
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
+      TopStatesContent(cityName: 'Loading...'),
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -115,7 +115,7 @@ class HomeTopStates extends ViewModelWidget<HomeViewModel> {
             TopCityCard(
               image: '',
               numberOfProperties: 0,
-              location: content.state ?? '',
+              location: content.cityName ?? '',
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Loading data, please wait')));
@@ -142,9 +142,9 @@ class HomeTopStates extends ViewModelWidget<HomeViewModel> {
                   TopCityCard(
                     image: '',
                     numberOfProperties: content.numberOfProperties ?? 0,
-                    location: content.state ?? '',
+                    location: content.cityName ?? '',
                     onTap: () {
-                      model.goToTopItemsView(content.state ?? '', true);
+                      model.goToTopItemsView(content.cityName ?? '', true);
                     },
                   ),
                   horizontalSpaceSmall,
