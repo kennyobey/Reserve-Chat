@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-=======
 // ignore_for_file: deprecated_member_use
 
 import 'dart:ffi';
 import 'dart:ui';
 
->>>>>>> test
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -16,9 +13,10 @@ import 'package:resavation/ui/views/property_owner_homepage/property_owner_homep
 import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/dump_widgets/list_space_button.dart';
 import '../../shared/dump_widgets/resavation_image.dart';
 
-class PropertyOwnerHomePageView extends StatelessWidget {
+class PropertyOwnerHomePageView extends StatefulWidget {
   const PropertyOwnerHomePageView({Key? key}) : super(key: key);
 
   @override
@@ -196,12 +194,22 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: kGray),
-                  borderRadius: BorderRadius.circular(5.0),
-                  color: kBlack,
+                padding: EdgeInsets.all(15.0),
+                decoration: new BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/Group 59.png"),
+                  ),
+
+                  //resavation\assets\images\lady image.jpg
                 ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(color: kGray),
+                //   borderRadius: BorderRadius.circular(5.0),
+                //   color: kBlack,
+                // ),
                 width: double.infinity,
                 height: 135.0,
                 child: Column(
@@ -213,7 +221,7 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
                       style: TextStyle(color: kWhite),
                     ),
                     verticalSpaceSmall,
-                    ResavationElevatedButton(
+                    ListSpaceResavationElevatedButton(
                       child: Text("List your space"),
                       onPressed: () async {
                         final isUserRestoring =
@@ -265,11 +273,23 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
                 ),
               ),
               verticalSpaceRegular,
-              ListingCard(),
+              ListingCard(
+                onTap: () {
+                  model.getBookedProperty();
+                },
+              ),
               verticalSpaceTiny,
-              ListingCard(),
+              ListingCard(
+                onTap: () {
+                  model.UserProfilePageView();
+                },
+              ),
               verticalSpaceTiny,
-              ListingCard(),
+              ListingCard(
+                onTap: () {
+                  model.UserProfilePageView();
+                },
+              ),
             ],
           ),
         ),
@@ -327,84 +347,105 @@ class ResavationListSpace extends StatelessWidget {
 }
 
 class ListingCard extends StatelessWidget {
-  get image => null;
+  ListingCard({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
+
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
           border: Border.all(color: kGray),
           borderRadius: new BorderRadius.circular(5.0),
         ),
         width: MediaQuery.of(context).size.width,
         height: 80,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ListTile(
-                leading: Container(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6), //or 15.0
-                    child: Image.asset(
-                      Assets.profile_image4,
-                      width: 80,
-                      height: 80,
-                    ),
-                  ),
+        child: ListTile(
+          contentPadding: EdgeInsets.zero,
+          // minVerticalPadding: 0,
+          leading: Container(
+            height: 75,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6), //or 15.0
+              child: GestureDetector(
+                child: Image.asset(
+                  Assets.profile_image4,
+                  fit: BoxFit.fill,
+                  //width: 80,
+                  height: 80,
                 ),
-                title: Text(
-                  "Adeyemo Stphen",
-                  style: AppStyle.kBodySmallRegular11W500,
-                ),
-                subtitle: Text(
-                  "SeedBuilderHub",
-                  style: AppStyle.kBodySmallRegular10W400,
-                ),
-                trailing: Container(
-                  width: 80,
-                  height: 30,
-                  child: FlatButton(
-                    child: Text(
-                      'Accept',
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-                    color: Colors.blueAccent,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      bookApartment(context);
-                    },
-                  ),
-                ),
-              )
-            ]));
+                onTap: onTap,
+              ),
+            ),
+          ),
+          title: Text(
+            "Adeyemo Stphen",
+            style: AppStyle.kBodySmallRegular11W500,
+          ),
+          subtitle: Text(
+            "SeedBuilderHub",
+            style: AppStyle.kBodySmallRegular10W400,
+          ),
+          trailing: Container(
+            width: 80,
+            height: 30,
+            child: FlatButton(
+              child: Text(
+                'View',
+                style: TextStyle(fontSize: 12.0),
+              ),
+              color: Colors.blueAccent,
+              textColor: Colors.white,
+              onPressed: () {
+                bookApartment(context);
+              },
+            ),
+          ),
+        )
+
+        //  Column(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       ])
+        );
   }
 
   void bookApartment(BuildContext context) {
     var alertdialog = Dialog(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
+        width: MediaQuery.of(context).size.height * 0.45,
+        height: 150,
+        margin: EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
+
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: new BorderRadius.circular(15.0),
         ),
-        width: double.infinity,
-        height: 240,
+        // width: double.infinity,
+        //height: 240,
         child: Center(
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     children: [
                       Container(
-                        height: 100,
+                        // color: Colors.red,
+                        height: 90,
                         width: 100,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6), //or 15.0
+                          borderRadius: BorderRadius.circular(12), //or 15.0
                           child: Image.asset(
                             Assets.profile_image4,
-                            width: 50,
-                            height: 50,
+                            fit: BoxFit.contain,
+                            // width: 80,
+                            // height: 80,
                           ),
                         ),
                       ),
@@ -457,14 +498,6 @@ class ListingCard extends StatelessWidget {
                   ),
                 ],
               ),
-              verticalSpaceSmall,
-              ResavationButton(
-                title: "Identity Document",
-                buttonColor: kWhite,
-                titleColor: kBlack,
-                borderColor: kGray,
-              ),
-              verticalSpaceSmall,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
