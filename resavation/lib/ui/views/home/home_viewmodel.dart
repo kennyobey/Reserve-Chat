@@ -70,8 +70,4 @@ class HomeViewModel extends BaseViewModel {
   void goToMessage() {
     _navigationService.navigateTo(Routes.messagesView);
   }
-
-  void goToUserProfileView() {
-    _navigationService.navigateTo(Routes.userProfileView);
-  }
 }

@@ -19,34 +19,17 @@ class EditProfileViewModel extends BaseViewModel {
 
   final _httpService = locator<HttpService>();
 
-  String? selectedGenderValue = 'Male';
-  String? selectedOccupationValue = 'Student';
-
   final userFirstNameController = TextEditingController();
   final userLastNameController = TextEditingController();
-  //final userEmailController = TextEditingController();
   final _userService = locator<UserTypeService>();
   LoginModel get userData => _userService.userData;
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }
 
-  void onSelectedGender(value) {
-    gender = value;
-    notifyListeners();
-  }
-
-  void onSelectedOccupation(value) {
-    gender = value;
-    notifyListeners();
-  }
-
   void goToMainView() {
     _navigationService.navigateTo(Routes.mainView);
   }
-
-  List<String> gender = ['Male', 'Female'];
-  List<String> occupation = ['Student', 'Self Employed', 'Employed'];
 
   Future<String> showFilePicker() async {
     try {
@@ -103,13 +86,5 @@ class EditProfileViewModel extends BaseViewModel {
     } catch (e) {
       return Future.error(e.toString());
     }
-  }
-
-  void goToVerificationPage() {
-    _navigationService.navigateTo(Routes.verificationPage);
-  }
-
-  void goToUserProfileView() {
-    _navigationService.navigateTo(Routes.userProfileView);
   }
 }

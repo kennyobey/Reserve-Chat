@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:resavation/services/core/upload_type_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 
-import '../../model/property_cotroller_model/booked_propety_model.dart';
 import '../../model/top_categories_model/top_categories_model.dart';
 
 class HttpService {
@@ -729,52 +727,6 @@ class HttpService {
                 )
                 .toList() ??
             [];
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
-  // Future<List<String>> getBookedProperty() async {
-  //   try {
-  //     final response = await http.get(
-  //         Uri.http(
-  //           requestSite,
-  //           "/api/v1/owner/property/booked/all",
-  //         ),
-  //         headers: <String, String>{
-  //           'Content-Type': 'application/json;charset=UTF-8'
-  //         });
-  //     if (response.statusCode <= 299) {
-  //       final decodedMessage = json.decode(response.body);
-  //       return (decodedMessage['booked'] as List<dynamic>?)
-  //               ?.map(
-  //                 (e) => e.toString(),
-  //               )
-  //               .toList() ??
-  //           [];
-  //     } else {
-  //       return Future.error(json.decode(response.body)['message'] ?? '');
-  //     }
-  //   } catch (exception) {
-  //     return Future.error("Error occurred in communicating with the server");
-  //   }
-  // }
-  Future<SearchModel> getBookedProperty() async {
-    try {
-      var response = await http.get(
-        Uri.http(requestSite, "/api/v1/owner/property/booked/all",
-            <String, String>{}),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      //log(response.body);
-      if (response.statusCode <= 299) {
-        return SearchModel.fromJson(response.body);
       } else {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
