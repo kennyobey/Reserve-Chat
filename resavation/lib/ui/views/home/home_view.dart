@@ -5,6 +5,7 @@ import 'package:resavation/ui/shared/smart_widgets/find_your_location.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/home/home_viewmodel.dart';
+import 'package:resavation/ui/views/home/widget/home_user_booked_property.dart';
 import 'package:stacked/stacked.dart';
 
 import 'widget/home_top_categories.dart';
@@ -64,6 +65,8 @@ class HomeView extends StatelessWidget {
           HomeTopStates(),
           verticalSpaceMedium,
           HomeUserAppointment(),
+          verticalSpaceMedium,
+          HomeUserBookedProperty(),
           verticalSpaceMedium,
         ],
       ),

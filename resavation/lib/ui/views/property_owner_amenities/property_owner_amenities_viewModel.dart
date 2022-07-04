@@ -4,7 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter/material.dart';
 import '../../../model/login_model.dart';
 import '../../../services/core/http_service.dart';
-import '../../../services/core/upload_type_service.dart';
+import 'package:resavation/services/core/upload_service.dart';
 
 import '../../../services/core/user_type_service.dart';
 
@@ -13,24 +13,28 @@ class PropertyOwnerAmenitiesViewModel extends BaseViewModel {
   final httpService = locator<HttpService>();
   final _userService = locator<UserTypeService>();
   LoginModel get userData => _userService.userData;
-  final propertyOwnerUploadModel = locator<UploadTypeService>();
+  final propertyOwnerUploadModel = locator<UploadService>();
 
   List<String> amenities = [];
   List<String> rules = [];
 
   PropertyOwnerAmenitiesViewModel() {
-    propertyOwnerUploadModel.clearStage5();
+    if (propertyOwnerUploadModel.isRestoringData) {
+      setUpPreviousData();
+    } else {
+      propertyOwnerUploadModel.clearStage5();
+    }
   }
 
-  void PropertyOwnerVerificationView(BuildContext context) async {
+  setUpPreviousData() {
+    amenities = propertyOwnerUploadModel.amenities;
+    rules = propertyOwnerUploadModel.rules;
+    notifyListeners();
+  }
+
+  void updateData() {
     propertyOwnerUploadModel.amenities = amenities;
     propertyOwnerUploadModel.rules = rules;
-
-    // _navigationService.navigateTo(Routes.propertyOwnerVerificationView);
-  }
-
-  void PropertyOwnerAcceptbuttonView() {
-    // _navigationService.navigateTo(Routes.propertyOwnerAcceptbuttonView);
   }
 
   deleteAmenity(String ameniti) {

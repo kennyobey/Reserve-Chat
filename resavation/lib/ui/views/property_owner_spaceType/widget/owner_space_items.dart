@@ -28,7 +28,7 @@ class AmenitiesSelection extends StatelessWidget {
           ),
         ),
         horizontalSpaceMedium,
-        buildIcons(Icons.remove_circle, onNegativeTap),
+        buildIcons(Icons.remove_rounded, onNegativeTap),
         horizontalSpaceSmall,
         Text(
           value.toString(),
@@ -50,13 +50,13 @@ class AmenitiesSelection extends StatelessWidget {
           width: 22,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: kPrimaryColor, width: 1),
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey, width: 1),
           ),
           child: Icon(
             icon,
-            size: 20,
-            color: kPrimaryColor,
+            size: 18,
+            color: Colors.grey,
           ),
         ));
   }
@@ -99,62 +99,17 @@ class FilterListTile extends StatelessWidget {
 
   Widget buildButton(String title, bool value) {
     final bool isSelected = value == selectedValue;
-    return InkWell(
-      onTap: () {
+
+    return CheckboxListTile(
+      title: Text(
+        title,
+        style: AppStyle.kBodyRegularBlack14,
+      ),
+      value: isSelected, // Displays checked or unchecked value
+      controlAffinity: ListTileControlAffinity.platform,
+      onChanged: (_) {
         onChanged(value);
       },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        padding: EdgeInsets.only(right: 20, left: isSelected ? 20 : 10),
-        margin: const EdgeInsets.only(top: 8, left: 3, right: 3),
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: isSelected
-                ? kPrimaryColor.withOpacity(0.8)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(5),
-            boxShadow: [
-              BoxShadow(
-                color:
-                    isSelected ? kBlack.withOpacity(0.2) : Colors.transparent,
-                blurRadius: 0.5,
-                offset: Offset(0.2, 0.2),
-              )
-            ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: AppStyle.kBodyRegularBlack14
-                  .copyWith(color: isSelected ? kWhite : kBlack),
-            ),
-            Container(
-              // margin: const EdgeInsets.only(right: 20),
-              height: 18,
-              width: 18,
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: const Color(0xff3e3e3e).withOpacity(0.4),
-                  width: 1,
-                ),
-              ),
-              child: Container(
-                margin: const EdgeInsets.all(1.3),
-                height: 12,
-                width: 12,
-                decoration: BoxDecoration(
-                  color: isSelected ? kSecondaryColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 
