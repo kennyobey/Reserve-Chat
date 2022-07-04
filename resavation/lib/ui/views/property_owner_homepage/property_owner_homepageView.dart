@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ffi';
+import 'dart:ui';
+
+>>>>>>> test
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -13,6 +21,12 @@ import '../../shared/dump_widgets/resavation_image.dart';
 class PropertyOwnerHomePageView extends StatelessWidget {
   const PropertyOwnerHomePageView({Key? key}) : super(key: key);
 
+  @override
+  State<PropertyOwnerHomePageView> createState() =>
+      _PropertyOwnerHomePageViewState();
+}
+
+class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
   Future<bool?> showListSpaceDialog(BuildContext context) async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.black,
@@ -214,7 +228,6 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                           model.goToPropertyOwnerSpaceTypeView(isUserRestoring);
                         }
                       },
-
                       //  borderColor: kp,
                     ),
                   ],

@@ -10,6 +10,10 @@ environment:
 dependencies:
   agora_rtc_engine: ^5.2.0
   analyzer: ^3.4.1
+<<<<<<< HEAD
+=======
+
+>>>>>>> test
   animations: ^2.0.2
   badges: ^2.0.2
   built_value: ^8.1.3

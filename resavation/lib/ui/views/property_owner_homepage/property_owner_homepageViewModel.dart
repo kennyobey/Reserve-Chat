@@ -10,6 +10,7 @@ import '../../../services/core/user_type_service.dart';
 class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserTypeService>();
+  final requestSite = "resavation-backend.herokuapp.com";
   final _uploadService = locator<UploadService>();
 
   LoginModel get userData => _userService.userData;
