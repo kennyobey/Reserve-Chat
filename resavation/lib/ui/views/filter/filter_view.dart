@@ -98,13 +98,6 @@ class FilterView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Let Type',
-              style: AppStyle.kBodyRegularW500,
-            ),
-            verticalSpaceSmall,
-            buildLetTypeList(),
-            verticalSpaceMedium,
-            Text(
               'Property Type',
               style: AppStyle.kBodyRegularW500,
             ),
@@ -163,21 +156,6 @@ class FilterView extends StatelessWidget {
         AvailabilityListTile(
           title: 'More than 1Year',
           value: Availability.More,
-        ),
-      ],
-    );
-  }
-
-  Column buildLetTypeList() {
-    return Column(
-      children: [
-        LetTypeListTile(
-          title: LetType.Rent.name,
-          value: LetType.Rent,
-        ),
-        LetTypeListTile(
-          title: LetType.Sale.name,
-          value: LetType.Sale,
         ),
       ],
     );
@@ -291,29 +269,6 @@ class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
       controlAffinity: ListTileControlAffinity.platform,
       onChanged: (_) {
         model.onDurationChanged(value);
-      },
-    );
-  }
-}
-
-class LetTypeListTile extends ViewModelWidget<FilterViewModel> {
-  const LetTypeListTile({required this.title, required this.value});
-
-  final String title;
-  final LetType value;
-
-  @override
-  Widget build(BuildContext context, model) {
-    final isActive = model.letTypes.contains(value);
-    return CheckboxListTile(
-      title: Text(
-        title,
-        style: AppStyle.kBodyRegularBlack14,
-      ), // Displays the option
-      value: isActive, // Displays checked or unchecked value
-      controlAffinity: ListTileControlAffinity.platform,
-      onChanged: (_) {
-        model.onLetChanged(value);
       },
     );
   }

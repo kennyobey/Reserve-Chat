@@ -62,14 +62,8 @@ class TopItemViewModel extends BaseViewModel {
     notifyListeners();
 
     try {
-      final categoryFuture = httpService.getPropertiesByCategories(
-          category: itemName, page: page, size: size);
-
-      final stateFuture = httpService.getPropertiesByStates(
-          state: itemName, page: page, size: size);
-
-      final propertySearch = await (isStates ? stateFuture : categoryFuture);
-
+      final propertySearch =
+          await httpService.getAllProperties(page: page, size: size);
       allLoaded =
           (propertySearch.last ?? false) || (propertySearch.empty ?? false);
       propertySearches.add(propertySearch);
@@ -90,16 +84,12 @@ class TopItemViewModel extends BaseViewModel {
 
     notifyListeners();
     try {
-      final categoryFuture = httpService.getPropertiesByCategories(
-          category: itemName, page: page, size: size);
+      final propertySearch =
+          await httpService.getAllProperties(page: page, size: size);
+      propertySearches.add(propertySearch);
 
-      final stateFuture = httpService.getPropertiesByStates(
-          state: itemName, page: page, size: size);
-
-      final propertySearch = await (isStates ? stateFuture : categoryFuture);
       allLoaded =
           (propertySearch.last ?? false) || (propertySearch.empty ?? false);
-      propertySearches.add(propertySearch);
     } catch (exception) {
       allLoaded = true;
     }

@@ -59,9 +59,10 @@ class _PropertyOwnerAmenitiesViewState
                 child: ResavationElevatedButton(
                     child: Text("Upload"),
                     onPressed: () {
-                      model.updateData();
+                      model.PropertyOwnerVerificationView(context);
 
                       showUploadItemDialog(model);
+                      // model.PropertyOwnerAcceptbuttonView();
                     }),
               )
             ],
@@ -224,7 +225,7 @@ class _PropertyOwnerAmenitiesViewState
             ),
             verticalSpaceTiny,
             Text(
-              'Uploading property, please do not cancel until success',
+              'Uploading propery, please do not cancel until success',
               textAlign: TextAlign.center,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -279,7 +280,8 @@ class _PropertyOwnerAmenitiesViewState
 
       Navigator.of(context).pop();
 
-      showSucessDialog(model);
+      model.propertyOwnerUploadModel.clearStage1();
+      model.navigationService.clearStackAndShow(Routes.mainView);
     } catch (exception) {
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -290,68 +292,6 @@ class _PropertyOwnerAmenitiesViewState
         ),
       );
     }
-  }
-
-  showSucessDialog(PropertyOwnerAmenitiesViewModel model) async {
-    Dialog dialog = Dialog(
-      backgroundColor: Colors.black,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      elevation: 5,
-      child: Material(
-          child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Property Uploaded',
-              style: AppStyle.kBodyRegularBlack16W600,
-            ),
-            verticalSpaceTiny,
-            Text(
-              'Your property has been successfully posted and will be shown after it has been validated by the administrator. ',
-              textAlign: TextAlign.start,
-              style: AppStyle.kBodyRegularBlack14,
-            ),
-            verticalSpaceSmall,
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'Okay',
-                ),
-              ),
-            ),
-          ],
-        ),
-      )),
-    );
-
-    await showGeneralDialog(
-      context: context,
-      barrierLabel: "Upload Property Success",
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 500),
-      pageBuilder: (_, __, ___) => dialog,
-      transitionBuilder: (_, anim, __, child) => FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
-        child: child,
-      ),
-    );
-
-    model.propertyOwnerUploadModel.clearStage1();
-    model.navigationService.clearStackAndShow(Routes.mainView);
   }
 }
 

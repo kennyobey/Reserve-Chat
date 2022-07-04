@@ -7,12 +7,12 @@ import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'package:resavation/services/core/upload_service.dart';
+import '../../../services/core/upload_type_service.dart';
 
 class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _httpService = locator<HttpService>();
-  final uploadTypeService = locator<UploadService>();
+  final uploadTypeService = locator<UploadTypeService>();
   final registrationFormKey = GlobalKey<FormState>();
   late Timer timer;
 
@@ -75,36 +75,8 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   int noOfBathroom = 0;
   int numberOfCarSLot = 0;
 
-  setUpPreviousData() {
-    this.liveInSpace = uploadTypeService.liveInSpace;
-    this.isSpaceServiced = uploadTypeService.isSpaceServiced;
-    this.isSpaceFurnished = uploadTypeService.isSpaceFurnished;
-    propertyStyleValue = uploadTypeService.propertyStyle;
-
-    final propertyCategory = uploadTypeService.propertyCategory;
-    if (propertyCategory == propertyCategories[0]) {
-      propertyTypeValue = uploadTypeService.residentialPropertyType;
-    } else if (propertyCategory == propertyCategories[1]) {
-      propertyTypeValue = uploadTypeService.commercialPropertyType;
-    } else if (propertyCategory == propertyCategories[2]) {
-      propertyTypeValue = uploadTypeService.industrialPropertyType;
-    } else if (propertyCategory == propertyCategories[3]) {
-      propertyTypeValue = uploadTypeService.retailPropertyType;
-    }
-
-    isCategoryEnabled = uploadTypeService.propertyCategory != null;
-    noOfBedroom = uploadTypeService.noOfBedroom;
-    noOfBathroom = uploadTypeService.noOfBathroom;
-    numberOfCarSLot = uploadTypeService.numberOfCarSLot;
-    notifyListeners();
-  }
-
   PropertyOwnerSpaceTypeViewModel() {
-    if (uploadTypeService.isRestoringData) {
-      setUpPreviousData();
-    } else {
-      uploadTypeService.clearStage1();
-    }
+    uploadTypeService.clearStage1();
     getData();
   }
 

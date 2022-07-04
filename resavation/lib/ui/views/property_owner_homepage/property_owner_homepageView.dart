@@ -1,3 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -12,131 +16,6 @@ import '../../shared/dump_widgets/resavation_image.dart';
 
 class PropertyOwnerHomePageView extends StatelessWidget {
   const PropertyOwnerHomePageView({Key? key}) : super(key: key);
-
-  Future<bool?> showListSpaceDialog(BuildContext context) async {
-    Dialog dialog = Dialog(
-      backgroundColor: Colors.black,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      elevation: 5,
-      child: Material(
-          child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Property Upload',
-              style: AppStyle.kBodyRegularBlack16W600,
-            ),
-            verticalSpaceTiny,
-            Text(
-              'Do you want to list a new property or continue from your previously saved property?',
-              textAlign: TextAlign.start,
-              style: AppStyle.kBodyRegularBlack14,
-            ),
-            verticalSpaceSmall,
-            ResavationElevatedButton(
-              child: Text('Start New Listing'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
-            verticalSpaceSmall,
-            ResavationElevatedButton(
-              child: Text('Resume Previous Listing'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
-        ),
-      )),
-    );
-
-    final isRestoring = await showGeneralDialog<bool>(
-      context: context,
-      barrierLabel: "Property Upload",
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 500),
-      pageBuilder: (_, __, ___) => dialog,
-      transitionBuilder: (_, anim, __, child) => FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
-        child: child,
-      ),
-    );
-    return isRestoring;
-  }
-
-  showLoadingData(BuildContext context) async {
-    Dialog dialog = Dialog(
-      backgroundColor: Colors.black,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      elevation: 5,
-      child: Material(
-          child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 40,
-              width: 40,
-              child: CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.blue,
-                valueColor: AlwaysStoppedAnimation(kWhite),
-              ),
-            ),
-            verticalSpaceMedium,
-            Text(
-              'Property Restoration',
-              style: AppStyle.kBodyRegularBlack16W600,
-            ),
-            verticalSpaceTiny,
-            Text(
-              'Restoring saved property, please do not cancel until success',
-              textAlign: TextAlign.center,
-              style: AppStyle.kBodyRegularBlack14,
-            ),
-          ],
-        ),
-      )),
-    );
-
-    showGeneralDialog(
-      context: context,
-      barrierLabel: "Property Restore",
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 500),
-      pageBuilder: (_, __, ___) => dialog,
-      transitionBuilder: (_, anim, __, child) => FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
-        child: child,
-      ),
-    );
-
-    try {
-      //
-    } catch (exception) {
-      return Future.error(
-        exception.toString(),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,18 +80,9 @@ class PropertyOwnerHomePageView extends StatelessWidget {
                     verticalSpaceSmall,
                     ResavationElevatedButton(
                       child: Text("List your space"),
-                      onPressed: () async {
-                        final isUserRestoring =
-                            await showListSpaceDialog(context);
-                        if (isUserRestoring != null) {
-                          if (isUserRestoring) {
-                            await showListSpaceDialog(context);
-                            //todo continue from here.
-                            // restore data from saved location
-                          }
-
-                          model.goToPropertyOwnerSpaceTypeView(isUserRestoring);
-                        }
+                      onPressed: () {
+                        //  model.PropertyOwnerTrackListView();
+                        model.goToPropertyOwnerSpaceTypeView();
                       },
 
                       //  borderColor: kp,

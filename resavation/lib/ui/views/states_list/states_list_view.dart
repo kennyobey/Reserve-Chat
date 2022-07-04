@@ -151,9 +151,9 @@ class StatesListView extends StatelessWidget {
           final topCity = topStates[index];
 
           return LongCategoriesAndStatesCard(
-            onTap: () => model.goToSearchView(topCity.state ?? ''),
+            onTap: () => model.goToSearchView(topCity.cityName ?? ''),
             image: "",
-            title: topCity.state ?? '',
+            title: topCity.cityName ?? '',
             count: "${topCity.numberOfProperties ?? ''} items",
           );
         },
