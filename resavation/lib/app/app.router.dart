@@ -14,7 +14,6 @@ import '../model/appointment.dart';
 import '../model/call_model.dart';
 import '../model/filter/filter.dart';
 import '../model/propety_model/property_model.dart';
-import '../services/core/dojah_verification.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
 import '../ui/views/audio_call/audio_call_view.dart';
@@ -61,8 +60,6 @@ import '../ui/views/signup/signup_view.dart';
 import '../ui/views/startup/startup_view.dart';
 import '../ui/views/states_list/states_list_view.dart';
 import '../ui/views/top_items/top_item_view.dart';
-import '../ui/views/user_profile/user_profile_view.dart';
-import '../ui/views/user_profile_page/user_profile_pageView.dart';
 import '../ui/views/verify_user_account/verify_user_account.dart';
 import '../ui/views/video_call/video_call_view.dart';
 
@@ -129,12 +126,6 @@ class Routes {
       '/property-owner-track-list-view';
   static const String categoriesListView = '/categories-list-view';
   static const String statesListView = '/states-list-view';
-  static const String userProfilePageView = '/user-Profile-page-view';
-  static const String verificationPage = '/verification-page-view';
-  static const String userProfileView = '/user-profile-view';
-
-  //UserProfileView
-
   static const all = <String>{
     startupView,
     mainView,
@@ -184,9 +175,6 @@ class Routes {
     propertyOwnerTrackListView,
     categoriesListView,
     statesListView,
-    userProfilePageView,
-    verificationPage,
-    userProfileView
   };
 }
 
@@ -253,11 +241,7 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerTrackListView),
     RouteDef(Routes.categoriesListView, page: CategoriesListView),
     RouteDef(Routes.statesListView, page: StatesListView),
-    RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
-    RouteDef(Routes.verificationPage, page: VerificationPage),
-    RouteDef(Routes.userProfileView, page: UserProfileView),
   ];
-
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
@@ -616,24 +600,6 @@ class StackedRouter extends RouterBase {
     StatesListView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const StatesListView(),
-        settings: data,
-      );
-    },
-    UserProfilePageView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfilePageView(),
-        settings: data,
-      );
-    },
-    VerificationPage: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const VerificationPage(),
-        settings: data,
-      );
-    },
-    UserProfileView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfileView(),
         settings: data,
       );
     },

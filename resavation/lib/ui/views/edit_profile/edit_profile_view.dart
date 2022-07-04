@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:badges/badges.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
@@ -79,12 +78,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                       ),
                       verticalSpaceMedium,
-                      verticalSpaceMedium,
-                      Text(
-                        'Personal Information Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
                       Text(
                         'Last Name',
                         style: AppStyle.kBodyRegularBlack14W500,
@@ -104,166 +97,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: model.userData.firstName,
                         controller: model.userFirstNameController,
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'About Me',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "I am a student of UNIBEN",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Date of birth',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "22/01/2022",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Phone Number',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "2347032867019",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Gender',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      buildGender(model),
-                      verticalSpaceSmall,
-                      Text(
-                        'Occupation',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      buildOccupation(model),
-                      verticalSpaceMedium,
-                      Text(
-                        'Personal Address Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      Text(
-                        'Country',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'State',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'City',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Ibadan",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Address',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "No 1 Festus Idahosa Street, Molete, Ibadan.",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Postal Code',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "224466",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceMedium,
-                      Text(
-                        'Next of Kin Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'First Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Stephen",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Last Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Adeyemo",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Email',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "adeyemo********8@gmail.com",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Phone number',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "+2347088996756",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Gender',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      buildGender(model),
-                      verticalSpaceSmall,
-                      Text(
-                        'Relationship',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Uncle",
                         hintTextStyle: AppStyle.kSubHeading,
                       ),
                     ],
@@ -402,75 +235,6 @@ class _EditProfileViewState extends State<EditProfileView> {
         opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
         child: child,
       ),
-    );
-  }
-
-  Widget buildGender(EditProfileViewModel model) {
-    String defaultGender = "male";
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-          hint: Text(
-            "Male",
-            style: AppStyle.kBodyRegular,
-          ),
-          items: model.gender
-              .map((item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: AppStyle.kBodyRegular,
-                    ),
-                  ))
-              .toList(),
-          value: model.selectedGenderValue.toString(),
-          onChanged: (value) {
-            model.onSelectedGender(value);
-          },
-          icon: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-          ),
-          buttonWidth: double.infinity,
-          buttonPadding: EdgeInsets.only(left: 18, right: 20),
-          buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.black26,
-            ),
-          )),
-    );
-  }
-
-  Widget buildOccupation(EditProfileViewModel model) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-          hint: Text(
-            "Male",
-            style: AppStyle.kBodyRegular,
-          ),
-          items: model.occupation
-              .map((item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: AppStyle.kBodyRegular,
-                    ),
-                  ))
-              .toList(),
-          value: model.selectedOccupationValue.toString(),
-          onChanged: (value) {
-            model.onSelectedOccupation(value);
-          },
-          icon: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-          ),
-          buttonWidth: double.infinity,
-          buttonPadding: EdgeInsets.only(left: 18, right: 20),
-          buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.black26,
-            ),
-          )),
     );
   }
 }

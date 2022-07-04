@@ -76,7 +76,7 @@ class HomeView extends StatelessWidget {
       backgroundColor: Colors.transparent,
       leading: Center(
         child: GestureDetector(
-          onTap: model.goToUserProfileView,
+          onTap: model.goToEditProfileView,
           child: Container(
             height: 40,
             width: 40,
