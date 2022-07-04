@@ -1,144 +1,134 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
-import 'package:resavation/services/core/paystack_payment.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_searchbar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/booking_submission/booking_submission_viewmodel.dart';
+import 'package:resavation/ui/views/date_picker/date_picker_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class BookingSubmissionView extends StatelessWidget {
   final Property property;
+  final ChoiceOfPayment choiceOfPayment;
   final DateTime startDate;
 
   const BookingSubmissionView({
     Key? key,
     required this.property,
     required this.startDate,
+    required this.choiceOfPayment,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return ViewModelBuilder<BookingSubmissionViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: ResavationAppBar(
           title: "Booking Details",
+          centerTitle: false,
+          backEnabled: true,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Column(
-                  children: [
-                    buildDescription(),
-                    verticalSpaceSmall,
-                    Divider(),
-                    verticalSpaceSmall,
-                    buildItem2(context),
-                    verticalSpaceSmall,
-                    Divider(),
-                    verticalSpaceSmall,
-                    buildCouponCode(),
-                    verticalSpaceSmall,
-                    Divider(),
-                    verticalSpaceSmall,
-                    buildTotal(),
-                  ],
-                ),
-              ),
-            ),
-            verticalSpaceSmall,
-            buildContinueButton(width, context, model),
-            verticalSpaceSmall,
-          ],
-        ),
+        body: buildBody(context, model),
       ),
       viewModelBuilder: () => BookingSubmissionViewModel(),
     );
   }
 
-  Padding buildTotal() {
-    final oCcy = NumberFormat("#,##0.00", "en_US");
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        children: [
-          PaymentDetails(
-            title: 'Discount',
-            percentage: '0%',
+  Column buildBody(BuildContext context, BookingSubmissionViewModel model) {
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(),
+                verticalSpaceTiny,
+                Text(
+                  'Property Description',
+                  style: AppStyle.kBodyRegularBlack16W600,
+                ),
+                verticalSpaceTiny,
+                const Divider(),
+                verticalSpaceTiny,
+                buildDescription(),
+                verticalSpaceMedium,
+                buildCheckInDate(context),
+                verticalSpaceMedium,
+                buildCouponCode(),
+                verticalSpaceMedium,
+                const Divider(),
+                verticalSpaceTiny,
+                Text(
+                  'Payment Summary',
+                  style: AppStyle.kBodyRegularBlack16W600,
+                ),
+                verticalSpaceTiny,
+                const Divider(),
+                verticalSpaceMedium,
+                buildTotal(),
+                verticalSpaceMassive,
+              ],
+            ),
           ),
-          PaymentDetails(
-              title: 'Subtotal',
-              percentage:
-                  '${String.fromCharCode(8358)} ${oCcy.format(property.spacePrice ?? 0)}'),
-          PaymentDetails(
-            title: 'Extra Price',
-            percentage: '0',
-          ),
-          PaymentDetails(
-            title: 'Tax',
-            percentage: '0%',
-          ),
-          verticalSpaceSmall,
-          PaymentDetails(
-            title: 'Payment Amount',
-            percentage:
-                '${String.fromCharCode(8358)} ${oCcy.format(property.spacePrice ?? 0)}',
-            isTotal: true,
-          ),
-        ],
-      ),
+        ),
+        verticalSpaceSmall,
+        buildContinueButton(context, model),
+        verticalSpaceSmall,
+      ],
     );
   }
 
-  Padding buildCouponCode() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Coupon Code',
-            style: AppStyle.kBodyRegularBlack15W500,
-          ),
-          Row(
-            children: [
-              Expanded(
-                  flex: 3,
-                  child: ResavationSearchBar(
-                    text: '',
-                  )),
-              Expanded(
-                  child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 48,
-                  width: 40,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "APPLY",
-                    style: AppStyle.kBodyRegularBlack14.copyWith(color: kWhite),
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        bottomRight: Radius.circular(5)),
-                    color: kPrimaryColor,
-                  ),
-                ),
-              )),
-            ],
-          )
-        ],
-      ),
+  Widget buildTotal() {
+    final oCcy = NumberFormat("#,##0.00", "en_US");
+
+    final subscription = property.subscription;
+    double amount = 0;
+
+    if (choiceOfPayment == ChoiceOfPayment.Monthly) {
+      amount = subscription?.monthlyPrice ?? 0;
+    } else if (choiceOfPayment == ChoiceOfPayment.Quartely) {
+      amount = subscription?.quarterlyPrice ?? 0;
+    } else if (choiceOfPayment == ChoiceOfPayment.Biannually) {
+      amount = subscription?.biannualPrice ?? 0;
+    } else if (choiceOfPayment == ChoiceOfPayment.Annually) {
+      amount = subscription?.annualPrice ?? 0;
+    }
+
+    return PaymentDetails(
+      title: 'Payment Amount',
+      percentage: '${String.fromCharCode(8358)} ${oCcy.format(amount)}',
+      isTotal: true,
+    );
+  }
+
+  Widget buildCouponCode() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(),
+        verticalSpaceTiny,
+        Text(
+          'Coupon Code',
+          style: AppStyle.kBodyRegularBlack16W600,
+        ),
+        verticalSpaceTiny,
+        Text(
+          'If you have a coupon code, please input it below; the coupon will be applied to your current payment. ',
+          style: AppStyle.kBodyRegularBlack14,
+        ),
+        verticalSpaceMedium,
+        ResavationSearchBar(
+          text: '',
+          hintText: 'Coupon',
+        ),
+      ],
     );
   }
 
@@ -146,128 +136,348 @@ class BookingSubmissionView extends StatelessWidget {
     return '${dateTime?.day ?? ''}/${dateTime?.month ?? ''}/${dateTime?.year ?? ''}';
   }
 
-  Padding buildItem2(BuildContext context) {
-    final DateTime? endDate = startDate.add(Duration(days: 365));
-
+  Widget buildCheckInDate(BuildContext context) {
     final startDateAsString = dateAsString(startDate);
-    final endDateAsString = dateAsString(endDate);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        children: [
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(),
+        verticalSpaceTiny,
+        Text(
+          'Check In Date',
+          style: AppStyle.kBodyRegularBlack16W600,
+        ),
+        verticalSpaceTiny,
+        Text(
+          'Please keep in mind that this is subject to change as the landowner(s) decide whether or not to approve your request.',
+          style: AppStyle.kBodyRegularBlack14,
+        ),
+        verticalSpaceMedium,
+        Row(
+          children: [
+            Text(
+              'Selected Date: ',
+              style: AppStyle.kBodyRegularBlack15W500,
+            ),
+            Spacer(),
+            Text(
+              '${startDateAsString}',
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            horizontalSpaceSmall,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(
+                Icons.edit,
+                color: kPrimaryColor,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildDescription() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          child: ResavationImage(
+            image: property.propertyImages?[0].imageUrl ?? '',
+          ),
+          height: 120,
+          width: 120,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        horizontalSpaceTiny,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Name',
+                property.propertyName ?? '',
                 style: AppStyle.kBodyRegularBlack15W500,
               ),
-              Spacer(),
+              verticalSpaceTiny,
               Text(
-                property.city ?? '',
-                style: AppStyle.kBodyRegularBlack14,
+                'Address: ' + (property.address ?? ''),
+                style: AppStyle.kBodySmallRegular,
+              ),
+              Text(
+                'City: ' + (property.city ?? ''),
+                style: AppStyle.kBodySmallRegular,
+              ),
+              Text(
+                'Country: ' + (property.country ?? ''),
+                style: AppStyle.kBodySmallRegular,
+              ),
+              Text(
+                'Surface Area: ' + (property.surfaceArea?.toString() ?? ''),
+                style: AppStyle.kBodySmallRegular,
+              ),
+              Text(
+                'Payment Option: ' + (choiceOfPayment.name),
+                style: AppStyle.kBodySmallRegular,
               ),
             ],
           ),
-          verticalSpaceTiny,
-          Row(
-            children: [
-              Text(
-                'Date',
-                style: AppStyle.kBodyRegularBlack15W500,
-              ),
-              Spacer(),
-              Text(
-                '${startDateAsString} - ${endDateAsString}',
-                style: AppStyle.kBodyRegularBlack14,
-              ),
-              horizontalSpaceSmall,
-              GestureDetector(
-                onTap: () {
+        ),
+      ],
+    );
+  }
+
+  Widget buildContinueButton(
+      BuildContext context, BookingSubmissionViewModel model) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 10,
+        right: 10,
+      ),
+      width: double.infinity,
+      child: ResavationElevatedButton(
+        child: Text('Book Property'),
+        onPressed: () async {
+          final shouldBook = await showConfirmationDialog(context);
+          if (shouldBook) {
+            final wasSuceessful = await showUploadItemDialog(context, model);
+            if (wasSuceessful) {
+              showSucessDialog(context, model);
+            }
+          }
+        },
+      ),
+    );
+  }
+
+  showSucessDialog(
+      BuildContext context, BookingSubmissionViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Property Booked',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'The property has been successfully reserved; you will be contacted once the owners have confirmed it. ',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Edit',
-                  style: AppStyle.kBodyRegularBlack14
-                      .copyWith(color: kPrimaryColor),
+                  'Okay',
                 ),
               ),
-            ],
-          ),
-          verticalSpaceMedium,
-          Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: kGray.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(5)),
-            child: Text(
-              'Number of Day: 365',
+            ),
+          ],
+        ),
+      )),
+    );
+
+    await showGeneralDialog(
+      context: context,
+      barrierLabel: "Book Property Success",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+
+    model.goToHomePage();
+  }
+
+  Future<bool> showUploadItemDialog(
+      BuildContext context, BookingSubmissionViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.blue,
+                valueColor: AlwaysStoppedAnimation(kWhite),
+              ),
+            ),
+            verticalSpaceMedium,
+            Text(
+              'Property Booking',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Booking propery, please do not cancel this screen',
+              textAlign: TextAlign.center,
               style: AppStyle.kBodyRegularBlack14,
             ),
-          ),
-        ],
+          ],
+        ),
+      )),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Book Property",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
       ),
     );
+
+    try {
+      await model.bookProperty(
+        property: property,
+        choiceOfPayment: choiceOfPayment,
+        startDate: startDate,
+      );
+
+      Navigator.of(context).pop();
+
+      return true;
+    } catch (exception) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            exception.toString(),
+          ),
+        ),
+      );
+      return false;
+    }
   }
 
-  Padding buildDescription() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Future<bool> showConfirmationDialog(BuildContext context) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Book Proerty',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Do you wish to book this property for later payment? ',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  property.city ?? '',
-                  style: AppStyle.kBodyRegularBlack15W500,
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    'Yes',
+                  ),
                 ),
-                verticalSpaceSmall,
-                Text(
-                  property.address ?? '',
-                  style: AppStyle.kBodySmallRegular,
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(
+                    'No',
+                  ),
                 ),
               ],
-            ),
-          ),
-          Container(
-            child: ResavationImage(
-              image: property.propertyImages?[0].imageUrl ?? '',
-            ),
-            height: 120,
-            width: 120,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
+      )),
+    );
+
+    final shouldBook = await showGeneralDialog<bool>(
+      context: context,
+      barrierLabel: "Confirm book property",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
       ),
     );
+    return shouldBook ?? false;
   }
 
-  ResavationButton buildContinueButton(
-      double width, BuildContext context, BookingSubmissionViewModel model) {
-    return ResavationButton(
-      title: 'Continue',
-      width: width - 20,
-      onTap: () async {
-        String email = model.email;
-        int price = 0;
-        bool userPaid =
-            await MakePayment(ctx: context, email: email, price: price)
-                .chargeCardAndMakePayment();
-        if (userPaid) {
-          model.goToConfirmationView();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Payment Failed')),
-          );
-        }
-      },
-    );
+  makePayment() {
+    /*     String email = model.email;
+          int price = 0;
+          bool userPaid =
+              await MakePayment(ctx: context, email: email, price: price)
+                  .chargeCardAndMakePayment();
+          if (userPaid) {
+            model.goToConfirmationView();
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Payment Failed')),
+            );
+          } */
   }
 }
 

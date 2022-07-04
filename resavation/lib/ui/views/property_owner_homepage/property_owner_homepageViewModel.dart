@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/services/core/upload_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -9,6 +10,7 @@ import '../../../services/core/user_type_service.dart';
 class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserTypeService>();
+  final _uploadService = locator<UploadService>();
 
   LoginModel get userData => _userService.userData;
 
@@ -17,7 +19,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
         .navigateTo(Routes.propertyOwnerIdentificationVerificationView);
   }
 
-  void goToPropertyOwnerSpaceTypeView() {
+  void goToPropertyOwnerSpaceTypeView(bool isRestoringData) {
+    _uploadService.isRestoringData = isRestoringData;
     _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
   }
 

@@ -1,6 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 
-class UploadTypeService {
+class UploadService {
   ///stage 1 data
   String? propertyStatus;
   String? propertyCategory;
@@ -28,15 +28,6 @@ class UploadTypeService {
 
   //add stage 3 data here
   List<XFile>? selectedImages;
-/*
-{
-  "message": "Please Enter valid state name",
-  "success": false,
-  "httpStatus": "BAD_REQUEST",
-  "timestamp": "2022-06-15T06:34:46.242307Z"
-}
-
-*/
 
   //Stage 4 data
   int? spacePrice;
@@ -113,4 +104,6 @@ class UploadTypeService {
     amenities = [];
     rules = [];
   }
+
+  bool isRestoringData = false;
 }

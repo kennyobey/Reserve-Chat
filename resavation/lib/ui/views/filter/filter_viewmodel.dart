@@ -17,6 +17,11 @@ enum Availability {
   More,
 }
 
+enum LetType {
+  Sale,
+  Rent,
+}
+
 class FilterViewModel extends BaseViewModel {
   final oCcy = NumberFormat("#,##0.00", "en_US");
   bool hasErrorOnData = false;
@@ -60,6 +65,7 @@ class FilterViewModel extends BaseViewModel {
       );
 
   List<Availability> availablities = [];
+  List<LetType> letTypes = [];
 
   double surfaceArea = 0;
 
@@ -76,6 +82,17 @@ class FilterViewModel extends BaseViewModel {
         availablities.remove(value);
       } else {
         availablities.add(value);
+      }
+      notifyListeners();
+    }
+  }
+
+  void onLetChanged(LetType? value) {
+    if (value != null) {
+      if (letTypes.contains(value)) {
+        letTypes.remove(value);
+      } else {
+        letTypes.add(value);
       }
       notifyListeners();
     }

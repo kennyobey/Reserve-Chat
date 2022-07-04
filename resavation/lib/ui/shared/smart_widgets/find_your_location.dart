@@ -9,9 +9,11 @@ class FindYourLocation extends StatelessWidget {
     Key? key,
     this.onTap,
     this.controller,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   final void Function()? onTap;
+  final void Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
 
   @override
@@ -25,8 +27,9 @@ class FindYourLocation extends StatelessWidget {
             controller: controller,
             elevation: 0.0,
             showPrefix: true,
-            hintText: 'Enter your location',
+            hintText: 'Enter your search',
             fillColors: kWhite,
+            onFieldSubmitted: onFieldSubmitted,
           ),
         ),
         horizontalSpaceSmall,
