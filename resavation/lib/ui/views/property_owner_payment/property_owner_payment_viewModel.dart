@@ -4,11 +4,11 @@ import 'package:resavation/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../../services/core/upload_type_service.dart';
+import 'package:resavation/services/core/upload_service.dart';
 
 class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final propertyOwnerUploadModel = locator<UploadTypeService>();
+  final propertyOwnerUploadModel = locator<UploadService>();
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
@@ -34,7 +34,11 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   List<String> selectedSubscriptions = [];
 
   PropertyOwnerPaymentViewModel() {
-    propertyOwnerUploadModel.clearStage4();
+    if (propertyOwnerUploadModel.isRestoringData) {
+      setUpPreviousData();
+    } else {
+      propertyOwnerUploadModel.clearStage4();
+    }
   }
 
   bool isVerified() {
@@ -82,6 +86,53 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
       endDate = pickedDate;
       notifyListeners();
     }
+  }
+
+  setUpPreviousData() {
+    if (propertyOwnerUploadModel.spacePrice != null) {
+      if (propertyOwnerUploadModel.spacePrice ==
+          propertyOwnerUploadModel.annualPrice) {
+        displayPrice = 'Annually';
+      } else if (propertyOwnerUploadModel.spacePrice ==
+          propertyOwnerUploadModel.biannualPrice) {
+        displayPrice = 'Biannually';
+      } else if (propertyOwnerUploadModel.spacePrice ==
+          propertyOwnerUploadModel.quarterlyPrice) {
+        displayPrice = 'Quarterly';
+      } else if (propertyOwnerUploadModel.spacePrice ==
+          propertyOwnerUploadModel.monthlyPrice) {
+        displayPrice = 'Monthly';
+      }
+    }
+
+    if (propertyOwnerUploadModel.annualPrice != null) {
+      propertyannualPriceController.text =
+          (propertyOwnerUploadModel.annualPrice ?? 0).toString();
+      selectedSubscriptions.add('Annually');
+    }
+    if (propertyOwnerUploadModel.biannualPrice != null) {
+      propertybiannualPriceController.text =
+          (propertyOwnerUploadModel.biannualPrice ?? 0).toString();
+      selectedSubscriptions.add('Biannually');
+    }
+    if (propertyOwnerUploadModel.quarterlyPrice != null) {
+      propertyquaterlylPriceController.text =
+          (propertyOwnerUploadModel.quarterlyPrice ?? 0).toString();
+      selectedSubscriptions.add('Quarterly');
+    }
+    if (propertyOwnerUploadModel.monthlyPrice != null) {
+      propertymonthlyPriceController.text =
+          (propertyOwnerUploadModel.monthlyPrice ?? 0).toString();
+      selectedSubscriptions.add('Monthly');
+    }
+
+    if (propertyOwnerUploadModel.startDate != null) {
+      startDate = propertyOwnerUploadModel.startDate!;
+    }
+    if (propertyOwnerUploadModel.endDate != null) {
+      endDate = propertyOwnerUploadModel.endDate!;
+    }
+    notifyListeners();
   }
 
   void goToPropertyOwnerAmenitiesView() {

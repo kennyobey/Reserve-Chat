@@ -1,11 +1,9 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/appointment.dart';
+import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/model/login_model.dart';
-import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
-import 'package:resavation/utility/assets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -73,5 +71,19 @@ class HomeViewModel extends BaseViewModel {
 
   void goToUserProfileView() {
     _navigationService.navigateTo(Routes.userProfileView);
+  }
+
+  void goToBookedContentList() {
+    _navigationService.navigateTo(Routes.bookedPropertyListView);
+  }
+
+  void goToBookedPropertyDetails(BookedPropertyContent content) {
+    _navigationService.navigateTo(
+      Routes.propertyDetailsView,
+      arguments: PropertyDetailsViewArguments(
+        passedProperty: content.property,
+        propertyContent: content,
+      ),
+    );
   }
 }

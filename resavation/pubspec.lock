@@ -432,9 +432,15 @@ packages:
       name: flutter_hooks
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.18.5+1"
   flutter_inappwebview:
     dependency: transitive
+=======
+    version: "0.18.3"
+  flutter_inappwebview:
+    dependency: "direct main"
+>>>>>>> oti
     description:
       name: flutter_inappwebview
       url: "https://pub.dartlang.org"

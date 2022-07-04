@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/services/core/upload_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -14,6 +15,7 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserTypeService>();
   final requestSite = "resavation-backend.herokuapp.com";
+  final _uploadService = locator<UploadService>();
 
   LoginModel get userData => _userService.userData;
   final userTypeService = locator<UserTypeService>();
@@ -23,7 +25,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
         .navigateTo(Routes.propertyOwnerIdentificationVerificationView);
   }
 
-  void goToPropertyOwnerSpaceTypeView() {
+  void goToPropertyOwnerSpaceTypeView(bool isRestoringData) {
+    _uploadService.isRestoringData = isRestoringData;
     _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
   }
 
