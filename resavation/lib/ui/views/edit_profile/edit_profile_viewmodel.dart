@@ -18,11 +18,15 @@ class EditProfileViewModel extends BaseViewModel {
 
   final _httpService = locator<HttpService>();
 
+  // Global Keys to use with the form text fields
+  final editProfileFormKey = GlobalKey<FormState>();
+
   String? selectedGenderValue = 'Male';
   String? selectedOccupationValue = 'Student';
   bool isLoading = false;
 
   DateTime dob = DateTime.now();
+  late final date = dob.toIso8601String();
   String? url;
 
   //user personal details
@@ -70,7 +74,7 @@ class EditProfileViewModel extends BaseViewModel {
         firstName,
         lastName,
         email,
-        url!,
+        url ?? "",
         gender,
         country,
         dob,

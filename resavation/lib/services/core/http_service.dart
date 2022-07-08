@@ -164,6 +164,7 @@ class HttpService {
     String occupation,
   ) async {
     try {
+      print("property");
       final response = await http.post(
         Uri.http(requestSite, "/api/v1/user/profile"),
         headers: <String, String>{'Content-Type': 'application/json'},
@@ -172,9 +173,9 @@ class HttpService {
             "firstName": firstName,
             "lastName": lastName,
             "email": email,
-            "imageUrl": imageUrl,
+            "imageUrl": "",
             "phoneNumber": phoneNumber,
-            "dateOfBirth": dateOfBirth,
+            "dateOfBirth": "",
             "country": country,
             "state": state,
             "address": address,
@@ -185,13 +186,17 @@ class HttpService {
         ),
       );
       if (response.statusCode <= 299) {
+        log(await response.body);
+        print(response.statusCode);
+        print('Response status: ${response.statusCode}');
         return editProfileModelFromJson(response.body);
       } else {
         return Future.error((json.decode(response.body)['message']) ??
             'Failed to update profile');
       }
     } catch (exception) {
-      return Future.error("Failed to update profile");
+      print(" Error is :${exception.toString()}");
+      return Future.error("Failed to update user profile");
     }
   }
 

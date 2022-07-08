@@ -35,6 +35,7 @@ class EditProfileModel {
   String? phoneNumber;
   String? gender;
   DateTime? dateOfBirth;
+  //String? dateOfBirth;
   String? country;
   String? state;
   String? city;
@@ -52,7 +53,7 @@ class EditProfileModel {
         phoneNumber: json["phoneNumber"],
         gender: json["gender"],
         dateOfBirth: DateTime.parse(json["dateOfBirth"]),
-        country: json["country"],
+        //dateOfBirth: json["dateOfBirth"],
         state: json["state"],
         city: json["city"],
         address: json["address"],
@@ -69,7 +70,7 @@ class EditProfileModel {
         "phoneNumber": phoneNumber,
         "gender": gender,
         "dateOfBirth":
-            "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
+            "${dateOfBirth!.toIso8601String()}-${dateOfBirth!.toIso8601String}-${dateOfBirth!.toIso8601String}",
         "country": country,
         "state": state,
         "city": city,
