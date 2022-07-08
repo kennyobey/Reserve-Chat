@@ -1,18 +1,27 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/login_model.dart';
+import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'package:resavation/services/core/upload_service.dart';
 
-class PropertyOwnerPaymentViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
-  final propertyOwnerUploadModel = locator<UploadService>();
+import '../../../services/core/http_service.dart';
 
+class PropertyOwnerPaymentViewModel extends BaseViewModel {
+  final navigationService = locator<NavigationService>();
+  final uploadTypeService = locator<UploadService>();
+  final _userService = locator<UserTypeService>();
+  LoginModel get userData => _userService.userData;
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
-
+  final _httpService = locator<HttpService>();
   List<String> subscriptionType = [
     'Monthly',
     'Quarterly',
@@ -34,10 +43,10 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   List<String> selectedSubscriptions = [];
 
   PropertyOwnerPaymentViewModel() {
-    if (propertyOwnerUploadModel.isRestoringData) {
+    if (uploadTypeService.isRestoringData) {
       setUpPreviousData();
     } else {
-      propertyOwnerUploadModel.clearStage4();
+      uploadTypeService.clearStage4();
     }
   }
 
@@ -89,88 +98,156 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   }
 
   setUpPreviousData() {
-    if (propertyOwnerUploadModel.spacePrice != null) {
-      if (propertyOwnerUploadModel.spacePrice ==
-          propertyOwnerUploadModel.annualPrice) {
+    if (uploadTypeService.spacePrice != null) {
+      if (uploadTypeService.spacePrice == uploadTypeService.annualPrice) {
         displayPrice = 'Annually';
-      } else if (propertyOwnerUploadModel.spacePrice ==
-          propertyOwnerUploadModel.biannualPrice) {
+      } else if (uploadTypeService.spacePrice ==
+          uploadTypeService.biannualPrice) {
         displayPrice = 'Biannually';
-      } else if (propertyOwnerUploadModel.spacePrice ==
-          propertyOwnerUploadModel.quarterlyPrice) {
+      } else if (uploadTypeService.spacePrice ==
+          uploadTypeService.quarterlyPrice) {
         displayPrice = 'Quarterly';
-      } else if (propertyOwnerUploadModel.spacePrice ==
-          propertyOwnerUploadModel.monthlyPrice) {
+      } else if (uploadTypeService.spacePrice ==
+          uploadTypeService.monthlyPrice) {
         displayPrice = 'Monthly';
       }
     }
 
-    if (propertyOwnerUploadModel.annualPrice != null) {
+    if (uploadTypeService.annualPrice != null) {
       propertyannualPriceController.text =
-          (propertyOwnerUploadModel.annualPrice ?? 0).toString();
+          (uploadTypeService.annualPrice ?? 0).toString();
       selectedSubscriptions.add('Annually');
     }
-    if (propertyOwnerUploadModel.biannualPrice != null) {
+    if (uploadTypeService.biannualPrice != null) {
       propertybiannualPriceController.text =
-          (propertyOwnerUploadModel.biannualPrice ?? 0).toString();
+          (uploadTypeService.biannualPrice ?? 0).toString();
       selectedSubscriptions.add('Biannually');
     }
-    if (propertyOwnerUploadModel.quarterlyPrice != null) {
+    if (uploadTypeService.quarterlyPrice != null) {
       propertyquaterlylPriceController.text =
-          (propertyOwnerUploadModel.quarterlyPrice ?? 0).toString();
+          (uploadTypeService.quarterlyPrice ?? 0).toString();
       selectedSubscriptions.add('Quarterly');
     }
-    if (propertyOwnerUploadModel.monthlyPrice != null) {
+    if (uploadTypeService.monthlyPrice != null) {
       propertymonthlyPriceController.text =
-          (propertyOwnerUploadModel.monthlyPrice ?? 0).toString();
+          (uploadTypeService.monthlyPrice ?? 0).toString();
       selectedSubscriptions.add('Monthly');
     }
 
-    if (propertyOwnerUploadModel.startDate != null) {
-      startDate = propertyOwnerUploadModel.startDate!;
+    if (uploadTypeService.startDate != null) {
+      startDate = uploadTypeService.startDate!;
     }
-    if (propertyOwnerUploadModel.endDate != null) {
-      endDate = propertyOwnerUploadModel.endDate!;
+    if (uploadTypeService.endDate != null) {
+      endDate = uploadTypeService.endDate!;
     }
     notifyListeners();
   }
 
   void goToPropertyOwnerAmenitiesView() {
     if (displayPrice == 'Annually') {
-      propertyOwnerUploadModel.spacePrice =
+      uploadTypeService.spacePrice =
           int.tryParse(propertyannualPriceController.text);
     } else if (displayPrice == 'Biannually') {
-      propertyOwnerUploadModel.spacePrice =
+      uploadTypeService.spacePrice =
           int.tryParse(propertybiannualPriceController.text);
     } else if (displayPrice == 'Quarterly') {
-      propertyOwnerUploadModel.spacePrice =
+      uploadTypeService.spacePrice =
           int.tryParse(propertyquaterlylPriceController.text);
     } else if (displayPrice == 'Monthly') {
-      propertyOwnerUploadModel.spacePrice =
+      uploadTypeService.spacePrice =
           int.tryParse(propertymonthlyPriceController.text);
     }
 
     if (selectedSubscriptions.contains('Annually')) {
-      propertyOwnerUploadModel.annualPrice =
+      uploadTypeService.annualPrice =
           int.tryParse(propertyannualPriceController.text);
     }
     if (selectedSubscriptions.contains('Biannually')) {
-      propertyOwnerUploadModel.biannualPrice =
+      uploadTypeService.biannualPrice =
           int.tryParse(propertybiannualPriceController.text);
     }
     if (selectedSubscriptions.contains('Quarterly')) {
-      propertyOwnerUploadModel.quarterlyPrice =
+      uploadTypeService.quarterlyPrice =
           int.tryParse(propertyquaterlylPriceController.text);
     }
     if (selectedSubscriptions.contains('Monthly')) {
-      propertyOwnerUploadModel.monthlyPrice =
+      uploadTypeService.monthlyPrice =
           int.tryParse(propertymonthlyPriceController.text);
     }
 
-    propertyOwnerUploadModel.startDate = startDate;
-    propertyOwnerUploadModel.endDate = endDate;
+    uploadTypeService.startDate = startDate;
+    uploadTypeService.endDate = endDate;
 
-    _navigationService.navigateTo(Routes.propertyOwnerAmenitiesView);
+    navigationService.navigateTo(Routes.propertyOwnerAmenitiesView);
+  }
+
+  saveStage4Data() async {
+    if (displayPrice == 'Annually') {
+      uploadTypeService.spacePrice =
+          int.tryParse(propertyannualPriceController.text);
+    } else if (displayPrice == 'Biannually') {
+      uploadTypeService.spacePrice =
+          int.tryParse(propertybiannualPriceController.text);
+    } else if (displayPrice == 'Quarterly') {
+      uploadTypeService.spacePrice =
+          int.tryParse(propertyquaterlylPriceController.text);
+    } else if (displayPrice == 'Monthly') {
+      uploadTypeService.spacePrice =
+          int.tryParse(propertymonthlyPriceController.text);
+    }
+
+    if (selectedSubscriptions.contains('Annually')) {
+      uploadTypeService.annualPrice =
+          int.tryParse(propertyannualPriceController.text);
+    }
+    if (selectedSubscriptions.contains('Biannually')) {
+      uploadTypeService.biannualPrice =
+          int.tryParse(propertybiannualPriceController.text);
+    }
+    if (selectedSubscriptions.contains('Quarterly')) {
+      uploadTypeService.quarterlyPrice =
+          int.tryParse(propertyquaterlylPriceController.text);
+    }
+    if (selectedSubscriptions.contains('Monthly')) {
+      uploadTypeService.monthlyPrice =
+          int.tryParse(propertymonthlyPriceController.text);
+    }
+
+    uploadTypeService.startDate = startDate;
+    uploadTypeService.endDate = endDate;
+
+    Reference sFirebaseStorageRef = FirebaseStorage.instance.ref();
+
+    final List<String> images = [];
+    final selectedImages = uploadTypeService.selectedImages ?? [];
+
+    for (final image in selectedImages) {
+      try {
+        if (image.runtimeType == XFile) {
+          final uniqueId = DateTime.now().millisecondsSinceEpoch;
+          Reference firebaseStorageRef = sFirebaseStorageRef.child(
+              'users/${userData.email}/productImages/${uploadTypeService.propertyName}/${uploadTypeService.propertyName}-$uniqueId');
+          UploadTask uploadTask = firebaseStorageRef.putFile(File(image.path));
+          final TaskSnapshot taskSnapshot = await uploadTask;
+          String url = await taskSnapshot.ref.getDownloadURL();
+          images.add(url);
+        } else {
+          images.add(image);
+        }
+      } catch (e) {
+        //
+      }
+    }
+
+    try {
+      await _httpService.saveProperty(
+        uploadTypeService: uploadTypeService,
+        images: images,
+      );
+      return;
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
 
   String getTitle() {

@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -32,7 +32,212 @@ class _PropertyOwnerAmenitiesViewState
 
   List<bool>? rules;
   _PropertyOwnerAmenitiesViewState();
-  MaterialPropertyResolver<Color?>? get getColor => null;
+  Future<bool> showSaveConfirmationDialog() async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Save property',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Do you wish to store your property for later editing? Your progress will be recovered when you upload again.',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    'Yes',
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(
+                    'No',
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      )),
+    );
+
+    final shouldShow = await showGeneralDialog<bool>(
+      context: context,
+      barrierLabel: "Save property confirmation",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+    if (shouldShow == null) {
+      return false;
+    } else {
+      return shouldShow;
+    }
+  }
+
+  showSavePropertyDialog(PropertyOwnerAmenitiesViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.blue,
+                valueColor: AlwaysStoppedAnimation(kWhite),
+              ),
+            ),
+            verticalSpaceMedium,
+            Text(
+              'Saving Property',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Saving property, please do not cancel until success',
+              textAlign: TextAlign.center,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      )),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Saving Property",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+
+    try {
+      await model.saveStage5Data();
+
+      Navigator.of(context).pop();
+      showSaveSucessDialog(model);
+    } catch (exception) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred while saving your data'),
+        ),
+      );
+    }
+  }
+
+  showSaveSucessDialog(PropertyOwnerAmenitiesViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Property Saved',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Your property has been successfully saved and will be shown on your next property listing.',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Okay',
+                ),
+              ),
+            ),
+          ],
+        ),
+      )),
+    );
+
+    await showGeneralDialog(
+      context: context,
+      barrierLabel: "Upload Property Success",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+
+    model.uploadTypeService.clearStage1();
+    model.navigationService.clearStackAndShow(Routes.mainView);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +247,19 @@ class _PropertyOwnerAmenitiesViewState
           title: "Amenities and House Rules",
           centerTitle: false,
           backEnabled: false,
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  bool shouldSave = await showSaveConfirmationDialog();
+                  if (shouldSave) {
+                    showSavePropertyDialog(model);
+                  }
+                },
+                icon: Icon(
+                  Icons.save_rounded,
+                  color: kPrimaryColor,
+                )),
+          ],
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(10),
@@ -250,18 +468,22 @@ class _PropertyOwnerAmenitiesViewState
 
     final List<String> images = [];
 
-    final rawImages = model.propertyOwnerUploadModel.selectedImages ?? [];
+    final rawImages = model.uploadTypeService.selectedImages ?? [];
 
     for (final image in rawImages) {
       try {
-        final uniqueId = DateTime.now().millisecondsSinceEpoch;
-        Reference firebaseStorageRef = sFirebaseStorageRef.child(
-            'users/${model.userData.email}/productImages/${model.propertyOwnerUploadModel.propertyName}/${model.propertyOwnerUploadModel.propertyName}-$uniqueId');
+        if (image.runtimeType == XFile) {
+          final uniqueId = DateTime.now().millisecondsSinceEpoch;
+          Reference firebaseStorageRef = sFirebaseStorageRef.child(
+              'users/${model.userData.email}/productImages/${model.uploadTypeService.propertyName}/${model.uploadTypeService.propertyName}-$uniqueId');
 
-        UploadTask uploadTask = firebaseStorageRef.putFile(File(image.path));
-        final TaskSnapshot taskSnapshot = await uploadTask;
-        String url = await taskSnapshot.ref.getDownloadURL();
-        images.add(url);
+          UploadTask uploadTask = firebaseStorageRef.putFile(File(image.path));
+          final TaskSnapshot taskSnapshot = await uploadTask;
+          String url = await taskSnapshot.ref.getDownloadURL();
+          images.add(url);
+        } else {
+          images.add(image);
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -275,7 +497,7 @@ class _PropertyOwnerAmenitiesViewState
 
     try {
       await model.httpService.uploadProperty(
-          uploadTypeService: model.propertyOwnerUploadModel, images: images);
+          uploadTypeService: model.uploadTypeService, images: images);
 
       Navigator.of(context).pop();
 
@@ -350,7 +572,7 @@ class _PropertyOwnerAmenitiesViewState
       ),
     );
 
-    model.propertyOwnerUploadModel.clearStage1();
+    model.uploadTypeService.clearStage1();
     model.navigationService.clearStackAndShow(Routes.mainView);
   }
 }

@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/model/booked_property/booked_property.dart';
 import 'package:resavation/model/filter/filter.dart';
 import 'package:resavation/model/login_model.dart';
 import 'package:resavation/model/registration_model.dart';
+import 'package:resavation/model/saved_property/saved_property.dart';
 import 'package:resavation/model/search_model/search_model.dart';
 import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:resavation/services/core/upload_service.dart';
@@ -352,6 +350,30 @@ class HttpService {
     }
   }
 
+  Future<OwnerPropertyModel> getOwnerProperty(
+      {required int page, required int size}) async {
+    try {
+      final response = await http.get(
+        Uri.http(requestSite, "api/v1/owner/property/all", <String, String>{
+          "page": page.toString(),
+          "size": size.toString(),
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+
+      if (response.statusCode <= 299) {
+        return OwnerPropertyModel.fromJson(response.body);
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
   Future<SearchModel> getFilteredProperty(
       {required Filter filter, required int page, required int size}) async {
     try {
@@ -620,6 +642,101 @@ class HttpService {
       }
     } catch (exception) {
       return Future.error(exception.toString());
+    }
+  }
+
+  saveProperty({
+    required UploadService uploadTypeService,
+    required List<String> images,
+  }) async {
+    final body = <String, dynamic>{
+      "propertyCategory": uploadTypeService.propertyCategory,
+      "propertyDetails": {
+        "address": uploadTypeService.address,
+        "amenities": uploadTypeService.amenities,
+        "availability": {
+          "from": uploadTypeService.startDate != null
+              ? DateFormat('dd-MM-yyyy').format(uploadTypeService.startDate!)
+              : null,
+          "to": uploadTypeService.endDate != null
+              ? DateFormat('dd-MM-yyyy').format(uploadTypeService.endDate!)
+              : null,
+        },
+        "bathTubCount": uploadTypeService.noOfBathroom,
+        "bedroomCount": uploadTypeService.noOfBedroom,
+        "carSlots": uploadTypeService.numberOfCarSLot,
+        "city": uploadTypeService.city,
+        "country": 'Nigeria',
+        "description": uploadTypeService.propertyDescription,
+        "imageUrl": images,
+        "liveInSPace": uploadTypeService.liveInSpace,
+        "propertyName": uploadTypeService.propertyName,
+        "roomType": uploadTypeService.spaceType,
+        "rules": uploadTypeService.rules,
+        "spaceFurnished": uploadTypeService.isSpaceFurnished,
+        "spaceServiced": uploadTypeService.isSpaceServiced,
+        "commercialPropertyType": uploadTypeService.commercialPropertyType,
+        "retailPropertyType": uploadTypeService.retailPropertyType,
+        "industrialPropertyType": uploadTypeService.industrialPropertyType,
+        "residentialPropertyType": uploadTypeService.residentialPropertyType,
+        "propertyStyle": uploadTypeService.propertyStyle,
+        "serviceType": uploadTypeService.isSpaceServiced == null
+            ? null
+            : (uploadTypeService.isSpaceServiced!)
+                ? "Serviced"
+                : 'Not Serviced',
+        "propertyStatus": uploadTypeService.propertyStatus,
+        "spacePrice": uploadTypeService.spacePrice,
+        "state": uploadTypeService.state,
+        "subscription": {
+          "annualPrice": uploadTypeService.annualPrice,
+          "biannualPrice": uploadTypeService.biannualPrice,
+          "monthlyPrice": uploadTypeService.monthlyPrice,
+          "quarterlyPrice": uploadTypeService.quarterlyPrice,
+        },
+        "surfaceArea": uploadTypeService.surfaceArea,
+      }
+    };
+
+    try {
+      final response =
+          await http.post(Uri.http(requestSite, "api/v1/properties/save"),
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization': userTypeService.authorization
+              },
+              body: jsonEncode(body));
+
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  }
+
+  Future<SavedProperty> getSavedProperty() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "api/v1/properties/saved_property",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+
+      if (response.statusCode <= 299) {
+        return SavedProperty.fromJson(response.body);
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
     }
   }
 
