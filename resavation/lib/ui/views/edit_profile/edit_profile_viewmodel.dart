@@ -1,5 +1,5 @@
+import 'dart:core';
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +8,6 @@ import 'package:resavation/app/app.router.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../model/login_model.dart';
 import '../../../services/core/http_service.dart';
 import '../../../services/core/user_type_service.dart';
@@ -21,23 +20,84 @@ class EditProfileViewModel extends BaseViewModel {
 
   String? selectedGenderValue = 'Male';
   String? selectedOccupationValue = 'Student';
+  bool isLoading = false;
 
+  DateTime dob = DateTime.now();
+  String? url;
+
+  //user personal details
   final userFirstNameController = TextEditingController();
   final userLastNameController = TextEditingController();
-  //final userEmailController = TextEditingController();
+  final aboutMeEmailController = TextEditingController();
+  final dateOfBirthEmailController = TextEditingController();
+  final phoneNumberEmailController = TextEditingController();
+  final genderEmailController = TextEditingController();
+  final occupatuionEmailController = TextEditingController();
+
+  //User Personal address
+  final contryEmailController = TextEditingController();
+  final stateEmailController = TextEditingController();
+  final cityEmailController = TextEditingController();
+  final addressEmailController = TextEditingController();
+  final postalCodeEmailController = TextEditingController();
+
   final _userService = locator<UserTypeService>();
   LoginModel get userData => _userService.userData;
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }
 
+  editDetails() async {
+    isLoading = true;
+    notifyListeners();
+    final firstName = userFirstNameController.text.trim();
+    final lastName = userLastNameController.text.trim();
+    final email = aboutMeEmailController.text.trim();
+    final imageUrl = url;
+    final gender = selectedGenderValue.toString();
+    final dateOfBirth = '';
+    final country = contryEmailController.text.trim();
+    final state = stateEmailController.text.trim();
+    final city = cityEmailController.text.trim();
+    final address = addressEmailController.text.trim();
+    final postalCode = postalCodeEmailController.text.trim();
+    final aboutMe = aboutMeEmailController.text.trim();
+    final occupation = selectedOccupationValue.toString();
+    final phoneNumber = phoneNumberEmailController.text.trim();
+
+    try {
+      await _httpService.editDetails(
+        firstName,
+        lastName,
+        email,
+        url!,
+        gender,
+        country,
+        dob,
+        state,
+        occupation,
+        city,
+        address,
+        postalCode,
+        aboutMe,
+        phoneNumber,
+      );
+      isLoading = false;
+      notifyListeners();
+    } catch (exception) {
+      isLoading = false;
+      notifyListeners();
+      return Future.error(exception.toString());
+    }
+  }
+
   void onSelectedGender(value) {
-    gender = value;
+    selectedGenderValue = value;
     notifyListeners();
   }
 
   void onSelectedOccupation(value) {
-    gender = value;
+    selectedOccupationValue = value;
     notifyListeners();
   }
 

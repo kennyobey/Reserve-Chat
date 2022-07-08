@@ -115,6 +115,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: "I am a student of UNIBEN",
                         hintTextStyle: AppStyle.kSubHeading,
+                        controller: model.aboutMeEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please write something about yourself';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -135,6 +142,14 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: "2347032867019",
                         hintTextStyle: AppStyle.kSubHeading,
+                        keyboardType: TextInputType.number,
+                        controller: model.phoneNumberEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -163,6 +178,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: "Nigeria",
                         hintTextStyle: AppStyle.kSubHeading,
+                        controller: model.contryEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your country';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -171,8 +193,15 @@ class _EditProfileViewState extends State<EditProfileView> {
                       ),
                       ResavationTextField(
                         textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
+                        hintText: "Osun",
                         hintTextStyle: AppStyle.kSubHeading,
+                        controller: model.stateEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your state';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -183,6 +212,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: "Ibadan",
                         hintTextStyle: AppStyle.kSubHeading,
+                        controller: model.cityEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your city';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -193,6 +229,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: "No 1 Festus Idahosa Street, Molete, Ibadan.",
                         hintTextStyle: AppStyle.kSubHeading,
+                        controller: model.addressEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your address';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceSmall,
                       Text(
@@ -203,6 +246,14 @@ class _EditProfileViewState extends State<EditProfileView> {
                         textInputAction: TextInputAction.next,
                         hintText: "224466",
                         hintTextStyle: AppStyle.kSubHeading,
+                        keyboardType: TextInputType.number,
+                        controller: model.postalCodeEmailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your postal code';
+                          }
+                          return null;
+                        },
                       ),
                       verticalSpaceMedium,
                       Text(
@@ -292,11 +343,11 @@ class _EditProfileViewState extends State<EditProfileView> {
                               content: Text('Updating profile please wait')),
                         );
                         try {
-                          await model.updateProfile();
+                          await model.editDetails();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Profile Updated')),
                           );
-                          model.goToMainView();
+                          model.goToUserProfileView();
                         } catch (exception) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(exception.toString())),
@@ -444,7 +495,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Male",
+            "Student",
             style: AppStyle.kBodyRegular,
           ),
           items: model.occupation

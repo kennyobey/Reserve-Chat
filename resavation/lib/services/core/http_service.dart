@@ -14,6 +14,7 @@ import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:resavation/services/core/upload_type_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 
+import '../../model/edit_profile_model.dart';
 import '../../model/property_cotroller_model/booked_propety_model.dart';
 import '../../model/top_categories_model/top_categories_model.dart';
 
@@ -143,6 +144,54 @@ class HttpService {
       }
     } catch (exception) {
       return Future.error("Failed to register user");
+    }
+  }
+
+  editDetails(
+    String firstName,
+    String lastName,
+    String email,
+    String imageUrl,
+    String phoneNumber,
+    String gender,
+    DateTime dateOfBirth,
+    String country,
+    String state,
+    String city,
+    String address,
+    String postalCode,
+    String aboutMe,
+    String occupation,
+  ) async {
+    try {
+      final response = await http.post(
+        Uri.http(requestSite, "/api/v1/user/profile"),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(
+          <String, dynamic>{
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "imageUrl": imageUrl,
+            "phoneNumber": phoneNumber,
+            "dateOfBirth": dateOfBirth,
+            "country": country,
+            "state": state,
+            "address": address,
+            "postalCode": postalCode,
+            "aboutMe": aboutMe,
+            "occupation": occupation,
+          },
+        ),
+      );
+      if (response.statusCode <= 299) {
+        return editProfileModelFromJson(response.body);
+      } else {
+        return Future.error((json.decode(response.body)['message']) ??
+            'Failed to update profile');
+      }
+    } catch (exception) {
+      return Future.error("Failed to update profile");
     }
   }
 
