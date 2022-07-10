@@ -29,8 +29,12 @@ class AvailabilityPeriods {
       updatedAt: data['updatedAt'] == null
           ? null
           : DateTime.parse(data['updatedAt'] as String),
-      startDate: DateTime.parse(data['startDate'] as String),
-      endDate: DateTime.parse(data['endDate'] as String),
+      startDate: data['startDate'] == null
+          ? null
+          : DateTime.parse(data['startDate'] as String),
+      endDate: data['endDate'] == null
+          ? null
+          : DateTime.parse(data['endDate'] as String),
     );
   }
 

@@ -2,9 +2,9 @@ import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
 import 'package:resavation/model/appointment.dart';
-import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/propety_model/user.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 import 'package:resavation/ui/views/messages/messages_viewmodel.dart';
@@ -125,7 +125,7 @@ class PropertyDetailsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.mapView);
   }
 
-  void goToMakePayment(BookedPropertyContent? propertyContent) {
+  void goToMakePayment(TenantBookedPropertyContent? propertyContent) {
     final planAmount = propertyContent?.amount ?? 0;
     final subscriptionCode = '--';
     _navigationService.navigateTo(Routes.makePaymentView,

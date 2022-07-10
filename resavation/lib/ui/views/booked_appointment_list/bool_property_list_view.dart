@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/model/booked_property/content.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/views/home/widget/home_user_booked_property.dart';
@@ -139,8 +139,8 @@ class _BookedPropertyListViewState extends State<BookedPropertyListView> {
     }
   }
 
-  Widget buildBodyItem(
-      List<BookedPropertyContent> contents, BookedPropertyListViewModel model) {
+  Widget buildBodyItem(List<TenantBookedPropertyContent> contents,
+      BookedPropertyListViewModel model) {
     return Column(
       children: [
         Expanded(

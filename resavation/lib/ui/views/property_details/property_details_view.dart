@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
@@ -15,10 +15,14 @@ import 'package:stacked/stacked.dart';
 
 class PropertyDetailsView extends StatelessWidget {
   final Property? passedProperty;
-  final BookedPropertyContent? propertyContent;
+  final bool isPropertyOwner;
+  final TenantBookedPropertyContent? propertyContent;
 
   const PropertyDetailsView(
-      {Key? key, required this.passedProperty, this.propertyContent})
+      {Key? key,
+      required this.passedProperty,
+      this.propertyContent,
+      this.isPropertyOwner = false})
       : super(key: key);
 
   @override
@@ -45,10 +49,12 @@ class PropertyDetailsView extends StatelessWidget {
   }
 
   Widget buildBottomBar(PropertyDetailsViewModel model, BuildContext context) {
-    if (propertyContent == null) {
-      return buildBottomBar1(model);
+    if (isPropertyOwner) {
+      return buildBottomBarOwner(model, context);
+    } else if (propertyContent == null) {
+      return buildBottomBarTenant(model);
     } else if (propertyContent?.status == true) {
-      return buildBottomBar2(model, context);
+      return buildPaymentBottomBar(model, context);
     } else {
       return const SizedBox(
         height: 0,
@@ -57,7 +63,7 @@ class PropertyDetailsView extends StatelessWidget {
     }
   }
 
-  Padding buildBottomBar1(PropertyDetailsViewModel model) {
+  Padding buildBottomBarTenant(PropertyDetailsViewModel model) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -81,7 +87,8 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  Widget buildBottomBar2(PropertyDetailsViewModel model, BuildContext context) {
+  Widget buildPaymentBottomBar(
+      PropertyDetailsViewModel model, BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
@@ -89,6 +96,20 @@ class PropertyDetailsView extends StatelessWidget {
         child: Text("Make Payment"),
         onPressed: () {
           showPaymentDialog(model, context);
+        },
+      ),
+    );
+  }
+
+  Widget buildBottomBarOwner(
+      PropertyDetailsViewModel model, BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10),
+      child: ResavationElevatedButton(
+        child: Text("Edit Property"),
+        onPressed: () {
+          // showPaymentDialog(model, context);
         },
       ),
     );

@@ -1,17 +1,14 @@
-// ignore_for_file: deprecated_member_use
-
-import 'dart:ffi';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:resavation/model/saved_property/saved_property.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart';
+import 'package:resavation/ui/views/property_owner_homepage/widget/property_owner_booked_properties.dart';
+import 'package:resavation/ui/views/property_owner_homepage/widget/property_owner_properties.dart';
 import 'package:resavation/utility/assets.dart';
+
 import 'package:stacked/stacked.dart';
 
 import '../../shared/dump_widgets/list_space_button.dart';
@@ -252,61 +249,70 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildSpaceListing(model),
+              // ...buildTenantRequests(model),
               verticalSpaceMedium,
-              const Divider(),
-              verticalSpaceTiny,
-              Text(
-                "Tenants request",
-                style: AppStyle.kBodyRegularBlack14W500,
-              ),
-              verticalSpaceTiny,
-              const Divider(),
-              verticalSpaceTiny,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Text(
-                      "Details",
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
-                    Spacer(),
-                    Text(
-                      "File",
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
-                    Spacer(),
-                    Text(
-                      "Actions",
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
-                  ],
-                ),
-              ),
-              verticalSpaceRegular,
-              ListingCard(
-                onTap: () {
-                  model.getBookedProperty();
-                },
-              ),
-              verticalSpaceTiny,
-              ListingCard(
-                onTap: () {
-                  model.UserProfilePageView();
-                },
-              ),
-              verticalSpaceTiny,
-              ListingCard(
-                onTap: () {
-                  model.UserProfilePageView();
-                },
-              ),
+              PropertyOwnerBookedProperties(),
+              verticalSpaceMedium,
+              PropertyOwnerProperties(),
+              verticalSpaceMedium,
             ],
           ),
         ),
       ),
       viewModelBuilder: () => PropertyOwnerHomePageViewModel(),
     );
+  }
+
+  List<Widget> buildTenantRequests(PropertyOwnerHomePageViewModel model) {
+    return [
+      verticalSpaceMedium,
+      const Divider(),
+      verticalSpaceTiny,
+      Text(
+        "Tenants request",
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceTiny,
+      const Divider(),
+      verticalSpaceTiny,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          children: [
+            Text(
+              "Details",
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            Spacer(),
+            Text(
+              "File",
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            Spacer(),
+            Text(
+              "Actions",
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      ),
+      verticalSpaceRegular,
+      ListingCard(
+        onTap: () {},
+      ),
+      verticalSpaceTiny,
+      ListingCard(
+        onTap: () {
+          model.UserProfilePageView();
+        },
+      ),
+      verticalSpaceTiny,
+      ListingCard(
+        onTap: () {
+          model.UserProfilePageView();
+        },
+      ),
+    ];
   }
 }
 

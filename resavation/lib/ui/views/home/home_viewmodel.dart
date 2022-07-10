@@ -1,7 +1,7 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/model/login_model.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
@@ -77,7 +77,7 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.bookedPropertyListView);
   }
 
-  void goToBookedPropertyDetails(BookedPropertyContent content) {
+  void goToBookedPropertyDetails(TenantBookedPropertyContent content) {
     _navigationService.navigateTo(
       Routes.propertyDetailsView,
       arguments: PropertyDetailsViewArguments(

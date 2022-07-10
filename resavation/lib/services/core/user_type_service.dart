@@ -22,8 +22,8 @@ class UserTypeService with ReactiveServiceMixin {
 
   setUserData(LoginModel data) {
     _userData.value = data;
-    if (data.roles.isNotEmpty) {
-      _isTenant.value = data.roles[0] == "ROLE_USER";
+    if (data.role.isNotEmpty) {
+      _isTenant.value = data.role == "ROLE_USER";
     }
   }
 

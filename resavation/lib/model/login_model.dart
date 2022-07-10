@@ -17,16 +17,18 @@ class LoginModel {
     this.email = '',
     this.imageUrl = '',
     this.id = -1,
-    this.roles = const [],
+    this.accessRoles = const [],
     this.tokenType = '',
+    this.role = '',
   });
 
   String accessToken;
   String email;
   String imageUrl;
   int id;
-  List<String> roles;
+  List<String> accessRoles;
   String tokenType;
+  String role;
   String firstName;
   String lastName;
 
@@ -39,10 +41,11 @@ class LoginModel {
       accessToken: token,
       email: json["email"] ?? '',
       firstName: decodedToken["firstname"] ?? '',
+      role: decodedToken["role"] ?? '',
       lastName: decodedToken["lastname"] ?? '',
       imageUrl: decodedToken["imageUrl"] ?? '',
       id: json["id"] ?? '',
-      roles: List<String>.from(json["roles"].map((x) => x)),
+      accessRoles: List<String>.from(json["roles"].map((x) => x)),
       tokenType: json["tokenType"] ?? '',
     );
   }
@@ -57,10 +60,11 @@ class LoginModel {
       accessToken: token,
       email: loginModel.email,
       firstName: decodedToken["firstname"] ?? '',
+      role: decodedToken["role"] ?? '',
       lastName: decodedToken["lastname"] ?? '',
       imageUrl: decodedToken["imageUrl"] ?? '',
       id: loginModel.id,
-      roles: loginModel.roles,
+      accessRoles: loginModel.accessRoles,
       tokenType: json["tokenType"] ?? '',
     );
   }
@@ -69,9 +73,10 @@ class LoginModel {
         "accessToken": accessToken,
         "email": email,
         "id": id,
+        "role": role,
         "firstName": firstName,
         "lastName": lastName,
-        "roles": List<dynamic>.from(roles.map((x) => x)),
+        "roles": List<dynamic>.from(accessRoles.map((x) => x)),
         "tokenType": tokenType,
       };
 }

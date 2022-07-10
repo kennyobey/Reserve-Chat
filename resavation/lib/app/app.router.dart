@@ -7,11 +7,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../model/appointment.dart';
-import '../model/booked_property/content.dart';
 import '../model/call_model.dart';
 import '../model/filter/filter.dart';
 import '../model/propety_model/property_model.dart';
@@ -53,6 +53,7 @@ import '../ui/views/property_owner_identification_verification/property_owner_id
 import '../ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import '../ui/views/property_owner_payment/property_owner_payment_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
+import '../ui/views/property_owner_properties/property_owner_properties_view.dart';
 import '../ui/views/property_owner_settings/property_owner_settingsView.dart';
 import '../ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import '../ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
@@ -103,6 +104,8 @@ class Routes {
   static const String userProfileView = '/user-profile-view';
   static const String verificationPage = '/verification-page';
   static const String userProfilePageView = '/user-profile-page-view';
+  static const String propertyOwnerPropertiesView =
+      '/property-owner-properties-view';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
   static const String datePickerView = '/date-picker-view';
@@ -164,6 +167,7 @@ class Routes {
     userProfileView,
     verificationPage,
     userProfilePageView,
+    propertyOwnerPropertiesView,
     resetPasswordView,
     filterView,
     datePickerView,
@@ -229,6 +233,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userProfileView, page: UserProfileView),
     RouteDef(Routes.verificationPage, page: VerificationPage),
     RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
+    RouteDef(Routes.propertyOwnerPropertiesView,
+        page: PropertyOwnerPropertiesView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
     RouteDef(Routes.datePickerView, page: DatePickerView),
@@ -440,6 +446,12 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    PropertyOwnerPropertiesView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerPropertiesView(),
+        settings: data,
+      );
+    },
     ResetPasswordView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ResetPasswordView(),
@@ -469,6 +481,7 @@ class StackedRouter extends RouterBase {
           key: args.key,
           passedProperty: args.passedProperty,
           propertyContent: args.propertyContent,
+          isPropertyOwner: args.isPropertyOwner,
         ),
         settings: data,
       );
@@ -734,9 +747,13 @@ class DatePickerViewArguments {
 class PropertyDetailsViewArguments {
   final Key? key;
   final Property? passedProperty;
-  final BookedPropertyContent? propertyContent;
+  final TenantBookedPropertyContent? propertyContent;
+  final bool isPropertyOwner;
   PropertyDetailsViewArguments(
-      {this.key, required this.passedProperty, this.propertyContent});
+      {this.key,
+      required this.passedProperty,
+      this.propertyContent,
+      this.isPropertyOwner = false});
 }
 
 /// BookingSubmissionView arguments holder class

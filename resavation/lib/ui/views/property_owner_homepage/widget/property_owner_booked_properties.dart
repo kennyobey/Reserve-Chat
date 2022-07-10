@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:resavation/model/tenant_booked_property/content.dart';
-import 'package:resavation/model/tenant_booked_property/tenant_booked_property.dart';
+import 'package:resavation/model/owner_booked_property/content.dart';
+import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
+import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+import 'package:resavation/ui/views/home/widget/items.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
-import '../../../shared/spacing.dart';
-import '../home_viewmodel.dart';
-import 'items.dart';
 
-class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
-  const HomeUserBookedProperty({Key? key}) : super(key: key);
+import '../property_owner_homepageViewModel.dart';
+
+class PropertyOwnerBookedProperties
+    extends ViewModelWidget<PropertyOwnerHomePageViewModel> {
+  const PropertyOwnerBookedProperties({Key? key}) : super(key: key);
 
   Column buildErrorBody(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -23,7 +25,7 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(
-          height: 70,
+          height: 50,
           width: double.infinity,
         ),
         Text(
@@ -35,12 +37,12 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
           width: double.infinity,
         ),
         Text(
-          'An error occurred with the data fetch, please try again later',
+          'An error occured with the data fetch, please try again later',
           textAlign: TextAlign.center,
           style: bodyText2,
         ),
         const SizedBox(
-          height: 70,
+          height: 50,
         ),
       ],
     );
@@ -60,7 +62,7 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
           width: double.infinity,
         ),
         Text(
-          'No data!',
+          'No  booked properties yet!',
           style: bodyText1,
         ),
         const SizedBox(
@@ -68,7 +70,7 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
           width: double.infinity,
         ),
         Text(
-          'You curretly have no booked property',
+          'Kindly check back later for request(s) on your properties',
           textAlign: TextAlign.center,
           style: bodyText2,
         ),
@@ -79,20 +81,19 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildBody(HomeViewModel model) {
-    return FutureBuilder<TenantBookedProperty>(
-      future: model.httpService.getAllTenantsBookedProperty(page: 0, size: 5),
+  Widget buildBody(PropertyOwnerHomePageViewModel model) {
+    return FutureBuilder<OwnerBookedProperty>(
+      future: model.httpService.getAllOwnerBookedProperty(page: 0, size: 5),
       builder: ((context, asyncDataSnapshot) {
         if (asyncDataSnapshot.hasError) {
           return buildErrorBody(context);
         }
 
         if (asyncDataSnapshot.hasData) {
-          final queryData = asyncDataSnapshot.data;
-          final List<TenantBookedPropertyContent> bookedProperty =
-              queryData?.content ?? [];
+          final List<OwnerBookedPropertyContent> ownerProperty =
+              asyncDataSnapshot.data?.content ?? [];
 
-          return buildSuccessBody(bookedProperty, model, context);
+          return buildSuccessBody(ownerProperty, model, context);
         } else {
           return buildLoadingWidget();
         }
@@ -116,38 +117,38 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildSuccessBody(List<TenantBookedPropertyContent> allContent,
-      HomeViewModel model, BuildContext context) {
-    return allContent.isEmpty
+  Widget buildSuccessBody(List<OwnerBookedPropertyContent> allProperties,
+      PropertyOwnerHomePageViewModel model, BuildContext context) {
+    return allProperties.isEmpty
         ? buildEmptyBody(context)
         : ListView.builder(
             padding: const EdgeInsets.all(0),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
+            itemCount: allProperties.length,
             itemBuilder: (_, index) {
-              final content = allContent[index];
+              final property = allProperties[index];
               return BookedPropertyCard(
-                content: content,
+                content: property,
                 onTap: () {
-                  model.goToBookedPropertyDetails(content);
+                  // accept or decline tenant request
                 },
               );
             },
-            itemCount: allContent.length,
           );
   }
 
   @override
-  Widget build(BuildContext context, HomeViewModel model) {
+  Widget build(BuildContext context, PropertyOwnerHomePageViewModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleListTile(
           onTap: () {
-            model.goToBookedContentList();
+            // model.goToPropertyOwnerPropertiesView();
           },
           visibility: true,
-          title: 'Booked Propierties',
+          title: 'Tenant Request(s)',
         ),
         verticalSpaceSmall,
         buildBody(model),
@@ -163,7 +164,7 @@ class BookedPropertyCard extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  final TenantBookedPropertyContent content;
+  final OwnerBookedPropertyContent content;
   final void Function()? onTap;
 
   @override
@@ -205,7 +206,15 @@ class BookedPropertyCard extends StatelessWidget {
                     ),
                     verticalSpaceTiny,
                     Text(
-                      'Verified: ' + content.status.toString().toUpperCase(),
+                      'Tenant Name: ' +
+                          (content.user?.firstName ?? '') +
+                          " " +
+                          (content.user?.lastName ?? ''),
+                      style: AppStyle.kBodySmallRegular12W300,
+                    ),
+                    verticalSpaceTiny,
+                    Text(
+                      'Check In Date: ' + (content.checkInDate ?? ''),
                       style: AppStyle.kBodySmallRegular12W300,
                     ),
                     verticalSpaceTiny,

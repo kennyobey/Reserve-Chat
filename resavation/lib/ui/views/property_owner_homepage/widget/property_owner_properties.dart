@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:resavation/model/owner_property/owner_property.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:resavation/ui/shared/spacing.dart';
+import 'package:resavation/ui/views/home/widget/items.dart';
+import 'package:resavation/ui/views/property_owner_properties/property_owner_properties_view.dart';
 import 'package:stacked/stacked.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../property_owner_homepageViewModel.dart';
 
 class PropertyOwnerProperties
     extends ViewModelWidget<PropertyOwnerHomePageViewModel> {
@@ -74,25 +80,18 @@ class PropertyOwnerProperties
   }
 
   Widget buildBody(PropertyOwnerHomePageViewModel model) {
-    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: getTenantAppointments(model.userData.email),
+    return FutureBuilder<OwnerPropertyModel>(
+      future: model.httpService.getOwnerProperty(page: 0, size: 5),
       builder: ((context, asyncDataSnapshot) {
         if (asyncDataSnapshot.hasError) {
           return buildErrorBody(context);
         }
 
         if (asyncDataSnapshot.hasData) {
-          final queryData = asyncDataSnapshot.data;
-          final List<Appointment> userAppointments = queryData?.docs
-                  .map(
-                    (documentSnapshot) => Appointment.fromMap(
-                      documentSnapshot.data(),
-                    ),
-                  )
-                  .toList() ??
-              [];
+          final List<Property> ownerProperty =
+              asyncDataSnapshot.data?.properties ?? [];
 
-          return buildSuccessBody(userAppointments, model, context);
+          return buildSuccessBody(ownerProperty, model, context);
         } else {
           return buildLoadingWidget();
         }
@@ -116,24 +115,30 @@ class PropertyOwnerProperties
     );
   }
 
-  Widget buildSuccessBody(List<Property> allContent,
+  Widget buildSuccessBody(List<Property> allProperties,
       PropertyOwnerHomePageViewModel model, BuildContext context) {
-    return allContent.isEmpty
+    return allProperties.isEmpty
         ? buildEmptyBody(context)
         : ListView.builder(
             padding: const EdgeInsets.all(0),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
+            itemCount: 3,
             itemBuilder: (_, index) {
-              final appointment = allContent[index];
-              return HomeAppointmentItem(
-                appointment: appointment,
-                onPressed: () async {
-                  // showItemDialog(appointment, context);
-                },
+              final property = allProperties[index];
+              return PropertyOwnerPropertiesCard(
+                id: property.id ?? -1,
+                onTap: () => model.goToPropertyDetails(property),
+                image: property.propertyImages?[0].imageUrl ?? '',
+                amountPerYear: property.spacePrice ?? 0.0,
+                name: property.propertyName ?? '',
+                address: property.address ?? '',
+                numberOfBathrooms: property.bathTubCount ?? 0,
+                numberOfBedrooms: property.bedroomCount ?? 0,
+                squareFeet: property.surfaceArea ?? 0,
+                isFavoriteTap: property.favourite ?? false,
               );
             },
-            itemCount: allContent.length,
           );
   }
 
@@ -144,7 +149,7 @@ class PropertyOwnerProperties
       children: [
         TitleListTile(
           onTap: () {
-            // model.goToAppointmentList();
+            model.goToPropertyOwnerPropertiesView();
           },
           visibility: true,
           title: 'Your Properties',
@@ -152,70 +157,6 @@ class PropertyOwnerProperties
         verticalSpaceSmall,
         buildBody(model),
       ],
-    );
-  }
-}
-
-class HomeAppointmentItem extends StatelessWidget {
-  final Appointment appointment;
-  final VoidCallback onPressed;
-  const HomeAppointmentItem(
-      {Key? key, required this.appointment, required this.onPressed})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final color = appointment.status == AppointmentStatus.Declined
-        ? Colors.red
-        : appointment.status == AppointmentStatus.Passed
-            ? Colors.blueGrey
-            : appointment.status == AppointmentStatus.Booked
-                ? Colors.green
-                : kBlack;
-
-    return Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 1,
-      margin: const EdgeInsets.only(left: 3, right: 3, bottom: 8),
-      child: InkWell(
-        onTap: onPressed,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                appointment.propertyName ?? '',
-                style: AppStyle.kBodyRegularBlack15W500.copyWith(
-                  color: color,
-                ),
-              ),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Text(
-                    '${getAppointmentHour(appointment.appointmentStartTime ?? 0)} - ${getAppointmentHour(appointment.appointmentEndTime ?? 0)}',
-                    style: AppStyle.kBodyRegularBlack14W500.copyWith(
-                      color: color,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    appointment.status.name,
-                    style: AppStyle.kBodyRegularBlack14.copyWith(
-                      color: color,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
     );
   }
 }

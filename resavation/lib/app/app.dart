@@ -39,6 +39,7 @@ import 'package:resavation/ui/views/property_owner_identification_verification/p
 import 'package:resavation/ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_view.dart';
+import 'package:resavation/ui/views/property_owner_properties/property_owner_properties_view.dart';
 import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import 'package:resavation/ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
@@ -89,6 +90,7 @@ import '../ui/views/states_list/states_list_view.dart';
     AdaptiveRoute(page: UserProfileView),
     AdaptiveRoute(page: VerificationPage),
     AdaptiveRoute(page: UserProfilePageView),
+    AdaptiveRoute(page: PropertyOwnerPropertiesView),
 
     ///
     AdaptiveRoute(page: ResetPasswordView),

@@ -8,14 +8,21 @@
             "name": "resavation",
             "cwd": "resavation",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+             "args": [
+                "--verbose"
+             ]
+
         },
         {
             "name": "resavation (profile mode)",
             "cwd": "resavation",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": [
+               "--verbose"
+            ]
         }
     ]
 }
