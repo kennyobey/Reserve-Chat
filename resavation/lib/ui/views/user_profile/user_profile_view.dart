@@ -12,10 +12,12 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../model/edit_profile_model.dart';
 import 'user_profile_viewModel.dart';
 
 class UserProfileView extends StatefulWidget {
-  const UserProfileView({Key? key}) : super(key: key);
+  const UserProfileView({Key? key, this.content}) : super(key: key);
+  final EditProfileModel? content;
 
   @override
   State<UserProfileView> createState() => _UserProfileViewState();
@@ -83,7 +85,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                         borderColor: Colors.transparent,
                         titleColor: kWhite,
                         onTap: () {
-                          model.goToVerificationPage();
+                          model.getProfile();
                         },
                       ),
                       verticalSpaceMedium,
@@ -98,7 +100,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                       ),
                       verticalSpaceSmall,
                       Text(
-                        'Stephen ',
+                        model.content?.firstName ?? "Olu",
                         style: AppStyle.kBodyRegularBlack14W500
                             .copyWith(color: kGray),
                       ),

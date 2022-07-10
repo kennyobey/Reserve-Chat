@@ -836,4 +836,62 @@ class HttpService {
       return Future.error("Error occurred in communicating with the server");
     }
   }
+
+  // getUserProfile() async {
+  //   List incomingProfile = [''];
+  //   print("${incomingProfile}");
+  //   print("verify");
+  //   try {
+  //     var headers = {
+  //       'Authorization':
+  //           'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZXNhdmF0aW9uQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1BST1BFUlRZX09XTkVSIiwiaWQiOiI1NyIsImZpcnN0bmFtZSI6IlN0ZXBoZW4iLCJsYXN0bmFtZSI6IkFkZXllbW8iLCJlbWFpbCI6InJlc2F2YXRpb25AZ21haWwuY29tIiwiaWF0IjoxNjU2Mzk3NzYxLCJleHAiOjE2ODc5Mzc3NjF9.nNEt9F5OBGUD4Y7uvof1MHnemQRA7FOHSFtHPY1daL8FUJOHClNZe_12pHBAOyKkBKrMDLRjJv1sr9UlLp3BHw'
+  //     };
+  //     var request = http.Request(
+  //         'GET',
+  //         Uri.parse(
+  //             'https://resavation-backend.herokuapp.com/api/v1/user/profile'));
+  //     request.body = '''''';
+  //     request.headers.addAll(headers);
+
+  //     http.StreamedResponse response = await request.send();
+
+  //     if (response.statusCode == 200) {
+  //       print(" respomse is ${await response.stream.bytesToString()}");
+
+  //       incomingProfile =
+  //           editProfileModelFromJson(await response.stream.bytesToString())
+  //               .firstName! as List;
+  //     } else {
+  //       print(response.reasonPhrase);
+  //     }
+  //   } catch (exception) {
+  //     return Future.error(
+  //         "Error occurred in communicating wit the server: $exception");
+  //   }
+  // }
+
+  Future<EditProfileModel> getUserProfile() async {
+    try {
+      final response = await http.get(
+        Uri.http(
+          requestSite,
+          "/api/v1/user/profile",
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': userTypeService.authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        final decodedMessage = json.decode(response.body);
+        print("resut ${decodedMessage}");
+        return editProfileModelFromJson(response.body);
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+      // return Future.error("Error occurred in communicating with the server");
+    }
+  }
 }
