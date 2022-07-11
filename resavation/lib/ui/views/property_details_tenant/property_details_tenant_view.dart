@@ -96,14 +96,28 @@ class PropertyDetailsTenantView extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: ResavationElevatedButton(
         child: Text("Make Payment"),
-        onPressed: () {
-          showTenantPaymentDialog(model, context);
+        onPressed: () async {
+          try {
+            final shouldPay = await showTenantPaymentDialog(model, context);
+            if (shouldPay == true) {
+              final message =
+                  await model.chargeUser(tenantPropertyContent, context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                ),
+              );
+            }
+          } catch (exception) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(exception.toString())));
+          }
         },
       ),
     );
   }
 
-  showTenantPaymentDialog(
+  Future<bool?> showTenantPaymentDialog(
       PropertyDetailsTenantViewModel model, BuildContext context) async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.black,
@@ -128,7 +142,7 @@ class PropertyDetailsTenantView extends StatelessWidget {
             ),
             verticalSpaceTiny,
             Text(
-              'Please note that you would be enrolled in a payment plan and ${tenantPropertyContent?.paymentType} payments of NGN ${tenantPropertyContent?.amount} would be made.\n\nBefore charging, you will always receive a confirmation email that allows you to cancel at any time. ',
+              'Please note that you are about to make a  payment of NGN ${tenantPropertyContent?.amount}  for this property ${tenantPropertyContent?.paymentType} PLAN.\nKindly check through the property details before making payment',
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -172,9 +186,7 @@ class PropertyDetailsTenantView extends StatelessWidget {
       ),
     );
 
-    if (shouldPay == true) {
-      model.goToMakePayment(tenantPropertyContent);
-    }
+    return shouldPay;
   }
 
   Widget buildLocation(PropertyDetailsTenantViewModel model) {
