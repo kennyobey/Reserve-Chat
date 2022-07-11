@@ -1,5 +1,7 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/owner_booked_property/content.dart';
+import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/saved_property/saved_property.dart';
 import 'package:resavation/services/core/http_service.dart';
@@ -71,6 +73,17 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
     );
   }
 
+  void goToOwnerBookedPropertyDetails(
+      OwnerBookedPropertyContent bookedPropertyContent) {
+    _navigationService.navigateTo(
+      Routes.propertyDetailsView,
+      arguments: PropertyDetailsViewArguments(
+        passedProperty: bookedPropertyContent.property,
+        ownerPropertyContent: bookedPropertyContent,
+      ),
+    );
+  }
+
   Future<SavedProperty> restoreSavedProperty() async {
     try {
       final property = await httpService.getSavedProperty();
@@ -80,5 +93,9 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
         exception.toString(),
       );
     }
+  }
+
+  void goToPropertyOwnerBookedPropertiesView() {
+    _navigationService.navigateTo(Routes.propertyOwnerBookedPropertiesView);
   }
 }

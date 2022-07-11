@@ -82,7 +82,7 @@ class HomeViewModel extends BaseViewModel {
       Routes.propertyDetailsView,
       arguments: PropertyDetailsViewArguments(
         passedProperty: content.property,
-        propertyContent: content,
+        tenantPropertyContent: content,
       ),
     );
   }

@@ -128,12 +128,9 @@ class PropertyOwnerBookedProperties
             itemCount: allProperties.length,
             itemBuilder: (_, index) {
               final property = allProperties[index];
-              return BookedPropertyCard(
-                content: property,
-                onTap: () {
-                  // accept or decline tenant request
-                },
-              );
+              return PropertyOwnerBookedPropertyCard(
+                  content: property,
+                  onTap: () => model.goToOwnerBookedPropertyDetails(property));
             },
           );
   }
@@ -145,7 +142,7 @@ class PropertyOwnerBookedProperties
       children: [
         TitleListTile(
           onTap: () {
-            // model.goToPropertyOwnerPropertiesView();
+            model.goToPropertyOwnerBookedPropertiesView();
           },
           visibility: true,
           title: 'Tenant Request(s)',
@@ -157,8 +154,8 @@ class PropertyOwnerBookedProperties
   }
 }
 
-class BookedPropertyCard extends StatelessWidget {
-  const BookedPropertyCard({
+class PropertyOwnerBookedPropertyCard extends StatelessWidget {
+  const PropertyOwnerBookedPropertyCard({
     Key? key,
     required this.content,
     this.onTap,

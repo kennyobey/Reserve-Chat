@@ -7,15 +7,16 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../model/appointment.dart';
 import '../model/call_model.dart';
 import '../model/filter/filter.dart';
+import '../model/owner_booked_property/content.dart';
 import '../model/propety_model/property_model.dart';
 import '../model/propety_model/user.dart';
+import '../model/tenant_booked_property/content.dart';
 import '../services/core/dojah_verification.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
@@ -44,6 +45,7 @@ import '../ui/views/property_owner_add_cover_photo/property_owner_add_cover_phot
 import '../ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import '../ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import '../ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
+import '../ui/views/property_owner_booked_properties/property_owner_booked_properties_view.dart';
 import '../ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
 import '../ui/views/property_owner_details/property_owner_details_view.dart';
 import '../ui/views/property_owner_edit_profile/property_owner_edit_profileView.dart';
@@ -106,6 +108,8 @@ class Routes {
   static const String userProfilePageView = '/user-profile-page-view';
   static const String propertyOwnerPropertiesView =
       '/property-owner-properties-view';
+  static const String propertyOwnerBookedPropertiesView =
+      '/property-owner-booked-properties-view';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
   static const String datePickerView = '/date-picker-view';
@@ -168,6 +172,7 @@ class Routes {
     verificationPage,
     userProfilePageView,
     propertyOwnerPropertiesView,
+    propertyOwnerBookedPropertiesView,
     resetPasswordView,
     filterView,
     datePickerView,
@@ -235,6 +240,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
     RouteDef(Routes.propertyOwnerPropertiesView,
         page: PropertyOwnerPropertiesView),
+    RouteDef(Routes.propertyOwnerBookedPropertiesView,
+        page: PropertyOwnerBookedPropertiesView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
     RouteDef(Routes.datePickerView, page: DatePickerView),
@@ -452,6 +459,12 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    PropertyOwnerBookedPropertiesView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerBookedPropertiesView(),
+        settings: data,
+      );
+    },
     ResetPasswordView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ResetPasswordView(),
@@ -480,8 +493,9 @@ class StackedRouter extends RouterBase {
         builder: (context) => PropertyDetailsView(
           key: args.key,
           passedProperty: args.passedProperty,
-          propertyContent: args.propertyContent,
+          tenantPropertyContent: args.tenantPropertyContent,
           isPropertyOwner: args.isPropertyOwner,
+          ownerPropertyContent: args.ownerPropertyContent,
         ),
         settings: data,
       );
@@ -747,13 +761,15 @@ class DatePickerViewArguments {
 class PropertyDetailsViewArguments {
   final Key? key;
   final Property? passedProperty;
-  final TenantBookedPropertyContent? propertyContent;
+  final TenantBookedPropertyContent? tenantPropertyContent;
   final bool isPropertyOwner;
+  final OwnerBookedPropertyContent? ownerPropertyContent;
   PropertyDetailsViewArguments(
       {this.key,
       required this.passedProperty,
-      this.propertyContent,
-      this.isPropertyOwner = false});
+      this.tenantPropertyContent,
+      this.isPropertyOwner = false,
+      this.ownerPropertyContent});
 }
 
 /// BookingSubmissionView arguments holder class

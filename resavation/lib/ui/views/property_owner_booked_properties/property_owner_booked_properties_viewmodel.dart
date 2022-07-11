@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
-import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/tenant_booked_property/content.dart';
-import 'package:resavation/model/tenant_booked_property/tenant_booked_property.dart';
+import 'package:resavation/model/owner_booked_property/content.dart';
+import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
 
-class BookedPropertyListViewModel extends BaseViewModel {
+class PropertyOwnerBookedPropertiesViewModel extends BaseViewModel {
   bool isLoading = false;
   bool hasErrorOnData = false;
   int page = 0;
@@ -17,22 +16,21 @@ class BookedPropertyListViewModel extends BaseViewModel {
   int size = 8;
 
   final ScrollController scrollController = ScrollController();
-  final httpService = locator<HttpService>();
-
   final _navigationService = locator<NavigationService>();
-  List<TenantBookedProperty> bookedSearches = [];
+  final httpService = locator<HttpService>();
+  List<OwnerBookedProperty> ownerProperties = [];
 
-  List<TenantBookedPropertyContent> get contents {
-    final List<TenantBookedPropertyContent> allContents = [];
+  List<OwnerBookedPropertyContent> get properties {
+    final List<OwnerBookedPropertyContent> allProperty = [];
 
-    bookedSearches.forEach((element) {
-      allContents.addAll(element.content ?? []);
+    ownerProperties.forEach((element) {
+      allProperty.addAll(element.content ?? []);
     });
 
-    return allContents;
+    return allProperty;
   }
 
-  BookedPropertyListViewModel() {
+  PropertyOwnerBookedPropertiesViewModel() {
     getInitData();
   }
 
@@ -44,7 +42,7 @@ class BookedPropertyListViewModel extends BaseViewModel {
       }
       if (!isLoading &&
           !allLoaded &&
-          contents.isNotEmpty &&
+          properties.isNotEmpty &&
           !isLoadingOldData) {
         getOldData();
       }
@@ -53,17 +51,19 @@ class BookedPropertyListViewModel extends BaseViewModel {
 
   void getInitData() async {
     page = 0;
-    bookedSearches.clear();
+    ownerProperties.clear();
     isLoading = true;
     hasErrorOnData = false;
     allLoaded = false;
     notifyListeners();
 
     try {
-      final bookedSearch =
-          await httpService.getAllTenantsBookedProperty(page: page, size: size);
-      allLoaded = (bookedSearch.last ?? false) || (bookedSearch.empty ?? false);
-      bookedSearches.add(bookedSearch);
+      final propertySearch =
+          await httpService.getAllOwnerBookedProperty(page: page, size: size);
+
+      allLoaded =
+          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
+      ownerProperties.add(propertySearch);
 
       hasErrorOnData = false;
       attachScrollListener();
@@ -81,11 +81,12 @@ class BookedPropertyListViewModel extends BaseViewModel {
 
     notifyListeners();
     try {
-      final bookedSearch =
-          await httpService.getAllTenantsBookedProperty(page: page, size: size);
-      bookedSearches.add(bookedSearch);
+      final propertySearch =
+          await httpService.getAllOwnerBookedProperty(page: page, size: size);
 
-      allLoaded = (bookedSearch.last ?? false) || (bookedSearch.empty ?? false);
+      allLoaded =
+          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
+      ownerProperties.add(propertySearch);
     } catch (exception) {
       allLoaded = true;
     }
@@ -94,13 +95,13 @@ class BookedPropertyListViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToPropertyDetails(TenantBookedPropertyContent content) {
-    _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
-        passedProperty: content.property,
-        tenantPropertyContent: content,
-      ),
-    );
+  void goToPropertyDetails(OwnerBookedPropertyContent property) {
+    // _navigationService.navigateTo(
+    //   Routes.propertyDetailsView,
+    //   arguments: PropertyDetailsViewArguments(
+    //     passedProperty: property,
+    //     isPropertyOwner: true,
+    //   ),
+    // );
   }
 }

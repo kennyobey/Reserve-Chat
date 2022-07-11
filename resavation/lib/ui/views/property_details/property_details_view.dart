@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:resavation/model/owner_booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/ui/shared/colors.dart';
@@ -16,14 +17,16 @@ import 'package:stacked/stacked.dart';
 class PropertyDetailsView extends StatelessWidget {
   final Property? passedProperty;
   final bool isPropertyOwner;
-  final TenantBookedPropertyContent? propertyContent;
+  final TenantBookedPropertyContent? tenantPropertyContent;
+  final OwnerBookedPropertyContent? ownerPropertyContent;
 
-  const PropertyDetailsView(
-      {Key? key,
-      required this.passedProperty,
-      this.propertyContent,
-      this.isPropertyOwner = false})
-      : super(key: key);
+  const PropertyDetailsView({
+    Key? key,
+    required this.passedProperty,
+    this.tenantPropertyContent,
+    this.isPropertyOwner = false,
+    this.ownerPropertyContent,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +53,19 @@ class PropertyDetailsView extends StatelessWidget {
 
   Widget buildBottomBar(PropertyDetailsViewModel model, BuildContext context) {
     if (isPropertyOwner) {
+      // property owner is viewing product and can edit it
       return buildBottomBarOwner(model, context);
-    } else if (propertyContent == null) {
-      return buildBottomBarTenant(model);
-    } else if (propertyContent?.status == true) {
+    } else if (ownerPropertyContent != null) {
+      //property owner is accepting or declining tenant request
+      return buildOwnerBookedBottomBar(model);
+    } else if (tenantPropertyContent == null) {
+      //tenant is seeing either book appointment or book property
+      return buildTenantBookedBottomBar(model);
+    } else if (tenantPropertyContent?.status == true) {
+      // tenant is seeing the payment screen
       return buildPaymentBottomBar(model, context);
     } else {
+      // none of the above category.
       return const SizedBox(
         height: 0,
         width: double.infinity,
@@ -63,7 +73,7 @@ class PropertyDetailsView extends StatelessWidget {
     }
   }
 
-  Padding buildBottomBarTenant(PropertyDetailsViewModel model) {
+  Padding buildTenantBookedBottomBar(PropertyDetailsViewModel model) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -87,6 +97,30 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
+  Padding buildOwnerBookedBottomBar(PropertyDetailsViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ResavationElevatedButton(
+              child: Text("Accept Request"),
+              onPressed: () => model.goToBookAppointmentPage(),
+            ),
+          ),
+          horizontalSpaceMedium,
+          Expanded(
+            child: ResavationElevatedButton(
+              child: Text("Decline Request"),
+              onPressed: () => model.goToDatePickerView(),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget buildPaymentBottomBar(
       PropertyDetailsViewModel model, BuildContext context) {
     return Container(
@@ -95,7 +129,7 @@ class PropertyDetailsView extends StatelessWidget {
       child: ResavationElevatedButton(
         child: Text("Make Payment"),
         onPressed: () {
-          showPaymentDialog(model, context);
+          showTenantPaymentDialog(model, context);
         },
       ),
     );
@@ -115,7 +149,7 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  showPaymentDialog(
+  showTenantPaymentDialog(
       PropertyDetailsViewModel model, BuildContext context) async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.black,
@@ -140,7 +174,7 @@ class PropertyDetailsView extends StatelessWidget {
             ),
             verticalSpaceTiny,
             Text(
-              'Please note that you would be enrolled in a payment plan and ${propertyContent?.paymentType} payments of NGN ${propertyContent?.amount} would be made.\n\nBefore charging, you will always receive a confirmation email that allows you to cancel at any time. ',
+              'Please note that you would be enrolled in a payment plan and ${tenantPropertyContent?.paymentType} payments of NGN ${tenantPropertyContent?.amount} would be made.\n\nBefore charging, you will always receive a confirmation email that allows you to cancel at any time. ',
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -185,7 +219,7 @@ class PropertyDetailsView extends StatelessWidget {
     );
 
     if (shouldPay == true) {
-      model.goToMakePayment(propertyContent);
+      model.goToMakePayment(tenantPropertyContent);
     }
   }
 
@@ -376,31 +410,31 @@ class PropertyDetailsView extends StatelessWidget {
             ],
           ),
           verticalSpaceMedium,
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Description',
               description: model.property?.description ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property type',
               description: model.property?.propertyType ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property style',
               description: model.property?.propertyStyle ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property status',
               description: model.property?.propertyStatus ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Space serviced',
               description: model.property?.isSpaceServiced ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Space furnished',
               description: model.property?.isSpaceFurnished ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Owner lives in space',
               description: model.property?.isLiveInSPace ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Service type',
               description: model.property?.serviceType ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property category',
               description: model.property?.propertyCategory ?? ''),
           PropertyDetailItem2(
@@ -415,7 +449,7 @@ class PropertyDetailsView extends StatelessWidget {
                       ?.map((e) => e.rule ?? '')
                       .toList() ??
                   []),
-          PropertyDetailItem3(property: model.property),
+          _PropertyDetailItem3(property: model.property),
         ],
       ),
     );
@@ -438,11 +472,11 @@ class PropertyDetailsView extends StatelessWidget {
   }
 }
 
-class PropertyDetailItem extends StatelessWidget {
+class _PropertyDetailItem extends StatelessWidget {
   final String title;
   final String description;
 
-  const PropertyDetailItem(
+  const _PropertyDetailItem(
       {Key? key, required this.title, required this.description})
       : super(key: key);
 
@@ -493,10 +527,10 @@ class PropertyDetailItem2 extends StatelessWidget {
   }
 }
 
-class PropertyDetailItem3 extends StatelessWidget {
+class _PropertyDetailItem3 extends StatelessWidget {
   final Property? property;
 
-  const PropertyDetailItem3({
+  const _PropertyDetailItem3({
     Key? key,
     required this.property,
   }) : super(key: key);

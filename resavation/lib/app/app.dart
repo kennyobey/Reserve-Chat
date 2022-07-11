@@ -30,6 +30,7 @@ import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owne
 import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import 'package:resavation/ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
+import 'package:resavation/ui/views/property_owner_booked_properties/property_owner_booked_properties_view.dart';
 import 'package:resavation/ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
 import 'package:resavation/ui/views/property_owner_edit_profile/property_owner_edit_profileView.dart';
@@ -91,6 +92,7 @@ import '../ui/views/states_list/states_list_view.dart';
     AdaptiveRoute(page: VerificationPage),
     AdaptiveRoute(page: UserProfilePageView),
     AdaptiveRoute(page: PropertyOwnerPropertiesView),
+    AdaptiveRoute(page: PropertyOwnerBookedPropertiesView),
 
     ///
     AdaptiveRoute(page: ResetPasswordView),
