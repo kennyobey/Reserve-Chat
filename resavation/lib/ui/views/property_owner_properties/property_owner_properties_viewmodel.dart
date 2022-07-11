@@ -98,10 +98,9 @@ class PropertyOwnerPropertiesViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
+      Routes.propertyDetailsOwnerView,
+      arguments: PropertyDetailsOwnerViewArguments(
         passedProperty: property,
-        isPropertyOwner: true,
       ),
     );
   }

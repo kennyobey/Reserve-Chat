@@ -12,7 +12,7 @@ class OwnerBookedPropertyContent {
   Property? property;
   String? checkInDate;
   String? paymentType;
-  int? amount;
+  double? amount;
   String? subCategories;
   bool? status;
 
@@ -51,7 +51,7 @@ class OwnerBookedPropertyContent {
             : Property.fromMap(data['property'] as Map<String, dynamic>),
         checkInDate: data['checkInDate'] as String?,
         paymentType: data['paymentType'] as String?,
-        amount: data['amount'] as int?,
+        amount: data['amount'] as double?,
         subCategories: data['subCategories'] as String?,
         status: data['status'] as bool?,
       );

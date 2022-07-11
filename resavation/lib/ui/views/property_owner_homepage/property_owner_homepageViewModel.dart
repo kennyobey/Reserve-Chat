@@ -65,10 +65,9 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
+      Routes.propertyDetailsOwnerView,
+      arguments: PropertyDetailsOwnerViewArguments(
         passedProperty: property,
-        isPropertyOwner: true,
       ),
     );
   }
@@ -76,8 +75,8 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   void goToOwnerBookedPropertyDetails(
       OwnerBookedPropertyContent bookedPropertyContent) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
+      Routes.propertyDetailsOwnerView,
+      arguments: PropertyDetailsOwnerViewArguments(
         passedProperty: bookedPropertyContent.property,
         ownerPropertyContent: bookedPropertyContent,
       ),

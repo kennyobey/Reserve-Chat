@@ -124,8 +124,8 @@ class FilterDisplayViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(passedProperty: property),
+      Routes.propertyDetailsTenantView,
+      arguments: PropertyDetailsTenantViewArguments(passedProperty: property),
     );
   }
 }

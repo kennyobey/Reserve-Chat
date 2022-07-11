@@ -39,7 +39,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void goToPropertyDetails() {
-    _navigationService.navigateTo(Routes.propertyDetailsView);
+    _navigationService.navigateTo(Routes.propertyDetailsTenantView);
   }
 
   void goToTopItemsView(String itemName, bool isStates) {
@@ -79,8 +79,8 @@ class HomeViewModel extends BaseViewModel {
 
   void goToBookedPropertyDetails(TenantBookedPropertyContent content) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
+      Routes.propertyDetailsTenantView,
+      arguments: PropertyDetailsTenantViewArguments(
         passedProperty: content.property,
         tenantPropertyContent: content,
       ),

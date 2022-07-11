@@ -14,7 +14,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
 
-class PropertyDetailsViewModel extends BaseViewModel {
+class PropertyDetailsTenantViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
   final userService = locator<UserTypeService>();
@@ -23,7 +23,7 @@ class PropertyDetailsViewModel extends BaseViewModel {
   int get pagePosition => _pagePosition;
   Property? property;
 
-  PropertyDetailsViewModel(Property? property) {
+  PropertyDetailsTenantViewModel(Property? property) {
     this.property = property;
     notifyListeners();
   }

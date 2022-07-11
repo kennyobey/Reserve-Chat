@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
+import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/owner_booked_property/content.dart';
 import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:stacked/stacked.dart';
@@ -95,13 +96,13 @@ class PropertyOwnerBookedPropertiesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToPropertyDetails(OwnerBookedPropertyContent property) {
-    // _navigationService.navigateTo(
-    //   Routes.propertyDetailsView,
-    //   arguments: PropertyDetailsViewArguments(
-    //     passedProperty: property,
-    //     isPropertyOwner: true,
-    //   ),
-    // );
+  void goToPropertyDetails(OwnerBookedPropertyContent bookedPropertyContent) {
+    _navigationService.navigateTo(
+      Routes.propertyDetailsOwnerView,
+      arguments: PropertyDetailsOwnerViewArguments(
+        passedProperty: bookedPropertyContent.property,
+        ownerPropertyContent: bookedPropertyContent,
+      ),
+    );
   }
 }

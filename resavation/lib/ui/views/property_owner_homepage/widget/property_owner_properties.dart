@@ -123,7 +123,7 @@ class PropertyOwnerProperties
             padding: const EdgeInsets.all(0),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 3,
+            itemCount: allProperties.length,
             itemBuilder: (_, index) {
               final property = allProperties[index];
               return PropertyOwnerPropertiesCard(

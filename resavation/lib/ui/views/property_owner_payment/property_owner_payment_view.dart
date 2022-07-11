@@ -446,16 +446,6 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                 if (model.selectedSubscriptions.isNotEmpty)
                   ...buildSpacePrice(model),
                 verticalSpaceMedium,
-                /*       const Divider(),
-                verticalSpaceSmall,
-                Text(
-                  'Availability Period',
-                  style: AppStyle.kBodyRegularBlack14W500,
-                ),
-                verticalSpaceSmall,
-                const Divider(),
-                verticalSpaceSmall, */
-
                 DateContainer(
                   label: 'Availability Period (Start)',
                   initialDate: model.startDate,

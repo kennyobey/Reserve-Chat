@@ -10,27 +10,24 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dar
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_details/property_details_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
 
-class PropertyDetailsView extends StatelessWidget {
-  final Property? passedProperty;
-  final bool isPropertyOwner;
-  final TenantBookedPropertyContent? tenantPropertyContent;
-  final OwnerBookedPropertyContent? ownerPropertyContent;
+import 'property_details_tenant_viewmodel.dart';
 
-  const PropertyDetailsView({
+class PropertyDetailsTenantView extends StatelessWidget {
+  final Property? passedProperty;
+  final TenantBookedPropertyContent? tenantPropertyContent;
+
+  const PropertyDetailsTenantView({
     Key? key,
     required this.passedProperty,
     this.tenantPropertyContent,
-    this.isPropertyOwner = false,
-    this.ownerPropertyContent,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PropertyDetailsViewModel>.reactive(
+    return ViewModelBuilder<PropertyDetailsTenantViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -47,18 +44,13 @@ class PropertyDetailsView extends StatelessWidget {
         ),
         bottomSheet: buildBottomBar(model, context),
       ),
-      viewModelBuilder: () => PropertyDetailsViewModel(passedProperty),
+      viewModelBuilder: () => PropertyDetailsTenantViewModel(passedProperty),
     );
   }
 
-  Widget buildBottomBar(PropertyDetailsViewModel model, BuildContext context) {
-    if (isPropertyOwner) {
-      // property owner is viewing product and can edit it
-      return buildBottomBarOwner(model, context);
-    } else if (ownerPropertyContent != null) {
-      //property owner is accepting or declining tenant request
-      return buildOwnerBookedBottomBar(model);
-    } else if (tenantPropertyContent == null) {
+  Widget buildBottomBar(
+      PropertyDetailsTenantViewModel model, BuildContext context) {
+    if (tenantPropertyContent == null) {
       //tenant is seeing either book appointment or book property
       return buildTenantBookedBottomBar(model);
     } else if (tenantPropertyContent?.status == true) {
@@ -73,7 +65,7 @@ class PropertyDetailsView extends StatelessWidget {
     }
   }
 
-  Padding buildTenantBookedBottomBar(PropertyDetailsViewModel model) {
+  Padding buildTenantBookedBottomBar(PropertyDetailsTenantViewModel model) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -97,32 +89,8 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  Padding buildOwnerBookedBottomBar(PropertyDetailsViewModel model) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: ResavationElevatedButton(
-              child: Text("Accept Request"),
-              onPressed: () => model.goToBookAppointmentPage(),
-            ),
-          ),
-          horizontalSpaceMedium,
-          Expanded(
-            child: ResavationElevatedButton(
-              child: Text("Decline Request"),
-              onPressed: () => model.goToDatePickerView(),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget buildPaymentBottomBar(
-      PropertyDetailsViewModel model, BuildContext context) {
+      PropertyDetailsTenantViewModel model, BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
@@ -135,22 +103,8 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  Widget buildBottomBarOwner(
-      PropertyDetailsViewModel model, BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      child: ResavationElevatedButton(
-        child: Text("Edit Property"),
-        onPressed: () {
-          // showPaymentDialog(model, context);
-        },
-      ),
-    );
-  }
-
   showTenantPaymentDialog(
-      PropertyDetailsViewModel model, BuildContext context) async {
+      PropertyDetailsTenantViewModel model, BuildContext context) async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.black,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -223,7 +177,7 @@ class PropertyDetailsView extends StatelessWidget {
     }
   }
 
-  Widget buildLocation(PropertyDetailsViewModel model) {
+  Widget buildLocation(PropertyDetailsTenantViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -320,7 +274,7 @@ class PropertyDetailsView extends StatelessWidget {
   }
 
   Widget buildDescription(
-      PropertyDetailsViewModel model, BuildContext context) {
+      PropertyDetailsTenantViewModel model, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10.0,
@@ -455,7 +409,8 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  Widget buildHeader(PropertyDetailsViewModel model, BuildContext context) {
+  Widget buildHeader(
+      PropertyDetailsTenantViewModel model, BuildContext context) {
     return PropertyDetailsHeader(
       onBackTap: model.navigateBack,
       propertyImages: model.property?.propertyImages ?? [],

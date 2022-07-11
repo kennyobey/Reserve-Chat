@@ -96,8 +96,8 @@ class BookedPropertyListViewModel extends BaseViewModel {
 
   void goToPropertyDetails(TenantBookedPropertyContent content) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
+      Routes.propertyDetailsTenantView,
+      arguments: PropertyDetailsTenantViewArguments(
         passedProperty: content.property,
         tenantPropertyContent: content,
       ),
