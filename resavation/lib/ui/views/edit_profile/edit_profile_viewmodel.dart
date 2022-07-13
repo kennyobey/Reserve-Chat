@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/edit_profile_model.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -47,6 +48,9 @@ class EditProfileViewModel extends BaseViewModel {
 
   final _userService = locator<UserTypeService>();
   LoginModel get userData => _userService.userData;
+
+  EditProfileModel? get incomingProfile => null;
+
   void showComingSoon() {
     _snackbarService.showComingSoon();
   }

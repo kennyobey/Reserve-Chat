@@ -27,6 +27,7 @@ class UserProfileViewModel extends BaseViewModel {
   final _userService = locator<UserTypeService>();
 
   List<EditProfileModel> incomingProfile = <EditProfileModel>[];
+
   EditProfileModel? content;
 
   LoginModel get userData => _userService.userData;
@@ -88,15 +89,16 @@ class UserProfileViewModel extends BaseViewModel {
   }
 
   getProfile() async {
-    print("profile is ${incomingProfile}");
-    print("profile ${content?.email}");
-    //print("get profile");
+    print("get profile");
+    print("profile is ${incoming}");
+    //print("profile ${incoming.firstName}");
+
     isLoading = true;
     hasErrorOnData = false;
     notifyListeners();
     try {
       final incoming = await _httpService.getUserProfile();
-      incomingProfile.add(incoming);
+      // incomingProfile.add(incoming);
     } catch (exception) {
       hasErrorOnData = true;
     }
