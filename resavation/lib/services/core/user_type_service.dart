@@ -2,8 +2,11 @@ import 'package:observable_ish/value/value.dart';
 import 'package:resavation/model/login_model.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../model/edit_profile_model.dart';
+
 class UserTypeService with ReactiveServiceMixin {
   RxValue<LoginModel> _userData = RxValue<LoginModel>(LoginModel());
+
   RxValue<bool> _isTenant = RxValue<bool>(true);
   RxValue<int> _currentIndex = RxValue<int>(0);
   bool get isTenant => _isTenant.value;
@@ -45,6 +48,7 @@ class UserTypeService with ReactiveServiceMixin {
     listenToReactiveValues([_isTenant]);
     listenToReactiveValues([_currentIndex]);
     listenToReactiveValues([_userData]);
+
     listenToReactiveValues([_confirmPass]);
     listenToReactiveValues([error]);
   }

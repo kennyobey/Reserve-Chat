@@ -261,7 +261,7 @@ class ChatInputField extends StatelessWidget {
               enableSkinTones: true,
               showRecentsTab: true,
               recentsLimit: 28,
-              //noRecentsText: 'No Recents',
+              // noRecentsText: 'No Recents',
               // noRecentsStyle:
               //     const TextStyle(fontSize: 20, color: Colors.black26),
               tabIndicatorAnimDuration: kTabScrollDuration,

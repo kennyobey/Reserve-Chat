@@ -44,6 +44,7 @@ class _VerificationPageState extends State<VerificationPage> {
 
   final appId = "62b4cea40fdea6003489d12d"; //your application ID
   final publicKey = "test_pk_JacLtoqjU8KiWc7nbeAFO4DF8"; //your public key
+  final name = "kehinde";
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class _VerificationPageState extends State<VerificationPage> {
               ),
               onPressed: () {
                 final userData = {
-                  "first_name": "Kehinde",
+                  "first_name": name,
                   "last_name": "Ade",
                   "dob": "1998-03-08",
                   "residence_country": "Nigeria"

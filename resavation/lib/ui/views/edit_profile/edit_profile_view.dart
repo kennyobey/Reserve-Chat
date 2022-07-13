@@ -43,230 +43,297 @@ class _EditProfileViewState extends State<EditProfileView> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      verticalSpaceSmall,
-                      Center(
-                        child: Badge(
-                          badgeColor: kWhite,
-                          position: BadgePosition.bottomEnd(),
-                          badgeContent: IconButton(
-                              icon: Icon(Icons.camera_alt_sharp),
-                              onPressed: () async {
-                                try {
-                                  final imageLocation =
-                                      await model.showFilePicker();
-                                  showImageDialog(imageLocation, model);
-                                } catch (exception) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(exception.toString())),
-                                  );
-                                }
-                              }),
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(80),
-                            ),
-                            child: ResavationImage(
-                              image: model.userData.imageUrl,
+                  child: Form(
+                    key: model.editProfileFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        verticalSpaceSmall,
+                        Center(
+                          child: Badge(
+                            badgeColor: kWhite,
+                            position: BadgePosition.bottomEnd(),
+                            badgeContent: IconButton(
+                                icon: Icon(Icons.camera_alt_sharp),
+                                onPressed: () async {
+                                  try {
+                                    final imageLocation =
+                                        await model.showFilePicker();
+                                    showImageDialog(imageLocation, model);
+                                  } catch (exception) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(exception.toString())),
+                                    );
+                                  }
+                                }),
+                            child: Container(
+                              width: 150,
+                              height: 150,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(80),
+                              ),
+                              child: ResavationImage(
+                                image: model.userData.imageUrl,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      verticalSpaceMedium,
-                      verticalSpaceMedium,
-                      Text(
-                        'Personal Information Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Last Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: model.userData.lastName,
-                        controller: model.userLastNameController,
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'First Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: model.userData.firstName,
-                        controller: model.userFirstNameController,
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'About Me',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "I am a student of UNIBEN",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Date of birth',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "22/01/2022",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Phone Number',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "2347032867019",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Gender',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      buildGender(model),
-                      verticalSpaceSmall,
-                      Text(
-                        'Occupation',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      buildOccupation(model),
-                      verticalSpaceMedium,
-                      Text(
-                        'Personal Address Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      Text(
-                        'Country',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'State',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Nigeria",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'City',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Ibadan",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Address',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "No 1 Festus Idahosa Street, Molete, Ibadan.",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Postal Code',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "224466",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceMedium,
-                      Text(
-                        'Next of Kin Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'First Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Stephen",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Last Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Adeyemo",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Email',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "adeyemo********8@gmail.com",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Phone number',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "+2347088996756",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Gender',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      buildGender(model),
-                      verticalSpaceSmall,
-                      Text(
-                        'Relationship',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      ResavationTextField(
-                        textInputAction: TextInputAction.next,
-                        hintText: "Uncle",
-                        hintTextStyle: AppStyle.kSubHeading,
-                      ),
-                    ],
+                        verticalSpaceMedium,
+                        verticalSpaceMedium,
+                        Text(
+                          'Personal Information Data',
+                          style: AppStyle.kHeading3,
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'Last Name',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: model.userData.lastName,
+                          controller: model.userLastNameController,
+                          hintTextStyle: AppStyle.kSubHeading,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your last name';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'First Name',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: model.userData.firstName,
+                          controller: model.userFirstNameController,
+                          hintTextStyle: AppStyle.kSubHeading,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your first name';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'About Me',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "I am a student of UNIBEN",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          controller: model.aboutMeEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please write something about yourself';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'Date of birth',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "22/01/2022",
+                          hintTextStyle: AppStyle.kSubHeading,
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'Phone Number',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "2347032867019",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          keyboardType: TextInputType.number,
+                          controller: model.phoneNumberEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your phone number';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'Gender',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        verticalSpaceSmall,
+                        buildGender(model),
+                        verticalSpaceSmall,
+                        Text(
+                          'Occupation',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        verticalSpaceSmall,
+                        buildOccupation(model),
+                        verticalSpaceMedium,
+                        Text(
+                          'Personal Address Data',
+                          style: AppStyle.kHeading3,
+                        ),
+                        Text(
+                          'Country',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "Nigeria",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          controller: model.contryEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your country';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'State',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "Osun",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          controller: model.stateEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your state';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'City',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "Ibadan",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          controller: model.cityEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your city';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'Address',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText:
+                              "No 1 Festus Idahosa Street, Molete, Ibadan.",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          controller: model.addressEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your address';
+                            }
+                            return null;
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        Text(
+                          'Postal Code',
+                          style: AppStyle.kBodyRegularBlack14W500,
+                        ),
+                        ResavationTextField(
+                          textInputAction: TextInputAction.next,
+                          hintText: "224466",
+                          hintTextStyle: AppStyle.kSubHeading,
+                          keyboardType: TextInputType.number,
+                          controller: model.postalCodeEmailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your postal code';
+                            }
+                            return null;
+                          },
+                        ),
+                        // verticalSpaceMedium,
+                        // Text(
+                        //   'Next of Kin Data',
+                        //   style: AppStyle.kHeading3,
+                        // ),
+                        // verticalSpaceSmall,
+                        // Text(
+                        //   'First Name',
+                        //   style: AppStyle.kBodyRegularBlack14W500,
+                        // ),
+                        // ResavationTextField(
+                        //   textInputAction: TextInputAction.next,
+                        //   hintText: "Stephen",
+                        //   hintTextStyle: AppStyle.kSubHeading,
+                        // ),
+                        // verticalSpaceSmall,
+                        // Text(
+                        //   'Last Name',
+                        //   style: AppStyle.kBodyRegularBlack14W500,
+                        // ),
+                        // ResavationTextField(
+                        //   textInputAction: TextInputAction.next,
+                        //   hintText: "Adeyemo",
+                        //   hintTextStyle: AppStyle.kSubHeading,
+                        // ),
+                        // verticalSpaceSmall,
+                        // Text(
+                        //   'Email',
+                        //   style: AppStyle.kBodyRegularBlack14W500,
+                        // ),
+                        // ResavationTextField(
+                        //   textInputAction: TextInputAction.next,
+                        //   hintText: "adeyemo********8@gmail.com",
+                        //   hintTextStyle: AppStyle.kSubHeading,
+                        // ),
+                        // verticalSpaceSmall,
+                        // Text(
+                        //   'Phone number',
+                        //   style: AppStyle.kBodyRegularBlack14W500,
+                        // ),
+                        // ResavationTextField(
+                        //   textInputAction: TextInputAction.next,
+                        //   hintText: "+2347088996756",
+                        //   hintTextStyle: AppStyle.kSubHeading,
+                        // ),
+                        // verticalSpaceSmall,
+                        // Text(
+                        //   'Gender',
+                        //   style: AppStyle.kBodyRegularBlack14W500,
+                        // ),
+                        // verticalSpaceSmall,
+                        // buildGender(model),
+                        // verticalSpaceSmall,
+                        // Text(
+                        //   'Relationship',
+                        //   style: AppStyle.kBodyRegularBlack14W500,
+                        // ),
+                        // ResavationTextField(
+                        //   textInputAction: TextInputAction.next,
+                        //   hintText: "Uncle",
+                        //   hintTextStyle: AppStyle.kSubHeading,
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -276,7 +343,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   Expanded(
                     child: ResavationButton(
                       title: 'Cancel',
-                      onTap: model.goToMainView,
+                      onTap: model.goToUserProfileView,
                       buttonColor: kWhite,
                       titleColor: kBlack,
                       borderColor: kGray,
@@ -287,22 +354,43 @@ class _EditProfileViewState extends State<EditProfileView> {
                     child: ResavationButton(
                       title: 'Save',
                       onTap: () async {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Updating profile please wait')),
-                        );
+                        final isValid =
+                            model.editProfileFormKey.currentState?.validate();
+                        if ((isValid ?? false) == false || model.isLoading) {
+                          return;
+                        }
+
                         try {
-                          await model.updateProfile();
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Profile Updated')),
+                            SnackBar(
+                                content:
+                                    Text('Processing request, please wait')),
                           );
-                          model.goToMainView();
+                          await model.editDetails();
+                          model.goToUserProfileView();
                         } catch (exception) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(exception.toString())),
                           );
                         }
                       },
+                      // onTap: () async {
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(
+                      //         content: Text('Updating profile please wait')),
+                      //   );
+                      //   try {
+                      //     await model.editDetails();
+                      //     ScaffoldMessenger.of(context).showSnackBar(
+                      //       SnackBar(content: Text('Profile Updated')),
+                      //     );
+                      //     model.goToUserProfileView();
+                      //   } catch (exception) {
+                      //     ScaffoldMessenger.of(context).showSnackBar(
+                      //       SnackBar(content: Text(exception.toString())),
+                      //     );
+                      //   }
+                      // },
                     ),
                   ),
                 ],
@@ -444,7 +532,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Male",
+            "Student",
             style: AppStyle.kBodyRegular,
           ),
           items: model.occupation
