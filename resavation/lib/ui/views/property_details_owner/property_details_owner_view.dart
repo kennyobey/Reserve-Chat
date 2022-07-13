@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:resavation/model/booked_property/content.dart';
+import 'package:resavation/model/owner_booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
-import 'package:resavation/ui/views/property_details/property_details_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
 
-class PropertyDetailsView extends StatelessWidget {
-  final Property? passedProperty;
-  final BookedPropertyContent? propertyContent;
+import 'property_details_owner_viewmodel.dart';
 
-  const PropertyDetailsView(
-      {Key? key, required this.passedProperty, this.propertyContent})
-      : super(key: key);
+class PropertyDetailsOwnerView extends StatelessWidget {
+  final Property? passedProperty;
+
+  final OwnerBookedPropertyContent? ownerPropertyContent;
+
+  const PropertyDetailsOwnerView({
+    Key? key,
+    required this.passedProperty,
+    this.ownerPropertyContent,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PropertyDetailsViewModel>.reactive(
+    return ViewModelBuilder<PropertyDetailsOwnerViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -40,24 +43,26 @@ class PropertyDetailsView extends StatelessWidget {
         ),
         bottomSheet: buildBottomBar(model, context),
       ),
-      viewModelBuilder: () => PropertyDetailsViewModel(passedProperty),
+      viewModelBuilder: () => PropertyDetailsOwnerViewModel(passedProperty),
     );
   }
 
-  Widget buildBottomBar(PropertyDetailsViewModel model, BuildContext context) {
-    if (propertyContent == null) {
-      return buildBottomBar1(model);
-    } else if (propertyContent?.status == true) {
-      return buildBottomBar2(model, context);
+  Widget buildBottomBar(
+      PropertyDetailsOwnerViewModel model, BuildContext context) {
+    if (ownerPropertyContent != null) {
+      if (ownerPropertyContent?.status == false) {
+        //property owner is accepting or declining tenant request
+        return buildOwnerBookedBottomBar(model, context);
+      } else {
+        return const SizedBox();
+      }
     } else {
-      return const SizedBox(
-        height: 0,
-        width: double.infinity,
-      );
+      return buildBottomBarOwner(model, context);
     }
   }
 
-  Padding buildBottomBar1(PropertyDetailsViewModel model) {
+  Padding buildOwnerBookedBottomBar(
+      PropertyDetailsOwnerViewModel model, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -65,15 +70,53 @@ class PropertyDetailsView extends StatelessWidget {
         children: [
           Expanded(
             child: ResavationElevatedButton(
-              child: Text("Book Appointment"),
-              onPressed: () => model.goToBookAppointmentPage(),
+              child: Text("Accept Request"),
+              onPressed: () async {
+                final shouldProceed =
+                    await showOwnerAcceptTenantRequest(model, context);
+                if (shouldProceed == true) {
+                  showLoadingData(context);
+                  try {
+                    await model.acceptTenantRequest(ownerPropertyContent!);
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'Your tenant request has been accepted succesfully')));
+                    Navigator.of(context).pop();
+                  } catch (exception) {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'An error occurred accepting your tenant request, please  ty again later')));
+                  }
+                }
+              },
             ),
           ),
           horizontalSpaceMedium,
           Expanded(
             child: ResavationElevatedButton(
-              child: Text("Book Property"),
-              onPressed: () => model.goToDatePickerView(),
+              child: Text("Decline Request"),
+              onPressed: () async {
+                final shouldProceed =
+                    await showOwnerDeclineTenantRequest(model, context);
+                if (shouldProceed == true) {
+                  showLoadingData(context);
+                  try {
+                    await model.declineTenantRequest(ownerPropertyContent!);
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'Your tenant request has been declined succesfully')));
+                    Navigator.of(context).pop();
+                  } catch (exception) {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'An error occurred decling your tenant request, please  ty again later')));
+                  }
+                }
+              },
             ),
           )
         ],
@@ -81,21 +124,79 @@ class PropertyDetailsView extends StatelessWidget {
     );
   }
 
-  Widget buildBottomBar2(PropertyDetailsViewModel model, BuildContext context) {
+  Widget buildBottomBarOwner(
+      PropertyDetailsOwnerViewModel model, BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       child: ResavationElevatedButton(
-        child: Text("Make Payment"),
+        child: Text("Edit Property"),
         onPressed: () {
-          showPaymentDialog(model, context);
+          if (passedProperty != null) {
+            model.goToEditProperty(passedProperty!);
+          }
         },
       ),
     );
   }
 
-  showPaymentDialog(
-      PropertyDetailsViewModel model, BuildContext context) async {
+  showLoadingData(BuildContext context) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.blue,
+                valueColor: AlwaysStoppedAnimation(kWhite),
+              ),
+            ),
+            verticalSpaceMedium,
+            Text(
+              'Request proccessing',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Please be patient while we process your request.',
+              textAlign: TextAlign.center,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      )),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Loading",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+  }
+
+  Future<bool?> showOwnerAcceptTenantRequest(
+      PropertyDetailsOwnerViewModel model, BuildContext context) async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.black,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -114,12 +215,12 @@ class PropertyDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Property Payment',
+              'Property Request',
               style: AppStyle.kBodyRegularBlack16W600,
             ),
             verticalSpaceTiny,
             Text(
-              'Please note that you would be enrolled in a payment plan and ${propertyContent?.paymentType} payments of NGN ${propertyContent?.amount} would be made.\n\nBefore charging, you will always receive a confirmation email that allows you to cancel at any time. ',
+              'Please note that you would be accepting a ${ownerPropertyContent?.paymentType} payment request on this property from  ${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}',
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -132,7 +233,7 @@ class PropertyDetailsView extends StatelessWidget {
                     Navigator.of(context).pop(true);
                   },
                   child: Text(
-                    'Proceed',
+                    'Accept',
                   ),
                 ),
                 TextButton(
@@ -150,7 +251,7 @@ class PropertyDetailsView extends StatelessWidget {
       )),
     );
 
-    final shouldPay = await showGeneralDialog<bool>(
+    final shouldProceed = await showGeneralDialog<bool>(
       context: context,
       barrierLabel: "Property Payment",
       barrierDismissible: false,
@@ -163,12 +264,82 @@ class PropertyDetailsView extends StatelessWidget {
       ),
     );
 
-    if (shouldPay == true) {
-      model.goToMakePayment(propertyContent);
-    }
+    return shouldProceed;
   }
 
-  Widget buildLocation(PropertyDetailsViewModel model) {
+  Future<bool?> showOwnerDeclineTenantRequest(
+      PropertyDetailsOwnerViewModel model, BuildContext context) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Property Request',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Please note that you would be decling a ${ownerPropertyContent?.paymentType} payment request on this property from  ${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    'Accept',
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(
+                    'Cancel',
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      )),
+    );
+
+    final shouldProceed = await showGeneralDialog<bool>(
+      context: context,
+      barrierLabel: "Property Payment",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+
+    return shouldProceed;
+  }
+
+  Widget buildLocation(PropertyDetailsOwnerViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -265,7 +436,7 @@ class PropertyDetailsView extends StatelessWidget {
   }
 
   Widget buildDescription(
-      PropertyDetailsViewModel model, BuildContext context) {
+      PropertyDetailsOwnerViewModel model, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10.0,
@@ -289,97 +460,31 @@ class PropertyDetailsView extends StatelessWidget {
             numberOfBathrooms: model.property?.bathTubCount ?? 0,
             squareFeet: model.property?.surfaceArea ?? 0,
           ),
-          verticalSpaceMedium,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: ResavationImage(
-                      image: passedProperty?.user?.imageUrl ?? ''),
-                ),
-                onTap: () =>
-                    model.goToPropertyOwnersProfileView(passedProperty?.user),
-              ),
-              horizontalSpaceSmall,
-              InkWell(
-                onTap: () {
-                  model.goToPropertyOwnersProfileView(passedProperty?.user);
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      (passedProperty?.user?.firstName ?? '') +
-                          ' ' +
-                          (passedProperty?.user?.lastName ?? ''),
-                      style: AppStyle.kBodyRegularBlack16W600,
-                    ),
-                    Text(
-                      'View Profile',
-                      style: AppStyle.kBodyRegularBlack14
-                          .copyWith(color: kPrimaryColor),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              horizontalSpaceSmall,
-              GestureDetector(
-                onTap: () async {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Setting up chatroom, please wait')),
-                  );
-                  final error = await model.gotToChatRoomView();
-                  if (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            'You can not create a chat room with your self'),
-                      ),
-                    );
-                  }
-                },
-                child: Icon(
-                  Icons.message_rounded,
-                  size: 25,
-                  color: kBlack,
-                ),
-              ),
-            ],
-          ),
-          verticalSpaceMedium,
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Description',
               description: model.property?.description ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property type',
               description: model.property?.propertyType ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property style',
               description: model.property?.propertyStyle ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property status',
               description: model.property?.propertyStatus ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Space serviced',
               description: model.property?.isSpaceServiced ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Space furnished',
               description: model.property?.isSpaceFurnished ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Owner lives in space',
               description: model.property?.isLiveInSPace ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Service type',
               description: model.property?.serviceType ?? ''),
-          PropertyDetailItem(
+          _PropertyDetailItem(
               title: 'Property category',
               description: model.property?.propertyCategory ?? ''),
           PropertyDetailItem2(
@@ -394,34 +499,28 @@ class PropertyDetailsView extends StatelessWidget {
                       ?.map((e) => e.rule ?? '')
                       .toList() ??
                   []),
-          PropertyDetailItem3(property: model.property),
+          _PropertyDetailItem3(property: model.property),
         ],
       ),
     );
   }
 
-  Widget buildHeader(PropertyDetailsViewModel model, BuildContext context) {
+  Widget buildHeader(
+      PropertyDetailsOwnerViewModel model, BuildContext context) {
     return PropertyDetailsHeader(
       onBackTap: model.navigateBack,
       propertyImages: model.property?.propertyImages ?? [],
       isFavoriteTap: model.property?.favourite ?? false,
-      onFavoriteTap: () async {
-        try {
-          await model.onFavouriteTap();
-        } catch (exception) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(exception.toString())));
-        }
-      },
+      onFavoriteTap: null,
     );
   }
 }
 
-class PropertyDetailItem extends StatelessWidget {
+class _PropertyDetailItem extends StatelessWidget {
   final String title;
   final String description;
 
-  const PropertyDetailItem(
+  const _PropertyDetailItem(
       {Key? key, required this.title, required this.description})
       : super(key: key);
 
@@ -472,10 +571,10 @@ class PropertyDetailItem2 extends StatelessWidget {
   }
 }
 
-class PropertyDetailItem3 extends StatelessWidget {
+class _PropertyDetailItem3 extends StatelessWidget {
   final Property? property;
 
-  const PropertyDetailItem3({
+  const _PropertyDetailItem3({
     Key? key,
     required this.property,
   }) : super(key: key);

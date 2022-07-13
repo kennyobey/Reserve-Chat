@@ -9,7 +9,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:resavation/services/core/upload_service.dart';
 
 class PropertyOwnerDetailsViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
+  final navigationService = locator<NavigationService>();
   final uploadTypeService = locator<UploadService>();
   final _httpService = locator<HttpService>();
   final uploadFormKey = GlobalKey<FormState>();
@@ -69,7 +69,28 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
     uploadTypeService.state = selectedState;
     uploadTypeService.city = propertyCityController.text.trim();
 
-    _navigationService.navigateTo(Routes.propertyOwnerAddPhotosView);
+    navigationService.navigateTo(Routes.propertyOwnerAddPhotosView);
+  }
+
+  saveStage2Data() async {
+    uploadTypeService.propertyName = propertyNameController.text.trim();
+    uploadTypeService.propertyDescription =
+        propertyDescriptionController.text.trim();
+    uploadTypeService.address = propertyAddressController.text.trim();
+    uploadTypeService.surfaceArea =
+        double.tryParse(surfaceAreaController.text.trim()) ?? 0;
+    uploadTypeService.state = selectedState;
+    uploadTypeService.city = propertyCityController.text.trim();
+
+    try {
+      await _httpService.saveProperty(
+        uploadTypeService: uploadTypeService,
+        images: [],
+      );
+      return;
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
 
   setUpPreviousData() {
@@ -86,7 +107,7 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
 
   //Google Map
   void goToMapView() {
-    _navigationService.navigateTo(Routes.mapView);
+    navigationService.navigateTo(Routes.mapView);
   }
 
   void onStateChanged(value) {

@@ -5,8 +5,8 @@ import 'package:resavation/model/search_model/sort.dart';
 import '../top_categories_model/pageable.dart';
 import 'content.dart';
 
-class BookedProperty {
-  List<BookedPropertyContent>? content;
+class TenantBookedProperty {
+  List<TenantBookedPropertyContent>? content;
   bool? empty;
   bool? first;
   bool? last;
@@ -18,7 +18,7 @@ class BookedProperty {
   int? totalElements;
   int? totalPages;
 
-  BookedProperty({
+  TenantBookedProperty({
     this.content,
     this.empty,
     this.first,
@@ -37,10 +37,11 @@ class BookedProperty {
     return 'BookedProperty(content: $content, empty: $empty, first: $first, last: $last, number: $number, numberOfElements: $numberOfElements, pageable: $pageable, size: $size, sort: $sort, totalElements: $totalElements, totalPages: $totalPages)';
   }
 
-  factory BookedProperty.fromMap(Map<String, dynamic> data) {
-    return BookedProperty(
+  factory TenantBookedProperty.fromMap(Map<String, dynamic> data) {
+    return TenantBookedProperty(
       content: (data['content'] as List<dynamic>?)
-          ?.map((e) => BookedPropertyContent.fromMap(e as Map<String, dynamic>))
+          ?.map((e) =>
+              TenantBookedPropertyContent.fromMap(e as Map<String, dynamic>))
           .toList(),
       empty: data['empty'] as bool?,
       first: data['first'] as bool?,
@@ -61,8 +62,9 @@ class BookedProperty {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [BookedProperty].
-  factory BookedProperty.fromJson(String data) {
-    return BookedProperty.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [TenantBookedProperty].
+  factory TenantBookedProperty.fromJson(String data) {
+    return TenantBookedProperty.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 }

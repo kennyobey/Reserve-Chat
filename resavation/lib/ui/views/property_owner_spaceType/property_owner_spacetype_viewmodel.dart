@@ -10,7 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:resavation/services/core/upload_service.dart';
 
 class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
+  final navigationService = locator<NavigationService>();
   final _httpService = locator<HttpService>();
   final uploadTypeService = locator<UploadService>();
   final registrationFormKey = GlobalKey<FormState>();
@@ -76,6 +76,12 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   int numberOfCarSLot = 0;
 
   setUpPreviousData() {
+    final propertyCategories = [
+      "Residential",
+      "Commercial",
+      "Industrial",
+      "Retail",
+    ];
     this.liveInSpace = uploadTypeService.liveInSpace;
     this.isSpaceServiced = uploadTypeService.isSpaceServiced;
     this.isSpaceFurnished = uploadTypeService.isSpaceFurnished;
@@ -237,8 +243,20 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   void goToPropertyOwnerDetailsView() {
-    _navigationService.navigateTo(
+    navigationService.navigateTo(
       Routes.propertyOwnerDetailsView,
     );
+  }
+
+  saveStage1Data() async {
+    try {
+      await _httpService.saveProperty(
+        uploadTypeService: uploadTypeService,
+        images: [],
+      );
+      return;
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
 }

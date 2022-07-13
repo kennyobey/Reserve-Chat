@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/booked_property/booked_property.dart';
-import 'package:resavation/model/booked_property/content.dart';
-import 'package:resavation/model/propety_model/property_model.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
+import 'package:resavation/model/tenant_booked_property/tenant_booked_property.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -21,10 +20,10 @@ class BookedPropertyListViewModel extends BaseViewModel {
   final httpService = locator<HttpService>();
 
   final _navigationService = locator<NavigationService>();
-  List<BookedProperty> bookedSearches = [];
+  List<TenantBookedProperty> bookedSearches = [];
 
-  List<BookedPropertyContent> get contents {
-    final List<BookedPropertyContent> allContents = [];
+  List<TenantBookedPropertyContent> get contents {
+    final List<TenantBookedPropertyContent> allContents = [];
 
     bookedSearches.forEach((element) {
       allContents.addAll(element.content ?? []);
@@ -95,12 +94,12 @@ class BookedPropertyListViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void goToPropertyDetails(BookedPropertyContent content) {
+  void goToPropertyDetails(TenantBookedPropertyContent content) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(
+      Routes.propertyDetailsTenantView,
+      arguments: PropertyDetailsTenantViewArguments(
         passedProperty: content.property,
-        propertyContent: content,
+        tenantPropertyContent: content,
       ),
     );
   }

@@ -143,7 +143,7 @@ class _PropertyOwnerAppointmentPageoneViewState
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
-                'Active',
+                'Pending',
                 style: AppStyle.kBodyRegularBlack14W500.copyWith(
                     color: model.currentTabPosition == 0 ? kWhite : kBlack),
               ),
@@ -167,7 +167,7 @@ class _PropertyOwnerAppointmentPageoneViewState
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
-                'Pending',
+                'Active',
                 style: AppStyle.kBodyRegularBlack14W500.copyWith(
                     color: model.currentTabPosition == 1 ? kWhite : kBlack),
               ),
@@ -230,8 +230,6 @@ class _PropertyOwnerAppointmentPageoneViewState
     return PageView.builder(
       itemBuilder: ((context, index) {
         if (index == 0) {
-          return ActiveItemBody(appointments: activeItems);
-        } else if (index == 1) {
           return PendingItemBody(
               appointments: pendingItems,
               onAccepted: (appointment) {
@@ -242,6 +240,8 @@ class _PropertyOwnerAppointmentPageoneViewState
                 model.acceptDeclineAppointment(
                     appointment, AppointmentStatus.Declined);
               });
+        } else if (index == 1) {
+          return ActiveItemBody(appointments: activeItems);
         } else {
           return PassItemBody(appointments: passItems);
         }

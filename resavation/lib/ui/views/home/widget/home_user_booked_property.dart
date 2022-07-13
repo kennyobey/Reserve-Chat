@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:resavation/model/booked_property/booked_property.dart';
-import 'package:resavation/model/booked_property/content.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
+import 'package:resavation/model/tenant_booked_property/tenant_booked_property.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -80,7 +80,7 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
   }
 
   Widget buildBody(HomeViewModel model) {
-    return FutureBuilder<BookedProperty>(
+    return FutureBuilder<TenantBookedProperty>(
       future: model.httpService.getAllTenantsBookedProperty(page: 0, size: 5),
       builder: ((context, asyncDataSnapshot) {
         if (asyncDataSnapshot.hasError) {
@@ -89,7 +89,7 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
 
         if (asyncDataSnapshot.hasData) {
           final queryData = asyncDataSnapshot.data;
-          final List<BookedPropertyContent> bookedProperty =
+          final List<TenantBookedPropertyContent> bookedProperty =
               queryData?.content ?? [];
 
           return buildSuccessBody(bookedProperty, model, context);
@@ -116,7 +116,7 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildSuccessBody(List<BookedPropertyContent> allContent,
+  Widget buildSuccessBody(List<TenantBookedPropertyContent> allContent,
       HomeViewModel model, BuildContext context) {
     return allContent.isEmpty
         ? buildEmptyBody(context)
@@ -163,7 +163,7 @@ class BookedPropertyCard extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  final BookedPropertyContent content;
+  final TenantBookedPropertyContent content;
   final void Function()? onTap;
 
   @override

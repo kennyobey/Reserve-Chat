@@ -66,7 +66,7 @@ class PropertyDetailsHeader extends StatelessWidget {
             right: 0,
           ),
           buildBackButton(topPadding),
-          buildFavouriteButton(topPadding),
+          if (onFavoriteTap != null) buildFavouriteButton(topPadding),
         ],
       ),
     );
@@ -144,15 +144,4 @@ class PropertyDetailsHeader extends StatelessWidget {
       ),
     );
   }
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
-
-  @override
-  double get maxExtent => 300.0;
-
-  @override
-  double get minExtent => 0;
 }

@@ -11,11 +11,12 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../model/appointment.dart';
-import '../model/booked_property/content.dart';
 import '../model/call_model.dart';
 import '../model/filter/filter.dart';
+import '../model/owner_booked_property/content.dart';
 import '../model/propety_model/property_model.dart';
 import '../model/propety_model/user.dart';
+import '../model/tenant_booked_property/content.dart';
 import '../services/core/dojah_verification.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
@@ -39,13 +40,16 @@ import '../ui/views/messages/messages_view.dart';
 import '../ui/views/onboarding/onboarding_view.dart';
 import '../ui/views/payment/payment_view.dart';
 import '../ui/views/profile_product_list/profile_product_list_view.dart';
-import '../ui/views/property_details/property_details_view.dart';
+import '../ui/views/property_details_owner/property_details_owner_view.dart';
+import '../ui/views/property_details_tenant/property_details_tenant_view.dart';
 import '../ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoView.dart';
 import '../ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import '../ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import '../ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
+import '../ui/views/property_owner_booked_properties/property_owner_booked_properties_view.dart';
 import '../ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
 import '../ui/views/property_owner_details/property_owner_details_view.dart';
+import '../ui/views/property_owner_edit/property_owner_edit_view.dart';
 import '../ui/views/property_owner_edit_profile/property_owner_edit_profileView.dart';
 import '../ui/views/property_owner_homepage/property_owner_homepageView.dart';
 import '../ui/views/property_owner_identification/property_owner_identificationView.dart';
@@ -53,6 +57,7 @@ import '../ui/views/property_owner_identification_verification/property_owner_id
 import '../ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import '../ui/views/property_owner_payment/property_owner_payment_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
+import '../ui/views/property_owner_properties/property_owner_properties_view.dart';
 import '../ui/views/property_owner_settings/property_owner_settingsView.dart';
 import '../ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import '../ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
@@ -103,10 +108,18 @@ class Routes {
   static const String userProfileView = '/user-profile-view';
   static const String verificationPage = '/verification-page';
   static const String userProfilePageView = '/user-profile-page-view';
+  static const String propertyOwnerPropertiesView =
+      '/property-owner-properties-view';
+  static const String propertyOwnerBookedPropertiesView =
+      '/property-owner-booked-properties-view';
+  static const String propertyOwnerEditPropertyView =
+      '/property-owner-edit-property-view';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
   static const String datePickerView = '/date-picker-view';
-  static const String propertyDetailsView = '/property-details-view';
+  static const String propertyDetailsTenantView =
+      '/property-details-tenant-view';
+  static const String propertyDetailsOwnerView = '/property-details-owner-view';
   static const String bookingSubmissionView = '/booking-submission-view';
   static const String settingsView = '/settings-view';
   static const String mapView = '/map-view';
@@ -164,10 +177,14 @@ class Routes {
     userProfileView,
     verificationPage,
     userProfilePageView,
+    propertyOwnerPropertiesView,
+    propertyOwnerBookedPropertiesView,
+    propertyOwnerEditPropertyView,
     resetPasswordView,
     filterView,
     datePickerView,
-    propertyDetailsView,
+    propertyDetailsTenantView,
+    propertyDetailsOwnerView,
     bookingSubmissionView,
     settingsView,
     mapView,
@@ -229,10 +246,17 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userProfileView, page: UserProfileView),
     RouteDef(Routes.verificationPage, page: VerificationPage),
     RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
+    RouteDef(Routes.propertyOwnerPropertiesView,
+        page: PropertyOwnerPropertiesView),
+    RouteDef(Routes.propertyOwnerBookedPropertiesView,
+        page: PropertyOwnerBookedPropertiesView),
+    RouteDef(Routes.propertyOwnerEditPropertyView,
+        page: PropertyOwnerEditPropertyView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
     RouteDef(Routes.datePickerView, page: DatePickerView),
-    RouteDef(Routes.propertyDetailsView, page: PropertyDetailsView),
+    RouteDef(Routes.propertyDetailsTenantView, page: PropertyDetailsTenantView),
+    RouteDef(Routes.propertyDetailsOwnerView, page: PropertyDetailsOwnerView),
     RouteDef(Routes.bookingSubmissionView, page: BookingSubmissionView),
     RouteDef(Routes.settingsView, page: SettingsView),
     RouteDef(Routes.mapView, page: MapView),
@@ -440,6 +464,29 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    PropertyOwnerPropertiesView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerPropertiesView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerBookedPropertiesView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const PropertyOwnerBookedPropertiesView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerEditPropertyView: (data) {
+      var args =
+          data.getArgs<PropertyOwnerEditPropertyViewArguments>(nullOk: false);
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerEditPropertyView(
+          key: args.key,
+          property: args.property,
+        ),
+        settings: data,
+      );
+    },
     ResetPasswordView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const ResetPasswordView(),
@@ -462,13 +509,25 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    PropertyDetailsView: (data) {
-      var args = data.getArgs<PropertyDetailsViewArguments>(nullOk: false);
+    PropertyDetailsTenantView: (data) {
+      var args =
+          data.getArgs<PropertyDetailsTenantViewArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PropertyDetailsView(
+        builder: (context) => PropertyDetailsTenantView(
           key: args.key,
           passedProperty: args.passedProperty,
-          propertyContent: args.propertyContent,
+          tenantPropertyContent: args.tenantPropertyContent,
+        ),
+        settings: data,
+      );
+    },
+    PropertyDetailsOwnerView: (data) {
+      var args = data.getArgs<PropertyDetailsOwnerViewArguments>(nullOk: false);
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyDetailsOwnerView(
+          key: args.key,
+          passedProperty: args.passedProperty,
+          ownerPropertyContent: args.ownerPropertyContent,
         ),
         settings: data,
       );
@@ -723,6 +782,13 @@ class MakePaymentViewArguments {
       {this.key, required this.planAmount, required this.subscriptionCode});
 }
 
+/// PropertyOwnerEditPropertyView arguments holder class
+class PropertyOwnerEditPropertyViewArguments {
+  final Key? key;
+  final Property property;
+  PropertyOwnerEditPropertyViewArguments({this.key, required this.property});
+}
+
 /// DatePickerView arguments holder class
 class DatePickerViewArguments {
   final Key? key;
@@ -730,13 +796,22 @@ class DatePickerViewArguments {
   DatePickerViewArguments({this.key, required this.property});
 }
 
-/// PropertyDetailsView arguments holder class
-class PropertyDetailsViewArguments {
+/// PropertyDetailsTenantView arguments holder class
+class PropertyDetailsTenantViewArguments {
   final Key? key;
   final Property? passedProperty;
-  final BookedPropertyContent? propertyContent;
-  PropertyDetailsViewArguments(
-      {this.key, required this.passedProperty, this.propertyContent});
+  final TenantBookedPropertyContent? tenantPropertyContent;
+  PropertyDetailsTenantViewArguments(
+      {this.key, required this.passedProperty, this.tenantPropertyContent});
+}
+
+/// PropertyDetailsOwnerView arguments holder class
+class PropertyDetailsOwnerViewArguments {
+  final Key? key;
+  final Property? passedProperty;
+  final OwnerBookedPropertyContent? ownerPropertyContent;
+  PropertyDetailsOwnerViewArguments(
+      {this.key, required this.passedProperty, this.ownerPropertyContent});
 }
 
 /// BookingSubmissionView arguments holder class

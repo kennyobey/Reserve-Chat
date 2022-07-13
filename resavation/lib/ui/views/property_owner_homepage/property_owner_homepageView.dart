@@ -1,16 +1,14 @@
-// ignore_for_file: deprecated_member_use
-
-import 'dart:ffi';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:resavation/model/saved_property/saved_property.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageViewModel.dart';
+import 'package:resavation/ui/views/property_owner_homepage/widget/property_owner_booked_properties.dart';
+import 'package:resavation/ui/views/property_owner_homepage/widget/property_owner_properties.dart';
 import 'package:resavation/utility/assets.dart';
+
 import 'package:stacked/stacked.dart';
 
 import '../../shared/dump_widgets/list_space_button.dart';
@@ -37,8 +35,7 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
       elevation: 5,
       child: Material(
           child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,19 +50,25 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
-            verticalSpaceSmall,
-            ResavationElevatedButton(
-              child: Text('Start New Listing'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+            verticalSpaceMedium,
+            SizedBox(
+              width: double.infinity,
+              child: ResavationElevatedButton(
+                child: Text('Start New Listing'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
             ),
-            verticalSpaceSmall,
-            ResavationElevatedButton(
-              child: Text('Resume Previous Listing'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
+            verticalSpaceTiny,
+            SizedBox(
+              width: double.infinity,
+              child: ResavationElevatedButton(
+                child: Text('Resume Previous Listing'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
             ),
           ],
         ),
@@ -75,7 +78,7 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
     final isRestoring = await showGeneralDialog<bool>(
       context: context,
       barrierLabel: "Property Upload",
-      barrierDismissible: false,
+      barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 500),
       pageBuilder: (_, __, ___) => dialog,
@@ -87,7 +90,8 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
     return isRestoring;
   }
 
-  showLoadingData(BuildContext context) async {
+  Future<SavedProperty> showLoadingData(
+      BuildContext context, PropertyOwnerHomePageViewModel model) async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.black,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -114,12 +118,12 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
             ),
             verticalSpaceMedium,
             Text(
-              'Property Restoration',
+              'Data Setup',
               style: AppStyle.kBodyRegularBlack16W600,
             ),
             verticalSpaceTiny,
             Text(
-              'Restoring saved property, please do not cancel until success',
+              'Please be patient while we set up your data.',
               textAlign: TextAlign.center,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -142,12 +146,64 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
     );
 
     try {
-      //
+      final SavedProperty savedProperty = await model.restoreSavedProperty();
+      Navigator.of(context).pop();
+      return savedProperty;
     } catch (exception) {
+      Navigator.of(context).pop();
       return Future.error(
         exception.toString(),
       );
     }
+  }
+
+  Widget buildSpaceListing(PropertyOwnerHomePageViewModel model) {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      decoration: new BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          fit: BoxFit.fill,
+          image: AssetImage("assets/images/Group 59.png"),
+        ),
+      ),
+      width: double.infinity,
+      height: 135.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          verticalSpaceTiny,
+          Text(
+            "Connecting you to the best tenant all over the world",
+            style: TextStyle(color: kWhite),
+          ),
+          verticalSpaceSmall,
+          ListSpaceResavationElevatedButton(
+            child: Text("List your space"),
+            onPressed: () async {
+              try {
+                final savedProperty = await showLoadingData(context, model);
+
+                if (savedProperty.propertyStatus != null) {
+                  final isRestoring = await showListSpaceDialog(context);
+                  if (isRestoring != null && isRestoring) {
+                    model.goToPropertyOwnerSpaceTypeView(savedProperty);
+                  } else {
+                    model.goToPropertyOwnerSpaceTypeView(null);
+                  }
+                } else {
+                  model.goToPropertyOwnerSpaceTypeView(null);
+                }
+              } catch (exception) {
+                model.goToPropertyOwnerSpaceTypeView(null);
+              }
+            },
+            //  borderColor: kp,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -193,109 +249,71 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.all(15.0),
-                decoration: new BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage("assets/images/Group 59.png"),
-                  ),
-
-                  //resavation\assets\images\lady image.jpg
-                ),
-                // decoration: BoxDecoration(
-                //   border: Border.all(color: kGray),
-                //   borderRadius: BorderRadius.circular(5.0),
-                //   color: kBlack,
-                // ),
-                width: double.infinity,
-                height: 135.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpaceTiny,
-                    Text(
-                      "Connecting you to the best tenant all over the world",
-                      style: TextStyle(color: kWhite),
-                    ),
-                    verticalSpaceSmall,
-                    ListSpaceResavationElevatedButton(
-                      child: Text("List your space"),
-                      onPressed: () async {
-                        final isUserRestoring =
-                            await showListSpaceDialog(context);
-                        if (isUserRestoring != null) {
-                          if (isUserRestoring) {
-                            await showListSpaceDialog(context);
-                            //todo continue from here.
-                            // restore data from saved location
-                          }
-
-                          model.goToPropertyOwnerSpaceTypeView(isUserRestoring);
-                        }
-                      },
-                      //  borderColor: kp,
-                    ),
-                  ],
-                ),
-              ),
+              buildSpaceListing(model),
+              // ...buildTenantRequests(model),
               verticalSpaceMedium,
-              const Divider(),
-              verticalSpaceTiny,
-              Text(
-                "Tenants request",
-                style: AppStyle.kBodyRegularBlack14W500,
-              ),
-              verticalSpaceTiny,
-              const Divider(),
-              verticalSpaceTiny,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Text(
-                      "Details",
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
-                    Spacer(),
-                    Text(
-                      "File",
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
-                    Spacer(),
-                    Text(
-                      "Actions",
-                      style: AppStyle.kBodyRegularBlack14,
-                    ),
-                  ],
-                ),
-              ),
-              verticalSpaceRegular,
-              ListingCard(
-                onTap: () {
-                  model.getBookedProperty();
-                },
-              ),
-              verticalSpaceTiny,
-              ListingCard(
-                onTap: () {
-                  model.UserProfilePageView();
-                },
-              ),
-              verticalSpaceTiny,
-              ListingCard(
-                onTap: () {
-                  model.UserProfilePageView();
-                },
-              ),
+              PropertyOwnerBookedProperties(),
+              verticalSpaceMedium,
+              PropertyOwnerProperties(),
+              verticalSpaceMedium,
             ],
           ),
         ),
       ),
       viewModelBuilder: () => PropertyOwnerHomePageViewModel(),
     );
+  }
+
+  List<Widget> buildTenantRequests(PropertyOwnerHomePageViewModel model) {
+    return [
+      verticalSpaceMedium,
+      const Divider(),
+      verticalSpaceTiny,
+      Text(
+        "Tenants request",
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceTiny,
+      const Divider(),
+      verticalSpaceTiny,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          children: [
+            Text(
+              "Details",
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            Spacer(),
+            Text(
+              "File",
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            Spacer(),
+            Text(
+              "Actions",
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      ),
+      verticalSpaceRegular,
+      ListingCard(
+        onTap: () {},
+      ),
+      verticalSpaceTiny,
+      ListingCard(
+        onTap: () {
+          model.UserProfilePageView();
+        },
+      ),
+      verticalSpaceTiny,
+      ListingCard(
+        onTap: () {
+          model.UserProfilePageView();
+        },
+      ),
+    ];
   }
 }
 

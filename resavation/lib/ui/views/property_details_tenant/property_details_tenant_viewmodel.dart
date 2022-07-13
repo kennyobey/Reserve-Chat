@@ -2,19 +2,23 @@ import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/amenities_model.dart';
 import 'package:resavation/model/appointment.dart';
-import 'package:resavation/model/booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/propety_model/user.dart';
+import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 import 'package:resavation/ui/views/messages/messages_viewmodel.dart';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
 
-class PropertyDetailsViewModel extends BaseViewModel {
+class PropertyDetailsTenantViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final httpService = locator<HttpService>();
   final userService = locator<UserTypeService>();
@@ -23,7 +27,7 @@ class PropertyDetailsViewModel extends BaseViewModel {
   int get pagePosition => _pagePosition;
   Property? property;
 
-  PropertyDetailsViewModel(Property? property) {
+  PropertyDetailsTenantViewModel(Property? property) {
     this.property = property;
     notifyListeners();
   }
@@ -125,7 +129,7 @@ class PropertyDetailsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.mapView);
   }
 
-  void goToMakePayment(BookedPropertyContent? propertyContent) {
+  /* void goToMakePayment(TenantBookedPropertyContent? propertyContent) {
     final planAmount = propertyContent?.amount ?? 0;
     final subscriptionCode = '--';
     _navigationService.navigateTo(Routes.makePaymentView,
@@ -133,5 +137,74 @@ class PropertyDetailsViewModel extends BaseViewModel {
           planAmount: planAmount,
           subscriptionCode: subscriptionCode,
         ));
+  }
+ */
+  Future<String> chargeUser(TenantBookedPropertyContent? propertyContent,
+      BuildContext context) async {
+    final planAmount = propertyContent?.amount ?? 0;
+    final plugin = PaystackPlugin();
+    await plugin.initialize(
+        publicKey: 'pk_test_e16fa6551c9df39291ec9a0d69efed432d1a6cb3');
+
+    final email = userService.userData.email;
+
+    String platform;
+    if (Platform.isIOS) {
+      platform = 'Ios';
+    } else {
+      platform = 'Android';
+    }
+
+    final reference =
+        'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
+
+    final logo = Container(
+      alignment: Alignment.center,
+      child: Image.asset(
+        'assets/icons/app_icon.png',
+        width: 80,
+        height: 80,
+        fit: BoxFit.fitWidth,
+      ),
+    );
+    Charge charge = Charge()
+      ..amount = (planAmount.toInt() * 100)
+      ..reference = reference
+      ..email = email
+      ..card = PaymentCard(
+        number: null,
+        cvc: null,
+        expiryMonth: null,
+        expiryYear: null,
+      );
+
+    try {
+      CheckoutResponse response = await plugin.checkout(
+        context,
+        method: CheckoutMethod.card,
+        charge: charge,
+        fullscreen: true,
+        logo: logo,
+      );
+
+      final reference = response.reference;
+
+      if (response.status) {
+        /*  final body = await OrderProvider().verifyOnServer(reference);
+        return body; */
+        debugPrint(reference);
+        return reference ?? '';
+      }
+      // The transaction failed. Checking if we should verify the transaction
+      if (response.verify) {
+        /*   final body = await OrderProvider().verifyOnServer(reference);
+        return body; */
+        return '';
+      } else {
+        return Future.error(response.message);
+      }
+    } catch (e) {
+      return Future.error(e.toString());
+    }
   }
 }

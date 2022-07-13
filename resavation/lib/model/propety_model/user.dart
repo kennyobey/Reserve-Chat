@@ -7,6 +7,16 @@ class User {
   String? firstName;
   String? lastName;
   String? email;
+  dynamic phoneNumber;
+  dynamic gender;
+  dynamic dateOfBirth;
+  dynamic country;
+  dynamic state;
+  dynamic city;
+  dynamic address;
+  dynamic postalCode;
+  dynamic aboutMe;
+  dynamic occupation;
   String? imageUrl;
   dynamic notification;
   List<dynamic>? favourites;
@@ -18,6 +28,16 @@ class User {
     this.firstName,
     this.lastName,
     this.email,
+    this.phoneNumber,
+    this.gender,
+    this.dateOfBirth,
+    this.country,
+    this.state,
+    this.city,
+    this.address,
+    this.postalCode,
+    this.aboutMe,
+    this.occupation,
     this.imageUrl,
     this.notification,
     this.favourites,
@@ -34,6 +54,16 @@ class User {
         firstName: data['firstName'] as String?,
         lastName: data['lastName'] as String?,
         email: data['email'] as String?,
+        phoneNumber: data['phoneNumber'] as dynamic,
+        gender: data['gender'] as dynamic,
+        dateOfBirth: data['dateOfBirth'] as dynamic,
+        country: data['country'] as dynamic,
+        state: data['state'] as dynamic,
+        city: data['city'] as dynamic,
+        address: data['address'] as dynamic,
+        postalCode: data['postalCode'] as dynamic,
+        aboutMe: data['aboutMe'] as dynamic,
+        occupation: data['occupation'] as dynamic,
         imageUrl: data['imageUrl'] as String?,
         notification: data['notification'] as dynamic,
         favourites: data['favourites'] as List<dynamic>?,
@@ -46,6 +76,16 @@ class User {
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
+        'phoneNumber': phoneNumber,
+        'gender': gender,
+        'dateOfBirth': dateOfBirth,
+        'country': country,
+        'state': state,
+        'city': city,
+        'address': address,
+        'postalCode': postalCode,
+        'aboutMe': aboutMe,
+        'occupation': occupation,
         'imageUrl': imageUrl,
         'notification': notification,
         'favourites': favourites,

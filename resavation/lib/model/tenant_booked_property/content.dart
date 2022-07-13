@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:resavation/model/booked_property/property_owner.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/propety_model/user.dart';
 
-class BookedPropertyContent {
+import 'property_owner.dart';
+
+class TenantBookedPropertyContent {
   double? amount;
   String? checkInDate;
   DateTime? createdAt;
@@ -17,7 +18,7 @@ class BookedPropertyContent {
   DateTime? updatedAt;
   User? user;
 
-  BookedPropertyContent({
+  TenantBookedPropertyContent({
     this.amount,
     this.checkInDate,
     this.createdAt,
@@ -36,8 +37,8 @@ class BookedPropertyContent {
     return 'Content(amount: $amount, checkInDate: $checkInDate, createdAt: $createdAt, id: $id, paymentType: $paymentType, property: $property, propertyOwner: $propertyOwner, status: $status, subCategories: $subCategories, updatedAt: $updatedAt, user: $user)';
   }
 
-  factory BookedPropertyContent.fromMap(Map<String, dynamic> data) =>
-      BookedPropertyContent(
+  factory TenantBookedPropertyContent.fromMap(Map<String, dynamic> data) =>
+      TenantBookedPropertyContent(
         amount: data['amount'] as double?,
         checkInDate: data['checkInDate'] as String?,
         createdAt: data['createdAt'] == null
@@ -64,9 +65,9 @@ class BookedPropertyContent {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [BookedPropertyContent].
-  factory BookedPropertyContent.fromJson(String data) {
-    return BookedPropertyContent.fromMap(
+  /// Parses the string and returns the resulting Json object as [TenantBookedPropertyContent].
+  factory TenantBookedPropertyContent.fromJson(String data) {
+    return TenantBookedPropertyContent.fromMap(
         json.decode(data) as Map<String, dynamic>);
   }
 }

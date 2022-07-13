@@ -208,10 +208,13 @@ class TitleListTile extends StatelessWidget {
           onTap: onTap,
           child: Visibility(
             visible: visibility,
-            child: Text(
-              'See All',
-              style: AppStyle.kBodySmallRegular12W500.copyWith(
-                color: kPrimaryColor,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Text(
+                'See All',
+                style: AppStyle.kBodySmallRegular12W500.copyWith(
+                  color: kPrimaryColor,
+                ),
               ),
             ),
           ),

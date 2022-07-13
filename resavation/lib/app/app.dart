@@ -25,13 +25,16 @@ import 'package:resavation/ui/views/messages/messages_view.dart';
 import 'package:resavation/ui/views/onboarding/onboarding_view.dart';
 import 'package:resavation/ui/views/payment/payment_view.dart';
 import 'package:resavation/ui/views/profile_product_list/profile_product_list_view.dart';
-import 'package:resavation/ui/views/property_details/property_details_view.dart';
+import 'package:resavation/ui/views/property_details_owner/property_details_owner_view.dart';
+
 import 'package:resavation/ui/views/property_owner_add_cover_photo/property_owner_add_cover_photoView.dart';
 import 'package:resavation/ui/views/property_owner_add_photos/property_owner_add_photosView.dart';
 import 'package:resavation/ui/views/property_owner_amenities/property_owner_amenities_view.dart';
 import 'package:resavation/ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
+import 'package:resavation/ui/views/property_owner_booked_properties/property_owner_booked_properties_view.dart';
 import 'package:resavation/ui/views/property_owner_datepicker/property_owner_datepickerView.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_view.dart';
+import 'package:resavation/ui/views/property_owner_edit/property_owner_edit_view.dart';
 import 'package:resavation/ui/views/property_owner_edit_profile/property_owner_edit_profileView.dart';
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageView.dart';
 import 'package:resavation/ui/views/property_owner_identification/property_owner_identificationView.dart';
@@ -39,6 +42,7 @@ import 'package:resavation/ui/views/property_owner_identification_verification/p
 import 'package:resavation/ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_view.dart';
 import 'package:resavation/ui/views/property_owner_profile/property_owner_profile_view.dart';
+import 'package:resavation/ui/views/property_owner_properties/property_owner_properties_view.dart';
 import 'package:resavation/ui/views/property_owner_settings/property_owner_settingsView.dart';
 import 'package:resavation/ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import 'package:resavation/ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
@@ -58,6 +62,7 @@ import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../ui/views/property_details_tenant/property_details_tenant_view.dart';
 import '../ui/views/states_list/states_list_view.dart';
 
 @StackedApp(
@@ -89,12 +94,16 @@ import '../ui/views/states_list/states_list_view.dart';
     AdaptiveRoute(page: UserProfileView),
     AdaptiveRoute(page: VerificationPage),
     AdaptiveRoute(page: UserProfilePageView),
+    AdaptiveRoute(page: PropertyOwnerPropertiesView),
+    AdaptiveRoute(page: PropertyOwnerBookedPropertiesView),
+    AdaptiveRoute(page: PropertyOwnerEditPropertyView),
 
     ///
     AdaptiveRoute(page: ResetPasswordView),
     AdaptiveRoute(page: FilterView),
     AdaptiveRoute(page: DatePickerView),
-    AdaptiveRoute(page: PropertyDetailsView),
+    AdaptiveRoute(page: PropertyDetailsTenantView),
+    AdaptiveRoute(page: PropertyDetailsOwnerView),
     AdaptiveRoute(page: BookingSubmissionView),
     AdaptiveRoute(page: SettingsView),
     AdaptiveRoute(page: MapView),

@@ -1,5 +1,10 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/model/owner_booked_property/content.dart';
+import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
+import 'package:resavation/model/propety_model/property_model.dart';
+import 'package:resavation/model/saved_property/saved_property.dart';
+import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/upload_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -7,13 +12,10 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../model/login_model.dart';
 import '../../../services/core/user_type_service.dart';
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:developer';
-
 class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserTypeService>();
+  final httpService = locator<HttpService>();
   final requestSite = "resavation-backend.herokuapp.com";
   final _uploadService = locator<UploadService>();
 
@@ -25,8 +27,11 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
         .navigateTo(Routes.propertyOwnerIdentificationVerificationView);
   }
 
-  void goToPropertyOwnerSpaceTypeView(bool isRestoringData) {
-    _uploadService.isRestoringData = isRestoringData;
+  void goToPropertyOwnerSpaceTypeView(SavedProperty? savedProperty) {
+    _uploadService.isRestoringData = savedProperty != null;
+    if (savedProperty != null) {
+      _uploadService.setUpData(savedProperty);
+    }
     _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
   }
 
@@ -36,6 +41,10 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
 
   void goToMessage() {
     _navigationService.navigateTo(Routes.messagesView);
+  }
+
+  void goToPropertyOwnerPropertiesView() {
+    _navigationService.navigateTo(Routes.propertyOwnerPropertiesView);
   }
 
   void PropertyOwnerMyPropertyView() {
@@ -54,26 +63,38 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.userProfilePageView);
   }
 
-  getBookedProperty() async {
-    print("object");
+  void goToPropertyDetails(Property property) {
+    _navigationService.navigateTo(
+      Routes.propertyDetailsOwnerView,
+      arguments: PropertyDetailsOwnerViewArguments(
+        passedProperty: property,
+      ),
+    );
+  }
+
+  void goToOwnerBookedPropertyDetails(
+      OwnerBookedPropertyContent bookedPropertyContent) {
+    _navigationService.navigateTo(
+      Routes.propertyDetailsOwnerView,
+      arguments: PropertyDetailsOwnerViewArguments(
+        passedProperty: bookedPropertyContent.property,
+        ownerPropertyContent: bookedPropertyContent,
+      ),
+    );
+  }
+
+  Future<SavedProperty> restoreSavedProperty() async {
     try {
-      var response = await http.get(
-        Uri.http(requestSite, "/api/v1/owner/property/booked/all"),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      log(response.body);
-      // if (response.statusCode == 200) {
-      //   return fromJson(response.body);
-      // } else {
-      //   return Future.error(json.decode(response.body)['message'] ?? '');
-      // }
+      final property = await httpService.getSavedProperty();
+      return property;
     } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
+      return Future.error(
+        exception.toString(),
+      );
     }
-    notifyListeners();
+  }
+
+  void goToPropertyOwnerBookedPropertiesView() {
+    _navigationService.navigateTo(Routes.propertyOwnerBookedPropertiesView);
   }
 }

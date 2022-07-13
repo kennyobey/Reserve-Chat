@@ -107,7 +107,8 @@ class FavoriteViewModel extends BaseViewModel {
   }
 
   void goToPropertyDetails(Property property) {
-    _navigationService.navigateTo(Routes.propertyDetailsView,
-        arguments: PropertyDetailsViewArguments(passedProperty: property));
+    _navigationService.navigateTo(Routes.propertyDetailsTenantView,
+        arguments:
+            PropertyDetailsTenantViewArguments(passedProperty: property));
   }
 }
