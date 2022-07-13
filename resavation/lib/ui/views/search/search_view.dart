@@ -5,6 +5,7 @@ import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/smart_widgets/find_your_location.dart';
 import 'package:resavation/ui/shared/spacing.dart';
+import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/search/search_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -68,15 +69,28 @@ class _SearchViewState extends State<SearchView> {
             child: Column(
               children: [
                 FindYourLocation(
-                  controller: model.textFieldController,
                   onTap: model.goToFilterView,
+                  onFieldSubmitted: model.searchProperty,
                 ),
                 verticalSpaceSmall,
                 const Divider(),
-                SortProperty(
-                  noOfProperties: model.properties.length,
-                  sortByTitle: 'Default Order',
+                verticalSpaceTiny,
+                Row(
+                  children: [
+                    Text(
+                      model.properties.length.toString(),
+                      style: AppStyle.kSubHeading.copyWith(
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                    Text(
+                      ' Properties',
+                      style: AppStyle.kSubHeading,
+                    ),
+                    Spacer(),
+                  ],
                 ),
+                verticalSpaceTiny,
                 const Divider(),
                 verticalSpaceSmall,
                 Expanded(

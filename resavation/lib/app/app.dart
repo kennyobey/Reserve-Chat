@@ -1,11 +1,13 @@
 import 'package:resavation/services/core/custom_snackbar_service.dart';
+import 'package:resavation/services/core/dojah_verification.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:resavation/services/core/image_picker_service.dart';
-import 'package:resavation/services/core/upload_type_service.dart';
+import 'package:resavation/services/core/upload_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
 import 'package:resavation/ui/views/appointment_booking/appointment_booking.dart';
 import 'package:resavation/ui/views/appointment_list/appointment_list_view.dart';
 import 'package:resavation/ui/views/audio_call/audio_call_view.dart';
+import 'package:resavation/ui/views/booked_appointment_list/bool_property_list_view.dart';
 import 'package:resavation/ui/views/booking_submission/booking_submission_view.dart';
 import 'package:resavation/ui/views/categories_list/categories_list_view.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_view.dart';
@@ -17,6 +19,7 @@ import 'package:resavation/ui/views/filter/filter_view.dart';
 import 'package:resavation/ui/views/filter_display/filter_display.dart';
 import 'package:resavation/ui/views/login/login_view.dart';
 import 'package:resavation/ui/views/main/main_view.dart';
+import 'package:resavation/ui/views/make_payment/make_payment_view.dart';
 import 'package:resavation/ui/views/map/map_view.dart';
 import 'package:resavation/ui/views/messages/messages_view.dart';
 import 'package:resavation/ui/views/onboarding/onboarding_view.dart';
@@ -48,6 +51,8 @@ import 'package:resavation/ui/views/sign_up_confirmation/signup_confirmation_vie
 import 'package:resavation/ui/views/signup/signup_view.dart';
 import 'package:resavation/ui/views/startup/startup_view.dart';
 import 'package:resavation/ui/views/top_items/top_item_view.dart';
+import 'package:resavation/ui/views/user_profile/user_profile_view.dart';
+import 'package:resavation/ui/views/user_profile_page/user_profile_pageView.dart';
 import 'package:resavation/ui/views/verify_user_account/verify_user_account.dart';
 import 'package:resavation/ui/views/video_call/video_call_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -78,7 +83,12 @@ import '../ui/views/states_list/states_list_view.dart';
     AdaptiveRoute(page: PropertyVerificationView),
     AdaptiveRoute(page: PropertyOwnerAddPhotosView),
     AdaptiveRoute(page: PropertyOwnerAddCoverPhotosView),
+    AdaptiveRoute(page: BookedPropertyListView),
     AdaptiveRoute(page: VideoCallView),
+    AdaptiveRoute(page: MakePaymentView),
+    AdaptiveRoute(page: UserProfileView),
+    AdaptiveRoute(page: VerificationPage),
+    AdaptiveRoute(page: UserProfilePageView),
 
     ///
     AdaptiveRoute(page: ResetPasswordView),
@@ -114,7 +124,7 @@ import '../ui/views/states_list/states_list_view.dart';
   dependencies: [
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: HttpService),
-    LazySingleton(classType: UploadTypeService),
+    LazySingleton(classType: UploadService),
     LazySingleton(classType: SnackbarService),
     LazySingleton(classType: CustomSnackbarService),
     LazySingleton(classType: UserTypeService),

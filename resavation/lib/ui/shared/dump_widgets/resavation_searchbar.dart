@@ -7,6 +7,7 @@ class ResavationSearchBar extends StatefulWidget {
     Key? key,
     required this.text,
     this.onChanged,
+    this.onFieldSubmitted,
     this.onTap,
     this.label,
     this.icon,
@@ -24,6 +25,7 @@ class ResavationSearchBar extends StatefulWidget {
 
   final String text;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onFieldSubmitted;
   final void Function()? onTap;
   final String? label;
   final Icon? icon;
@@ -43,8 +45,6 @@ class ResavationSearchBar extends StatefulWidget {
 }
 
 class _ResavationSearchBarState extends State<ResavationSearchBar> {
-  late String _text = widget.controller!.text;
-
   @override
   Widget build(BuildContext context) {
     final style = AppStyle.kBodySmallRegular;
@@ -54,6 +54,7 @@ class _ResavationSearchBarState extends State<ResavationSearchBar> {
         elevation: widget.elevation != null ? widget.elevation! : 0.0,
         child: TextFormField(
           keyboardType: widget.keyboardType,
+          onFieldSubmitted: widget.onFieldSubmitted,
           textInputAction: widget.textInputAction,
           controller: widget.controller,
           validator: widget.validator,

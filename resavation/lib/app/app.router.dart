@@ -11,24 +11,29 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../model/appointment.dart';
+import '../model/booked_property/content.dart';
 import '../model/call_model.dart';
 import '../model/filter/filter.dart';
 import '../model/propety_model/property_model.dart';
+import '../model/propety_model/user.dart';
 import '../services/core/dojah_verification.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
 import '../ui/views/audio_call/audio_call_view.dart';
+import '../ui/views/booked_appointment_list/bool_property_list_view.dart';
 import '../ui/views/booking_submission/booking_submission_view.dart';
 import '../ui/views/categories_list/categories_list_view.dart';
 import '../ui/views/chat_room/chat_room_view.dart';
 import '../ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
 import '../ui/views/date_picker/date_picker_view.dart';
+import '../ui/views/date_picker/date_picker_viewmodel.dart';
 import '../ui/views/edit_profile/edit_profile_view.dart';
 import '../ui/views/filter/filter_view.dart';
 import '../ui/views/filter_display/filter_display.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/main/main_view.dart';
+import '../ui/views/make_payment/make_payment_view.dart';
 import '../ui/views/map/map_view.dart';
 import '../ui/views/messages/messages_view.dart';
 import '../ui/views/onboarding/onboarding_view.dart';
@@ -92,7 +97,12 @@ class Routes {
       '/property-owner-add-photos-view';
   static const String propertyOwnerAddCoverPhotosView =
       '/property-owner-add-cover-photos-view';
+  static const String bookedPropertyListView = '/booked-property-list-view';
   static const String videoCallView = '/video-call-view';
+  static const String makePaymentView = '/make-payment-view';
+  static const String userProfileView = '/user-profile-view';
+  static const String verificationPage = '/verification-page';
+  static const String userProfilePageView = '/user-profile-page-view';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
   static const String datePickerView = '/date-picker-view';
@@ -129,12 +139,6 @@ class Routes {
       '/property-owner-track-list-view';
   static const String categoriesListView = '/categories-list-view';
   static const String statesListView = '/states-list-view';
-  static const String userProfilePageView = '/user-Profile-page-view';
-  static const String verificationPage = '/verification-page-view';
-  static const String userProfileView = '/user-profile-view';
-
-  //UserProfileView
-
   static const all = <String>{
     startupView,
     mainView,
@@ -154,7 +158,12 @@ class Routes {
     propertyVerificationView,
     propertyOwnerAddPhotosView,
     propertyOwnerAddCoverPhotosView,
+    bookedPropertyListView,
     videoCallView,
+    makePaymentView,
+    userProfileView,
+    verificationPage,
+    userProfilePageView,
     resetPasswordView,
     filterView,
     datePickerView,
@@ -184,9 +193,6 @@ class Routes {
     propertyOwnerTrackListView,
     categoriesListView,
     statesListView,
-    userProfilePageView,
-    verificationPage,
-    userProfileView
   };
 }
 
@@ -217,7 +223,12 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerAddPhotosView),
     RouteDef(Routes.propertyOwnerAddCoverPhotosView,
         page: PropertyOwnerAddCoverPhotosView),
+    RouteDef(Routes.bookedPropertyListView, page: BookedPropertyListView),
     RouteDef(Routes.videoCallView, page: VideoCallView),
+    RouteDef(Routes.makePaymentView, page: MakePaymentView),
+    RouteDef(Routes.userProfileView, page: UserProfileView),
+    RouteDef(Routes.verificationPage, page: VerificationPage),
+    RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
     RouteDef(Routes.datePickerView, page: DatePickerView),
@@ -253,11 +264,7 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerTrackListView),
     RouteDef(Routes.categoriesListView, page: CategoriesListView),
     RouteDef(Routes.statesListView, page: StatesListView),
-    RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
-    RouteDef(Routes.verificationPage, page: VerificationPage),
-    RouteDef(Routes.userProfileView, page: UserProfileView),
   ];
-
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
@@ -274,9 +281,7 @@ class StackedRouter extends RouterBase {
       );
     },
     AppointmentBookingPage: (data) {
-      var args = data.getArgs<AppointmentBookingPageArguments>(
-        orElse: () => AppointmentBookingPageArguments(),
-      );
+      var args = data.getArgs<AppointmentBookingPageArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => AppointmentBookingPage(
           key: args.key,
@@ -394,9 +399,44 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    BookedPropertyListView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const BookedPropertyListView(),
+        settings: data,
+      );
+    },
     VideoCallView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const VideoCallView(),
+        settings: data,
+      );
+    },
+    MakePaymentView: (data) {
+      var args = data.getArgs<MakePaymentViewArguments>(nullOk: false);
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => MakePaymentView(
+          key: args.key,
+          planAmount: args.planAmount,
+          subscriptionCode: args.subscriptionCode,
+        ),
+        settings: data,
+      );
+    },
+    UserProfileView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const UserProfileView(),
+        settings: data,
+      );
+    },
+    VerificationPage: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const VerificationPage(),
+        settings: data,
+      );
+    },
+    UserProfilePageView: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => const UserProfilePageView(),
         settings: data,
       );
     },
@@ -428,6 +468,7 @@ class StackedRouter extends RouterBase {
         builder: (context) => PropertyDetailsView(
           key: args.key,
           passedProperty: args.passedProperty,
+          propertyContent: args.propertyContent,
         ),
         settings: data,
       );
@@ -439,6 +480,7 @@ class StackedRouter extends RouterBase {
           key: args.key,
           property: args.property,
           startDate: args.startDate,
+          choiceOfPayment: args.choiceOfPayment,
         ),
         settings: data,
       );
@@ -462,8 +504,13 @@ class StackedRouter extends RouterBase {
       );
     },
     PropertyOwnerProfileView: (data) {
+      var args = data.getArgs<PropertyOwnerProfileViewArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerProfileView(),
+        builder: (context) => PropertyOwnerProfileView(
+          key: args.key,
+          user: args.user,
+          propertyId: args.propertyId,
+        ),
         settings: data,
       );
     },
@@ -619,24 +666,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    UserProfilePageView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfilePageView(),
-        settings: data,
-      );
-    },
-    VerificationPage: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const VerificationPage(),
-        settings: data,
-      );
-    },
-    UserProfileView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfileView(),
-        settings: data,
-      );
-    },
   };
 }
 
@@ -647,8 +676,9 @@ class StackedRouter extends RouterBase {
 /// AppointmentBookingPage arguments holder class
 class AppointmentBookingPageArguments {
   final Key? key;
-  final AppointmentBookingDetails? appointmentBookingDetails;
-  AppointmentBookingPageArguments({this.key, this.appointmentBookingDetails});
+  final AppointmentBookingDetails appointmentBookingDetails;
+  AppointmentBookingPageArguments(
+      {this.key, required this.appointmentBookingDetails});
 }
 
 /// CoWorkingSpaceAboutView arguments holder class
@@ -684,6 +714,15 @@ class PropertyOwnerAddCoverPhotosViewArguments {
   PropertyOwnerAddCoverPhotosViewArguments({this.key});
 }
 
+/// MakePaymentView arguments holder class
+class MakePaymentViewArguments {
+  final Key? key;
+  final double planAmount;
+  final String subscriptionCode;
+  MakePaymentViewArguments(
+      {this.key, required this.planAmount, required this.subscriptionCode});
+}
+
 /// DatePickerView arguments holder class
 class DatePickerViewArguments {
   final Key? key;
@@ -695,7 +734,9 @@ class DatePickerViewArguments {
 class PropertyDetailsViewArguments {
   final Key? key;
   final Property? passedProperty;
-  PropertyDetailsViewArguments({this.key, required this.passedProperty});
+  final BookedPropertyContent? propertyContent;
+  PropertyDetailsViewArguments(
+      {this.key, required this.passedProperty, this.propertyContent});
 }
 
 /// BookingSubmissionView arguments holder class
@@ -703,8 +744,21 @@ class BookingSubmissionViewArguments {
   final Key? key;
   final Property property;
   final DateTime startDate;
+  final ChoiceOfPayment choiceOfPayment;
   BookingSubmissionViewArguments(
-      {this.key, required this.property, required this.startDate});
+      {this.key,
+      required this.property,
+      required this.startDate,
+      required this.choiceOfPayment});
+}
+
+/// PropertyOwnerProfileView arguments holder class
+class PropertyOwnerProfileViewArguments {
+  final Key? key;
+  final User user;
+  final int propertyId;
+  PropertyOwnerProfileViewArguments(
+      {this.key, required this.user, required this.propertyId});
 }
 
 /// ProfileProductListView arguments holder class

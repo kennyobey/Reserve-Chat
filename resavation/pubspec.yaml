@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   flutter_credit_card: ^3.0.1
   flutter_hooks: ^0.18.2
+  flutter_inappwebview: ^5.4.3+7
   flutter_paystack: ^1.0.5+1
   flutter_polyline_points: ^1.0.0
   flutter_svg: ^1.0.0

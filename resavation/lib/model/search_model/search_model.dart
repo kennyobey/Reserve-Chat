@@ -56,31 +56,12 @@ class SearchModel {
         empty: data['empty'] as bool?,
       );
 
-  Map<String, dynamic> toMap() => {
-        'content': properties?.map((e) => e.toMap()).toList(),
-        'pageable': pageable?.toMap(),
-        'last': last,
-        'totalElements': totalElements,
-        'totalPages': totalPages,
-        'sort': sort?.toMap(),
-        'first': first,
-        'number': number,
-        'numberOfElements': numberOfElements,
-        'size': size,
-        'empty': empty,
-      };
-
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [SearchModel].
   factory SearchModel.fromJson(String data) {
     return SearchModel.fromMap(json.decode(data) as Map<String, dynamic>);
   }
-
-  /// `dart:convert`
-  ///
-  /// Converts [SearchModel] to a JSON string.
-  String toJson() => json.encode(toMap());
 
   SearchModel copyWith({
     List<Property>? content,
