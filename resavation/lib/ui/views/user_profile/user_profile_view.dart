@@ -12,16 +12,21 @@ import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/edit_profile/edit_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../model/edit_profile_model.dart';
 import 'user_profile_viewModel.dart';
 
 class UserProfileView extends StatefulWidget {
-  const UserProfileView({Key? key}) : super(key: key);
+  const UserProfileView({
+    Key? key,
+  }) : super(key: key);
+  //final EditProfileModel content;
 
   @override
   State<UserProfileView> createState() => _UserProfileViewState();
 }
 
 class _UserProfileViewState extends State<UserProfileView> {
+  // EditProfileModel? content;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<UserProfileViewModel>.reactive(
@@ -83,232 +88,11 @@ class _UserProfileViewState extends State<UserProfileView> {
                         borderColor: Colors.transparent,
                         titleColor: kWhite,
                         onTap: () {
-                          model.goToVerificationPage();
+                          model.getProfile();
                         },
                       ),
                       verticalSpaceMedium,
-                      Text(
-                        'Personal Information Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Full legal first and middle names',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Stephen ',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Last names',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Adeyemo',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'About Me',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'I am a final student of Agric Science, Obafemi Awolowo University, Ile-ife, Nigeria.',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Date of birth',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'August 24, 1990',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Email',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'adeyemo********8@gmail.com',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Phone number',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        '07089898989',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Gender',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Male',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Occupation',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Student',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceMedium,
-                      Text(
-                        'Personal Address Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Country',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Nigeria',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'State',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Oyo',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'City',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Ibadan',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Address',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        "No 1 Festus Idahosa Street, Molete, Ibadan.",
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Postal Code',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      Text(
-                        '224466',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceMedium,
-                      Text(
-                        'Next of Kin Data',
-                        style: AppStyle.kHeading3,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'First Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Stephen',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Last Name',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Adeyemo',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Email',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'adeyemo********8@gmail.com',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Phone number',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        '+2347088996756',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Gender',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Male',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Relationship',
-                        style: AppStyle.kBodyRegularBlack14W500,
-                      ),
-                      verticalSpaceSmall,
-                      Text(
-                        'Uncle',
-                        style: AppStyle.kBodyRegularBlack14W500
-                            .copyWith(color: kGray),
-                      ),
+                      buildProfileItems(context, model),
                     ],
                   ),
                 ),
@@ -479,5 +263,220 @@ class _UserProfileViewState extends State<UserProfileView> {
             ),
           )),
     );
+  }
+
+  Widget buildProfileItems(BuildContext context, UserProfileViewModel model) {
+    //List<EditProfileModel> content = model.incomingProfile ;
+    return Column(children: [
+      Text(
+        'Personal Information Data',
+        style: AppStyle.kHeading3,
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Full legal first and middle names',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.firstName ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Last names',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.lastName ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'About Me',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.aboutMe ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Date of birth',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        'August 24, 1990',
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Email',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.email ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Phone number',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.phoneNumber ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Gender',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.gender ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Occupation',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.occupation ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceMedium,
+      Text(
+        'Personal Address Data',
+        style: AppStyle.kHeading3,
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Country',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.country ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'State',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.state ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'City',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.city ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Address',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      verticalSpaceSmall,
+      Text(
+        model.content?.address ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+      verticalSpaceSmall,
+      Text(
+        'Postal Code',
+        style: AppStyle.kBodyRegularBlack14W500,
+      ),
+      Text(
+        model.content?.postalCode ?? "",
+        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+      ),
+
+      // Text(
+      //   'Next of Kin Data',
+      //   style: AppStyle.kHeading3,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'First Name',
+      //   style: AppStyle.kBodyRegularBlack14W500,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Stephen',
+      //   style: AppStyle.kBodyRegularBlack14W500
+      //       .copyWith(color: kGray),
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Last Name',
+      //   style: AppStyle.kBodyRegularBlack14W500,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Adeyemo',
+      //   style: AppStyle.kBodyRegularBlack14W500
+      //       .copyWith(color: kGray),
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Email',
+      //   style: AppStyle.kBodyRegularBlack14W500,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'adeyemo********8@gmail.com',
+      //   style: AppStyle.kBodyRegularBlack14W500
+      //       .copyWith(color: kGray),
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Phone number',
+      //   style: AppStyle.kBodyRegularBlack14W500,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   '+2347088996756',
+      //   style: AppStyle.kBodyRegularBlack14W500
+      //       .copyWith(color: kGray),
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Gender',
+      //   style: AppStyle.kBodyRegularBlack14W500,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Male',
+      //   style: AppStyle.kBodyRegularBlack14W500
+      //       .copyWith(color: kGray),
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Relationship',
+      //   style: AppStyle.kBodyRegularBlack14W500,
+      // ),
+      // verticalSpaceSmall,
+      // Text(
+      //   'Uncle',
+      //   style: AppStyle.kBodyRegularBlack14W500
+      //       .copyWith(color: kGray),
+      // ),],);
+    ]);
   }
 }
