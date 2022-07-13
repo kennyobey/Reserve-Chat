@@ -184,6 +184,7 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
             onPressed: () async {
               try {
                 final savedProperty = await showLoadingData(context, model);
+
                 if (savedProperty.propertyStatus != null) {
                   final isRestoring = await showListSpaceDialog(context);
                   if (isRestoring != null && isRestoring) {

@@ -6,7 +6,6 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details_header.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
@@ -51,8 +50,12 @@ class PropertyDetailsOwnerView extends StatelessWidget {
   Widget buildBottomBar(
       PropertyDetailsOwnerViewModel model, BuildContext context) {
     if (ownerPropertyContent != null) {
-      //property owner is accepting or declining tenant request
-      return buildOwnerBookedBottomBar(model, context);
+      if (ownerPropertyContent?.status == false) {
+        //property owner is accepting or declining tenant request
+        return buildOwnerBookedBottomBar(model, context);
+      } else {
+        return const SizedBox();
+      }
     } else {
       return buildBottomBarOwner(model, context);
     }
@@ -508,9 +511,7 @@ class PropertyDetailsOwnerView extends StatelessWidget {
       onBackTap: model.navigateBack,
       propertyImages: model.property?.propertyImages ?? [],
       isFavoriteTap: model.property?.favourite ?? false,
-      onFavoriteTap: () async {
-        //
-      },
+      onFavoriteTap: null,
     );
   }
 }

@@ -228,7 +228,7 @@ class FilterView extends StatelessWidget {
 
   RangeSlider buildPriceRange(FilterViewModel model) {
     return RangeSlider(
-      divisions: 10,
+      divisions: 20,
       activeColor: kPrimaryColor,
       inactiveColor: kGray,
       onChanged: model.onRangeSliderChanged,
@@ -360,7 +360,7 @@ class FacilityCard extends StatelessWidget {
             count.toString(),
           ),
           horizontalSpaceSmall,
-          buildIcons(Icons.remove_circle, onDecrement),
+          buildIcons(Icons.remove_rounded, onDecrement),
         ],
       ),
     );
@@ -377,13 +377,13 @@ class FacilityCard extends StatelessWidget {
           width: 22,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: kPrimaryColor, width: 1),
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey, width: 1),
           ),
           child: Icon(
             icon,
-            size: 20,
-            color: kPrimaryColor,
+            size: 18,
+            color: Colors.grey,
           ),
         ));
   }

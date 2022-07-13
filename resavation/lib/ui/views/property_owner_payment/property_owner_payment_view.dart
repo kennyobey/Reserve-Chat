@@ -456,7 +456,7 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                 verticalSpaceSmall,
                 DateContainer(
                   label: 'Availability Period (End)',
-                  initialDate: model.startDate,
+                  initialDate: model.endDate,
                   firstDate: model.startDate,
                   lastDate: DateTime(model.startDate.year + 5),
                   onPressed: model.selectEndDate,

@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/model/filter/filter.dart';
 import 'package:resavation/model/login_model.dart';
-import 'package:resavation/model/owner_booked_property/content.dart';
 import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:resavation/model/owner_property/owner_property.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
@@ -319,13 +317,17 @@ class HttpService {
           'Authorization': userTypeService.authorization
         },
       );
+      debugPrint(propertyId.toString());
 
       if (response.statusCode <= 299) {
         return SearchModel.fromJson(response.body);
       } else {
+        debugPrint(response.statusCode.toString());
+        debugPrint(json.decode(response.body)['message'] ?? '');
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
     } catch (exception) {
+      debugPrint(exception.toString());
       return Future.error("Error occurred in communicating with the server");
     }
   }
@@ -741,7 +743,7 @@ class HttpService {
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
     } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
+      return Future.error(exception.toString());
     }
   }
 

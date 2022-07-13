@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:resavation/model/owner_booked_property/content.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/tenant_booked_property/content.dart';
 import 'package:resavation/ui/shared/colors.dart';
@@ -427,14 +426,16 @@ class PropertyDetailsTenantView extends StatelessWidget {
       onBackTap: model.navigateBack,
       propertyImages: model.property?.propertyImages ?? [],
       isFavoriteTap: model.property?.favourite ?? false,
-      onFavoriteTap: () async {
-        try {
-          await model.onFavouriteTap();
-        } catch (exception) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(exception.toString())));
-        }
-      },
+      onFavoriteTap: tenantPropertyContent != null
+          ? null
+          : () async {
+              try {
+                await model.onFavouriteTap();
+              } catch (exception) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(exception.toString())));
+              }
+            },
     );
   }
 }

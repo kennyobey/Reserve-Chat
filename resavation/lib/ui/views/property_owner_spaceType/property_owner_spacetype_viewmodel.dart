@@ -76,6 +76,12 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   int numberOfCarSLot = 0;
 
   setUpPreviousData() {
+    final propertyCategories = [
+      "Residential",
+      "Commercial",
+      "Industrial",
+      "Retail",
+    ];
     this.liveInSpace = uploadTypeService.liveInSpace;
     this.isSpaceServiced = uploadTypeService.isSpaceServiced;
     this.isSpaceFurnished = uploadTypeService.isSpaceFurnished;

@@ -23,7 +23,7 @@ class UserTypeService with ReactiveServiceMixin {
   setUserData(LoginModel data) {
     _userData.value = data;
     if (data.role.isNotEmpty) {
-      _isTenant.value = data.role == "ROLE_USER";
+      _isTenant.value = !data.accessRoles.contains('ROLE_PROPERTY_OWNER');
     }
   }
 

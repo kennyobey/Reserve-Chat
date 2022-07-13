@@ -211,6 +211,12 @@ class PropertyOwnerBookedPropertyCard extends StatelessWidget {
                     ),
                     verticalSpaceTiny,
                     Text(
+                      'Status: ' +
+                          (content.status == true ? 'Accepted' : 'Pending'),
+                      style: AppStyle.kBodySmallRegular12W300,
+                    ),
+                    verticalSpaceTiny,
+                    Text(
                       '${String.fromCharCode(8358)} ${oCcy.format(content.amount ?? 0)}',
                       style: AppStyle.kBodySmallRegular12W500.copyWith(
                         color: kPrimaryColor,

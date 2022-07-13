@@ -9,6 +9,7 @@ import 'user.dart';
 
 class SavedProperty {
   String? address;
+  String? roomType;
   List<Amenity>? amenities;
   AvailabilityPeriods? availabilityPeriods;
   int? bathTubCount;
@@ -32,10 +33,10 @@ class SavedProperty {
   String? propertyStyle;
   String? propertyType;
   String? serviceType;
-  int? spacePrice;
+  double? spacePrice;
   String? state;
   Subscription? subscription;
-  int? surfaceArea;
+  double? surfaceArea;
   DateTime? updatedAt;
   String? uploadStatus;
   User? user;
@@ -55,6 +56,7 @@ class SavedProperty {
     this.favourite,
     this.id,
     this.isLiveInSPace,
+    this.roomType,
     this.isSpaceFurnished,
     this.isSpaceServiced,
     this.paymentType,
@@ -78,6 +80,7 @@ class SavedProperty {
 
   factory SavedProperty.fromMap(Map<String, dynamic> data) => SavedProperty(
         address: data['address'] as String?,
+        roomType: data['roomType'] as String?,
         amenities: (data['amenities'] as List<dynamic>?)
             ?.map((e) => Amenity.fromMap(e as Map<String, dynamic>))
             .toList(),
@@ -112,13 +115,13 @@ class SavedProperty {
         propertyStyle: data['propertyStyle'] as String?,
         propertyType: data['propertyType'] as String?,
         serviceType: data['serviceType'] as String?,
-        spacePrice: data['spacePrice'] as int?,
+        spacePrice: (data['spacePrice'] as num?)?.toDouble(),
         state: data['state'] as String?,
         subscription: data['subscription'] == null
             ? null
             : Subscription.fromMap(
                 data['subscription'] as Map<String, dynamic>),
-        surfaceArea: data['surfaceArea'] as int?,
+        surfaceArea: (data['surfaceArea'] as num?)?.toDouble(),
         updatedAt: data['updatedAt'] == null
             ? null
             : DateTime.parse(data['updatedAt'] as String),

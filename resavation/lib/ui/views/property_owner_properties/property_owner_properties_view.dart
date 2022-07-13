@@ -146,7 +146,6 @@ class _PropertyOwnerPropertiesViewState
 
   Widget buildBodyItem(
       List<Property> properties, PropertyOwnerPropertiesViewModel model) {
-    debugPrint(properties.length.toString());
     return Column(
       children: [
         Expanded(
@@ -156,6 +155,10 @@ class _PropertyOwnerPropertiesViewState
               return PropertyOwnerPropertiesCard(
                 id: property.id ?? -1,
                 onTap: () => model.goToPropertyDetails(property),
+                verified: property.verificationStatus == null ||
+                        property.verificationStatus == 'NOT_VERIFIED'
+                    ? false
+                    : true,
                 image: property.propertyImages?[0].imageUrl ?? '',
                 amountPerYear: property.spacePrice ?? 0.0,
                 name: property.propertyName ?? '',
@@ -211,6 +214,7 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
     Key? key,
     required this.id,
     required this.image,
+    required this.verified,
     this.onFavoriteTap,
     this.amountPerYear,
     required this.name,
@@ -227,6 +231,7 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
   final String image;
   final double? amountPerYear;
   final String name;
+  final bool verified;
   final String address;
   final int numberOfBedrooms;
   final int numberOfBathrooms;
@@ -245,11 +250,11 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
+        margin: const EdgeInsets.only(left: 5, right: 5, bottom: 8),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 flex: 2,
@@ -286,7 +291,12 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
                       address,
                       style: AppStyle.kBodySmallRegular12W300,
                     ),
-                    verticalSpaceSmall,
+                    verticalSpaceTiny,
+                    Text(
+                      'Verified: ${verified}',
+                      style: AppStyle.kBodySmallRegular12W300,
+                    ),
+                    verticalSpaceTiny,
                     Text(
                       '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}',
                       style: AppStyle.kBodySmallRegular12W500.copyWith(

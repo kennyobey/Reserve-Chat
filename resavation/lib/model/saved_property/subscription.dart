@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class Subscription {
-  int? annualPrice;
-  int? biannualPrice;
+  double? annualPrice;
+  double? biannualPrice;
   DateTime? createdAt;
   int? id;
-  int? monthlyPrice;
-  int? quarterlyPrice;
+  double? monthlyPrice;
+  double? quarterlyPrice;
   DateTime? updatedAt;
 
   Subscription({
@@ -20,14 +20,14 @@ class Subscription {
   });
 
   factory Subscription.fromMap(Map<String, dynamic> data) => Subscription(
-        annualPrice: data['annualPrice'] as int?,
-        biannualPrice: data['biannualPrice'] as int?,
+        annualPrice: (data['annualPrice'] as num?)?.toDouble(),
+        biannualPrice: (data['biannualPrice'] as num?)?.toDouble(),
         createdAt: data['createdAt'] == null
             ? null
             : DateTime.parse(data['createdAt'] as String),
         id: data['id'] as int?,
-        monthlyPrice: data['monthlyPrice'] as int?,
-        quarterlyPrice: data['quarterlyPrice'] as int?,
+        monthlyPrice: (data['monthlyPrice'] as num?)?.toDouble(),
+        quarterlyPrice: (data['quarterlyPrice'] as num?)?.toDouble(),
         updatedAt: data['updatedAt'] == null
             ? null
             : DateTime.parse(data['updatedAt'] as String),

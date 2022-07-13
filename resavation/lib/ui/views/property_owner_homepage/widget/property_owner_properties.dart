@@ -128,6 +128,10 @@ class PropertyOwnerProperties
               final property = allProperties[index];
               return PropertyOwnerPropertiesCard(
                 id: property.id ?? -1,
+                verified: property.verificationStatus == null ||
+                        property.verificationStatus == 'NOT_VERIFIED'
+                    ? false
+                    : true,
                 onTap: () => model.goToPropertyDetails(property),
                 image: property.propertyImages?[0].imageUrl ?? '',
                 amountPerYear: property.spacePrice ?? 0.0,

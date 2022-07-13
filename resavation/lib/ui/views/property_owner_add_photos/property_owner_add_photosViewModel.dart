@@ -88,7 +88,7 @@ class PropertyOwnerAddPhotosViewModel extends BaseViewModel {
     navigationService.navigateTo(Routes.propertyOwnerPaymentView);
   }
 
-  clearImage(XFile image) {
+  clearImage(image) {
     selectedImages.remove(image);
     notifyListeners();
   }

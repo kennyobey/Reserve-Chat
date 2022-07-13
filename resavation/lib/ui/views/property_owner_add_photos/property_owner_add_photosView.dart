@@ -480,7 +480,6 @@ class ImageItem extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: () {
                 Navigator.of(context).pop();
-                clearImage();
               },
               child: Container(
                 height: 30,
@@ -490,6 +489,17 @@ class ImageItem extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+              bottom: 5,
+              left: 10,
+              right: 10,
+              child: ResavationElevatedButton(
+                child: Text('Remove Image'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  clearImage();
+                },
+              )),
         ],
       ),
     );

@@ -39,6 +39,7 @@ class UploadService {
   DateTime? endDate;
   //Stage 5 data
   List<String> amenities = [];
+
   List<String> rules = [];
 
   bool verifyStage1() {
@@ -75,17 +76,45 @@ class UploadService {
   }
 
   setUpStage1(SavedProperty savedProperty) {
+    final propertyCategories = [
+      "Residential",
+      "Commercial",
+      "Industrial",
+      "Retail",
+    ];
     propertyStatus = savedProperty.propertyStatus;
     propertyCategory = savedProperty.propertyCategory;
-    commercialPropertyType = null;
-    retailPropertyType = null;
-    industrialPropertyType = null;
-    residentialPropertyType = null;
-    spaceType = null;
-    isSpaceFurnished = null;
-    isSpaceServiced = null;
+
+    spaceType = savedProperty.roomType;
+
+    if (propertyCategory == propertyCategories[0]) {
+      residentialPropertyType = savedProperty.propertyType;
+    } else if (propertyCategory == propertyCategories[1]) {
+      commercialPropertyType = savedProperty.propertyType;
+    } else if (propertyCategory == propertyCategories[2]) {
+      industrialPropertyType = savedProperty.propertyType;
+    } else if (propertyCategory == propertyCategories[3]) {
+      retailPropertyType = savedProperty.propertyType;
+    }
+
+    isSpaceFurnished = savedProperty.isSpaceFurnished == null
+        ? null
+        : savedProperty.isSpaceFurnished == 'YES'
+            ? true
+            : false;
+    isSpaceServiced = savedProperty.isSpaceServiced == null
+        ? null
+        : savedProperty.isSpaceServiced == 'YES'
+            ? true
+            : false;
+
+    liveInSpace = savedProperty.isLiveInSPace == null
+        ? null
+        : savedProperty.isLiveInSPace == 'YES'
+            ? true
+            : false;
+
     propertyStyle = savedProperty.propertyStyle;
-    liveInSpace = null;
     noOfBathroom = savedProperty.bathTubCount ?? 0;
     noOfBedroom = savedProperty.bedroomCount ?? 0;
     numberOfCarSLot = savedProperty.carSlot ?? 0;
@@ -104,7 +133,7 @@ class UploadService {
   setUpStage2(SavedProperty savedProperty) {
     propertyName = savedProperty.propertyName;
     propertyDescription = savedProperty.description;
-
+    surfaceArea = savedProperty.surfaceArea;
     state = savedProperty.state;
     city = savedProperty.city;
     address = savedProperty.address;
@@ -133,11 +162,11 @@ class UploadService {
   }
 
   setUpStage4(SavedProperty savedProperty) {
-    spacePrice = savedProperty.spacePrice;
-    annualPrice = savedProperty.subscription?.annualPrice;
-    biannualPrice = savedProperty.subscription?.biannualPrice;
-    monthlyPrice = savedProperty.subscription?.monthlyPrice;
-    quarterlyPrice = savedProperty.subscription?.quarterlyPrice;
+    spacePrice = savedProperty.spacePrice?.toInt();
+    annualPrice = savedProperty.subscription?.annualPrice?.toInt();
+    biannualPrice = savedProperty.subscription?.biannualPrice?.toInt();
+    monthlyPrice = savedProperty.subscription?.monthlyPrice?.toInt();
+    quarterlyPrice = savedProperty.subscription?.quarterlyPrice?.toInt();
     startDate = savedProperty.availabilityPeriods?.startDate;
     endDate = savedProperty.availabilityPeriods?.endDate;
   }
