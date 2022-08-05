@@ -84,6 +84,7 @@ class ProfileProductListView extends StatelessWidget {
                         propertyName: property.city ?? '',
                         address: property.address ?? '',
                         numberOfBathrooms: property.bathTubCount ?? 0,
+                        numberOfCars: property.carSlot ?? 0,
                         numberOfBedrooms: property.bedroomCount ?? 0,
                         squareFeet: property.surfaceArea ?? 0,
                         isFavoriteTap: property.favourite ?? false,

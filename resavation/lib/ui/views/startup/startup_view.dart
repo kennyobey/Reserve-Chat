@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+import 'package:resavation/utility/app_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -45,16 +46,17 @@ class _StartupViewState extends State<StartupView>
           ),
           Hero(
             tag: "logo", // id for hero animation
-            child: Image.asset('assets/icons/app_icon.png',
-                color: kPrimaryColor, height: 180, fit: BoxFit.fitHeight),
+            child: Image.asset('assets/icons/new_app_icon.png',
+                height: 150, fit: BoxFit.fitHeight),
           ),
-          verticalSpaceSmall,
+          verticalSpaceTiny,
           Text(
             'Resavation',
             style: AppStyle.kHeading4.copyWith(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: kPrimaryColor),
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: kBlack,
+            ),
           ),
         ],
       ),
@@ -102,14 +104,17 @@ class _StartupViewState extends State<StartupView>
   }
 
   void route() async {
-    final prefs = await SharedPreferences.getInstance();
-    final visibility = prefs.getBool('onboarding_visibility') ?? true;
-
     final service = locator<NavigationService>();
-    if (visibility) {
-      service.replaceWith(Routes.onboardingView);
+    if (AppPreferences.hasUserSeenOnBoarding) {
+      if (AppPreferences.getRefeshToken.isEmpty ||
+          AppPreferences.getTokenType.isEmpty ||
+          AppPreferences.getAccessRoles.isEmpty) {
+        service.replaceWith(Routes.logInView);
+      } else {
+        service.replaceWith(Routes.refreshTokenView);
+      }
     } else {
-      service.replaceWith(Routes.logInView);
+      service.replaceWith(Routes.onboardingView);
     }
   }
 

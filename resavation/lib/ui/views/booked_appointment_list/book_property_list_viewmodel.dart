@@ -9,7 +9,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../services/core/http_service.dart';
 
 class BookedPropertyListViewModel extends BaseViewModel {
-  bool isLoading = false;
+  bool isLoading = true;
   bool hasErrorOnData = false;
   int page = 0;
   bool allLoaded = false;
@@ -33,9 +33,8 @@ class BookedPropertyListViewModel extends BaseViewModel {
   }
 
   BookedPropertyListViewModel() {
-    getInitData();
+    attachScrollListener();
   }
-
   attachScrollListener() {
     scrollController.addListener(() {
       if (scrollController.position.pixels <=
@@ -66,7 +65,6 @@ class BookedPropertyListViewModel extends BaseViewModel {
       bookedSearches.add(bookedSearch);
 
       hasErrorOnData = false;
-      attachScrollListener();
     } catch (exception) {
       hasErrorOnData = true;
     }

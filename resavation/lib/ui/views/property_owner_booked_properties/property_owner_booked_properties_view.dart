@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:resavation/model/owner_booked_property/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -24,36 +25,41 @@ class _PropertyOwnerBookedPropertiesViewState
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerBookedPropertiesViewModel>.reactive(
-      builder: (context, model, child) => Scaffold(
-        appBar: buildAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              const Divider(),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Text(
-                    model.properties.length.toString(),
-                    style: AppStyle.kSubHeading.copyWith(
-                      color: kPrimaryColor,
+      builder: (context, model, child) => FocusDetector(
+        onFocusGained: () {
+          model.getInitData();
+        },
+        child: Scaffold(
+          appBar: buildAppBar(),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                const Divider(),
+                verticalSpaceTiny,
+                Row(
+                  children: [
+                    Text(
+                      model.properties.length.toString(),
+                      style: AppStyle.kSubHeading.copyWith(
+                        color: kPrimaryColor,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '  item(s)',
-                    style: AppStyle.kSubHeading,
-                  ),
-                  Spacer(),
-                ],
-              ),
-              verticalSpaceTiny,
-              const Divider(),
-              verticalSpaceSmall,
-              Expanded(
-                child: buildBody(model),
-              ),
-            ],
+                    Text(
+                      '  item(s)',
+                      style: AppStyle.kSubHeading,
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                verticalSpaceTiny,
+                const Divider(),
+                verticalSpaceSmall,
+                Expanded(
+                  child: buildBody(model),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -69,16 +75,18 @@ class _PropertyOwnerBookedPropertiesViewState
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+  Widget buildLoadingWidget() {
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return PropertyOwnerBookedPropertyCard(
+          content: OwnerBookedPropertyContent(),
+          shimmerEnabled: true,
+          onTap: () {},
+        );
+      },
+      padding: const EdgeInsets.all(0),
+      physics: const BouncingScrollPhysics(),
+      itemCount: 15,
     );
   }
 

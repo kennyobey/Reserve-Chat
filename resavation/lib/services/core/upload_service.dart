@@ -20,6 +20,7 @@ class UploadService {
 
   ///stage 2 data
   String? propertyName;
+
   String? propertyDescription;
   String? state;
   String? city;
@@ -31,6 +32,7 @@ class UploadService {
 
   //Stage 4 data
   int? spacePrice;
+  int unit = 0;
   int? annualPrice;
   int? biannualPrice;
   int? monthlyPrice;
@@ -135,6 +137,7 @@ class UploadService {
     propertyDescription = savedProperty.description;
     surfaceArea = savedProperty.surfaceArea;
     state = savedProperty.state;
+
     city = savedProperty.city;
     address = savedProperty.address;
   }
@@ -151,6 +154,7 @@ class UploadService {
   }
 
   clearStage4() {
+    unit = 0;
     spacePrice = null;
     annualPrice = null;
     biannualPrice = null;
@@ -163,6 +167,7 @@ class UploadService {
 
   setUpStage4(SavedProperty savedProperty) {
     spacePrice = savedProperty.spacePrice?.toInt();
+    unit = savedProperty.unit ?? 0;
     annualPrice = savedProperty.subscription?.annualPrice?.toInt();
     biannualPrice = savedProperty.subscription?.biannualPrice?.toInt();
     monthlyPrice = savedProperty.subscription?.monthlyPrice?.toInt();

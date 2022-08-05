@@ -89,6 +89,15 @@ String getFormattedTime(int timestamp) {
   }
 }
 
+String getFormattedTime2(int timestamp) {
+  try {
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return DateFormat('dd MMMM').format(dateTime);
+  } catch (exception) {
+    return "";
+  }
+}
+
 String getAppointmentHour(int hour) {
   if (hour < 12) {
     return '$hour am';

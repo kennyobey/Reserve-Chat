@@ -318,12 +318,55 @@ class _SignUpViewState extends State<SignUpView> {
                 ...buildTermsAndCondition(model),
                 ...buildSignUpButton(model),
                 ...buildSignInButton(model),
+                verticalSpaceMedium,
+                buildTermsAndConditions(context),
               ],
             ),
           ),
         ),
       ),
       viewModelBuilder: () => SignUpViewModel(),
+    );
+  }
+
+  Widget buildTermsAndConditions(BuildContext context) {
+    final bodyText2 =
+        Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14);
+    return InkWell(
+      onTap: () async {
+        /*    try {
+          const url = "https://boxin.ng/BOXIN%20PRIVACY%20POLICY.pdf";
+          await launchUrlString(url);
+        } catch (_) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                  'Error occurred in opening T&C, please send a message to support@boxin.ng')));
+        } */
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              'Terms',
+              style: bodyText2.copyWith(
+                color: kPrimaryColor,
+              ),
+            ),
+            Text(' and ', style: bodyText2),
+            Text(
+              'Conditions',
+              style: bodyText2.copyWith(
+                color: kPrimaryColor,
+              ),
+            ),
+            Text(' of use', style: bodyText2),
+          ],
+        ),
+      ),
     );
   }
 }

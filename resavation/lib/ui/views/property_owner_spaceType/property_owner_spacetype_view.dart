@@ -284,30 +284,33 @@ class _PropertyOwnerSpaceTypeViewState
           title: "Space Type",
           centerTitle: false,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  if (uploadFormKey.currentState!.validate()) {
-                    final bool isAllAdded =
-                        model.uploadTypeService.verifyStage1();
-                    if (isAllAdded) {
-                      bool shouldSave = await showSaveConfirmationDialog();
-                      if (shouldSave) {
-                        showSavePropertyDialog(model);
-                      }
-                    } else {
-                      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                              'Kindly fill all the fields above to proceed'),
-                        ),
-                      );
+            TextButton(
+              onPressed: () async {
+                if (uploadFormKey.currentState!.validate()) {
+                  final bool isAllAdded =
+                      model.uploadTypeService.verifyStage1();
+                  if (isAllAdded) {
+                    bool shouldSave = await showSaveConfirmationDialog();
+                    if (shouldSave) {
+                      showSavePropertyDialog(model);
                     }
+                  } else {
+                    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                      const SnackBar(
+                        content:
+                            Text('Kindly fill all the fields above to proceed'),
+                      ),
+                    );
                   }
-                },
-                icon: Icon(
-                  Icons.save_rounded,
+                }
+              },
+              child: Text(
+                'SAVE',
+                style: AppStyle.kBodyRegularBlack14.copyWith(
                   color: kPrimaryColor,
-                ))
+                ),
+              ),
+            )
           ],
         ),
         body: model.isLoading
@@ -342,14 +345,29 @@ class _PropertyOwnerSpaceTypeViewState
               const Divider(),
 
               verticalSpaceSmall,
+              Text(
+                'Property Status',
+                style: AppStyle.kBodyRegularBlack15W500,
+              ),
+              verticalSpaceSmall,
               buildPropertyStatus(model),
+
               verticalSpaceSmall,
 
               ...buildPropertyCategory(model),
               verticalSpaceSmall,
-
+              Text(
+                'Property Structure',
+                style: AppStyle.kBodyRegularBlack15W500,
+              ),
+              verticalSpaceSmall,
               buildPropertyType(model),
 
+              verticalSpaceSmall,
+              Text(
+                'Listing Option',
+                style: AppStyle.kBodyRegularBlack15W500,
+              ),
               verticalSpaceSmall,
               buildListingOptions(model),
 
@@ -451,7 +469,7 @@ class _PropertyOwnerSpaceTypeViewState
   List<Widget> buildLiveInSpace(PropertyOwnerSpaceTypeViewModel model) {
     return [
       Text(
-        'Do you leave in this space',
+        'Do you live in this space',
         style: AppStyle.kBodyRegularBlack15W500,
       ),
       FilterListTile(
@@ -502,7 +520,7 @@ class _PropertyOwnerSpaceTypeViewState
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Select Style Option",
+            "Listing Option",
             style: AppStyle.kBodyRegular,
           ),
           items: model.propertyStyleOption
@@ -561,7 +579,7 @@ class _PropertyOwnerSpaceTypeViewState
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Select Property",
+            "Select Property Structure",
             style: AppStyle.kBodyRegular,
           ),
           items: model.spaceType
@@ -593,6 +611,11 @@ class _PropertyOwnerSpaceTypeViewState
 
   List<Widget> buildPropertyCategory(PropertyOwnerSpaceTypeViewModel model) {
     return [
+      Text(
+        'Property Category',
+        style: AppStyle.kBodyRegularBlack15W500,
+      ),
+      verticalSpaceSmall,
       DropdownButtonHideUnderline(
         child: DropdownButton2(
           hint: Text(
@@ -628,6 +651,12 @@ class _PropertyOwnerSpaceTypeViewState
         ),
       ),
       verticalSpaceSmall,
+      if (model.isCategoryEnabled)
+        Text(
+          'Property Type',
+          style: AppStyle.kBodyRegularBlack15W500,
+        ),
+      if (model.isCategoryEnabled) verticalSpaceSmall,
       if (model.isCategoryEnabled)
         DropdownButtonHideUnderline(
           child: DropdownButton2(

@@ -38,7 +38,7 @@ class BookingSubmissionViewModel extends BaseViewModel {
       await _httpService.bookProperty(
           amount: amount,
           id: property.id ?? -1,
-          paymentType: choiceOfPayment.name.toUpperCase(),
+          paymentCycle: choiceOfPayment.name.toUpperCase(),
           checkInDate: startDate);
     } catch (exception) {
       return Future.error(exception.toString());

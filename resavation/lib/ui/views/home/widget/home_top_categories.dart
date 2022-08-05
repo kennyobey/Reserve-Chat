@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../model/top_categories_model/content.dart';
-import '../../../../model/top_categories_model/top_categories_model.dart';
 import '../../../shared/spacing.dart';
 
 import '../home_viewmodel.dart';
@@ -77,57 +76,36 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildBody(HomeViewModel model) {
-    final topCategoriesFuture =
-        model.httpService.getTopCategoriesWithHighestProperties();
-    return FutureBuilder<TopCategoriesModel>(
-      future: topCategoriesFuture,
-      builder: ((context, snapshot) {
-        if (snapshot.hasError) {
-          return buildErrorBody(context);
-        }
-
-        if (snapshot.hasData) {
-          final List<TopCategoriesContent> allContent =
-              snapshot.data?.content ?? [];
-          return buildSuccessBody(allContent, model, context);
-        } else {
-          return buildLoadingBody(context);
-        }
-      }),
-    );
+  Widget buildBody(HomeViewModel model, BuildContext context) {
+    if (model.topCategoriesLoading) {
+      return buildLoadingBody(context);
+    } else if (model.topCategoriesHasError) {
+      return buildErrorBody(context);
+    } else {
+      final List<TopCategoriesContent> allContent =
+          model.topCategoriesModel.content ?? [];
+      return buildSuccessBody(allContent, model, context);
+    }
   }
 
   SingleChildScrollView buildLoadingBody(BuildContext context) {
     final allContent = [
-      TopCategoriesContent(
-        propertyCategory: 'Loading....',
-      ),
-      TopCategoriesContent(
-        propertyCategory: 'Loading....',
-      ),
-      TopCategoriesContent(
-        propertyCategory: 'Loading....',
-      ),
-      TopCategoriesContent(
-        propertyCategory: 'Loading....',
-      ),
-      TopCategoriesContent(
-        propertyCategory: 'Loading....',
-      ),
+      TopCategoriesContent(),
+      TopCategoriesContent(),
+      TopCategoriesContent(),
+      TopCategoriesContent(),
+      TopCategoriesContent(),
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          for (final content in allContent) ...[
+          for (final _ in allContent) ...[
             CategoryCard(
               image: '',
-              category: content.propertyCategory ?? '',
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Loading data, please wait')));
-              },
+              shimmerEnabled: true,
+              category: '',
+              onTap: () {},
             ),
             horizontalSpaceSmall,
           ],
@@ -146,7 +124,8 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
               children: [
                 for (final content in allContent) ...[
                   CategoryCard(
-                    image: '',
+                    image:
+                        model.topCategoriesImages[allContent.indexOf(content)],
                     category: content.propertyCategory ?? '',
                     onTap: () {
                       model.goToTopItemsView(
@@ -171,7 +150,7 @@ class HomeTopCategories extends ViewModelWidget<HomeViewModel> {
           title: 'Categories',
         ),
         verticalSpaceSmall,
-        buildBody(model),
+        buildBody(model, context),
       ],
     );
   }

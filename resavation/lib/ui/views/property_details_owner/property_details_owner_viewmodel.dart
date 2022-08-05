@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../services/core/http_service.dart';
+import '../messages/messages_viewmodel.dart';
 
 class PropertyDetailsOwnerViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -40,7 +41,7 @@ class PropertyDetailsOwnerViewModel extends BaseViewModel {
     _navigationService.back();
   }
 
-  //Google Map
+  // Google Map
   void goToMapView() {
     _navigationService.navigateTo(Routes.mapView);
   }
@@ -49,7 +50,7 @@ class PropertyDetailsOwnerViewModel extends BaseViewModel {
     try {
       await httpService.acceptDeclineTeantRequest(
         true,
-        propertyContent.property?.id ?? -1,
+        propertyContent.id ?? -1,
       );
     } catch (exception) {
       return Future.error(exception.toString());
@@ -60,7 +61,7 @@ class PropertyDetailsOwnerViewModel extends BaseViewModel {
     try {
       await httpService.acceptDeclineTeantRequest(
         false,
-        propertyContent.property?.id ?? -1,
+        propertyContent.id ?? -1,
       );
     } catch (exception) {
       return Future.error(exception.toString());
@@ -74,5 +75,24 @@ class PropertyDetailsOwnerViewModel extends BaseViewModel {
         property: property,
       ),
     );
+  }
+
+  Future<bool> gotToChatRoomView(
+      OwnerBookedPropertyContent? ownerPropertyContent) async {
+    if (userService.userData.email ==
+        (ownerPropertyContent?.user?.email ?? '-')) {
+      return true;
+    } else {
+      final chatModel = await MessagesViewModel.createChat(
+        ownerPropertyContent?.user?.email ?? '-',
+        (ownerPropertyContent?.user?.firstName ?? '') +
+            ' ' +
+            (ownerPropertyContent?.user?.lastName ?? ''),
+        ownerPropertyContent?.user?.imageUrl ?? '',
+      );
+      _navigationService.navigateTo(Routes.chatRoomView,
+          arguments: ChatRoomViewArguments(chatModel: chatModel));
+      return false;
+    }
   }
 }

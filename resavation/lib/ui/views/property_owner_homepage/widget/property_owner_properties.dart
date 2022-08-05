@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/model/owner_property/owner_property.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
-import 'package:resavation/ui/shared/colors.dart';
+
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/views/home/widget/items.dart';
 import 'package:resavation/ui/views/property_owner_properties/property_owner_properties_view.dart';
@@ -79,39 +79,39 @@ class PropertyOwnerProperties
     );
   }
 
-  Widget buildBody(PropertyOwnerHomePageViewModel model) {
-    return FutureBuilder<OwnerPropertyModel>(
-      future: model.httpService.getOwnerProperty(page: 0, size: 5),
-      builder: ((context, asyncDataSnapshot) {
-        if (asyncDataSnapshot.hasError) {
-          return buildErrorBody(context);
-        }
-
-        if (asyncDataSnapshot.hasData) {
-          final List<Property> ownerProperty =
-              asyncDataSnapshot.data?.properties ?? [];
-
-          return buildSuccessBody(ownerProperty, model, context);
-        } else {
-          return buildLoadingWidget();
-        }
-      }),
-    );
+  Widget buildBody(PropertyOwnerHomePageViewModel model, BuildContext context) {
+    if (model.ownerPropertyLoading) {
+      return buildLoadingWidget();
+    } else if (model.ownerPropertyHasError) {
+      return buildErrorBody(context);
+    } else {
+      return buildSuccessBody(model.ownerPropertyModel, model, context);
+    }
   }
 
   Widget buildLoadingWidget() {
-    return Container(
-      height: 300,
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.all(0),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 5,
+      itemBuilder: (_, index) {
+        return PropertyOwnerPropertiesCard(
+          id: -1,
+          verified: true,
+          onTap: () {},
+          image: '',
+          amountPerYear: 0.0,
+          shimmerEnabled: true,
+          name: '',
+          address: '',
+          numberOfBathrooms: 0,
+          numberOfBedrooms: 0,
+          numberOfCars: 0,
+          squareFeet: 0,
+          isFavoriteTap: false,
+        );
+      },
     );
   }
 
@@ -139,6 +139,7 @@ class PropertyOwnerProperties
                 address: property.address ?? '',
                 numberOfBathrooms: property.bathTubCount ?? 0,
                 numberOfBedrooms: property.bedroomCount ?? 0,
+                numberOfCars: property.carSlot ?? 0,
                 squareFeet: property.surfaceArea ?? 0,
                 isFavoriteTap: property.favourite ?? false,
               );
@@ -159,7 +160,7 @@ class PropertyOwnerProperties
           title: 'Your Properties',
         ),
         verticalSpaceSmall,
-        buildBody(model),
+        buildBody(model, context),
       ],
     );
   }

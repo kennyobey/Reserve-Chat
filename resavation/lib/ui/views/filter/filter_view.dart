@@ -72,7 +72,7 @@ class FilterView extends StatelessWidget {
                       children: [
                         buildBody(model),
                         verticalSpaceSmall,
-                        buildApplyButton(model)
+                        buildApplyButton(model, context)
                       ],
                     ),
                   ),
@@ -81,12 +81,20 @@ class FilterView extends StatelessWidget {
     );
   }
 
-  Widget buildApplyButton(FilterViewModel model) {
+  Widget buildApplyButton(FilterViewModel model, BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ResavationElevatedButton(
         child: Text('Apply'),
-        onPressed: model.applyFilter,
+        onPressed: () {
+          if (model.propertyStatus == null || model.propertyStatus == null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    'Please select the property type and status; all other parameters are optional. ')));
+          } else {
+            model.applyFilter();
+          }
+        },
       ),
     );
   }
@@ -98,11 +106,11 @@ class FilterView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Let Type',
+              'Property Status',
               style: AppStyle.kBodyRegularW500,
             ),
             verticalSpaceSmall,
-            buildLetTypeList(),
+            buildPropertyStatus(model),
             verticalSpaceMedium,
             Text(
               'Property Type',
@@ -131,55 +139,10 @@ class FilterView extends StatelessWidget {
             ),
             verticalSpaceSmall,
             buildFacilities(model),
-            verticalSpaceMedium,
-            Text(
-              'Availability',
-              style: AppStyle.kBodyRegularW500,
-            ),
-            verticalSpaceSmall,
-            buildAvailabilityList(),
             verticalSpaceMassive,
           ],
         ),
       ),
-    );
-  }
-
-  Column buildAvailabilityList() {
-    return Column(
-      children: [
-        AvailabilityListTile(
-          title: Availability.Shortlet.name,
-          value: Availability.Shortlet,
-        ),
-        AvailabilityListTile(
-          title: '6 Months',
-          value: Availability.Months,
-        ),
-        AvailabilityListTile(
-          title: 'Within 1Year',
-          value: Availability.Year,
-        ),
-        AvailabilityListTile(
-          title: 'More than 1Year',
-          value: Availability.More,
-        ),
-      ],
-    );
-  }
-
-  Column buildLetTypeList() {
-    return Column(
-      children: [
-        LetTypeListTile(
-          title: LetType.Rent.name,
-          value: LetType.Rent,
-        ),
-        LetTypeListTile(
-          title: LetType.Sale.name,
-          value: LetType.Sale,
-        ),
-      ],
     );
   }
 
@@ -238,6 +201,43 @@ class FilterView extends StatelessWidget {
     );
   }
 
+  Widget buildPropertyStatus(FilterViewModel model) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        hint: Text(
+          "Select Property Status",
+          style: AppStyle.kBodyRegular,
+        ),
+        items: model.propertyStatusList
+            .map(
+              (item) => DropdownMenuItem<String>(
+                value: item,
+                child: Text(
+                  item,
+                  style: AppStyle.kBodyRegular,
+                ),
+              ),
+            )
+            .toList(),
+        value: model.propertyStatus,
+        onChanged: (value) {
+          model.onPropertyStatusValueChange(value);
+        },
+        icon: const Icon(
+          Icons.keyboard_arrow_down_rounded,
+        ),
+        buttonWidth: double.infinity,
+        buttonPadding: EdgeInsets.only(left: 18, right: 20),
+        buttonDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: Colors.black26,
+          ),
+        ),
+      ),
+    );
+  }
+
   DropdownButtonHideUnderline buildPropertyType(FilterViewModel model) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
@@ -269,52 +269,6 @@ class FilterView extends StatelessWidget {
               color: Colors.black26,
             ),
           )),
-    );
-  }
-}
-
-class AvailabilityListTile extends ViewModelWidget<FilterViewModel> {
-  const AvailabilityListTile({required this.title, required this.value});
-
-  final String title;
-  final Availability value;
-
-  @override
-  Widget build(BuildContext context, model) {
-    final isActive = model.availablities.contains(value);
-    return CheckboxListTile(
-      title: Text(
-        title,
-        style: AppStyle.kBodyRegularBlack14,
-      ), // Displays the option
-      value: isActive, // Displays checked or unchecked value
-      controlAffinity: ListTileControlAffinity.platform,
-      onChanged: (_) {
-        model.onDurationChanged(value);
-      },
-    );
-  }
-}
-
-class LetTypeListTile extends ViewModelWidget<FilterViewModel> {
-  const LetTypeListTile({required this.title, required this.value});
-
-  final String title;
-  final LetType value;
-
-  @override
-  Widget build(BuildContext context, model) {
-    final isActive = model.letTypes.contains(value);
-    return CheckboxListTile(
-      title: Text(
-        title,
-        style: AppStyle.kBodyRegularBlack14,
-      ), // Displays the option
-      value: isActive, // Displays checked or unchecked value
-      controlAffinity: ListTileControlAffinity.platform,
-      onChanged: (_) {
-        model.onLetChanged(value);
-      },
     );
   }
 }

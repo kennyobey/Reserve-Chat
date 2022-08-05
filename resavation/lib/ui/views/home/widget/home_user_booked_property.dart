@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:intl/intl.dart';
 import 'package:resavation/model/tenant_booked_property/content.dart';
-import 'package:resavation/model/tenant_booked_property/tenant_booked_property.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 import '../../../shared/spacing.dart';
 import '../home_viewmodel.dart';
@@ -79,40 +80,29 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildBody(HomeViewModel model) {
-    return FutureBuilder<TenantBookedProperty>(
-      future: model.httpService.getAllTenantsBookedProperty(page: 0, size: 5),
-      builder: ((context, asyncDataSnapshot) {
-        if (asyncDataSnapshot.hasError) {
-          return buildErrorBody(context);
-        }
-
-        if (asyncDataSnapshot.hasData) {
-          final queryData = asyncDataSnapshot.data;
-          final List<TenantBookedPropertyContent> bookedProperty =
-              queryData?.content ?? [];
-
-          return buildSuccessBody(bookedProperty, model, context);
-        } else {
-          return buildLoadingWidget();
-        }
-      }),
-    );
+  Widget buildBody(HomeViewModel model, BuildContext context) {
+    if (model.tenantBookedPropertyLoading) {
+      return buildLoadingWidget();
+    } else if (model.tenantBookedPropertyHasError) {
+      return buildErrorBody(context);
+    } else {
+      return buildSuccessBody(model.tenantBookedPropertyModel, model, context);
+    }
   }
 
   Widget buildLoadingWidget() {
-    return Container(
-      height: 300,
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.all(0),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (_, index) {
+        return BookedPropertyCard(
+          shimmerEnabled: true,
+          content: TenantBookedPropertyContent(),
+          onTap: () {},
+        );
+      },
+      itemCount: 3,
     );
   }
 
@@ -147,10 +137,10 @@ class HomeUserBookedProperty extends ViewModelWidget<HomeViewModel> {
             model.goToBookedContentList();
           },
           visibility: true,
-          title: 'Booked Propierties',
+          title: 'Booked Properties',
         ),
         verticalSpaceSmall,
-        buildBody(model),
+        buildBody(model, context),
       ],
     );
   }
@@ -161,15 +151,14 @@ class BookedPropertyCard extends StatelessWidget {
     Key? key,
     required this.content,
     this.onTap,
+    this.shimmerEnabled = false,
   }) : super(key: key);
 
   final TenantBookedPropertyContent content;
   final void Function()? onTap;
-
+  final bool shimmerEnabled;
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,##0.00", "en_US");
-    final property = content.property;
     return InkWell(
       splashColor: Colors.transparent,
       onTap: onTap,
@@ -178,70 +167,191 @@ class BookedPropertyCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         margin: const EdgeInsets.only(left: 5, right: 5, bottom: 8),
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        child: shimmerEnabled
+            ? Shimmer.fromColors(
+                baseColor: Colors.grey.shade100,
+                highlightColor: Colors.grey.shade300,
+                child: shimmerBody(),
+              )
+            : buildBody(),
+      ),
+    );
+  }
+
+  Widget shimmerBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          height: 130,
+          width: double.infinity,
+          color: kPrimaryColor,
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            color: kPrimaryColor,
+            width: double.infinity,
+            height: 10,
+          ),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            color: kPrimaryColor,
+            width: double.infinity,
+            height: 10,
+          ),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            color: kPrimaryColor,
+            width: double.infinity,
+            height: 10,
+          ),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            color: kPrimaryColor,
+            width: double.infinity,
+            height: 10,
+          ),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Container(
+            color: kPrimaryColor,
+            width: double.infinity,
+            height: 10,
+          ),
+        ),
+        verticalSpaceTiny,
+      ],
+    );
+  }
+
+  Widget buildBody() {
+    final property = content.property;
+    final oCcy = NumberFormat("#,##0.00", "en_US");
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Hero(
+          child: Stack(
             children: [
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      property?.propertyName ?? '',
-                      style: AppStyle.kBodyRegular18W500,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      property?.address ?? '',
-                      style: AppStyle.kBodySmallRegular12W300,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      'Payment Type: ' + (content.paymentType ?? ''),
-                      style: AppStyle.kBodySmallRegular12W300,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      'Verified: ' + content.status.toString().toUpperCase(),
-                      style: AppStyle.kBodySmallRegular12W300,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      '${String.fromCharCode(8358)} ${oCcy.format(content.amount ?? 0)}',
-                      style: AppStyle.kBodySmallRegular12W500.copyWith(
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                  ],
+              Container(
+                height: 130,
+                width: double.infinity,
+                child: ResavationImage(
+                  image: property?.propertyImages?[0].imageUrl ?? '',
                 ),
               ),
-              horizontalSpaceSmall,
-              Expanded(
-                flex: 2,
-                child: GestureDetector(
-                  onTap: onTap,
-                  child: Hero(
-                    child: Container(
-                      height: 100,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: ResavationImage(
-                        image: property?.propertyImages?[0].imageUrl ?? '',
-                      ),
+              Positioned(
+                top: 3,
+                left: 3,
+                child: Container(
+                  padding: EdgeInsets.all(3),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color:
+                        content.status == true ? Colors.green : Colors.orange,
+                  ),
+                  child: Text(
+                    content.status == true ? 'Accepted' : 'Pending',
+                    style: AppStyle.kBodySmallRegular12W500.copyWith(
+                      color: kWhite,
                     ),
-                    tag: content.id.toString(),
                   ),
                 ),
+              )
+            ],
+          ),
+          tag: content.id.toString(),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            property?.propertyName ?? '',
+            style: AppStyle.kBodyRegularBlack16W600.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            property?.address ?? '',
+            style: AppStyle.kBodySmallRegular12W300,
+          ),
+        ),
+        const Divider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Payment Cycle',
+                  style: AppStyle.kBodySmallRegular12W300,
+                ),
+              ),
+              Text(
+                (content.paymentCycle ?? ''),
+                style: AppStyle.kBodySmallRegular12W500,
               ),
             ],
           ),
         ),
-      ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Price',
+                  style: AppStyle.kBodySmallRegular12W300,
+                ),
+              ),
+              Text(
+                '${String.fromCharCode(8358)} ${oCcy.format(content.amount ?? 0)}',
+                style: AppStyle.kBodySmallRegular12W500,
+              ),
+            ],
+          ),
+        ),
+        verticalSpaceTiny,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Payment Details',
+                  style: AppStyle.kBodySmallRegular12W300,
+                ),
+              ),
+              Text(
+                'Not Paid',
+                style: AppStyle.kBodySmallRegular12W500,
+              ),
+            ],
+          ),
+        ),
+        verticalSpaceTiny,
+      ],
     );
   }
 }

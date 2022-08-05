@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
@@ -28,11 +27,6 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
   bool isLoading = true;
 
   PropertyOwnerDetailsViewModel() {
-    if (uploadTypeService.isRestoringData) {
-      setUpPreviousData();
-    } else {
-      uploadTypeService.clearStage2();
-    }
     getData();
   }
 
@@ -42,6 +36,11 @@ class PropertyOwnerDetailsViewModel extends BaseViewModel {
     notifyListeners();
     try {
       states = await _httpService.getStates();
+      if (uploadTypeService.isRestoringData) {
+        setUpPreviousData();
+      } else {
+        uploadTypeService.clearStage2();
+      }
     } catch (exception) {
       hasErrorOnData = true;
     }

@@ -269,6 +269,16 @@ class _PropertyOwnerAddPhotosViewState
         floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColor,
           onPressed: () async {
+            if (model.selectedImages.length >= 10) {
+              ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "You can not add more than 10 images",
+                  ),
+                ),
+              );
+              return;
+            }
             try {
               await model.addPhoto();
             } catch (exception) {
@@ -318,25 +328,28 @@ class _PropertyOwnerAddPhotosViewState
           centerTitle: false,
           backEnabled: false,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  if (model.selectedImages.isNotEmpty) {
-                    bool shouldSave = await showSaveConfirmationDialog();
-                    if (shouldSave) {
-                      showSavePropertyDialog(model);
-                    }
-                  } else {
-                    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-                      SnackBar(
-                        content: Text('Please select one or more images'),
-                      ),
-                    );
+            TextButton(
+              onPressed: () async {
+                if (model.selectedImages.isNotEmpty) {
+                  bool shouldSave = await showSaveConfirmationDialog();
+                  if (shouldSave) {
+                    showSavePropertyDialog(model);
                   }
-                },
-                icon: Icon(
-                  Icons.save_rounded,
+                } else {
+                  ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                    SnackBar(
+                      content: Text('Please select one or more images'),
+                    ),
+                  );
+                }
+              },
+              child: Text(
+                'SAVE',
+                style: AppStyle.kBodyRegularBlack14.copyWith(
                   color: kPrimaryColor,
-                ))
+                ),
+              ),
+            )
           ],
         ),
         body: Padding(
@@ -353,7 +366,7 @@ class _PropertyOwnerAddPhotosViewState
               ),
               verticalSpaceTiny,
               Text(
-                'Image(s) help prospective tenant imagine staying in your place\nYou can add as many image(s) as you want',
+                'Image(s) help prospective tenant imagine staying in your place\nYou can add  up to 10 images of your property.',
                 style: AppStyle.kBodyRegularBlack14,
               ),
               verticalSpaceMedium,

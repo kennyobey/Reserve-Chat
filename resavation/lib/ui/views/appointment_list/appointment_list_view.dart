@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
@@ -18,9 +19,14 @@ class AppointmentListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AppointmentListViewModel>.reactive(
       builder: (context, model, child) {
-        return Scaffold(
-          appBar: buildAppBar(),
-          body: buildBody(model, context),
+        return FocusDetector(
+          onFocusGained: () {
+            model.getData();
+          },
+          child: Scaffold(
+            appBar: buildAppBar(),
+            body: buildBody(model, context),
+          ),
         );
       },
       viewModelBuilder: () => AppointmentListViewModel(),
@@ -90,16 +96,18 @@ class AppointmentListView extends StatelessWidget {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+  Widget buildLoadingWidget() {
+    return ListView.builder(
+      itemBuilder: (_, index) {
+        return HomeAppointmentItem(
+          appointment: Appointment(),
+          onPressed: () {},
+          shimmerEnabled: true,
+        );
+      },
+      padding: const EdgeInsets.all(0),
+      physics: const BouncingScrollPhysics(),
+      itemCount: 15,
     );
   }
 

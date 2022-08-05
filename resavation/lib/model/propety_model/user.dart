@@ -15,7 +15,7 @@ class User {
   dynamic city;
   dynamic address;
   dynamic postalCode;
-  dynamic aboutMe;
+  String? aboutMe;
   dynamic occupation;
   String? imageUrl;
   dynamic notification;
@@ -62,7 +62,7 @@ class User {
         city: data['city'] as dynamic,
         address: data['address'] as dynamic,
         postalCode: data['postalCode'] as dynamic,
-        aboutMe: data['aboutMe'] as dynamic,
+        aboutMe: data['aboutMe'] as String?,
         occupation: data['occupation'] as dynamic,
         imageUrl: data['imageUrl'] as String?,
         notification: data['notification'] as dynamic,

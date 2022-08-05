@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:resavation/app/app.locator.dart';
-import 'package:resavation/model/filter/filter.dart';
 import 'package:resavation/model/login_model.dart';
 import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:resavation/model/owner_property/owner_property.dart';
@@ -15,11 +14,11 @@ import 'package:resavation/model/tenant_booked_property/tenant_booked_property.d
 import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:resavation/services/core/upload_service.dart';
 import 'package:resavation/services/core/user_type_service.dart';
-
+import 'package:resavation/utility/app_preferences.dart';
 
 import '../../model/edit_profile_model.dart';
-import '../../model/property_cotroller_model/booked_propety_model.dart';
 
+import '../../model/filter.dart';
 import '../../model/top_categories_model/top_categories_model.dart';
 
 class HttpService {
@@ -112,7 +111,7 @@ class HttpService {
 
   Future<bool> loginUser(String email, String password) async {
     try {
-      var response = await http.post(
+      final response = await http.post(
         Uri.http(requestSite, "api/v1/auth/login"),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8'
@@ -129,6 +128,11 @@ class HttpService {
         String responseString = response.body;
 
         final loginModel = loginModelFromJson(responseString);
+        AppPreferences.setRefeshTokenAndAccessRole(
+          token: loginModel.refreshToken,
+          accessRoles: loginModel.accessRoles,
+          tokenType: loginModel.tokenType,
+        );
         userTypeService.setUserData(loginModel);
         return true;
       } else if (response.statusCode == 400) {
@@ -182,55 +186,102 @@ class HttpService {
     }
   }
 
-  editDetails(
-    String firstName,
-    String lastName,
-    String email,
-    String imageUrl,
-    String phoneNumber,
-    String gender,
-    DateTime dateOfBirth,
-    String country,
-    String state,
-    String city,
-    String address,
-    String postalCode,
-    String aboutMe,
-    String occupation,
-  ) async {
+  Future<String> refreshToken(String refershToken,
+      [bool isUpdate = true]) async {
     try {
-      print("property");
       final response = await http.post(
-        Uri.http(requestSite, "/api/v1/user/profile"),
-        headers: <String, String>{'Content-Type': 'application/json'},
+        Uri.http(requestSite, "api/v1/auth/refreshtoken"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
         body: jsonEncode(
           <String, dynamic>{
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "imageUrl": "",
-            "phoneNumber": phoneNumber,
-            "dateOfBirth": "",
-            "country": country,
-            "state": state,
-            "address": address,
-            "postalCode": postalCode,
-            "aboutMe": aboutMe,
-            "occupation": occupation,
+            "refreshToken": refershToken,
           },
         ),
       );
+
       if (response.statusCode <= 299) {
-        log(await response.body);
-        print(response.statusCode);
-        print('Response status: ${response.statusCode}');
-        return editProfileModelFromJson(response.body);
+        final loginModel = loginFromRefreshToken(response.body);
+        if (isUpdate) {
+          userTypeService.updateUserData(loginModel);
+        } else {
+          userTypeService.setUserData(loginModel);
+        }
+
+        AppPreferences.setRefeshTokenAndAccessRole(
+          token: loginModel.refreshToken,
+          accessRoles: AppPreferences.getAccessRoles,
+          tokenType: loginModel.tokenType,
+        );
+        return loginModel.accessToken;
+      } else {
+        return Future.error((json.decode(response.body)['message']) ??
+            'Failed to refresh user session');
+      }
+    } catch (exception) {
+      return Future.error("Failed to register user");
+    }
+  }
+
+  editDetails({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String imageUrl,
+    required String phoneNumber,
+    required String gender,
+    required DateTime dateOfBirth,
+    required String country,
+    required String state,
+    required String city,
+    required String address,
+    required String postalCode,
+    required String aboutMe,
+    required String occupation,
+  }) async {
+    try {
+      final authorization = await userTypeService.authorization();
+      final response = await http.post(
+        Uri.http(requestSite, "/api/v1/user/profile/update"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': authorization
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            "aboutMe": aboutMe,
+            "address": address,
+            "city": city,
+            "country": country,
+            "dateOfBirth": DateFormat('dd-MM-yyyy').format(dateOfBirth),
+            "firstName": firstName,
+            "gender": gender,
+            "imageUrl": imageUrl,
+            "lastName": lastName,
+            "occupation": occupation,
+            "phoneNumber": phoneNumber,
+            "postalCode": postalCode,
+            "state": state,
+          },
+        ),
+      );
+
+      if (response.statusCode <= 299) {
+        final loginModel =
+            loginFromOldModel(response.body, userTypeService.userData);
+        AppPreferences.setRefeshTokenAndAccessRole(
+          token: loginModel.refreshToken,
+          accessRoles: loginModel.accessRoles,
+          tokenType: loginModel.tokenType,
+        );
+        userTypeService.updateUserData(loginModel);
+        return;
       } else {
         return Future.error((json.decode(response.body)['message']) ??
             'Failed to update profile');
       }
     } catch (exception) {
-      print(" Error is :${exception.toString()}");
       return Future.error("Failed to update user profile");
     }
   }
@@ -289,14 +340,15 @@ class HttpService {
   Future<SearchModel> getAllProperties(
       {required int page, required int size}) async {
     try {
-      var response = await http.get(
+      final authorization = await userTypeService.authorization();
+      final response = await http.get(
         Uri.http(requestSite, "api/v1/user/property", <String, String>{
           "page": page.toString(),
           "size": size.toString(),
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -313,6 +365,7 @@ class HttpService {
   Future<SearchModel> getPropertiesByCategories(
       {required String category, required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(requestSite, "api/v1/properties/filter", <String, String>{
           "category": category,
@@ -321,7 +374,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -338,6 +391,7 @@ class HttpService {
   Future<SearchModel> getPropertiesByStates(
       {required String state, required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(requestSite, "api/v1/properties/search", <String, String>{
           "key": state,
@@ -346,7 +400,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -361,30 +415,27 @@ class HttpService {
   }
 
   Future<SearchModel> getLandOwnerListings(
-      {required int propertyId, required int page, required int size}) async {
+      {required int userId, required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
-        Uri.http(requestSite,
-            "api/v1/user/property/owner/$propertyId", <String, String>{
+        Uri.http(
+            requestSite, "api/v1/user/property/owner/$userId", <String, String>{
           "page": page.toString(),
           "size": size.toString(),
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
-      debugPrint(propertyId.toString());
 
       if (response.statusCode <= 299) {
         return SearchModel.fromJson(response.body);
       } else {
-        debugPrint(response.statusCode.toString());
-        debugPrint(json.decode(response.body)['message'] ?? '');
         return Future.error(json.decode(response.body)['message'] ?? '');
       }
     } catch (exception) {
-      debugPrint(exception.toString());
       return Future.error("Error occurred in communicating with the server");
     }
   }
@@ -392,6 +443,7 @@ class HttpService {
   Future<SearchModel> getSearchProperty(
       {required String text, required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(requestSite, "api/v1/properties/search", <String, String>{
           "key": text,
@@ -400,7 +452,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -417,6 +469,7 @@ class HttpService {
   Future<OwnerPropertyModel> getOwnerProperty(
       {required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(requestSite, "api/v1/owner/property/all", <String, String>{
           "page": page.toString(),
@@ -424,7 +477,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -438,18 +491,55 @@ class HttpService {
     }
   }
 
+  Future<String> verifiyPayment({
+    required int propertyId,
+    required String interval,
+    required String reference,
+  }) async {
+    try {
+      final authorization = await userTypeService.authorization();
+      final response = await http.post(
+        Uri.http(
+          requestSite,
+          "api/v1/payment/verify",
+        ),
+        body: jsonEncode(
+          <String, dynamic>{
+            "paymentInterval": interval,
+            "propertyId": propertyId,
+            "reference": reference,
+          },
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': authorization
+        },
+      );
+
+      if (response.statusCode <= 299) {
+        return json.decode(response.body)['paymentStatus'] ?? '';
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
   Future<SearchModel> getFilteredProperty(
       {required Filter filter, required int page, required int size}) async {
     try {
-      var response = await http.post(
-        Uri.http(requestSite, "/api/v1/properties/filter", <String, String>{
+      final authorization = await userTypeService.authorization();
+      final response = await http.post(
+        Uri.http(
+            requestSite, "/api/v1/properties/filter-property", <String, String>{
           "page": page.toString(),
           "size": size.toString(),
         }),
         body: filter.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -465,14 +555,15 @@ class HttpService {
 
   getAllPropertyById({required int id}) async {
     try {
-      var response = await http.get(
+      final authorization = await userTypeService.authorization();
+      final response = await http.get(
         Uri.http(
           requestSite,
           "api/v1/properties/$id",
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -488,11 +579,12 @@ class HttpService {
 
   togglePropertyAsFavourite({required int propertyId}) async {
     try {
-      var response = await http.post(
+      final authorization = await userTypeService.authorization();
+      final response = await http.post(
           Uri.http(requestSite, "api/v1/user/property/favourite/alter"),
           headers: <String, String>{
             'Content-Type': 'application/json;charset=UTF-8',
-            'Authorization': userTypeService.authorization
+            'Authorization': authorization
           },
           body: jsonEncode(
             <String, dynamic>{
@@ -512,6 +604,7 @@ class HttpService {
   Future<SearchModel> getAllFavouriteProperties(
       {required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(requestSite,
             "api/v1/user/property/favourite/fetch", <String, String>{
@@ -520,7 +613,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -537,6 +630,7 @@ class HttpService {
   Future<TenantBookedProperty> getAllTenantsBookedProperty(
       {required int page, required int size}) async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(requestSite, "api/v1/user/property/booked", <String, String>{
           "page": page.toString(),
@@ -544,9 +638,10 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
+      debugPrint(response.body.toString());
       if (response.statusCode <= 299) {
         return TenantBookedProperty.fromJson(response.body);
       } else {
@@ -562,7 +657,8 @@ class HttpService {
   Future<TopCategoriesModel> getTopCategoriesWithHighestProperties(
       {int page = 0, int size = 8}) async {
     try {
-      var response = await http.get(
+      final authorization = await userTypeService.authorization();
+      final response = await http.get(
         Uri.http(
             requestSite, "api/v1/properties/top-categories", <String, String>{
           "page": page.toString(),
@@ -570,7 +666,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -588,14 +684,15 @@ class HttpService {
   Future<TopStatesModel> getTopStatesWithHighestProperties(
       {int page = 0, int size = 8}) async {
     try {
-      var response = await http.get(
+      final authorization = await userTypeService.authorization();
+      final response = await http.get(
         Uri.http(requestSite, "api/v1/properties/top-cities", <String, String>{
           "page": page.toString(),
           "size": size.toString(),
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -610,38 +707,13 @@ class HttpService {
 
 /////////////////////
 
-  updateProfile({required Map<String, dynamic> body}) async {
-    try {
-      var response = await http.post(
-        Uri.http(
-          requestSite,
-          "api/v1/user/profile/update",
-        ),
-        body: jsonEncode(body),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
-        },
-      );
-      if (response.statusCode <= 299) {
-        final loginModel =
-            loginFromOldModel(response.body, userTypeService.userData);
-        userTypeService.updateUserData(loginModel);
-        return;
-      } else {
-        return Future.error(json.decode(response.body)['message'] ?? '');
-      }
-    } catch (exception) {
-      return Future.error("Error occurred in communicating with the server");
-    }
-  }
-
   uploadProperty({
     required UploadService uploadTypeService,
     required List<String> images,
   }) async {
     final body = <String, dynamic>{
       "propertyCategory": uploadTypeService.propertyCategory ?? '',
+      "unit": uploadTypeService.unit,
       "propertyDetails": {
         "address": uploadTypeService.address ?? '',
         "amenities": uploadTypeService.amenities,
@@ -676,7 +748,7 @@ class HttpService {
         "propertyStyle": uploadTypeService.propertyStyle ?? '',
         "serviceType": (uploadTypeService.isSpaceServiced ?? false)
             ? "Serviced"
-            : 'Not Serviced',
+            : 'Self Serviced',
         "propertyStatus": uploadTypeService.propertyStatus ?? '',
         "spacePrice": uploadTypeService.spacePrice ?? 0.0,
         "state": uploadTypeService.state ?? '',
@@ -686,19 +758,22 @@ class HttpService {
           "monthlyPrice": uploadTypeService.monthlyPrice ?? 0.0,
           "quarterlyPrice": uploadTypeService.quarterlyPrice ?? 0.0
         },
-        "surfaceArea": uploadTypeService.surfaceArea ?? 0
+        "surfaceArea": uploadTypeService.surfaceArea ?? 0,
+        "unit": uploadTypeService.unit,
       }
     };
-
+    debugPrint(jsonEncode(body));
     try {
-      final response =
-          await http.post(Uri.http(requestSite, "/api/v1/properties/upload"),
-              headers: <String, String>{
-                'Content-Type': 'application/json',
-                'Authorization': userTypeService.authorization
-              },
-              body: jsonEncode(body));
-
+      final authorization = await userTypeService.authorization();
+      final response = await http.post(
+          Uri.http(requestSite, "/api/v1/properties/upload"),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': authorization
+          },
+          body: jsonEncode(body));
+      debugPrint(response.request?.url.toString());
+      debugPrint(response.body);
       if (response.statusCode == 200) {
         return;
       } else {
@@ -759,17 +834,19 @@ class HttpService {
           "quarterlyPrice": uploadTypeService.quarterlyPrice,
         },
         "surfaceArea": uploadTypeService.surfaceArea,
+        "unit": uploadTypeService.unit,
       }
     };
 
     try {
-      final response =
-          await http.post(Uri.http(requestSite, "api/v1/properties/save"),
-              headers: <String, String>{
-                'Content-Type': 'application/json',
-                'Authorization': userTypeService.authorization
-              },
-              body: jsonEncode(body));
+      final authorization = await userTypeService.authorization();
+      final response = await http.post(
+          Uri.http(requestSite, "api/v1/properties/save"),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': authorization
+          },
+          body: jsonEncode(body));
 
       if (response.statusCode == 200) {
         return;
@@ -783,6 +860,7 @@ class HttpService {
 
   Future<SavedProperty> getSavedProperty() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -790,7 +868,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
@@ -807,22 +885,24 @@ class HttpService {
   bookProperty({
     required double amount,
     required int id,
-    required String paymentType,
+    required String paymentCycle,
     required DateTime checkInDate,
   }) async {
     final body = <String, dynamic>{
       "amount": amount,
       "checkInDate": DateFormat('dd-MM-yyyy').format(checkInDate),
-      "paymentType": paymentType,
+      "paymentCycle": paymentCycle,
       "propertyId": id
     };
 
     try {
+      final authorization = await userTypeService.authorization();
+
       final response = await http.post(
         Uri.http(requestSite, "api/v1/user/property/book"),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
         body: jsonEncode(body),
       );
@@ -864,6 +944,7 @@ class HttpService {
   /////////////////
   Future<List<String>> getCommercialPropertyTypes() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -871,7 +952,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -892,6 +973,7 @@ class HttpService {
 
   Future<List<String>> getIndustrialPropertyTypes() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -899,7 +981,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -920,6 +1002,7 @@ class HttpService {
 
   Future<List<String>> getResidentialPropertyTypes() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -927,7 +1010,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -948,6 +1031,7 @@ class HttpService {
 
   Future<List<String>> getRetailPropertyTypes() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -955,7 +1039,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -976,6 +1060,7 @@ class HttpService {
 
   Future<List<String>> getPropertyStatus() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -983,7 +1068,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -1004,6 +1089,7 @@ class HttpService {
 
   Future<List<String>> getPropertyStyle() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -1011,7 +1097,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -1032,6 +1118,7 @@ class HttpService {
 
   Future<List<String>> getPropertyCategories() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -1039,7 +1126,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -1060,6 +1147,7 @@ class HttpService {
 
   Future<List<String>> getStates() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -1067,7 +1155,7 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       if (response.statusCode <= 299) {
@@ -1114,7 +1202,8 @@ class HttpService {
   Future<OwnerBookedProperty> getAllOwnerBookedProperty(
       {required int page, required int size}) async {
     try {
-      var response = await http.get(
+      final authorization = await userTypeService.authorization();
+      final response = await http.get(
         Uri.http(
             requestSite, "/api/v1/owner/property/booked/all", <String, String>{
           "page": page.toString(),
@@ -1122,7 +1211,7 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
       //log(response.body);
@@ -1141,6 +1230,12 @@ class HttpService {
     int id,
   ) async {
     try {
+      final authorization = await userTypeService.authorization();
+      debugPrint(jsonEncode(<String, dynamic>{
+        "accepted": accepted,
+        "propertyId": id,
+      }).toString());
+      debugPrint(authorization);
       final response = await http.post(
         Uri.http(
           requestSite,
@@ -1152,9 +1247,10 @@ class HttpService {
         }),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
+      debugPrint(response.body.toString());
       if (response.statusCode <= 299) {
         return;
       } else {
@@ -1165,41 +1261,30 @@ class HttpService {
     }
   }
 
-  updateProperty({
+  updatePropertyDescription({
     required Property property,
     required String description,
-    required List<String> amenities,
-    required List<String> rules,
-    required DateTime startDate,
-    required DateTime endDate,
   }) async {
     try {
-      final response = await http.post(
+      final authorization = await userTypeService.authorization();
+      final response = await http.put(
         Uri.http(
           requestSite,
-          "/api/v1/owner/property/update",
+          "api/v1/owner/property/update",
         ),
         body: jsonEncode(
           <String, dynamic>{
-            "amenities": amenities,
-            "availability": {
-              "from": DateFormat('dd-MM-yyyy').format(startDate),
-              "to": DateFormat('dd-MM-yyyy').format(endDate),
-            },
             "description": description,
             "price": property.spacePrice ?? 0.0,
             "propertyId": property.id ?? -1,
-            "rules": rules
           },
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
 
-      debugPrint(response.statusCode.toString());
-      debugPrint(response.body);
       if (response.statusCode <= 299) {
         return;
       } else {
@@ -1210,41 +1295,142 @@ class HttpService {
     }
   }
 
-  // getUserProfile() async {
-  //   List incomingProfile = [''];
-  //   print("${incomingProfile}");
-  //   print("verify");
-  //   try {
-  //     var headers = {
-  //       'Authorization':
-  //           'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZXNhdmF0aW9uQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1BST1BFUlRZX09XTkVSIiwiaWQiOiI1NyIsImZpcnN0bmFtZSI6IlN0ZXBoZW4iLCJsYXN0bmFtZSI6IkFkZXllbW8iLCJlbWFpbCI6InJlc2F2YXRpb25AZ21haWwuY29tIiwiaWF0IjoxNjU2Mzk3NzYxLCJleHAiOjE2ODc5Mzc3NjF9.nNEt9F5OBGUD4Y7uvof1MHnemQRA7FOHSFtHPY1daL8FUJOHClNZe_12pHBAOyKkBKrMDLRjJv1sr9UlLp3BHw'
-  //     };
-  //     var request = http.Request(
-  //         'GET',
-  //         Uri.parse(
-  //             'https://resavation-backend.herokuapp.com/api/v1/user/profile'));
-  //     request.body = '''''';
-  //     request.headers.addAll(headers);
+  updatePropertyAmenities({
+    required Property property,
+    required List<String> amenities,
+  }) async {
+    try {
+      final authorization = await userTypeService.authorization();
 
-  //     http.StreamedResponse response = await request.send();
+      final response = await http.put(
+        Uri.http(
+          requestSite,
+          "api/v1/owner/property/update/amenity",
+        ),
+        body: jsonEncode(
+          <String, dynamic>{
+            "amenity": amenities,
+            "propertyId": property.id ?? -1,
+          },
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': authorization
+        },
+      );
 
-  //     if (response.statusCode == 200) {
-  //       print(" respomse is ${await response.stream.bytesToString()}");
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
 
-  //       incomingProfile =
-  //           editProfileModelFromJson(await response.stream.bytesToString())
-  //               .firstName! as List;
-  //     } else {
-  //       print(response.reasonPhrase);
-  //     }
-  //   } catch (exception) {
-  //     return Future.error(
-  //         "Error occurred in communicating wit the server: $exception");
-  //   }
-  // }
+  updatePropertyAvailiability({
+    required Property property,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      final authorization = await userTypeService.authorization();
+      final response = await http.put(
+        Uri.http(
+          requestSite,
+          "/api/v1/owner/property/update/availability",
+        ),
+        body: jsonEncode(
+          <String, dynamic>{
+            "from": DateFormat('dd-MM-yyyy').format(startDate),
+            "to": DateFormat('dd-MM-yyyy').format(endDate),
+            "propertyId": property.id ?? -1,
+          },
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  updatePropertyRules({
+    required Property property,
+    required List<String> rules,
+  }) async {
+    try {
+      final authorization = await userTypeService.authorization();
+      final response = await http.put(
+        Uri.http(
+          requestSite,
+          "/api/v1/owner/property/update/rule",
+        ),
+        body: jsonEncode(
+          <String, dynamic>{
+            "propertyId": property.id ?? -1,
+            "rule": rules,
+          },
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': authorization
+        },
+      );
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
+
+  updatePropertyImages({
+    required Property property,
+    required List<String> images,
+  }) async {
+    try {
+      final authorization = await userTypeService.authorization();
+      final response = await http.put(
+        Uri.http(
+          requestSite,
+          "/api/v1/owner/property/update/image",
+        ),
+        body: jsonEncode(
+          <String, dynamic>{
+            "propertyId": property.id ?? -1,
+            "images": images,
+          },
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': authorization
+        },
+      );
+
+      if (response.statusCode <= 299) {
+        return;
+      } else {
+        return Future.error(json.decode(response.body)['message'] ?? '');
+      }
+    } catch (exception) {
+      return Future.error("Error occurred in communicating with the server");
+    }
+  }
 
   Future<EditProfileModel> getUserProfile() async {
     try {
+      final authorization = await userTypeService.authorization();
       final response = await http.get(
         Uri.http(
           requestSite,
@@ -1252,19 +1438,20 @@ class HttpService {
         ),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': userTypeService.authorization
+          'Authorization': authorization
         },
       );
+      debugPrint(response.statusCode.toString());
+
       if (response.statusCode <= 299) {
-        final decodedMessage = json.decode(response.body);
-        print("resut ${decodedMessage}");
         return editProfileModelFromJson(response.body);
       } else {
+        return EditProfileModel();
+      } /* else {
         return Future.error(json.decode(response.body)['message'] ?? '');
-      }
+      } */
     } catch (exception) {
-      return Future.error(exception.toString());
-      // return Future.error("Error occurred in communicating with the server");
+      return Future.error(exception);
     }
   }
 }

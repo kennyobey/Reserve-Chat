@@ -5,6 +5,7 @@ import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/messages/messages_viewmodel.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 
 class MessagesView extends StatelessWidget {
@@ -119,17 +120,31 @@ class MessagesView extends StatelessWidget {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
-    );
+  Widget buildLoadingWidget() {
+    return ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(0),
+        itemCount: 10,
+        itemBuilder: (ctx, index) {
+          return MessagesCard(
+            onTap: (_) {},
+            shimmerEnabled: true,
+            chatModel: ChatModel(
+              chatId: '',
+              usersId: [],
+              messageCount: {},
+              usersName: {},
+              usersProfileImage: {},
+              lastMessage: ChatMessageModel(
+                  message: '', userId: '', timestamp: 0, imageUrl: ''),
+              lastMessageTimeStamp: 0,
+            ),
+            userEmail: '',
+          );
+        },
+        separatorBuilder: (_, __) {
+          return const Divider();
+        });
   }
 
   AppBar buildAppBar() {
@@ -159,10 +174,11 @@ class MessagesView extends StatelessWidget {
 class MessagesCard extends StatelessWidget {
   final ChatModel chatModel;
   final String userEmail;
-
+  final bool shimmerEnabled;
   const MessagesCard({
     required this.chatModel,
     required this.userEmail,
+    this.shimmerEnabled = false,
     Key? key,
     required this.onTap,
   }) : super(key: key);
@@ -171,26 +187,66 @@ class MessagesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final count = chatModel.messageCount[userEmail] ?? 0;
-    String otherUserEmail = chatModel.usersId
-        .firstWhere((element) => element.toString() != userEmail);
-    final userName = chatModel.usersName[otherUserEmail] ?? '';
-    final otherUserImage = chatModel.usersProfileImage[otherUserEmail] ?? '';
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
       margin: EdgeInsets.only(top: 5, bottom: 5),
       child: InkWell(
         splashColor: Colors.transparent,
         onTap: () => onTap(chatModel),
-        child: Row(
-          children: [
-            buildImage(otherUserImage),
-            horizontalSpaceSmall,
-            buildUserDetails(userName),
-            buildLastMessages(count),
-          ],
-        ),
+        child: shimmerEnabled
+            ? Shimmer.fromColors(
+                baseColor: Colors.grey.shade100,
+                highlightColor: Colors.grey.shade300,
+                child: shimmerBody(),
+              )
+            : buildBody(),
       ),
+    );
+  }
+
+  Row shimmerBody() {
+    return Row(
+      children: [
+        Container(
+          height: 40,
+          width: 40,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
+        ),
+        horizontalSpaceSmall,
+        Expanded(
+          child: Column(children: [
+            Container(
+              color: kPrimaryColor,
+              width: double.infinity,
+              height: 20,
+            ),
+            verticalSpaceSmall,
+            Container(
+              color: kPrimaryColor,
+              width: double.infinity,
+              height: 20,
+            ),
+          ]),
+        )
+      ],
+    );
+  }
+
+  Row buildBody() {
+    final count = chatModel.messageCount[userEmail] ?? 0;
+    String otherUserEmail = chatModel.usersId
+        .firstWhere((element) => element.toString() != userEmail);
+    final userName = chatModel.usersName[otherUserEmail] ?? '';
+    final otherUserImage = chatModel.usersProfileImage[otherUserEmail] ?? '';
+    return Row(
+      children: [
+        buildImage(otherUserImage),
+        horizontalSpaceSmall,
+        buildUserDetails(userName),
+        buildLastMessages(count),
+      ],
     );
   }
 

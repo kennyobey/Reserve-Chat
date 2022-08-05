@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:intl/intl.dart';
 import 'package:resavation/ui/shared/dump_widgets/property_details.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/spacing.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../shared/text_styles.dart';
 import 'property_owner_properties_viewmodel.dart';
 import 'package:stacked/stacked.dart';
@@ -26,36 +28,41 @@ class _PropertyOwnerPropertiesViewState
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PropertyOwnerPropertiesViewModel>.reactive(
-      builder: (context, model, child) => Scaffold(
-        appBar: buildAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              const Divider(),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Text(
-                    model.properties.length.toString(),
-                    style: AppStyle.kSubHeading.copyWith(
-                      color: kPrimaryColor,
+      builder: (context, model, child) => FocusDetector(
+        onFocusGained: () {
+          model.getInitData();
+        },
+        child: Scaffold(
+          appBar: buildAppBar(),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                const Divider(),
+                verticalSpaceTiny,
+                Row(
+                  children: [
+                    Text(
+                      model.properties.length.toString(),
+                      style: AppStyle.kSubHeading.copyWith(
+                        color: kPrimaryColor,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '  item(s)',
-                    style: AppStyle.kSubHeading,
-                  ),
-                  Spacer(),
-                ],
-              ),
-              verticalSpaceTiny,
-              const Divider(),
-              verticalSpaceSmall,
-              Expanded(
-                child: buildBody(model),
-              ),
-            ],
+                    Text(
+                      '  item(s)',
+                      style: AppStyle.kSubHeading,
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                verticalSpaceTiny,
+                const Divider(),
+                verticalSpaceSmall,
+                Expanded(
+                  child: buildBody(model),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -71,16 +78,28 @@ class _PropertyOwnerPropertiesViewState
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+  Widget buildLoadingWidget() {
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return PropertyOwnerPropertiesCard(
+          id: -1,
+          verified: true,
+          onTap: () {},
+          image: '',
+          amountPerYear: 0.0,
+          shimmerEnabled: true,
+          name: '',
+          address: '',
+          numberOfBathrooms: 0,
+          numberOfBedrooms: 0,
+          numberOfCars: 0,
+          squareFeet: 0,
+          isFavoriteTap: false,
+        );
+      },
+      padding: const EdgeInsets.all(0),
+      physics: const BouncingScrollPhysics(),
+      itemCount: 15,
     );
   }
 
@@ -165,6 +184,7 @@ class _PropertyOwnerPropertiesViewState
                 address: property.address ?? '',
                 numberOfBathrooms: property.bathTubCount ?? 0,
                 numberOfBedrooms: property.bedroomCount ?? 0,
+                numberOfCars: property.carSlot ?? 0,
                 squareFeet: property.surfaceArea ?? 0,
                 isFavoriteTap: property.favourite ?? false,
               );
@@ -218,9 +238,11 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
     this.onFavoriteTap,
     this.amountPerYear,
     required this.name,
+    this.shimmerEnabled = false,
     this.address = '',
     required this.numberOfBedrooms,
     required this.numberOfBathrooms,
+    required this.numberOfCars,
     required this.squareFeet,
     this.isFavoriteTap = false,
     this.onTap,
@@ -235,14 +257,14 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
   final String address;
   final int numberOfBedrooms;
   final int numberOfBathrooms;
+  final int numberOfCars;
   final double squareFeet;
   final bool isFavoriteTap;
-
+  final bool shimmerEnabled;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,##0.00", "en_US");
     return InkWell(
       splashColor: Colors.transparent,
       onTap: onTap,
@@ -253,70 +275,134 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
         margin: const EdgeInsets.only(left: 5, right: 5, bottom: 8),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: shimmerEnabled
+              ? Shimmer.fromColors(
+                  baseColor: Colors.grey.shade100,
+                  highlightColor: Colors.grey.shade300,
+                  child: shimmerBody(),
+                )
+              : buildBody(),
+        ),
+      ),
+    );
+  }
+
+  Row shimmerBody() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            height: 100,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: kSecondaryColor,
+            ),
+          ),
+        ),
+        horizontalSpaceSmall,
+        Expanded(
+          flex: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
-                flex: 2,
-                child: GestureDetector(
-                  onTap: onTap,
-                  child: Hero(
-                    child: Container(
-                      height: 100,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: ResavationImage(
-                        image: image,
-                      ),
-                    ),
-                    tag: id.toString(),
-                  ),
-                ),
+              Container(
+                color: kPrimaryColor,
+                width: double.infinity,
+                height: 10,
               ),
-              horizontalSpaceSmall,
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: AppStyle.kBodyRegular18W500,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      address,
-                      style: AppStyle.kBodySmallRegular12W300,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      'Verified: ${verified}',
-                      style: AppStyle.kBodySmallRegular12W300,
-                    ),
-                    verticalSpaceTiny,
-                    Text(
-                      '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}',
-                      style: AppStyle.kBodySmallRegular12W500.copyWith(
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                    verticalSpaceSmall,
-                    PropertyDetails(
-                      numberOfBedrooms: numberOfBedrooms,
-                      numberOfBathrooms: numberOfBathrooms,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      squareFeet: squareFeet,
-                    ),
-                  ],
-                ),
+              verticalSpaceTiny,
+              Container(
+                color: kPrimaryColor,
+                width: double.infinity,
+                height: 10,
+              ),
+              verticalSpaceTiny,
+              Container(
+                color: kPrimaryColor,
+                width: double.infinity,
+                height: 10,
+              ),
+              verticalSpaceTiny,
+              Container(
+                color: kPrimaryColor,
+                width: double.infinity,
+                height: 10,
               ),
             ],
           ),
         ),
-      ),
+      ],
+    );
+  }
+
+  Row buildBody() {
+    final oCcy = NumberFormat("#,##0.00", "en_US");
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 2,
+          child: GestureDetector(
+            onTap: onTap,
+            child: Hero(
+              child: Container(
+                height: 100,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: ResavationImage(
+                  image: image,
+                ),
+              ),
+              tag: id.toString(),
+            ),
+          ),
+        ),
+        horizontalSpaceSmall,
+        Expanded(
+          flex: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: AppStyle.kBodyRegular18W500,
+              ),
+              verticalSpaceTiny,
+              Text(
+                address,
+                style: AppStyle.kBodySmallRegular12W300,
+              ),
+              verticalSpaceTiny,
+              Text(
+                'Verified: ${verified}',
+                style: AppStyle.kBodySmallRegular12W300,
+              ),
+              verticalSpaceTiny,
+              Text(
+                '${String.fromCharCode(8358)}${oCcy.format(amountPerYear ?? 0)}',
+                style: AppStyle.kBodySmallRegular12W500.copyWith(
+                  color: kPrimaryColor,
+                ),
+              ),
+              verticalSpaceSmall,
+              PropertyDetails(
+                numberOfBedrooms: numberOfBedrooms,
+                numberOfCars: numberOfCars,
+                numberOfBathrooms: numberOfBathrooms,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                squareFeet: squareFeet,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

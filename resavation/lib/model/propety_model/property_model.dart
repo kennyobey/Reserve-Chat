@@ -29,6 +29,8 @@ class Property {
   String? address;
   String? serviceType;
   dynamic paymentType;
+  String? roomType;
+  int? unit;
   double? surfaceArea;
   double? spacePrice;
   String? verificationStatus;
@@ -53,6 +55,8 @@ class Property {
     this.isLiveInSPace,
     this.bedroomCount,
     this.bathTubCount,
+    this.roomType,
+    this.unit,
     this.carSlot,
     this.propertyName,
     this.description,
@@ -106,6 +110,8 @@ class Property {
         city: data['city'] as String?,
         address: data['address'] as String?,
         serviceType: data['serviceType'] as String?,
+        unit: data['unit'] as int?,
+        roomType: data['roomType'] as String?,
         paymentType: data['paymentType'] as dynamic,
         surfaceArea: (data['surfaceArea'] as num?)?.toDouble(),
         spacePrice: (data['spacePrice'] as num?)?.toDouble(),
@@ -148,6 +154,8 @@ class Property {
     int? bedroomCount,
     int? bathTubCount,
     int? carSlot,
+    int? unit,
+    String? roomType,
     String? propertyName,
     String? description,
     String? country,
@@ -175,6 +183,8 @@ class Property {
       propertyStyle: propertyStyle ?? this.propertyStyle,
       propertyStatus: propertyStatus ?? this.propertyStatus,
       isSpaceServiced: isSpaceServiced ?? this.isSpaceServiced,
+      unit: unit ?? this.unit,
+      roomType: roomType ?? this.roomType,
       isSpaceFurnished: isSpaceFurnished ?? this.isSpaceFurnished,
       isLiveInSPace: isLiveInSPace ?? this.isLiveInSPace,
       bedroomCount: bedroomCount ?? this.bedroomCount,

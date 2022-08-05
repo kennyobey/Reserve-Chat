@@ -23,16 +23,27 @@ class FavoriteView extends StatelessWidget {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+  Widget buildLoadingWidget() {
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return FavoriteCard(
+          id: -1,
+          shimmerEnabled: true,
+          onTap: () {},
+          image: '',
+          amountPerYear: 0.0,
+          name: '',
+          address: '',
+          numberOfBathrooms: 0,
+          numberOfBedrooms: 0,
+          numberOfCars: 0,
+          squareFeet: 0,
+          isFavoriteTap: false,
+        );
+      },
+      itemCount: 15,
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(0),
     );
   }
 
@@ -141,6 +152,7 @@ class FavoriteView extends StatelessWidget {
                 address: property.address ?? '',
                 numberOfBathrooms: property.bathTubCount ?? 0,
                 numberOfBedrooms: property.bedroomCount ?? 0,
+                numberOfCars: property.carSlot ?? 0,
                 squareFeet: property.surfaceArea ?? 0,
                 isFavoriteTap: property.favourite ?? false,
               );

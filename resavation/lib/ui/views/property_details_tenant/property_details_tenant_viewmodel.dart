@@ -103,7 +103,6 @@ class PropertyDetailsTenantViewModel extends BaseViewModel {
         Routes.propertyOwnerProfileView,
         arguments: PropertyOwnerProfileViewArguments(
           user: user,
-          propertyId: property?.id ?? -1,
         ),
       );
     }
@@ -137,6 +136,7 @@ class PropertyDetailsTenantViewModel extends BaseViewModel {
           planAmount: planAmount,
           subscriptionCode: subscriptionCode,
         ));
+        
   }
  */
   Future<String> chargeUser(TenantBookedPropertyContent? propertyContent,
@@ -190,16 +190,21 @@ class PropertyDetailsTenantViewModel extends BaseViewModel {
       final reference = response.reference;
 
       if (response.status) {
-        /*  final body = await OrderProvider().verifyOnServer(reference);
-        return body; */
-        debugPrint(reference);
-        return reference ?? '';
+        final response = await httpService.verifiyPayment(
+          reference: reference ?? '',
+          propertyId: propertyContent?.property?.id ?? -1,
+          interval: propertyContent?.paymentCycle ?? '',
+        );
+        return response;
       }
-      // The transaction failed. Checking if we should verify the transaction
+
       if (response.verify) {
-        /*   final body = await OrderProvider().verifyOnServer(reference);
-        return body; */
-        return '';
+        final response = await httpService.verifiyPayment(
+          reference: reference ?? '',
+          propertyId: propertyContent?.property?.id ?? -1,
+          interval: propertyContent?.paymentCycle ?? '',
+        );
+        return response;
       } else {
         return Future.error(response.message);
       }

@@ -29,7 +29,6 @@ class PropertyDetailsTenantView extends StatelessWidget {
     return ViewModelBuilder<PropertyDetailsTenantViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -96,20 +95,18 @@ class PropertyDetailsTenantView extends StatelessWidget {
       child: ResavationElevatedButton(
         child: Text("Make Payment"),
         onPressed: () async {
-          try {
-            final shouldPay = await showTenantPaymentDialog(model, context);
-            if (shouldPay == true) {
+          final shouldPay = await showTenantPaymentDialog(model, context);
+          if (shouldPay == true) {
+            try {
+              showProcessingRequestDialog(context);
               final message =
                   await model.chargeUser(tenantPropertyContent, context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(message),
-                ),
-              );
+              Navigator.pop(context);
+              showPaymentInformationDialog(message, context);
+            } catch (exception) {
+              Navigator.pop(context);
+              showPaymentInformationDialog(exception.toString(), context);
             }
-          } catch (exception) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(exception.toString())));
           }
         },
       ),
@@ -141,7 +138,7 @@ class PropertyDetailsTenantView extends StatelessWidget {
             ),
             verticalSpaceTiny,
             Text(
-              'Please note that you are about to make a  payment of NGN ${tenantPropertyContent?.amount}  for this property ${tenantPropertyContent?.paymentType} PLAN.\nKindly check through the property details before making payment',
+              'Please note that you are about to make a  payment of NGN ${tenantPropertyContent?.amount}  for this property ${tenantPropertyContent?.paymentCycle} PLAN.\nKindly check through the property details before making payment',
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -188,6 +185,122 @@ class PropertyDetailsTenantView extends StatelessWidget {
     return shouldPay;
   }
 
+  showProcessingRequestDialog(BuildContext context) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.blue,
+                valueColor: AlwaysStoppedAnimation(kWhite),
+              ),
+            ),
+            verticalSpaceMedium,
+            Text(
+              'Processing Request',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Processing request, please do not cancel until success',
+              textAlign: TextAlign.center,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      )),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Processing  Request",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+  }
+
+  showPaymentInformationDialog(String message, BuildContext context) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Information',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              message,
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Okay',
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      )),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Property Payment Information",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+  }
+
   Widget buildLocation(PropertyDetailsTenantViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -200,74 +313,30 @@ class PropertyDetailsTenantView extends StatelessWidget {
           verticalSpaceSmall,
           Text(
             'Location',
-            style: AppStyle.kBodyRegularBlack15W500,
+            style: AppStyle.kBodyRegularBlack16W600,
           ),
           Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.location_on,
                     size: 16,
                     color: Colors.red,
                   ),
+                  horizontalSpaceSmall,
                   Expanded(
                     child: Text(
-                      'Address: ${model.property?.address}',
+                      '${model.property?.address}, ${model.property?.city}, ${model.property?.state}, ${model.property?.country}',
                       style: AppStyle.kBodyRegularBlack15,
                     ),
                   ),
                 ],
               ),
               verticalSpaceTiny,
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Colors.red,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'State: ${model.property?.state}',
-                      style: AppStyle.kBodyRegularBlack15,
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Colors.red,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'City: ${model.property?.city}',
-                      style: AppStyle.kBodyRegularBlack15,
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Colors.red,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Country: ${model.property?.country}',
-                      style: AppStyle.kBodyRegularBlack15,
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceTiny,
+
+              /*      verticalSpaceTiny,
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
@@ -276,7 +345,7 @@ class PropertyDetailsTenantView extends StatelessWidget {
                     model.goToMapView();
                   },
                 ),
-              ),
+              ), */
             ],
           ),
         ],
@@ -306,6 +375,7 @@ class PropertyDetailsTenantView extends StatelessWidget {
           PropertyDetails(
             title: model.property?.propertyCategory ?? '',
             numberOfBedrooms: model.property?.bedroomCount ?? 0,
+            numberOfCars: model.property?.carSlot ?? 0,
             numberOfBathrooms: model.property?.bathTubCount ?? 0,
             squareFeet: model.property?.surfaceArea ?? 0,
           ),
@@ -375,9 +445,20 @@ class PropertyDetailsTenantView extends StatelessWidget {
             ],
           ),
           verticalSpaceMedium,
-          _PropertyDetailItem(
-              title: 'Description',
-              description: model.property?.description ?? ''),
+          Text(
+            'Description',
+            style: AppStyle.kBodyRegularBlack16W600,
+          ),
+          verticalSpaceTiny,
+          Text(
+            model.property?.description ?? '',
+            style: AppStyle.kBodySmallRegular12,
+          ),
+          verticalSpaceMedium,
+          Text(
+            "Property Information",
+            style: AppStyle.kBodyRegularBlack16W600,
+          ),
           _PropertyDetailItem(
               title: 'Property type',
               description: model.property?.propertyType ?? ''),
@@ -400,20 +481,29 @@ class PropertyDetailsTenantView extends StatelessWidget {
               title: 'Service type',
               description: model.property?.serviceType ?? ''),
           _PropertyDetailItem(
+              title: 'Room type', description: model.property?.roomType ?? ''),
+          _PropertyDetailItem(
+              title: 'Units availiable',
+              description: model.property?.unit?.toString() ?? ''),
+          _PropertyDetailItem(
               title: 'Property category',
               description: model.property?.propertyCategory ?? ''),
-          PropertyDetailItem2(
-              title: 'Property amenities',
-              items: model.property?.amenities
-                      ?.map((e) => e.amenity ?? '')
-                      .toList() ??
-                  []),
-          PropertyDetailItem2(
-              title: 'Property rules',
-              items: model.property?.propertyRule
-                      ?.map((e) => e.rule ?? '')
-                      .toList() ??
-                  []),
+          verticalSpaceSmall,
+          if (model.property?.amenities?.isNotEmpty == true)
+            PropertyDetailItem2(
+                title: 'Property Amenities',
+                items: model.property?.amenities
+                        ?.map((e) => e.amenity ?? '')
+                        .toList() ??
+                    []),
+          verticalSpaceSmall,
+          if (model.property?.propertyRule?.isNotEmpty == true)
+            PropertyDetailItem2(
+                title: 'Property Rules',
+                items: model.property?.propertyRule
+                        ?.map((e) => e.rule ?? '')
+                        .toList() ??
+                    []),
           _PropertyDetailItem3(property: model.property),
         ],
       ),
@@ -450,17 +540,31 @@ class _PropertyDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        verticalSpaceSmall,
-        Text(
-          title,
-          style: AppStyle.kBodyRegularBlack15W500,
-        ),
-        verticalSpaceTiny,
-        Text(description, style: AppStyle.kBodySmallRegular12),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              title,
+              style: AppStyle.kBodySmallRegular12W500,
+            ),
+          ),
+          horizontalSpaceTiny,
+          Expanded(
+            flex: 3,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                description,
+                style: AppStyle.kBodySmallRegular12,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -481,7 +585,7 @@ class PropertyDetailItem2 extends StatelessWidget {
         verticalSpaceSmall,
         Text(
           title,
-          style: AppStyle.kBodyRegularBlack15W500,
+          style: AppStyle.kBodyRegularBlack16W600,
         ),
         verticalSpaceTiny,
         ...items.map((element) {
@@ -512,63 +616,32 @@ class _PropertyDetailItem3 extends StatelessWidget {
         verticalSpaceSmall,
         Text(
           'Payment Options',
-          style: AppStyle.kBodyRegularBlack15W500,
+          style: AppStyle.kBodyRegularBlack16W600,
         ),
         verticalSpaceTiny,
         if ((property?.subscription?.monthlyPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Monthly Plan:',
-                  style: AppStyle.kBodySmallRegular12,
-                ),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.monthlyPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Monthly Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.monthlyPrice ?? 0)}',
           ),
         if ((property?.subscription?.quarterlyPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Quartely Plan:', style: AppStyle.kBodySmallRegular12),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.quarterlyPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Quartely Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.quarterlyPrice ?? 0)}',
           ),
         if ((property?.subscription?.biannualPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Biannual Plan:', style: AppStyle.kBodySmallRegular12),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.biannualPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Biannual Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.biannualPrice ?? 0)}',
           ),
         if ((property?.subscription?.annualPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Annual Plan:', style: AppStyle.kBodySmallRegular12),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.annualPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Annual Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.annualPrice ?? 0)}',
           ),
       ],
     );

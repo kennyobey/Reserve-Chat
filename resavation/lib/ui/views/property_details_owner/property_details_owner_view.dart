@@ -29,7 +29,6 @@ class PropertyDetailsOwnerView extends StatelessWidget {
     return ViewModelBuilder<PropertyDetailsOwnerViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,7 +50,6 @@ class PropertyDetailsOwnerView extends StatelessWidget {
       PropertyDetailsOwnerViewModel model, BuildContext context) {
     if (ownerPropertyContent != null) {
       if (ownerPropertyContent?.status == false) {
-        //property owner is accepting or declining tenant request
         return buildOwnerBookedBottomBar(model, context);
       } else {
         return const SizedBox();
@@ -220,7 +218,7 @@ class PropertyDetailsOwnerView extends StatelessWidget {
             ),
             verticalSpaceTiny,
             Text(
-              'Please note that you would be accepting a ${ownerPropertyContent?.paymentType} payment request on this property from  ${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}',
+              'Please note that you would be accepting a ${ownerPropertyContent?.paymentCycle} payment request on this property from  ${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}',
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -292,7 +290,7 @@ class PropertyDetailsOwnerView extends StatelessWidget {
             ),
             verticalSpaceTiny,
             Text(
-              'Please note that you would be decling a ${ownerPropertyContent?.paymentType} payment request on this property from  ${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}',
+              'Please note that you would be decling a ${ownerPropertyContent?.paymentCycle} payment request on this property from  ${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}',
               textAlign: TextAlign.start,
               style: AppStyle.kBodyRegularBlack14,
             ),
@@ -305,7 +303,7 @@ class PropertyDetailsOwnerView extends StatelessWidget {
                     Navigator.of(context).pop(true);
                   },
                   child: Text(
-                    'Accept',
+                    'Decline',
                   ),
                 ),
                 TextButton(
@@ -351,74 +349,30 @@ class PropertyDetailsOwnerView extends StatelessWidget {
           verticalSpaceSmall,
           Text(
             'Location',
-            style: AppStyle.kBodyRegularBlack15W500,
+            style: AppStyle.kBodyRegularBlack16W600,
           ),
           Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.location_on,
                     size: 16,
                     color: Colors.red,
                   ),
+                  horizontalSpaceSmall,
                   Expanded(
                     child: Text(
-                      'Address: ${model.property?.address}',
+                      '${model.property?.address}, ${model.property?.city}, ${model.property?.state}, ${model.property?.country}',
                       style: AppStyle.kBodyRegularBlack15,
                     ),
                   ),
                 ],
               ),
               verticalSpaceTiny,
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Colors.red,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'State: ${model.property?.state}',
-                      style: AppStyle.kBodyRegularBlack15,
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Colors.red,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'City: ${model.property?.city}',
-                      style: AppStyle.kBodyRegularBlack15,
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Colors.red,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Country: ${model.property?.country}',
-                      style: AppStyle.kBodyRegularBlack15,
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceTiny,
+
+              /*      verticalSpaceTiny,
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
@@ -427,7 +381,7 @@ class PropertyDetailsOwnerView extends StatelessWidget {
                     model.goToMapView();
                   },
                 ),
-              ),
+              ), */
             ],
           ),
         ],
@@ -457,12 +411,27 @@ class PropertyDetailsOwnerView extends StatelessWidget {
           PropertyDetails(
             title: model.property?.propertyCategory ?? '',
             numberOfBedrooms: model.property?.bedroomCount ?? 0,
+            numberOfCars: model.property?.carSlot ?? 0,
             numberOfBathrooms: model.property?.bathTubCount ?? 0,
             squareFeet: model.property?.surfaceArea ?? 0,
           ),
-          _PropertyDetailItem(
-              title: 'Description',
-              description: model.property?.description ?? ''),
+          if (ownerPropertyContent != null)
+            ...buildTenantDetails(context, model),
+          verticalSpaceSmall,
+          Text(
+            'Description',
+            style: AppStyle.kBodyRegularBlack16W600,
+          ),
+          verticalSpaceTiny,
+          Text(
+            model.property?.description ?? '',
+            style: AppStyle.kBodySmallRegular12,
+          ),
+          verticalSpaceMedium,
+          Text(
+            "Property Information",
+            style: AppStyle.kBodyRegularBlack16W600,
+          ),
           _PropertyDetailItem(
               title: 'Property type',
               description: model.property?.propertyType ?? ''),
@@ -485,24 +454,108 @@ class PropertyDetailsOwnerView extends StatelessWidget {
               title: 'Service type',
               description: model.property?.serviceType ?? ''),
           _PropertyDetailItem(
+              title: 'Room type', description: model.property?.roomType ?? ''),
+          _PropertyDetailItem(
+              title: 'Units availiable',
+              description: model.property?.unit?.toString() ?? ''),
+          _PropertyDetailItem(
               title: 'Property category',
               description: model.property?.propertyCategory ?? ''),
-          PropertyDetailItem2(
-              title: 'Property amenities',
-              items: model.property?.amenities
-                      ?.map((e) => e.amenity ?? '')
-                      .toList() ??
-                  []),
-          PropertyDetailItem2(
-              title: 'Property rules',
-              items: model.property?.propertyRule
-                      ?.map((e) => e.rule ?? '')
-                      .toList() ??
-                  []),
+          verticalSpaceSmall,
+          if (model.property?.amenities?.isNotEmpty == true)
+            PropertyDetailItem2(
+                title: 'Property Amenities',
+                items: model.property?.amenities
+                        ?.map((e) => e.amenity ?? '')
+                        .toList() ??
+                    []),
+          verticalSpaceSmall,
+          if (model.property?.propertyRule?.isNotEmpty == true)
+            PropertyDetailItem2(
+                title: 'Property Ruules',
+                items: model.property?.propertyRule
+                        ?.map((e) => e.rule ?? '')
+                        .toList() ??
+                    []),
+          verticalSpaceSmall,
           _PropertyDetailItem3(property: model.property),
         ],
       ),
     );
+  }
+
+  List<Widget> buildTenantDetails(
+    BuildContext context,
+    PropertyDetailsOwnerViewModel model,
+  ) {
+    return [
+      verticalSpaceSmall,
+      const Divider(),
+      verticalSpaceTiny,
+      Text(
+        'Request Details',
+        style: AppStyle.kHeading3,
+      ),
+      verticalSpaceTiny,
+      const Divider(),
+      verticalSpaceSmall,
+      Text(
+        'About tenant',
+        style: AppStyle.kBodyRegularBlack16W600,
+      ),
+      verticalSpaceTiny,
+      Text(
+        ownerPropertyContent?.user?.aboutMe ?? '',
+        style: AppStyle.kBodySmallRegular12,
+      ),
+      verticalSpaceMedium,
+      Text(
+        'Tenant information',
+        style: AppStyle.kBodyRegularBlack16W600,
+      ),
+      _PropertyDetailItem(
+          title: 'Tenant name',
+          description:
+              '${ownerPropertyContent?.user?.firstName ?? ''} ${ownerPropertyContent?.user?.lastName ?? ''}'),
+      _PropertyDetailItem(
+          title: 'Tenant gender',
+          description: ownerPropertyContent?.user?.gender ?? ''),
+      _PropertyDetailItem(
+          title: 'Tenant occupation',
+          description: ownerPropertyContent?.user?.occupation ?? ''),
+      verticalSpaceMedium,
+      Container(
+        width: double.infinity,
+        child: ResavationElevatedButton(
+          child: Text(
+            "Message Tenant",
+          ),
+          onPressed: () async {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Setting up chatroom, please wait')),
+            );
+            final error = await model.gotToChatRoomView(ownerPropertyContent);
+            if (error) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content:
+                      Text('You can not create a chat room with your self'),
+                ),
+              );
+            }
+          },
+        ),
+      ),
+      verticalSpaceMedium,
+      const Divider(),
+      verticalSpaceTiny,
+      Text(
+        'Property Details',
+        style: AppStyle.kHeading3,
+      ),
+      verticalSpaceTiny,
+      const Divider(),
+    ];
   }
 
   Widget buildHeader(
@@ -526,17 +579,31 @@ class _PropertyDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        verticalSpaceSmall,
-        Text(
-          title,
-          style: AppStyle.kBodyRegularBlack15W500,
-        ),
-        verticalSpaceTiny,
-        Text(description, style: AppStyle.kBodySmallRegular12),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              title,
+              style: AppStyle.kBodySmallRegular12W500,
+            ),
+          ),
+          horizontalSpaceTiny,
+          Expanded(
+            flex: 3,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                description,
+                style: AppStyle.kBodySmallRegular12,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -557,13 +624,13 @@ class PropertyDetailItem2 extends StatelessWidget {
         verticalSpaceSmall,
         Text(
           title,
-          style: AppStyle.kBodyRegularBlack15W500,
+          style: AppStyle.kBodyRegularBlack16W600,
         ),
         verticalSpaceTiny,
         ...items.map((element) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 3),
-            child: Text('- $element', style: AppStyle.kBodySmallRegular12),
+            child: Text('• $element', style: AppStyle.kBodySmallRegular12),
           );
         }).toList(),
       ],
@@ -588,63 +655,32 @@ class _PropertyDetailItem3 extends StatelessWidget {
         verticalSpaceSmall,
         Text(
           'Payment Options',
-          style: AppStyle.kBodyRegularBlack15W500,
+          style: AppStyle.kBodyRegularBlack16W600,
         ),
         verticalSpaceTiny,
         if ((property?.subscription?.monthlyPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Monthly Plan:',
-                  style: AppStyle.kBodySmallRegular12,
-                ),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.monthlyPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Monthly Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.monthlyPrice ?? 0)}',
           ),
         if ((property?.subscription?.quarterlyPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Quartely Plan:', style: AppStyle.kBodySmallRegular12),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.quarterlyPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Quartely Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.quarterlyPrice ?? 0)}',
           ),
         if ((property?.subscription?.biannualPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Biannual Plan:', style: AppStyle.kBodySmallRegular12),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.biannualPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Biannual Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.biannualPrice ?? 0)}',
           ),
         if ((property?.subscription?.annualPrice ?? 0) > 0)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Annual Plan:', style: AppStyle.kBodySmallRegular12),
-                Text(
-                    '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.annualPrice ?? 0)}',
-                    style: AppStyle.kBodySmallRegular12),
-              ],
-            ),
+          _PropertyDetailItem(
+            title: "Annual Plan",
+            description:
+                '${String.fromCharCode(8358)} ${oCcy.format(property?.subscription?.annualPrice ?? 0)}',
           ),
       ],
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/model/top_states_model/top_states_model.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../model/top_states_model/content.dart';
@@ -77,49 +76,37 @@ class HomeTopStates extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildBody(HomeViewModel model) {
-    final topCitiesFuture =
-        model.httpService.getTopStatesWithHighestProperties();
-    return FutureBuilder<TopStatesModel>(
-      future: topCitiesFuture,
-      builder: ((context, snapshot) {
-        if (snapshot.hasError) {
-          return buildErrorBody(context);
-        }
-
-        if (snapshot.hasData) {
-          final List<TopStatesContent> allContent =
-              snapshot.data?.content ?? [];
-          return buildSuccessBody(allContent, model, context);
-        } else {
-          return buildLoadingBody(context);
-        }
-      }),
-    );
+  Widget buildBody(HomeViewModel model, BuildContext context) {
+    if (model.topStatesLoading) {
+      return buildLoadingBody(context);
+    } else if (model.topStateHasError) {
+      return buildErrorBody(context);
+    } else {
+      final List<TopStatesContent> allContent =
+          model.topStatesModel.content ?? [];
+      return buildSuccessBody(allContent, model, context);
+    }
   }
 
   SingleChildScrollView buildLoadingBody(BuildContext context) {
     final allContent = [
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
-      TopStatesContent(state: 'Loading...'),
+      TopStatesContent(),
+      TopStatesContent(),
+      TopStatesContent(),
+      TopStatesContent(),
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          for (final content in allContent) ...[
+          for (final _ in allContent) ...[
             TopCityCard(
               image: '',
               numberOfProperties: 0,
-              location: content.state ?? '',
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Loading data, please wait')));
-              },
+              shimmerEnabled: true,
+              location: '',
+              onTap: () {},
             ),
             horizontalSpaceSmall,
           ],
@@ -140,7 +127,7 @@ class HomeTopStates extends ViewModelWidget<HomeViewModel> {
               children: [
                 for (final content in allContent) ...[
                   TopCityCard(
-                    image: '',
+                    image: model.topStatesImages[allContent.indexOf(content)],
                     numberOfProperties: content.numberOfProperties ?? 0,
                     location: content.state ?? '',
                     onTap: () {
@@ -165,7 +152,7 @@ class HomeTopStates extends ViewModelWidget<HomeViewModel> {
           title: 'Top States',
         ),
         verticalSpaceSmall,
-        buildBody(model),
+        buildBody(model, context),
       ],
     );
   }

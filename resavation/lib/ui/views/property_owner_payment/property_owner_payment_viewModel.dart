@@ -18,14 +18,17 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final uploadTypeService = locator<UploadService>();
   final _userService = locator<UserTypeService>();
+
+  int noOfUnits = 0;
   LoginModel get userData => _userService.userData;
   DateTime startDate = DateTime.now();
+  DateTime firstDate = DateTime.now();
   DateTime endDate = DateTime.now();
   final _httpService = locator<HttpService>();
   List<String> subscriptionType = [
     'Monthly',
     'Quarterly',
-    'Biannually',
+    // 'Biannually',
     'Annually'
   ];
 
@@ -86,6 +89,24 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
   Future<void> selectStartDate(DateTime? pickedDate) async {
     if (pickedDate != null && pickedDate != startDate) {
       startDate = pickedDate;
+      endDate = DateTime.fromMillisecondsSinceEpoch(
+          pickedDate.millisecondsSinceEpoch);
+      notifyListeners();
+    }
+  }
+
+  void onPositiveUnitTap() {
+    noOfUnits++;
+    uploadTypeService.unit = noOfUnits;
+
+    notifyListeners();
+  }
+
+  void onNegativeCarUnitTap() {
+    if (noOfUnits != 0) {
+      noOfUnits--;
+      uploadTypeService.unit = noOfUnits;
+
       notifyListeners();
     }
   }
@@ -101,10 +122,11 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     if (uploadTypeService.spacePrice != null) {
       if (uploadTypeService.spacePrice == uploadTypeService.annualPrice) {
         displayPrice = 'Annually';
-      } else if (uploadTypeService.spacePrice ==
+      } /* else if (uploadTypeService.spacePrice ==
           uploadTypeService.biannualPrice) {
         displayPrice = 'Biannually';
-      } else if (uploadTypeService.spacePrice ==
+      } */
+      else if (uploadTypeService.spacePrice ==
           uploadTypeService.quarterlyPrice) {
         displayPrice = 'Quarterly';
       } else if (uploadTypeService.spacePrice ==
@@ -118,11 +140,11 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
           (uploadTypeService.annualPrice ?? 0).toString();
       selectedSubscriptions.add('Annually');
     }
-    if (uploadTypeService.biannualPrice != null) {
+    /*    if (uploadTypeService.biannualPrice != null) {
       propertybiannualPriceController.text =
           (uploadTypeService.biannualPrice ?? 0).toString();
       selectedSubscriptions.add('Biannually');
-    }
+    } */
     if (uploadTypeService.quarterlyPrice != null) {
       propertyquaterlylPriceController.text =
           (uploadTypeService.quarterlyPrice ?? 0).toString();
@@ -136,10 +158,15 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
 
     if (uploadTypeService.startDate != null) {
       startDate = uploadTypeService.startDate!;
+      if (firstDate.millisecondsSinceEpoch > startDate.millisecondsSinceEpoch) {
+        firstDate = DateTime.fromMillisecondsSinceEpoch(
+            startDate.millisecondsSinceEpoch);
+      }
     }
     if (uploadTypeService.endDate != null) {
       endDate = uploadTypeService.endDate!;
     }
+    noOfUnits = uploadTypeService.unit;
     notifyListeners();
   }
 
@@ -147,10 +174,11 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     if (displayPrice == 'Annually') {
       uploadTypeService.spacePrice =
           int.tryParse(propertyannualPriceController.text);
-    } else if (displayPrice == 'Biannually') {
+    } /* else if (displayPrice == 'Biannually') {
       uploadTypeService.spacePrice =
           int.tryParse(propertybiannualPriceController.text);
-    } else if (displayPrice == 'Quarterly') {
+    }  */
+    else if (displayPrice == 'Quarterly') {
       uploadTypeService.spacePrice =
           int.tryParse(propertyquaterlylPriceController.text);
     } else if (displayPrice == 'Monthly') {
@@ -162,10 +190,10 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
       uploadTypeService.annualPrice =
           int.tryParse(propertyannualPriceController.text);
     }
-    if (selectedSubscriptions.contains('Biannually')) {
+    /*  if (selectedSubscriptions.contains('Biannually')) {
       uploadTypeService.biannualPrice =
           int.tryParse(propertybiannualPriceController.text);
-    }
+    } */
     if (selectedSubscriptions.contains('Quarterly')) {
       uploadTypeService.quarterlyPrice =
           int.tryParse(propertyquaterlylPriceController.text);
@@ -177,6 +205,7 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
 
     uploadTypeService.startDate = startDate;
     uploadTypeService.endDate = endDate;
+    uploadTypeService.unit = noOfUnits;
 
     navigationService.navigateTo(Routes.propertyOwnerAmenitiesView);
   }
@@ -185,10 +214,11 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     if (displayPrice == 'Annually') {
       uploadTypeService.spacePrice =
           int.tryParse(propertyannualPriceController.text);
-    } else if (displayPrice == 'Biannually') {
+    } /* else if (displayPrice == 'Biannually') {
       uploadTypeService.spacePrice =
           int.tryParse(propertybiannualPriceController.text);
-    } else if (displayPrice == 'Quarterly') {
+    }  */
+    else if (displayPrice == 'Quarterly') {
       uploadTypeService.spacePrice =
           int.tryParse(propertyquaterlylPriceController.text);
     } else if (displayPrice == 'Monthly') {
@@ -199,11 +229,11 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
     if (selectedSubscriptions.contains('Annually')) {
       uploadTypeService.annualPrice =
           int.tryParse(propertyannualPriceController.text);
-    }
+    } /* 
     if (selectedSubscriptions.contains('Biannually')) {
       uploadTypeService.biannualPrice =
           int.tryParse(propertybiannualPriceController.text);
-    }
+    } */
     if (selectedSubscriptions.contains('Quarterly')) {
       uploadTypeService.quarterlyPrice =
           int.tryParse(propertyquaterlylPriceController.text);
@@ -215,6 +245,7 @@ class PropertyOwnerPaymentViewModel extends BaseViewModel {
 
     uploadTypeService.startDate = startDate;
     uploadTypeService.endDate = endDate;
+    uploadTypeService.unit = noOfUnits;
 
     Reference sFirebaseStorageRef = FirebaseStorage.instance.ref();
 

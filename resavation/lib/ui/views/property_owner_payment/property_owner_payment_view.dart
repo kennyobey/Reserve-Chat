@@ -5,6 +5,7 @@ import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_payment/property_owner_payment_viewModel.dart';
 import 'package:resavation/ui/views/property_owner_payment/subscription.dart';
+import 'package:resavation/ui/views/property_owner_spaceType/widget/owner_space_items.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../shared/colors.dart';
@@ -277,14 +278,15 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
           centerTitle: false,
           backEnabled: false,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  if (model.selectedSubscriptions.isNotEmpty) {
-                    if (model.displayPrice != null &&
-                        model.displayPrice!.isNotEmpty) {
-                      if (model.isVerified()) {
-                        if (model.startDate.millisecondsSinceEpoch <
-                            model.endDate.millisecondsSinceEpoch) {
+            TextButton(
+              onPressed: () async {
+                if (model.selectedSubscriptions.isNotEmpty) {
+                  if (model.displayPrice != null &&
+                      model.displayPrice!.isNotEmpty) {
+                    if (model.isVerified()) {
+                      if (model.startDate.millisecondsSinceEpoch <
+                          model.endDate.millisecondsSinceEpoch) {
+                        if (model.noOfUnits > 0) {
                           bool shouldSave = await showSaveConfirmationDialog();
                           if (shouldSave) {
                             showSavePropertyDialog(model);
@@ -292,38 +294,49 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                         } else {
                           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                             const SnackBar(
-                              content: Text(
-                                  'Kindly select a valid availability period'),
+                              content:
+                                  Text('Kindly select the units availiable'),
                             ),
                           );
                         }
                       } else {
                         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                           const SnackBar(
-                            content:
-                                Text('Kindly enter the price for each plan '),
+                            content: Text(
+                                'Kindly select a valid availability period'),
                           ),
                         );
                       }
                     } else {
                       ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                         const SnackBar(
-                          content: Text('Please select your display price'),
+                          content:
+                              Text('Kindly enter the price for each plan '),
                         ),
                       );
                     }
                   } else {
                     ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                       const SnackBar(
-                        content: Text('Please select your subscription plan'),
+                        content: Text('Please select your display price'),
                       ),
                     );
                   }
-                },
-                icon: Icon(
-                  Icons.save_rounded,
+                } else {
+                  ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                    const SnackBar(
+                      content: Text('Please select your subscription plan'),
+                    ),
+                  );
+                }
+              },
+              child: Text(
+                'SAVE',
+                style: AppStyle.kBodyRegularBlack14.copyWith(
                   color: kPrimaryColor,
-                ))
+                ),
+              ),
+            )
           ],
         ),
         bottomNavigationBar: Padding(
@@ -348,7 +361,17 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                           if (model.isVerified()) {
                             if (model.startDate.millisecondsSinceEpoch <
                                 model.endDate.millisecondsSinceEpoch) {
-                              model.goToPropertyOwnerAmenitiesView();
+                              if (model.noOfUnits > 0) {
+                                model.goToPropertyOwnerAmenitiesView();
+                              } else {
+                                ScaffoldMessenger.maybeOf(context)
+                                    ?.showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Kindly select the units availiable'),
+                                  ),
+                                );
+                              }
                             } else {
                               ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                                 const SnackBar(
@@ -446,10 +469,31 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
                 if (model.selectedSubscriptions.isNotEmpty)
                   ...buildSpacePrice(model),
                 verticalSpaceMedium,
+                const Divider(),
+                verticalSpaceSmall,
+                Text(
+                  "Unit Availiable",
+                  style: AppStyle.kBodyRegularBlack15W500,
+                ),
+                verticalSpaceSmall,
+                const Divider(),
+                verticalSpaceSmall,
+                Text(
+                  'Please indicate the number of available units for your listing. In other words, how many spaces are available for your property listing? ',
+                  style: AppStyle.kBodyRegularBlack14,
+                ),
+                verticalSpaceMedium,
+                AmenitiesSelection(
+                  title: "Unit(s)",
+                  value: model.noOfUnits,
+                  onPositiveTap: () => model.onPositiveUnitTap(),
+                  onNegativeTap: () => model.onNegativeCarUnitTap(),
+                ),
+                verticalSpaceMedium,
                 DateContainer(
                   label: 'Availability Period (Start)',
                   initialDate: model.startDate,
-                  firstDate: DateTime.now(),
+                  firstDate: model.firstDate,
                   lastDate: DateTime(model.startDate.year + 5),
                   onPressed: model.selectStartDate,
                 ),
@@ -542,6 +586,8 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
 
   List<Widget> buildSpacePrice(PropertyOwnerPaymentViewModel model) {
     return [
+      verticalSpaceSmall,
+      const Divider(),
       Text(
         'Space Price',
         style: AppStyle.kBodyRegularBlack14W500,

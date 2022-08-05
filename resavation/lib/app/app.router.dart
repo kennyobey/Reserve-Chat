@@ -12,12 +12,12 @@ import 'package:stacked/stacked_annotations.dart';
 
 import '../model/appointment.dart';
 import '../model/call_model.dart';
-import '../model/filter/filter.dart';
+import '../model/edit_profile_model.dart';
+import '../model/filter.dart';
 import '../model/owner_booked_property/content.dart';
 import '../model/propety_model/property_model.dart';
 import '../model/propety_model/user.dart';
 import '../model/tenant_booked_property/content.dart';
-import '../services/core/dojah_verification.dart';
 import '../ui/views/appointment_booking/appointment_booking.dart';
 import '../ui/views/appointment_list/appointment_list_view.dart';
 import '../ui/views/audio_call/audio_call_view.dart';
@@ -29,12 +29,12 @@ import '../ui/views/co_working_space_about/co_working_space_aboutView.dart';
 import '../ui/views/confirmation/confirmation_view.dart';
 import '../ui/views/date_picker/date_picker_view.dart';
 import '../ui/views/date_picker/date_picker_viewmodel.dart';
+import '../ui/views/dojah_verification/dojah_verification.dart';
 import '../ui/views/edit_profile/edit_profile_view.dart';
 import '../ui/views/filter/filter_view.dart';
 import '../ui/views/filter_display/filter_display.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/main/main_view.dart';
-import '../ui/views/make_payment/make_payment_view.dart';
 import '../ui/views/map/map_view.dart';
 import '../ui/views/messages/messages_view.dart';
 import '../ui/views/onboarding/onboarding_view.dart';
@@ -52,17 +52,18 @@ import '../ui/views/property_owner_details/property_owner_details_view.dart';
 import '../ui/views/property_owner_edit/property_owner_edit_view.dart';
 import '../ui/views/property_owner_edit_profile/property_owner_edit_profileView.dart';
 import '../ui/views/property_owner_homepage/property_owner_homepageView.dart';
-import '../ui/views/property_owner_identification/property_owner_identificationView.dart';
 import '../ui/views/property_owner_identification_verification/property_owner_identification_verificationView.dart';
 import '../ui/views/property_owner_my_properties/property_owner_my_propertiesView.dart';
 import '../ui/views/property_owner_payment/property_owner_payment_view.dart';
 import '../ui/views/property_owner_profile/property_owner_profile_view.dart';
+import '../ui/views/property_owner_profile2/property_owner_profile_view2.dart';
 import '../ui/views/property_owner_properties/property_owner_properties_view.dart';
 import '../ui/views/property_owner_settings/property_owner_settingsView.dart';
 import '../ui/views/property_owner_spaceType/property_owner_spacetype_view.dart';
 import '../ui/views/property_owner_tracklist/property_owner_tracklisView.dart';
 import '../ui/views/property_owner_verification/property_owner_verificationView.dart';
 import '../ui/views/property_verification/property_verificationView.dart';
+import '../ui/views/refresh_token/refresh-token_view.dart';
 import '../ui/views/rest_password/reset_password_view.dart';
 import '../ui/views/search/search_view.dart';
 import '../ui/views/settings/settings_view.dart';
@@ -104,7 +105,6 @@ class Routes {
       '/property-owner-add-cover-photos-view';
   static const String bookedPropertyListView = '/booked-property-list-view';
   static const String videoCallView = '/video-call-view';
-  static const String makePaymentView = '/make-payment-view';
   static const String userProfileView = '/user-profile-view';
   static const String verificationPage = '/verification-page';
   static const String userProfilePageView = '/user-profile-page-view';
@@ -114,6 +114,9 @@ class Routes {
       '/property-owner-booked-properties-view';
   static const String propertyOwnerEditPropertyView =
       '/property-owner-edit-property-view';
+  static const String refreshTokenView = '/refresh-token-view';
+  static const String propertyOwnerProfileView2 =
+      '/property-owner-profile-view2';
   static const String resetPasswordView = '/reset-password-view';
   static const String filterView = '/filter-view';
   static const String datePickerView = '/date-picker-view';
@@ -137,8 +140,6 @@ class Routes {
   static const String propertyOwnerPaymentView = '/property-owner-payment-view';
   static const String propertyOwnerAmenitiesView =
       '/property-owner-amenities-view';
-  static const String propertyOwnerIdentificationView =
-      '/property-owner-identification-view';
   static const String propertyOwnerVerificationView =
       '/property-owner-verification-view';
   static const String topItemView = '/top-item-view';
@@ -173,13 +174,14 @@ class Routes {
     propertyOwnerAddCoverPhotosView,
     bookedPropertyListView,
     videoCallView,
-    makePaymentView,
     userProfileView,
     verificationPage,
     userProfilePageView,
     propertyOwnerPropertiesView,
     propertyOwnerBookedPropertiesView,
     propertyOwnerEditPropertyView,
+    refreshTokenView,
+    propertyOwnerProfileView2,
     resetPasswordView,
     filterView,
     datePickerView,
@@ -200,7 +202,6 @@ class Routes {
     propertyOwnerDetailsView,
     propertyOwnerPaymentView,
     propertyOwnerAmenitiesView,
-    propertyOwnerIdentificationView,
     propertyOwnerVerificationView,
     topItemView,
     propertyOwnerSettingsView,
@@ -242,7 +243,6 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerAddCoverPhotosView),
     RouteDef(Routes.bookedPropertyListView, page: BookedPropertyListView),
     RouteDef(Routes.videoCallView, page: VideoCallView),
-    RouteDef(Routes.makePaymentView, page: MakePaymentView),
     RouteDef(Routes.userProfileView, page: UserProfileView),
     RouteDef(Routes.verificationPage, page: VerificationPage),
     RouteDef(Routes.userProfilePageView, page: UserProfilePageView),
@@ -252,6 +252,8 @@ class StackedRouter extends RouterBase {
         page: PropertyOwnerBookedPropertiesView),
     RouteDef(Routes.propertyOwnerEditPropertyView,
         page: PropertyOwnerEditPropertyView),
+    RouteDef(Routes.refreshTokenView, page: RefreshTokenView),
+    RouteDef(Routes.propertyOwnerProfileView2, page: PropertyOwnerProfileView2),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
     RouteDef(Routes.filterView, page: FilterView),
     RouteDef(Routes.datePickerView, page: DatePickerView),
@@ -274,8 +276,6 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.propertyOwnerPaymentView, page: PropertyOwnerPaymentView),
     RouteDef(Routes.propertyOwnerAmenitiesView,
         page: PropertyOwnerAmenitiesView),
-    RouteDef(Routes.propertyOwnerIdentificationView,
-        page: PropertyOwnerIdentificationView),
     RouteDef(Routes.propertyOwnerVerificationView,
         page: PropertyOwnerVerificationView),
     RouteDef(Routes.topItemView, page: TopItemView),
@@ -435,17 +435,6 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    MakePaymentView: (data) {
-      var args = data.getArgs<MakePaymentViewArguments>(nullOk: false);
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => MakePaymentView(
-          key: args.key,
-          planAmount: args.planAmount,
-          subscriptionCode: args.subscriptionCode,
-        ),
-        settings: data,
-      );
-    },
     UserProfileView: (data) {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => const UserProfileView(),
@@ -487,9 +476,32 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
-    ResetPasswordView: (data) {
+    RefreshTokenView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const ResetPasswordView(),
+        builder: (context) => const RefreshTokenView(),
+        settings: data,
+      );
+    },
+    PropertyOwnerProfileView2: (data) {
+      var args =
+          data.getArgs<PropertyOwnerProfileView2Arguments>(nullOk: false);
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => PropertyOwnerProfileView2(
+          key: args.key,
+          user: args.user,
+        ),
+        settings: data,
+      );
+    },
+    ResetPasswordView: (data) {
+      var args = data.getArgs<ResetPasswordViewArguments>(
+        orElse: () => ResetPasswordViewArguments(),
+      );
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => ResetPasswordView(
+          key: args.key,
+          isForgotPassword: args.isForgotPassword,
+        ),
         settings: data,
       );
     },
@@ -568,7 +580,6 @@ class StackedRouter extends RouterBase {
         builder: (context) => PropertyOwnerProfileView(
           key: args.key,
           user: args.user,
-          propertyId: args.propertyId,
         ),
         settings: data,
       );
@@ -598,8 +609,14 @@ class StackedRouter extends RouterBase {
       );
     },
     EditProfileView: (data) {
+      var args = data.getArgs<EditProfileViewArguments>(
+        orElse: () => EditProfileViewArguments(),
+      );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const EditProfileView(),
+        builder: (context) => EditProfileView(
+          key: args.key,
+          userProfile: args.userProfile,
+        ),
         settings: data,
       );
     },
@@ -649,12 +666,6 @@ class StackedRouter extends RouterBase {
       );
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => PropertyOwnerAmenitiesView(key: args.key),
-        settings: data,
-      );
-    },
-    PropertyOwnerIdentificationView: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const PropertyOwnerIdentificationView(),
         settings: data,
       );
     },
@@ -773,20 +784,25 @@ class PropertyOwnerAddCoverPhotosViewArguments {
   PropertyOwnerAddCoverPhotosViewArguments({this.key});
 }
 
-/// MakePaymentView arguments holder class
-class MakePaymentViewArguments {
-  final Key? key;
-  final double planAmount;
-  final String subscriptionCode;
-  MakePaymentViewArguments(
-      {this.key, required this.planAmount, required this.subscriptionCode});
-}
-
 /// PropertyOwnerEditPropertyView arguments holder class
 class PropertyOwnerEditPropertyViewArguments {
   final Key? key;
   final Property property;
   PropertyOwnerEditPropertyViewArguments({this.key, required this.property});
+}
+
+/// PropertyOwnerProfileView2 arguments holder class
+class PropertyOwnerProfileView2Arguments {
+  final Key? key;
+  final User user;
+  PropertyOwnerProfileView2Arguments({this.key, required this.user});
+}
+
+/// ResetPasswordView arguments holder class
+class ResetPasswordViewArguments {
+  final Key? key;
+  final bool isForgotPassword;
+  ResetPasswordViewArguments({this.key, this.isForgotPassword = true});
 }
 
 /// DatePickerView arguments holder class
@@ -831,9 +847,7 @@ class BookingSubmissionViewArguments {
 class PropertyOwnerProfileViewArguments {
   final Key? key;
   final User user;
-  final int propertyId;
-  PropertyOwnerProfileViewArguments(
-      {this.key, required this.user, required this.propertyId});
+  PropertyOwnerProfileViewArguments({this.key, required this.user});
 }
 
 /// ProfileProductListView arguments holder class
@@ -841,6 +855,13 @@ class ProfileProductListViewArguments {
   final Key? key;
   final void Function()? onSortByTap;
   ProfileProductListViewArguments({this.key, this.onSortByTap});
+}
+
+/// EditProfileView arguments holder class
+class EditProfileViewArguments {
+  final Key? key;
+  final EditProfileModel? userProfile;
+  EditProfileViewArguments({this.key, this.userProfile});
 }
 
 /// FilterDisplay arguments holder class

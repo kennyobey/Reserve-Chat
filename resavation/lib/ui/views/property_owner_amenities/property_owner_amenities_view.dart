@@ -248,17 +248,20 @@ class _PropertyOwnerAmenitiesViewState
           centerTitle: false,
           backEnabled: false,
           actions: [
-            IconButton(
-                onPressed: () async {
-                  bool shouldSave = await showSaveConfirmationDialog();
-                  if (shouldSave) {
-                    showSavePropertyDialog(model);
-                  }
-                },
-                icon: Icon(
-                  Icons.save_rounded,
+            TextButton(
+              onPressed: () async {
+                bool shouldSave = await showSaveConfirmationDialog();
+                if (shouldSave) {
+                  showSavePropertyDialog(model);
+                }
+              },
+              child: Text(
+                'SAVE',
+                style: AppStyle.kBodyRegularBlack14.copyWith(
                   color: kPrimaryColor,
-                )),
+                ),
+              ),
+            ),
           ],
         ),
         bottomNavigationBar: Padding(
@@ -319,6 +322,8 @@ class _PropertyOwnerAmenitiesViewState
                 width: double.infinity,
                 child: ResavationElevatedButton(
                   child: Text("Add new amenity"),
+                  color: Colors.grey,
+                  foregroundColor: kBlack,
                   onPressed: () {
                     showAddItemDialog(
                         'Add Amenity',
@@ -356,6 +361,8 @@ class _PropertyOwnerAmenitiesViewState
                 width: double.infinity,
                 child: ResavationElevatedButton(
                   child: Text("Add new rule"),
+                  color: Colors.grey,
+                  foregroundColor: kBlack,
                   onPressed: () {
                     showAddItemDialog(
                         'Add Rule',

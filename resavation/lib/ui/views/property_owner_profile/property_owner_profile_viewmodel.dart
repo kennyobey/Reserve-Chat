@@ -17,9 +17,7 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
   bool isLoading = false;
   bool hasErrorOnData = false;
   int page = 0;
-  bool allLoaded = false;
-  bool isLoadingOldData = false;
-  int size = 8;
+  int size = 5;
 
   final ScrollController scrollController = ScrollController();
   final httpService = locator<HttpService>();
@@ -36,67 +34,30 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
   }
 
   PropertyOwnerProfileViewModel({
-    required int propertyId,
+    required User user,
   }) {
-    getInitData(propertyId);
+    getInitData(user);
   }
 
-  attachScrollListener(int id) {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels <=
-          scrollController.position.maxScrollExtent - 10) {
-        return;
-      }
-      if (!isLoading &&
-          !allLoaded &&
-          properties.isNotEmpty &&
-          !isLoadingOldData) {
-        getOldData(id);
-      }
-    });
-  }
-
-  void getInitData(int id) async {
+  void getInitData(User user) async {
     page = 0;
     propertySearches.clear();
     isLoading = true;
     hasErrorOnData = false;
-    allLoaded = false;
+
     notifyListeners();
 
     try {
       final propertySearch = await httpService.getLandOwnerListings(
-          propertyId: id, page: page, size: size);
-      allLoaded =
-          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
+          userId: user.id ?? -1, page: page, size: size);
+
       propertySearches.add(propertySearch);
 
       hasErrorOnData = false;
-      attachScrollListener(id);
     } catch (exception) {
       hasErrorOnData = true;
     }
     isLoading = false;
-    isLoadingOldData = false;
-    notifyListeners();
-  }
-
-  getOldData(int id) async {
-    page++;
-    isLoadingOldData = true;
-
-    notifyListeners();
-    try {
-      final propertySearch = await httpService.getLandOwnerListings(
-          propertyId: id, page: page, size: size);
-      allLoaded =
-          (propertySearch.last ?? false) || (propertySearch.empty ?? false);
-      propertySearches.add(propertySearch);
-    } catch (exception) {
-      allLoaded = true;
-    }
-    isLoadingOldData = false;
-
     notifyListeners();
   }
 
@@ -136,6 +97,13 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
     _navigationService.navigateTo(
       Routes.propertyDetailsTenantView,
       arguments: PropertyDetailsTenantViewArguments(passedProperty: property),
+    );
+  }
+
+  void goToPropertyOwnerProfile2(User user) {
+    _navigationService.navigateTo(
+      Routes.propertyOwnerProfileView2,
+      arguments: PropertyOwnerProfileView2Arguments(user: user),
     );
   }
 

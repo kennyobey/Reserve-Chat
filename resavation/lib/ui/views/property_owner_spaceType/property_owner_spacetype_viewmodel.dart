@@ -106,11 +106,6 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
   }
 
   PropertyOwnerSpaceTypeViewModel() {
-    if (uploadTypeService.isRestoringData) {
-      setUpPreviousData();
-    } else {
-      uploadTypeService.clearStage1();
-    }
     getData();
   }
 
@@ -126,6 +121,12 @@ class PropertyOwnerSpaceTypeViewModel extends BaseViewModel {
       propertyCategories = await _httpService.getPropertyCategories();
       propertyStatus = await _httpService.getPropertyStatus();
       propertyStyleOption = await _httpService.getPropertyStyle();
+
+      if (uploadTypeService.isRestoringData) {
+        setUpPreviousData();
+      } else {
+        uploadTypeService.clearStage1();
+      }
     } catch (exception) {
       hasErrorOnData = true;
     }

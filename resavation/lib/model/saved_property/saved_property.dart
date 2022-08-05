@@ -13,6 +13,7 @@ class SavedProperty {
   List<Amenity>? amenities;
   AvailabilityPeriods? availabilityPeriods;
   int? bathTubCount;
+  int? unit;
   int? bedroomCount;
   int? carSlot;
   String? city;
@@ -56,6 +57,7 @@ class SavedProperty {
     this.favourite,
     this.id,
     this.isLiveInSPace,
+    this.unit,
     this.roomType,
     this.isSpaceFurnished,
     this.isSpaceServiced,
@@ -89,6 +91,7 @@ class SavedProperty {
             : AvailabilityPeriods.fromMap(
                 data['availabilityPeriods'] as Map<String, dynamic>),
         bathTubCount: data['bathTubCount'] as int?,
+        unit: data['unit'] as int?,
         bedroomCount: data['bedroomCount'] as int?,
         carSlot: data['carSlot'] as int?,
         city: data['city'] as String?,

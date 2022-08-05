@@ -10,20 +10,19 @@ class TenantBookedPropertyContent {
   String? checkInDate;
   DateTime? createdAt;
   int? id;
-  String? paymentType;
+  String? paymentCycle;
   Property? property;
   PropertyOwner? propertyOwner;
   bool? status;
   String? subCategories;
   DateTime? updatedAt;
   User? user;
-
   TenantBookedPropertyContent({
     this.amount,
     this.checkInDate,
     this.createdAt,
     this.id,
-    this.paymentType,
+    this.paymentCycle,
     this.property,
     this.propertyOwner,
     this.status,
@@ -34,7 +33,7 @@ class TenantBookedPropertyContent {
 
   @override
   String toString() {
-    return 'Content(amount: $amount, checkInDate: $checkInDate, createdAt: $createdAt, id: $id, paymentType: $paymentType, property: $property, propertyOwner: $propertyOwner, status: $status, subCategories: $subCategories, updatedAt: $updatedAt, user: $user)';
+    return 'Content(amount: $amount, checkInDate: $checkInDate, createdAt: $createdAt, id: $id, paymentType: $paymentCycle, property: $property, propertyOwner: $propertyOwner, status: $status, subCategories: $subCategories, updatedAt: $updatedAt, user: $user)';
   }
 
   factory TenantBookedPropertyContent.fromMap(Map<String, dynamic> data) =>
@@ -45,7 +44,7 @@ class TenantBookedPropertyContent {
             ? null
             : DateTime.parse(data['createdAt'] as String),
         id: data['id'] as int?,
-        paymentType: data['paymentType'] as String?,
+        paymentCycle: data['paymentCycle'] as String?,
         property: data['property'] == null
             ? null
             : Property.fromMap(data['property'] as Map<String, dynamic>),

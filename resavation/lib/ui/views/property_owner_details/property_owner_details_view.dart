@@ -283,27 +283,30 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
             centerTitle: false,
             backEnabled: false,
             actions: [
-              IconButton(
-                  onPressed: () async {
-                    if (model.selectedState != null) {
-                      if (model.uploadFormKey.currentState!.validate()) {
-                        bool shouldSave = await showSaveConfirmationDialog();
-                        if (shouldSave) {
-                          showSavePropertyDialog(model);
-                        }
+              TextButton(
+                onPressed: () async {
+                  if (model.selectedState != null) {
+                    if (model.uploadFormKey.currentState!.validate()) {
+                      bool shouldSave = await showSaveConfirmationDialog();
+                      if (shouldSave) {
+                        showSavePropertyDialog(model);
                       }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please pick your state'),
-                        ),
-                      );
                     }
-                  },
-                  icon: Icon(
-                    Icons.save_rounded,
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please pick your state'),
+                      ),
+                    );
+                  }
+                },
+                child: Text(
+                  'SAVE',
+                  style: AppStyle.kBodyRegularBlack14.copyWith(
                     color: kPrimaryColor,
-                  ))
+                  ),
+                ),
+              )
             ],
           ),
           backgroundColor: Colors.white,
@@ -329,6 +332,8 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
           Expanded(
             child: ResavationElevatedButton(
               child: Text("Back"),
+              color: Colors.grey,
+              foregroundColor: Colors.black,
               onPressed: () => Navigator.pop(context),
             ),
           ),

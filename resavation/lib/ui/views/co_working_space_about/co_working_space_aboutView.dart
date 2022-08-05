@@ -195,6 +195,7 @@ class _CoWorkingSpaceAboutViewState extends State<CoWorkingSpaceAboutView> {
                   title: model.property?.propertyCategory ?? 'Eleko Estate',
                   numberOfBedrooms: model.property?.bedroomCount ?? 0,
                   numberOfBathrooms: model.property?.bathTubCount ?? 0,
+                  numberOfCars: model.property?.carSlot ?? 0,
                   squareFeet: (model.property?.surfaceArea ?? 0) + .0,
                 ),
                 verticalSpaceMedium,

@@ -1,7 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/owner_booked_property/content.dart';
-import 'package:resavation/model/owner_booked_property/owner_booked_property.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/saved_property/saved_property.dart';
 import 'package:resavation/services/core/http_service.dart';
@@ -19,12 +18,12 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
   final requestSite = "resavation-backend.herokuapp.com";
   final _uploadService = locator<UploadService>();
 
+  get getUserEmail => _userService.userData.email;
   LoginModel get userData => _userService.userData;
   final userTypeService = locator<UserTypeService>();
 
-  void goToPropertyOwnerIdentificationVerificationView() {
-    _navigationService
-        .navigateTo(Routes.propertyOwnerIdentificationVerificationView);
+  void goToProfileDetails() {
+    _navigationService.navigateTo(Routes.userProfileView);
   }
 
   void goToPropertyOwnerSpaceTypeView(SavedProperty? savedProperty) {
@@ -96,5 +95,47 @@ class PropertyOwnerHomePageViewModel extends BaseViewModel {
 
   void goToPropertyOwnerBookedPropertiesView() {
     _navigationService.navigateTo(Routes.propertyOwnerBookedPropertiesView);
+  }
+
+  getNewData() {
+    getOwnerBookedPropertyData();
+    getOwnerPropertyData();
+  }
+
+  bool ownerBookedPropertyLoading = true;
+  bool ownerBookedPropertyHasError = false;
+  List<OwnerBookedPropertyContent> ownerBookedPropertyModel = [];
+  getOwnerBookedPropertyData() async {
+    ownerBookedPropertyLoading = true;
+    notifyListeners();
+
+    try {
+      final data =
+          await httpService.getAllOwnerBookedProperty(page: 0, size: 5);
+      ownerBookedPropertyModel = data.content ?? [];
+      ownerBookedPropertyHasError = false;
+    } catch (exception) {
+      ownerBookedPropertyHasError = true;
+    }
+    ownerBookedPropertyLoading = false;
+    notifyListeners();
+  }
+
+  bool ownerPropertyLoading = true;
+  bool ownerPropertyHasError = false;
+  List<Property> ownerPropertyModel = [];
+  getOwnerPropertyData() async {
+    ownerPropertyLoading = true;
+    notifyListeners();
+
+    try {
+      final data = await httpService.getOwnerProperty(page: 0, size: 5);
+      ownerPropertyModel = data.properties ?? [];
+      ownerPropertyHasError = false;
+    } catch (exception) {
+      ownerPropertyHasError = true;
+    }
+    ownerPropertyLoading = false;
+    notifyListeners();
   }
 }

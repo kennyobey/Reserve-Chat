@@ -7,7 +7,7 @@ import 'package:resavation/services/core/user_type_service.dart';
 import 'package:stacked/stacked.dart';
 
 class AppointmentListViewModel extends BaseViewModel {
-  bool isLoading = false;
+  bool isLoading = true;
   bool hasErrorOnData = false;
 
   final _userService = locator<UserTypeService>();
@@ -17,10 +17,6 @@ class AppointmentListViewModel extends BaseViewModel {
   String? selectedValue;
 
   List<Appointment> userAppointments = [];
-
-  AppointmentListViewModel() {
-    getData();
-  }
 
   void getData() async {
     isLoading = true;

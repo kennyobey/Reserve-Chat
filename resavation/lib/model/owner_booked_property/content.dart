@@ -11,7 +11,7 @@ class OwnerBookedPropertyContent {
   User? user;
   Property? property;
   String? checkInDate;
-  String? paymentType;
+  String? paymentCycle;
   double? amount;
   String? subCategories;
   bool? status;
@@ -24,7 +24,7 @@ class OwnerBookedPropertyContent {
     this.user,
     this.property,
     this.checkInDate,
-    this.paymentType,
+    this.paymentCycle,
     this.amount,
     this.subCategories,
     this.status,
@@ -50,7 +50,7 @@ class OwnerBookedPropertyContent {
             ? null
             : Property.fromMap(data['property'] as Map<String, dynamic>),
         checkInDate: data['checkInDate'] as String?,
-        paymentType: data['paymentType'] as String?,
+        paymentCycle: data['paymentCycle'] as String?,
         amount: data['amount'] as double?,
         subCategories: data['subCategories'] as String?,
         status: data['status'] as bool?,

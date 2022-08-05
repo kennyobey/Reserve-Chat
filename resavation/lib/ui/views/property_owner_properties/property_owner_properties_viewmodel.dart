@@ -9,7 +9,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../services/core/http_service.dart';
 
 class PropertyOwnerPropertiesViewModel extends BaseViewModel {
-  bool isLoading = false;
+  bool isLoading = true;
   bool hasErrorOnData = false;
   int page = 0;
   bool allLoaded = false;
@@ -29,10 +29,6 @@ class PropertyOwnerPropertiesViewModel extends BaseViewModel {
     });
 
     return allProperty;
-  }
-
-  PropertyOwnerPropertiesViewModel() {
-    getInitData();
   }
 
   attachScrollListener() {

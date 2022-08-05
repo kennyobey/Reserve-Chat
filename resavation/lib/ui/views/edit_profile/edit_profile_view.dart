@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:badges/badges.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:resavation/model/edit_profile_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
-import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
+import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -13,7 +14,8 @@ import 'package:resavation/ui/views/edit_profile/edit_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class EditProfileView extends StatefulWidget {
-  const EditProfileView({Key? key}) : super(key: key);
+  final EditProfileModel? userProfile;
+  const EditProfileView({Key? key, this.userProfile}) : super(key: key);
 
   @override
   State<EditProfileView> createState() => _EditProfileViewState();
@@ -24,465 +26,299 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<EditProfileViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: BackButton(
-            color: Colors.black,
-          ),
-          title: Text(
-            'Edit Profile',
-            style: AppStyle.kHeading0,
-          ),
-        ),
+        appBar: buildAppBar(),
+        bottomNavigationBar: buildBottomAppBar(model, context),
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: model.editProfileFormKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        verticalSpaceSmall,
-                        Center(
-                          child: Badge(
-                            badgeColor: kWhite,
-                            position: BadgePosition.bottomEnd(),
-                            badgeContent: IconButton(
-                                icon: Icon(Icons.camera_alt_sharp),
-                                onPressed: () async {
-                                  try {
-                                    final imageLocation =
-                                        await model.showFilePicker();
-                                    showImageDialog(imageLocation, model);
-                                  } catch (exception) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(exception.toString())),
-                                    );
-                                  }
-                                }),
-                            child: Container(
-                              width: 150,
-                              height: 150,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                              ),
-                              child: ResavationImage(
-                                image: model.userData.imageUrl,
-                              ),
-                            ),
-                          ),
-                        ),
-                        verticalSpaceMedium,
-                        verticalSpaceMedium,
-                        Text(
-                          'Personal Information Data',
-                          style: AppStyle.kHeading3,
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'Last Name',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: model.userData.lastName,
-                          controller: model.userLastNameController,
-                          hintTextStyle: AppStyle.kSubHeading,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your last name';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'First Name',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: model.userData.firstName,
-                          controller: model.userFirstNameController,
-                          hintTextStyle: AppStyle.kSubHeading,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your first name';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'About Me',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "I am a student of UNIBEN",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          controller: model.aboutMeEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please write something about yourself';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'Date of birth',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "22/01/2022",
-                          hintTextStyle: AppStyle.kSubHeading,
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'Phone Number',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "2347032867019",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          keyboardType: TextInputType.number,
-                          controller: model.phoneNumberEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your phone number';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'Gender',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        verticalSpaceSmall,
-                        buildGender(model),
-                        verticalSpaceSmall,
-                        Text(
-                          'Occupation',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        verticalSpaceSmall,
-                        buildOccupation(model),
-                        verticalSpaceMedium,
-                        Text(
-                          'Personal Address Data',
-                          style: AppStyle.kHeading3,
-                        ),
-                        Text(
-                          'Country',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "Nigeria",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          controller: model.contryEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your country';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'State',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "Osun",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          controller: model.stateEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your state';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'City',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "Ibadan",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          controller: model.cityEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your city';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'Address',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText:
-                              "No 1 Festus Idahosa Street, Molete, Ibadan.",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          controller: model.addressEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your address';
-                            }
-                            return null;
-                          },
-                        ),
-                        verticalSpaceSmall,
-                        Text(
-                          'Postal Code',
-                          style: AppStyle.kBodyRegularBlack14W500,
-                        ),
-                        ResavationTextField(
-                          textInputAction: TextInputAction.next,
-                          hintText: "224466",
-                          hintTextStyle: AppStyle.kSubHeading,
-                          keyboardType: TextInputType.number,
-                          controller: model.postalCodeEmailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your postal code';
-                            }
-                            return null;
-                          },
-                        ),
-                        // verticalSpaceMedium,
-                        // Text(
-                        //   'Next of Kin Data',
-                        //   style: AppStyle.kHeading3,
-                        // ),
-                        // verticalSpaceSmall,
-                        // Text(
-                        //   'First Name',
-                        //   style: AppStyle.kBodyRegularBlack14W500,
-                        // ),
-                        // ResavationTextField(
-                        //   textInputAction: TextInputAction.next,
-                        //   hintText: "Stephen",
-                        //   hintTextStyle: AppStyle.kSubHeading,
-                        // ),
-                        // verticalSpaceSmall,
-                        // Text(
-                        //   'Last Name',
-                        //   style: AppStyle.kBodyRegularBlack14W500,
-                        // ),
-                        // ResavationTextField(
-                        //   textInputAction: TextInputAction.next,
-                        //   hintText: "Adeyemo",
-                        //   hintTextStyle: AppStyle.kSubHeading,
-                        // ),
-                        // verticalSpaceSmall,
-                        // Text(
-                        //   'Email',
-                        //   style: AppStyle.kBodyRegularBlack14W500,
-                        // ),
-                        // ResavationTextField(
-                        //   textInputAction: TextInputAction.next,
-                        //   hintText: "adeyemo********8@gmail.com",
-                        //   hintTextStyle: AppStyle.kSubHeading,
-                        // ),
-                        // verticalSpaceSmall,
-                        // Text(
-                        //   'Phone number',
-                        //   style: AppStyle.kBodyRegularBlack14W500,
-                        // ),
-                        // ResavationTextField(
-                        //   textInputAction: TextInputAction.next,
-                        //   hintText: "+2347088996756",
-                        //   hintTextStyle: AppStyle.kSubHeading,
-                        // ),
-                        // verticalSpaceSmall,
-                        // Text(
-                        //   'Gender',
-                        //   style: AppStyle.kBodyRegularBlack14W500,
-                        // ),
-                        // verticalSpaceSmall,
-                        // buildGender(model),
-                        // verticalSpaceSmall,
-                        // Text(
-                        //   'Relationship',
-                        //   style: AppStyle.kBodyRegularBlack14W500,
-                        // ),
-                        // ResavationTextField(
-                        //   textInputAction: TextInputAction.next,
-                        //   hintText: "Uncle",
-                        //   hintTextStyle: AppStyle.kSubHeading,
-                        // ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              verticalSpaceMedium,
-              Row(
-                children: [
-                  Expanded(
-                    child: ResavationButton(
-                      title: 'Cancel',
-                      onTap: model.goToUserProfileView,
-                      buttonColor: kWhite,
-                      titleColor: kBlack,
-                      borderColor: kGray,
-                    ),
-                  ),
-                  horizontalSpaceSmall,
-                  Expanded(
-                    child: ResavationButton(
-                      title: 'Save',
-                      onTap: () async {
-                        final isValid =
-                            model.editProfileFormKey.currentState?.validate();
-                        if ((isValid ?? false) == false || model.isLoading) {
-                          return;
-                        }
-
-                        try {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text('Processing request, please wait')),
-                          );
-                          await model.editDetails();
-                          model.goToUserProfileView();
-                        } catch (exception) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(exception.toString())),
-                          );
-                        }
-                      },
-                      // onTap: () async {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     SnackBar(
-                      //         content: Text('Updating profile please wait')),
-                      //   );
-                      //   try {
-                      //     await model.editDetails();
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       SnackBar(content: Text('Profile Updated')),
-                      //     );
-                      //     model.goToUserProfileView();
-                      //   } catch (exception) {
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       SnackBar(content: Text(exception.toString())),
-                      //     );
-                      //   }
-                      // },
-                    ),
-                  ),
-                ],
-              ),
-              verticalSpaceMedium,
-            ],
-          ),
+          child: buildBody(model, context),
         ),
       ),
-      viewModelBuilder: () => EditProfileViewModel(),
+      viewModelBuilder: () => EditProfileViewModel(widget.userProfile),
     );
   }
 
-  showImageDialog(String imageUrl, EditProfileViewModel model) {
-    final file = File(imageUrl);
-    Dialog dialog = Dialog(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      elevation: 5,
-      child: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(15),
+  SingleChildScrollView buildBody(
+      EditProfileViewModel model, BuildContext context) {
+    return SingleChildScrollView(
+      child: Form(
+        key: model.editProfileFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildUserImage(model, context),
+            verticalSpaceSmall,
+            const Divider(),
+            verticalSpaceTiny,
+            Text(
+              'Personal Information Data',
+              style: AppStyle.kHeading3,
             ),
-          ),
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Image.file(
-                  file,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 280,
-                  errorBuilder: (ctx, _, __) => const SizedBox(),
-                ),
-              ),
-              verticalSpaceMedium,
-              Text(
-                'Do you want to set this image as your profile picture?',
-                style: AppStyle.kBodyRegularBlack14,
-                textAlign: TextAlign.center,
-              ),
-              verticalSpaceMedium,
-              ResavationButton(
-                title: 'Continue',
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  try {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text('Processing request, please wait')),
-                    );
-                    await model.uploadDocument(file);
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Profile updated successfully')),
-                    );
-                  } catch (exception) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(exception.toString())),
-                    );
-                  }
-                },
-              ),
-              verticalSpaceSmall,
-              ResavationButton(
-                title: 'Cancel',
-                buttonColor: Colors.transparent,
-                borderColor: kPrimaryColor,
-                titleColor: kPrimaryColor,
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              verticalSpaceSmall,
-            ],
-          ),
+            verticalSpaceTiny,
+            const Divider(),
+            verticalSpaceSmall,
+            Text(
+              'About Me',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.newline,
+              keyboardType: TextInputType.multiline,
+              maxline: null,
+              hintText: '',
+              hintTextStyle: AppStyle.kSubHeading,
+              controller: model.aboutMeEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please write something about yourself';
+                }
+                return null;
+              },
+            ),
+            verticalSpaceSmall,
+            Text(
+              'Phone Number',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.next,
+              hintText: '',
+              hintTextStyle: AppStyle.kSubHeading,
+              keyboardType: TextInputType.number,
+              controller: model.phoneNumberEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your phone number';
+                }
+                return null;
+              },
+            ),
+            verticalSpaceSmall,
+            Text(
+              'Gender',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            verticalSpaceTiny,
+            buildGender(model),
+            verticalSpaceMedium,
+            Text(
+              'Occupation',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            verticalSpaceTiny,
+            buildOccupation(model),
+            verticalSpaceMedium,
+            Text(
+              'Date Of Birth',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            verticalSpaceTiny,
+            CalendarDatePicker(
+              firstDate: DateTime(1900),
+              initialDate: model.dateOfBirthInitialTime,
+              lastDate: DateTime.now(),
+              onDateChanged: model.setSelectedDOB,
+            ),
+            verticalSpaceSmall,
+            const Divider(),
+            verticalSpaceTiny,
+            Text(
+              'Personal Address Data',
+              style: AppStyle.kHeading3,
+            ),
+            verticalSpaceTiny,
+            const Divider(),
+            verticalSpaceSmall,
+            Text(
+              'Country',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.next,
+              hintText: "",
+              hintTextStyle: AppStyle.kSubHeading,
+              controller: model.contryEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your country';
+                }
+                return null;
+              },
+            ),
+            verticalSpaceSmall,
+            Text(
+              'State',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.next,
+              hintText: '',
+              hintTextStyle: AppStyle.kSubHeading,
+              controller: model.stateEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your state';
+                }
+                return null;
+              },
+            ),
+            verticalSpaceSmall,
+            Text(
+              'City',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.next,
+              hintText: '',
+              hintTextStyle: AppStyle.kSubHeading,
+              controller: model.cityEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your city';
+                }
+                return null;
+              },
+            ),
+            verticalSpaceSmall,
+            Text(
+              'Address',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.next,
+              hintText: "",
+              hintTextStyle: AppStyle.kSubHeading,
+              controller: model.addressEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your address';
+                }
+                return null;
+              },
+            ),
+            verticalSpaceSmall,
+            Text(
+              'Postal Code',
+              style: AppStyle.kBodyRegularBlack14W500,
+            ),
+            ResavationTextField(
+              textInputAction: TextInputAction.next,
+              hintText: "",
+              hintTextStyle: AppStyle.kSubHeading,
+              keyboardType: TextInputType.number,
+              controller: model.postalCodeEmailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your postal code';
+                }
+                return null;
+              },
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget buildBottomAppBar(EditProfileViewModel model, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: ResavationElevatedButton(
+              child: Text('Cancel'),
+              onPressed: model.goToUserProfileView,
+            ),
+          ),
+          horizontalSpaceSmall,
+          Expanded(
+            child: ResavationElevatedButton(
+              child: Text('Update'),
+              onPressed: () async {
+                final isValid =
+                    model.editProfileFormKey.currentState?.validate();
+                if ((isValid ?? false) == false || model.isLoading) {
+                  return;
+                }
+
+                if (model.selectedGenderValue == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Kindly select your geneder.')),
+                  );
+                  return;
+                }
+                if (model.selectedOccupationValue == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Kindly select your occupation.'),
+                    ),
+                  );
+                  return;
+                }
+                if (model.dateOfBirth == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Kindly select a valid Date Of Birth.'),
+                    ),
+                  );
+                  return;
+                }
+                showSaveProfileDialog(model);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showSaveProfileDialog(EditProfileViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.blue,
+                valueColor: AlwaysStoppedAnimation(kWhite),
+              ),
+            ),
+            verticalSpaceMedium,
+            Text(
+              'Updating Profile',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Updating profile, please do not cancel until success',
+              textAlign: TextAlign.center,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      )),
     );
 
     showGeneralDialog(
       context: context,
-      barrierLabel: "Image",
-      barrierDismissible: true,
+      barrierLabel: "Updating Profile",
+      barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 500),
       pageBuilder: (_, __, ___) => dialog,
@@ -491,14 +327,84 @@ class _EditProfileViewState extends State<EditProfileView> {
         child: child,
       ),
     );
+    try {
+      await model.editDetails();
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Your profile has successfully been updated')),
+      );
+      Navigator.of(context).pop();
+    } catch (exception) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(exception.toString())),
+      );
+    }
+  }
+
+  Widget buildUserImage(EditProfileViewModel model, BuildContext context) {
+    return Center(
+      child: Badge(
+        badgeColor: kWhite,
+        position: BadgePosition.bottomEnd(),
+        badgeContent: IconButton(
+            icon: Icon(Icons.camera_alt_sharp),
+            onPressed: () async {
+              try {
+                final imageLocation = await model.showFilePicker();
+                model.updateImageLocation(imageLocation);
+              } catch (exception) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(exception.toString())),
+                );
+              }
+            }),
+        child: Container(
+          width: 150,
+          height: 150,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(80),
+          ),
+          child: model.isImageFile
+              ? Image.file(
+                  File(model.profileImage),
+                  fit: BoxFit.cover,
+                  width: 150,
+                  height: 150,
+                  errorBuilder: (ctx, _, __) => Container(
+                    width: 150,
+                    height: 150,
+                    color: kLightBlue,
+                  ),
+                )
+              : ResavationImage(
+                  image: model.profileImage,
+                ),
+        ),
+      ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      leading: BackButton(
+        color: Colors.black,
+      ),
+      title: Text(
+        'Edit Profile',
+        style: AppStyle.kHeading0,
+      ),
+    );
   }
 
   Widget buildGender(EditProfileViewModel model) {
-    String defaultGender = "male";
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Male",
+            "Select Gender",
             style: AppStyle.kBodyRegular,
           ),
           items: model.gender
@@ -510,7 +416,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     ),
                   ))
               .toList(),
-          value: model.selectedGenderValue.toString(),
+          value: model.selectedGenderValue,
           onChanged: (value) {
             model.onSelectedGender(value);
           },
@@ -520,7 +426,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           buttonWidth: double.infinity,
           buttonPadding: EdgeInsets.only(left: 18, right: 20),
           buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(5),
             border: Border.all(
               color: Colors.black26,
             ),
@@ -532,7 +438,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
           hint: Text(
-            "Student",
+            "Select Occupation",
             style: AppStyle.kBodyRegular,
           ),
           items: model.occupation
@@ -544,7 +450,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     ),
                   ))
               .toList(),
-          value: model.selectedOccupationValue.toString(),
+          value: model.selectedOccupationValue,
           onChanged: (value) {
             model.onSelectedOccupation(value);
           },
@@ -554,7 +460,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           buttonWidth: double.infinity,
           buttonPadding: EdgeInsets.only(left: 18, right: 20),
           buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(5),
             border: Border.all(
               color: Colors.black26,
             ),

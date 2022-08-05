@@ -65,19 +65,20 @@ class SettingsView extends StatelessWidget {
                 onTap: model.showComingSoon,
               ),
               verticalSpaceMedium,
-              ResavationButton(
-                onTap: () {
-                  model.goToPropertyOwnerHomePageView();
-                  model.updateUserType();
-                },
-                width: double.infinity,
-                title: model.returnUserType()
-                    ? 'Switch to Property Owner'
-                    : 'Switch to User',
-                borderColor: kBlack.withOpacity(0.4),
-                titleColor: kBlack,
-                buttonColor: kWhite.withOpacity(0.9),
-              ),
+              if (model.hasOwnerRole)
+                ResavationButton(
+                  onTap: () {
+                    model.toggleUserType();
+                    model.resetView();
+                  },
+                  width: double.infinity,
+                  title: model.returnUserType()
+                      ? 'Switch to Property Owner'
+                      : 'Switch to User',
+                  borderColor: kBlack.withOpacity(0.4),
+                  titleColor: kBlack,
+                  buttonColor: kWhite.withOpacity(0.9),
+                ),
               verticalSpaceLarge,
               ListTile(
                 minLeadingWidth: 0,
