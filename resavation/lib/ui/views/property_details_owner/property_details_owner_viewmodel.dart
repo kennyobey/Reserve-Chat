@@ -84,11 +84,11 @@ class PropertyDetailsOwnerViewModel extends BaseViewModel {
       return true;
     } else {
       final chatModel = await MessagesViewModel.createChat(
-        ownerPropertyContent?.user?.email ?? '-',
-        (ownerPropertyContent?.user?.firstName ?? '') +
+        ownerPropertyContent?.user?.email?.trim() ?? '-',
+        (ownerPropertyContent?.user?.firstName?.trim() ?? '') +
             ' ' +
-            (ownerPropertyContent?.user?.lastName ?? ''),
-        ownerPropertyContent?.user?.imageUrl ?? '',
+            (ownerPropertyContent?.user?.lastName?.trim() ?? ''),
+        ownerPropertyContent?.user?.imageUrl?.trim() ?? '',
       );
       _navigationService.navigateTo(Routes.chatRoomView,
           arguments: ChatRoomViewArguments(chatModel: chatModel));

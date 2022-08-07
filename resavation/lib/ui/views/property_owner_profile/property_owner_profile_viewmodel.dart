@@ -112,9 +112,9 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
       return true;
     } else {
       final chatModel = await MessagesViewModel.createChat(
-        user.email ?? '-',
-        (user.firstName ?? '') + ' ' + (user.lastName ?? ''),
-        user.imageUrl ?? '',
+        user.email?.trim() ?? '-',
+        (user.firstName?.trim() ?? '') + ' ' + (user.lastName?.trim() ?? ''),
+        user.imageUrl?.trim() ?? '',
       );
       _navigationService.navigateTo(Routes.chatRoomView,
           arguments: ChatRoomViewArguments(chatModel: chatModel));
