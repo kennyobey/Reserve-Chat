@@ -14,6 +14,7 @@ class TenantBookedPropertyContent {
   Property? property;
   PropertyOwner? propertyOwner;
   bool? status;
+  bool? hasTenantPaid;
   String? subCategories;
   DateTime? updatedAt;
   User? user;
@@ -26,6 +27,7 @@ class TenantBookedPropertyContent {
     this.property,
     this.propertyOwner,
     this.status,
+    this.hasTenantPaid,
     this.subCategories,
     this.updatedAt,
     this.user,
@@ -53,6 +55,7 @@ class TenantBookedPropertyContent {
             : PropertyOwner.fromMap(
                 data['propertyOwner'] as Map<String, dynamic>),
         status: data['status'] as bool?,
+        hasTenantPaid: data['hasTenantPaid'] as bool?,
         subCategories: data['subCategories'] as String?,
         updatedAt: data['updatedAt'] == null
             ? null

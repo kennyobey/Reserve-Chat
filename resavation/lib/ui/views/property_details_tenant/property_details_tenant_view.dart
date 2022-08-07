@@ -51,7 +51,8 @@ class PropertyDetailsTenantView extends StatelessWidget {
     if (tenantPropertyContent == null) {
       //tenant is seeing either book appointment or book property
       return buildTenantBookedBottomBar(model);
-    } else if (tenantPropertyContent?.status == true) {
+    } else if (tenantPropertyContent?.status == true &&
+        tenantPropertyContent?.hasTenantPaid != true) {
       // tenant is seeing the payment screen
       return buildPaymentBottomBar(model, context);
     } else {
