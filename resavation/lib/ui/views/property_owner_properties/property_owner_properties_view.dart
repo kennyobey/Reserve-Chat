@@ -49,7 +49,7 @@ class _PropertyOwnerPropertiesViewState
                       ),
                     ),
                     Text(
-                      '  item(s)',
+                      '  Properties',
                       style: AppStyle.kSubHeading,
                     ),
                     Spacer(),
@@ -289,7 +289,7 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
 
   Row shimmerBody() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 2,
@@ -342,22 +342,44 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
   Row buildBody() {
     final oCcy = NumberFormat("#,##0.00", "en_US");
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 2,
           child: GestureDetector(
             onTap: onTap,
             child: Hero(
-              child: Container(
-                height: 100,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: ResavationImage(
-                  image: image,
-                ),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 100,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: ResavationImage(
+                      image: image,
+                    ),
+                  ),
+                  Positioned(
+                    top: 3,
+                    left: 3,
+                    child: Container(
+                      padding: EdgeInsets.all(3),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: verified ? Colors.green : Colors.orange,
+                      ),
+                      child: Text(
+                        verified ? 'Verifed' : 'Unverified',
+                        style: AppStyle.kBodySmallRegular12W500.copyWith(
+                          color: kWhite,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
               tag: id.toString(),
             ),

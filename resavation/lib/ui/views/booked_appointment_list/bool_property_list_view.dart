@@ -44,7 +44,7 @@ class _BookedPropertyListViewState extends State<BookedPropertyListView> {
                         ),
                       ),
                       Text(
-                        '  item(s)',
+                        '  Booked Properties',
                         style: AppStyle.kSubHeading,
                       ),
                       Spacer(),

@@ -46,7 +46,7 @@ class _PropertyOwnerBookedPropertiesViewState
                       ),
                     ),
                     Text(
-                      '  item(s)',
+                      '  Tenant Requests',
                       style: AppStyle.kSubHeading,
                     ),
                     Spacer(),
