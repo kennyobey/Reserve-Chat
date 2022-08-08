@@ -4,9 +4,10 @@ import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/favorite/favorite_view.dart';
 import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/main/main_viewmodel.dart';
-import 'package:resavation/ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
+// import 'package:resavation/ui/views/property_owner_analyticpage/property_owner_analyticView.dart';
 import 'package:resavation/ui/views/property_owner_appointment_page1/property_owner_appointment_pageoneView.dart';
 import 'package:resavation/ui/views/property_owner_homepage/property_owner_homepageView.dart';
+import 'package:resavation/ui/views/property_owner_properties/property_owner_properties_view.dart';
 import 'package:resavation/ui/views/search/search_view.dart';
 import 'package:resavation/ui/views/settings/settings_view.dart';
 import 'package:stacked/stacked.dart';
@@ -41,38 +42,6 @@ class MainView extends StatelessWidget {
       viewModelBuilder: () => MainViewModel(),
     );
   }
-
-  BottomNavigationBar buildBottomNavigationBar(MainViewModel model) {
-    return BottomNavigationBar(
-      selectedItemColor: kPrimaryColor,
-      iconSize: 28,
-      type: BottomNavigationBarType.fixed,
-      currentIndex: model.currentIndex,
-      onTap: model.setIndex,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            model.returnUserType()
-                ? Icons.favorite_border
-                : Icons.calendar_view_month_outlined,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(model.returnUserType() ? Icons.search : Icons.analytics),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings_outlined),
-          label: '',
-        ),
-      ],
-    );
-  }
 }
 
 Widget getViewForIndex(int index, bool isTenant) {
@@ -82,7 +51,8 @@ Widget getViewForIndex(int index, bool isTenant) {
     case 1:
       return isTenant ? FavoriteView() : PropertyOwnerAppointmentPageoneView();
     case 2:
-      return isTenant ? SearchView() : PropertyOwnerAnalyticView();
+      return isTenant ? SearchView() : PropertyOwnerPropertiesView();
+    // return isTenant ? SearchView() : PropertyOwnerAnalyticView();
     case 3:
       return SettingsView();
     default:

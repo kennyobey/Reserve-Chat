@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
 import 'package:resavation/model/edit_profile_model.dart';
-import 'package:resavation/services/core/custom_snackbar_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../model/login_model.dart';
@@ -14,31 +13,28 @@ import '../../../services/core/http_service.dart';
 import '../../../services/core/user_type_service.dart';
 
 class EditProfileViewModel extends BaseViewModel {
-  final _snackbarService = locator<CustomSnackbarService>();
   final _navigationService = locator<NavigationService>();
-
   final _httpService = locator<HttpService>();
+  final _userService = locator<UserTypeService>();
 
-  // Global Keys to use with the form text fields
-  final editProfileFormKey = GlobalKey<FormState>();
+  String profileImage = '';
+  bool isImageFile =
+      false; // used to know if the current image is from the web or from the device
+  DateTime dateOfBirthInitialTime = DateTime.now();
+  LoginModel get userData => _userService.userData;
 
-  String? selectedGenderValue = 'Male';
-  String? selectedOccupationValue = 'Student';
   bool isLoading = false;
 
-  DateTime dob = DateTime.now();
-  late final date = dob.toIso8601String();
-  String? url;
+  List<String> gender = ['Male', 'Female'];
+  List<String> occupation = ['Student', 'Self Employed', 'Employed'];
 
-  //user personal details
-  final userFirstNameController = TextEditingController();
-  final userLastNameController = TextEditingController();
+  final editProfileFormKey = GlobalKey<FormState>();
   final aboutMeEmailController = TextEditingController();
   final dateOfBirthEmailController = TextEditingController();
   final phoneNumberEmailController = TextEditingController();
-  final genderEmailController = TextEditingController();
-  final occupatuionEmailController = TextEditingController();
-
+  String? selectedGenderValue;
+  String? selectedOccupationValue;
+  DateTime? dateOfBirth;
   //User Personal address
   final contryEmailController = TextEditingController();
   final stateEmailController = TextEditingController();
@@ -46,49 +42,60 @@ class EditProfileViewModel extends BaseViewModel {
   final addressEmailController = TextEditingController();
   final postalCodeEmailController = TextEditingController();
 
-  final _userService = locator<UserTypeService>();
-  LoginModel get userData => _userService.userData;
-
-  EditProfileModel? get incomingProfile => null;
-
-  void showComingSoon() {
-    _snackbarService.showComingSoon();
+  EditProfileViewModel(EditProfileModel? profileModel) {
+    profileImage = profileModel?.imageUrl ?? '';
+    isImageFile = false;
+    aboutMeEmailController.text = profileModel?.aboutMe ?? '';
+    phoneNumberEmailController.text = profileModel?.phoneNumber ?? '';
+    selectedGenderValue = profileModel?.gender;
+    selectedOccupationValue = profileModel?.occupation;
+    contryEmailController.text = profileModel?.country ?? '';
+    stateEmailController.text = profileModel?.email ?? '';
+    cityEmailController.text = profileModel?.city ?? '';
+    addressEmailController.text = profileModel?.address ?? '';
+    postalCodeEmailController.text = profileModel?.postalCode ?? '';
+    dateOfBirth = profileModel?.dateOfBirth;
+    notifyListeners();
   }
 
   editDetails() async {
     isLoading = true;
     notifyListeners();
-    final firstName = userFirstNameController.text.trim();
-    final lastName = userLastNameController.text.trim();
-    final email = aboutMeEmailController.text.trim();
-    final imageUrl = url;
-    final gender = selectedGenderValue.toString();
-    final dateOfBirth = '';
-    final country = contryEmailController.text.trim();
-    final state = stateEmailController.text.trim();
-    final city = cityEmailController.text.trim();
-    final address = addressEmailController.text.trim();
-    final postalCode = postalCodeEmailController.text.trim();
-    final aboutMe = aboutMeEmailController.text.trim();
-    final occupation = selectedOccupationValue.toString();
-    final phoneNumber = phoneNumberEmailController.text.trim();
 
     try {
+      String image = profileImage;
+      if (isImageFile) {
+        image = await _uploadImage();
+      }
+
+      final email = userData.email;
+
+      final lastName = userData.lastName.trim();
+      final firstName = userData.firstName.trim();
+      final aboutMe = aboutMeEmailController.text.trim();
+      final phoneNumber = phoneNumberEmailController.text.trim();
+      final gender = selectedGenderValue.toString();
+      final occupation = selectedOccupationValue.toString();
+      final country = contryEmailController.text.trim();
+      final state = stateEmailController.text.trim();
+      final city = cityEmailController.text.trim();
+      final address = addressEmailController.text.trim();
+      final postalCode = postalCodeEmailController.text.trim();
       await _httpService.editDetails(
-        firstName,
-        lastName,
-        email,
-        url ?? "",
-        gender,
-        country,
-        dob,
-        state,
-        occupation,
-        city,
-        address,
-        postalCode,
-        aboutMe,
-        phoneNumber,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        imageUrl: image,
+        gender: gender,
+        country: country,
+        dateOfBirth: dateOfBirth ?? DateTime.now(),
+        state: state,
+        occupation: occupation,
+        city: city,
+        address: address,
+        postalCode: postalCode,
+        aboutMe: aboutMe,
+        phoneNumber: phoneNumber,
       );
       isLoading = false;
       notifyListeners();
@@ -112,9 +119,6 @@ class EditProfileViewModel extends BaseViewModel {
   void goToMainView() {
     _navigationService.navigateTo(Routes.mainView);
   }
-
-  List<String> gender = ['Male', 'Female'];
-  List<String> occupation = ['Student', 'Self Employed', 'Employed'];
 
   Future<String> showFilePicker() async {
     try {
@@ -140,7 +144,8 @@ class EditProfileViewModel extends BaseViewModel {
     }
   }
 
-  uploadDocument(File file) async {
+  Future<String> _uploadImage() async {
+    final file = File(profileImage);
     Reference sFirebaseStorageRef = FirebaseStorage.instance.ref();
     Reference firebaseStorageRef = sFirebaseStorageRef
         .child('users/${userData.email}/profilePictures/profilePicture');
@@ -148,28 +153,10 @@ class EditProfileViewModel extends BaseViewModel {
       UploadTask uploadTask = firebaseStorageRef.putFile(file);
       final TaskSnapshot taskSnapshot = await uploadTask;
       String url = await taskSnapshot.ref.getDownloadURL();
-
-      final body = {
-        "imageUrl": url,
-      };
-      await _httpService.updateProfile(body: body);
-      goToMainView();
+      return url;
     } catch (e) {
-      return Future.error(e.toString());
-    }
-  }
-
-  updateProfile() async {
-    final firstName = userFirstNameController.text.trim();
-    final lastName = userLastNameController.text.trim();
-    try {
-      final body = {
-        "firstName": firstName.isNotEmpty ? firstName : userData.firstName,
-        "lastName": lastName.isNotEmpty ? lastName : userData.lastName,
-      };
-      await _httpService.updateProfile(body: body);
-    } catch (e) {
-      return Future.error(e.toString());
+      return Future.error(
+          'An error occurred while updating your profile image');
     }
   }
 
@@ -178,6 +165,17 @@ class EditProfileViewModel extends BaseViewModel {
   }
 
   void goToUserProfileView() {
-    _navigationService.navigateTo(Routes.userProfileView);
+    _navigationService.back();
+  }
+
+  void setSelectedDOB(DateTime date) {
+    dateOfBirth = date;
+    notifyListeners();
+  }
+
+  void updateImageLocation(String imageLocation) {
+    profileImage = imageLocation;
+    isImageFile = true;
+    notifyListeners();
   }
 }

@@ -9,11 +9,13 @@ class PropertyDetails extends StatelessWidget {
     Key? key,
     required this.numberOfBedrooms,
     required this.numberOfBathrooms,
+    required this.numberOfCars,
     required this.squareFeet,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.title,
   }) : super(key: key);
 
+  final int numberOfCars;
   final int numberOfBedrooms;
   final int numberOfBathrooms;
   final double squareFeet;
@@ -22,18 +24,26 @@ class PropertyDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: mainAxisAlignment,
-      children: [
-        PropertyDetailsIcon(
-            icon: Icons.king_bed_outlined, numberOfBedrooms: numberOfBedrooms),
-        horizontalSpaceSmall,
-        PropertyDetailsIcon(
-            icon: Icons.shower_outlined, numberOfBedrooms: numberOfBathrooms),
-        horizontalSpaceSmall,
-        PropertyDetailsIcon(
-            icon: Icons.square_foot_outlined, numberOfBedrooms: squareFeet),
-      ],
+    return FittedBox(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        mainAxisAlignment: mainAxisAlignment,
+        children: [
+          PropertyDetailsIcon(
+              icon: Icons.king_bed_outlined,
+              numberOfBedrooms: numberOfBedrooms),
+          horizontalSpaceSmall,
+          PropertyDetailsIcon(
+              icon: Icons.shower_outlined, numberOfBedrooms: numberOfBathrooms),
+          horizontalSpaceSmall,
+          PropertyDetailsIcon(
+              icon: Icons.car_repair_outlined, numberOfBedrooms: numberOfCars),
+          horizontalSpaceSmall,
+          PropertyDetailsIcon(
+              icon: Icons.square_foot_outlined,
+              numberOfBedrooms: squareFeet.toInt().toString() + ' sqft'),
+        ],
+      ),
     );
   }
 }

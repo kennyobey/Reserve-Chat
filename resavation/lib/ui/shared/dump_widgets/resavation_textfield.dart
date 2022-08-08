@@ -15,6 +15,7 @@ class ResavationTextField extends StatefulWidget {
     this.hintTextStyle,
     this.color,
     this.fillColors,
+    this.focusNode,
     this.labelText,
     this.obscureText = false,
     this.showPrefix = false,
@@ -40,6 +41,7 @@ class ResavationTextField extends StatefulWidget {
   final bool showPrefix;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
@@ -62,6 +64,7 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
         color: Colors.transparent,
         child: TextFormField(
           onChanged: widget.onChanged,
+          focusNode: widget.focusNode,
           keyboardType: widget.keyboardType,
           inputFormatters: [
             if (widget.onlyNumbers)
@@ -86,7 +89,7 @@ class _ResavationTextFieldState extends State<ResavationTextField> {
             ),
             // fillColor: widget.fillColors ?? null,
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
+              borderSide: const BorderSide(color: kGray, width: 2.0),
             ),
             // filled: true,
             hintText: widget.hintText,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/filter/filter.dart';
+import 'package:resavation/model/filter.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/model/search_model/search_model.dart';
 import 'package:stacked/stacked.dart';
@@ -51,6 +51,7 @@ class FilterDisplayViewModel extends BaseViewModel {
 
   void getInitData(Filter filter) async {
     page = 0;
+
     isLoading = true;
     hasErrorOnData = false;
     notifyListeners();
@@ -124,8 +125,8 @@ class FilterDisplayViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(passedProperty: property),
+      Routes.propertyDetailsTenantView,
+      arguments: PropertyDetailsTenantViewArguments(passedProperty: property),
     );
   }
 }

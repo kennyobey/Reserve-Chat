@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:resavation/model/top_states_model/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -16,9 +17,14 @@ class StatesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StatesListViewModel>.reactive(
       builder: (context, model, child) {
-        return Scaffold(
-          appBar: buildAppBar(),
-          body: buildBody(model, context),
+        return FocusDetector(
+          onFocusGained: () {
+            model.getData();
+          },
+          child: Scaffold(
+            appBar: buildAppBar(),
+            body: buildBody(model, context),
+          ),
         );
       },
       viewModelBuilder: () => StatesListViewModel(),
@@ -89,17 +95,26 @@ class StatesListView extends StatelessWidget {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
+  Widget buildLoadingWidget() {
+    return GridView.builder(
+        padding: const EdgeInsets.all(0),
+        physics: const BouncingScrollPhysics(),
+        itemCount: 10,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          childAspectRatio: 1 / 1.5,
+          mainAxisSpacing: 10,
         ),
-      ),
-    );
+        itemBuilder: (_, index) {
+          return TopCityCard(
+            image: '',
+            numberOfProperties: 0,
+            shimmerEnabled: true,
+            location: '',
+            onTap: () {},
+          );
+        });
   }
 
   Padding buildBody(StatesListViewModel model, BuildContext context) {
@@ -146,22 +161,26 @@ class StatesListView extends StatelessWidget {
     } else if (topStates.isEmpty) {
       return buildEmptyBody(context);
     } else {
-      return ListView.builder(
-        itemBuilder: (ctx, index) {
-          final topCity = topStates[index];
-
-          return LongCategoriesAndStatesCard(
-            onTap: () => model.goToSearchView(topCity.state ?? ''),
-            image: "",
-            title: topCity.state ?? '',
-            count: "${topCity.numberOfProperties ?? ''} items",
-          );
-        },
-        padding: const EdgeInsets.all(0),
-        controller: model.scrollController,
-        physics: const BouncingScrollPhysics(),
-        itemCount: topStates.length,
-      );
+      return GridView.builder(
+          padding: const EdgeInsets.all(0),
+          physics: const BouncingScrollPhysics(),
+          controller: model.scrollController,
+          itemCount: topStates.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            childAspectRatio: 1 / 1.5,
+            mainAxisSpacing: 10,
+          ),
+          itemBuilder: (_, index) {
+            final topCity = topStates[index];
+            return TopCityCard(
+              image: model.topCitiesImages[index],
+              numberOfProperties: topCity.numberOfProperties ?? 0,
+              location: topCity.state ?? '',
+              onTap: () => model.goToSearchView(topCity.state ?? ''),
+            );
+          });
     }
   }
 }

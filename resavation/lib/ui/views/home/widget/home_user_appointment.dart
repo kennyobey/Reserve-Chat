@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:resavation/ui/shared/colors.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../shared/spacing.dart';
@@ -78,91 +80,119 @@ class HomeUserAppointment extends ViewModelWidget<HomeViewModel> {
     );
   }
 
-  Widget buildBody(HomeViewModel model) {
-    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: getTenantAppointments(model.userData.email),
-      builder: ((context, asyncDataSnapshot) {
-        if (asyncDataSnapshot.hasError) {
-          return buildErrorBody(context);
-        }
-
-        if (asyncDataSnapshot.hasData) {
-          final queryData = asyncDataSnapshot.data;
-          final List<Appointment> userAppointments = queryData?.docs
-                  .map(
-                    (documentSnapshot) => Appointment.fromMap(
-                      documentSnapshot.data(),
-                    ),
-                  )
-                  .toList() ??
-              [];
-
-          return buildSuccessBody(userAppointments, model, context);
-        } else {
-          return buildLoadingWidget();
-        }
-      }),
-    );
+  Widget buildBody(HomeViewModel model, BuildContext context) {
+    if (model.tenantAppointmentLoading) {
+      return buildLoadingWidget();
+    } else if (model.tenantAppointmentHasError) {
+      return buildErrorBody(context);
+    } else {
+      return buildSuccessBody(model.tenantAppointmentModel, model, context);
+    }
   }
 
   Widget buildLoadingWidget() {
-    return Container(
-      height: 300,
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.all(0),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (_, index) {
+        return HomeAppointmentItem(
+          appointment: Appointment(),
+          shimmerEnabled: true,
+          onPressed: () {},
+        );
+      },
+      itemCount: 3,
     );
   }
 
   showItemDialog(Appointment appointment, BuildContext context) async {
-    Widget continueButton = TextButton(
-      child: Text("Okay"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
     String content = '';
 
     if (appointment.status == AppointmentStatus.Declined) {
-      content =
-          'Your appointment with ${appointment.landOwnerName} on  ${getFormattedTime(appointment.appointmentDate ?? 0)}, ${getAppointmentHour(appointment.appointmentStartTime ?? 0)}-${getAppointmentHour(appointment.appointmentEndTime ?? 0)} for the propery at ${appointment.location} was declined';
+      content = 'Your appointment was declined';
     } else if (appointment.status == AppointmentStatus.Passed) {
-      content =
-          'Your appointment with ${appointment.landOwnerName} on  ${getFormattedTime(appointment.appointmentDate ?? 0)}, ${getAppointmentHour(appointment.appointmentStartTime ?? 0)}-${getAppointmentHour(appointment.appointmentEndTime ?? 0)} for the propery at ${appointment.location} has passed';
+      content = 'Your appointment has passed';
     } else if (appointment.status == AppointmentStatus.Booked) {
-      content =
-          'Your appointment with ${appointment.landOwnerName} on  ${getFormattedTime(appointment.appointmentDate ?? 0)}, ${getAppointmentHour(appointment.appointmentStartTime ?? 0)}-${getAppointmentHour(appointment.appointmentEndTime ?? 0)} for the propery at ${appointment.location} has been approved';
+      content = 'Your appointment has been approved';
     } else if (appointment.status == AppointmentStatus.Pending) {
       content =
-          'Your appointment with ${appointment.landOwnerName} on  ${getFormattedTime(appointment.appointmentDate ?? 0)}, ${getAppointmentHour(appointment.appointmentStartTime ?? 0)}-${getAppointmentHour(appointment.appointmentEndTime ?? 0)} for the propery at ${appointment.location} is pending, please check back later for updated information';
+          'Your appointment is pending, please check back later for updated information';
     }
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      titlePadding: EdgeInsets.only(left: 8, top: 8, right: 8),
-      contentPadding: EdgeInsets.only(left: 8, right: 8, top: 5),
-      title: Text("Appointment Details"),
-      content: Text(content),
-      actions: [
-        continueButton,
-      ],
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 5,
+      child: Material(
+        color: Colors.transparent,
+        child: Card(
+          elevation: 0,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Container(
+            width: double.infinity,
+            padding:
+                const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  (appointment.propertyName ?? ''),
+                  style: AppStyle.kBodyRegularBlack16W600.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                verticalSpaceSmall,
+                Text(
+                  '• ' + (appointment.location ?? ''),
+                  style: AppStyle.kBodyRegularBlack14.copyWith(
+                    color: kBlack.withOpacity(0.6),
+                  ),
+                ),
+                verticalSpaceSmall,
+                Text(
+                  '• ${getFormattedTime2(appointment.appointmentDate ?? 0)}, ${getAppointmentHour(appointment.appointmentStartTime ?? 0).toUpperCase()}-${getAppointmentHour(appointment.appointmentEndTime ?? 0).toUpperCase()}',
+                  style: AppStyle.kBodyRegularBlack14.copyWith(
+                    color: kBlack.withOpacity(0.6),
+                  ),
+                ),
+                verticalSpaceSmall,
+                Text(
+                  '• ' + (appointment.landOwnerName ?? ''),
+                  style: AppStyle.kBodyRegularBlack14.copyWith(
+                    color: kBlack.withOpacity(0.6),
+                  ),
+                ),
+                verticalSpaceSmall,
+                Text(
+                  '• ' + content,
+                  style: AppStyle.kBodyRegularBlack14.copyWith(
+                    color: kBlack.withOpacity(0.6),
+                  ),
+                ),
+                verticalSpaceSmall,
+              ],
+            ),
+          ),
+        ),
+      ),
     );
 
-    // show the dialog
-    final result = await showDialog(
+    showGeneralDialog(
       context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
+      barrierLabel: "Item Dialog",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
     );
-    return result;
   }
 
   Widget buildSuccessBody(
@@ -199,7 +229,7 @@ class HomeUserAppointment extends ViewModelWidget<HomeViewModel> {
           title: 'Your Appointments',
         ),
         verticalSpaceSmall,
-        buildBody(model),
+        buildBody(model, context),
       ],
     );
   }
@@ -208,20 +238,16 @@ class HomeUserAppointment extends ViewModelWidget<HomeViewModel> {
 class HomeAppointmentItem extends StatelessWidget {
   final Appointment appointment;
   final VoidCallback onPressed;
-  const HomeAppointmentItem(
-      {Key? key, required this.appointment, required this.onPressed})
-      : super(key: key);
+  final bool shimmerEnabled;
+  const HomeAppointmentItem({
+    Key? key,
+    required this.appointment,
+    required this.onPressed,
+    this.shimmerEnabled = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = appointment.status == AppointmentStatus.Declined
-        ? Colors.red
-        : appointment.status == AppointmentStatus.Passed
-            ? Colors.blueGrey
-            : appointment.status == AppointmentStatus.Booked
-                ? Colors.green
-                : kBlack;
-
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 1,
@@ -231,40 +257,78 @@ class HomeAppointmentItem extends StatelessWidget {
         child: Padding(
           padding:
               const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                appointment.propertyName ?? '',
-                style: AppStyle.kBodyRegularBlack15W500.copyWith(
-                  color: color,
-                ),
-              ),
-              verticalSpaceTiny,
-              Row(
-                children: [
-                  Text(
-                    '${getAppointmentHour(appointment.appointmentStartTime ?? 0)} - ${getAppointmentHour(appointment.appointmentEndTime ?? 0)}',
-                    style: AppStyle.kBodyRegularBlack14W500.copyWith(
-                      color: color,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    appointment.status.name,
-                    style: AppStyle.kBodyRegularBlack14.copyWith(
-                      color: color,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          child: shimmerEnabled
+              ? Shimmer.fromColors(
+                  baseColor: Colors.grey.shade100,
+                  highlightColor: Colors.grey.shade300,
+                  child: shimmerBody(),
+                )
+              : buildBody(),
         ),
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
       ),
+    );
+  }
+
+  Widget shimmerBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          color: kPrimaryColor,
+          width: double.infinity,
+          height: 20,
+        ),
+        verticalSpaceTiny,
+        Container(
+          color: kPrimaryColor,
+          width: double.infinity,
+          height: 20,
+        ),
+      ],
+    );
+  }
+
+  Column buildBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          (appointment.propertyName ?? ''),
+          style: AppStyle.kBodyRegularBlack16W600.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                '${getFormattedTime2(appointment.appointmentDate ?? 0)} - ${getAppointmentHour(appointment.appointmentStartTime ?? 0).toUpperCase()} to ${getAppointmentHour(appointment.appointmentEndTime ?? 0).toUpperCase()}',
+                style: AppStyle.kBodyRegularBlack14.copyWith(
+                  color: kBlack.withOpacity(0.6),
+                ),
+              ),
+            ),
+            horizontalSpaceTiny,
+            Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.shade200,
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Text(
+                appointment.status.name,
+                style: AppStyle.kBodyRegularBlack14.copyWith(
+                  color: kBlack,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

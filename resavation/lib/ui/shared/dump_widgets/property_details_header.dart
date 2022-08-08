@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/model/propety_model/property_image.dart';
-import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
-import 'package:resavation/utility/assets.dart';
 
 class PropertyDetailsHeader extends StatelessWidget {
   final List<PropertyImage> propertyImages;
@@ -66,7 +64,7 @@ class PropertyDetailsHeader extends StatelessWidget {
             right: 0,
           ),
           buildBackButton(topPadding),
-          buildFavouriteButton(topPadding),
+          if (onFavoriteTap != null) buildFavouriteButton(topPadding),
         ],
       ),
     );
@@ -144,15 +142,4 @@ class PropertyDetailsHeader extends StatelessWidget {
       ),
     );
   }
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
-
-  @override
-  double get maxExtent => 300.0;
-
-  @override
-  double get minExtent => 0;
 }

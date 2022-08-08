@@ -1,5 +1,6 @@
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/utility/app_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -26,6 +27,8 @@ class PropertyOwnerSettingsViewModel extends BaseViewModel {
   }
 
   void logout() async {
+    AppPreferences.setRefeshTokenAndAccessRole(
+        token: '', accessRoles: [], tokenType: '');
     await _navigationService.clearStackAndShow(Routes.onboardingView);
   }
 }

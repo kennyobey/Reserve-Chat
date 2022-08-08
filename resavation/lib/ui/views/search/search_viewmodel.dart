@@ -40,8 +40,10 @@ class SearchViewModel extends BaseViewModel {
   SearchViewModel() {
     getInitData();
   }
+  VoidCallback scrollListener = () {};
   attachScrollListener({String query = ''}) {
-    scrollController.addListener(() {
+    scrollController.removeListener(scrollListener);
+    scrollListener = () {
       if (scrollController.position.pixels <=
           scrollController.position.maxScrollExtent - 10) {
         return;
@@ -56,7 +58,8 @@ class SearchViewModel extends BaseViewModel {
           getOldData();
         }
       }
-    });
+    };
+    scrollController.addListener(scrollListener);
   }
 
   void getInitData() async {
@@ -195,8 +198,8 @@ class SearchViewModel extends BaseViewModel {
 
   void goToPropertyDetails(Property property) {
     _navigationService.navigateTo(
-      Routes.propertyDetailsView,
-      arguments: PropertyDetailsViewArguments(passedProperty: property),
+      Routes.propertyDetailsTenantView,
+      arguments: PropertyDetailsTenantViewArguments(passedProperty: property),
     );
   }
 

@@ -23,7 +23,10 @@ class ResavationImage extends StatelessWidget {
         color: kDarkBlue,
         child: Shimmer.fromColors(
           enabled: true,
-          child: SvgPicture.asset(Assets.logo),
+          child: Image.asset(
+            "assets/icons/resavation_logo.png",
+            color: kDarkBlue,
+          ),
           baseColor: kDarkBlue,
           highlightColor: kWhite,
         ),

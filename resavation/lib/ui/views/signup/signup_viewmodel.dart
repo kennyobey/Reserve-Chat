@@ -74,7 +74,7 @@ class SignUpViewModel extends BaseViewModel {
   //  User type UI Logic
 
   updateUserType() {
-    userTypeService.userType();
+    userTypeService.toggleUserType();
     print(userTypeService.isTenant);
     notifyListeners();
   }

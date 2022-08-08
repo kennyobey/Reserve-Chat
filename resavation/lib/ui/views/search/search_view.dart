@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
-import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/smart_widgets/find_your_location.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -19,46 +18,6 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
-  // AlgoliaAPI algoliaAPI = AlgoliaAPI();
-  // String _searchText = "";
-  // List<SearchHit> _hitsList = [];
-
-/*   Future<void> _getSearchResult(String query) async {
-    try {
-      final response = await algoliaAPI.search(query);
-      if (response != null) {
-        final hitsList = (response['hits'] as List).map((json) {
-          return SearchHit.fromJson(json);
-        }).toList();
-        setState(() {
-          _hitsList = hitsList;
-        });
-      } else {
-        setState(() {
-          _hitsList = [];
-        });
-      }
-    } catch (exception) {
-      setState(() {
-        _hitsList = [];
-      });
-    }
-  } */
-
-  @override
-  void initState() {
-    super.initState();
-    /*    _textFieldController.addListener(() {
-      if (_searchText != _textFieldController.text) {
-        setState(() {
-          _searchText = _textFieldController.text;
-        });
-        _getSearchResult(_searchText);
-      }
-    });
-    _getSearchResult(''); */
-  }
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SearchViewModel>.reactive(
@@ -110,16 +69,28 @@ class _SearchViewState extends State<SearchView> {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+  Widget buildLoadingWidget() {
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return PropertyCard(
+          id: -1,
+          onTap: () {},
+          shimmerEnabled: true,
+          image: '',
+          amountPerYear: 0,
+          propertyName: '',
+          address: '',
+          numberOfBathrooms: 0,
+          numberOfCars: 0,
+          numberOfBedrooms: 0,
+          squareFeet: 0.0,
+          isFavoriteTap: false,
+          onFavoriteTap: () async {},
+        );
+      },
+      padding: const EdgeInsets.all(0),
+      physics: const BouncingScrollPhysics(),
+      itemCount: 10,
     );
   }
 
@@ -199,6 +170,7 @@ class _SearchViewState extends State<SearchView> {
                 propertyName: property.propertyName ?? '',
                 address: property.address ?? '',
                 numberOfBathrooms: property.bathTubCount ?? 0,
+                numberOfCars: property.carSlot ?? 0,
                 numberOfBedrooms: property.bedroomCount ?? 0,
                 squareFeet: property.surfaceArea ?? 0.0,
                 isFavoriteTap: property.favourite ?? false,
@@ -251,29 +223,3 @@ class _SearchViewState extends State<SearchView> {
     );
   }
 }
-
-/* class AlgoliaAPI {
-  static const platform = const MethodChannel('com.algolia/api');
-
-  Future<dynamic> search(String query) async {
-    try {
-      var response =
-          await platform.invokeMethod('search', ['instant_search', query]);
-      return jsonDecode(response);
-    } on PlatformException catch (_) {
-      return null;
-    }
-  }
-} */
-
-/* class SearchHit {
-  final String name;
-  final String image;
-
-  SearchHit(this.name, this.image);
-
-  static SearchHit fromJson(Map<String, dynamic> json) {
-    return SearchHit(json['name'], json['image']);
-  }
-}
- */

@@ -28,8 +28,13 @@ class BottomNavBar extends ViewModelWidget<MainViewModel> {
               ? Icons.favorite_border
               : Icons.calendar_view_month_outlined,
         ),
-        buildItem(2, model.returnUserType() ? 'Search' : 'Analytics', model,
-            model.returnUserType() ? Icons.search : Icons.analytics),
+        buildItem(
+          2,
+          model.returnUserType() ? 'Search' : 'Properties',
+          // model.returnUserType() ? 'Search' : 'Analytics',
+          model,
+          model.returnUserType() ? Icons.search : Icons.analytics,
+        ),
         buildItem(3, 'Settings', model, Icons.settings_outlined),
       ],
 

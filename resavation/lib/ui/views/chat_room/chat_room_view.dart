@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
-import 'package:resavation/ui/views/audio_call/pickup_layout.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
 import 'package:resavation/ui/views/chat_room/widgets/avatar_card_widget.dart';
 import 'package:resavation/ui/views/chat_room/widgets/chat_input_field.dart';
@@ -22,10 +21,6 @@ class ChatRoomView extends StatefulWidget {
 class _ChatRoomViewState extends State<ChatRoomView> {
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(scaffold: buildBody());
-  }
-
-  ViewModelBuilder<ChatRoomViewModel> buildBody() {
     return ViewModelBuilder<ChatRoomViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: buildAppBar(model),
@@ -71,11 +66,6 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                             },
                             itemCount: allChatModel.length,
                           ),
-                          /*    ListView.builder(
-                              itemCount: demeChatMessages.length,
-                              itemBuilder: (context, index) =>
-                                  Message(message: demeChatMessages[index]),
-                            ),*/
                         ),
                         const SizedBox(height: 5),
                         ChatInputField(
@@ -147,12 +137,11 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     final otherUserImage =
         widget.chatModel?.usersProfileImage[otherUserEmail] ?? '';
     return AppBar(
-      elevation: 2.0,
+      elevation: 1,
       iconTheme: IconThemeData(
         color: Colors.black, //change your color here
       ),
       backgroundColor: kWhite,
-      leading: null,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -169,23 +158,6 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         ],
       ),
       actions: [
-/*         InkWell(
-          onTap: () {
-            model.startCall(
-              otherUserEmail: otherUserEmail,
-              otherUserName: otherUserName,
-              otherUserImage: otherUserImage,
-              chatID: widget.chatModel?.chatId ?? '',
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.call,
-              color: kBlack,
-            ),
-          ),
-        ), */
         InkWell(
           onTap: () {
             model.startCall(
@@ -198,7 +170,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(
-              Icons.videocam_outlined,
+              Icons.videocam_rounded,
               color: kBlack,
             ),
           ),
@@ -242,63 +214,61 @@ class MessageBox extends StatelessWidget {
             fontSize: 10,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w400,
+            color: isRight ? Colors.white : Colors.black,
           ),
     );
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Column(
-        crossAxisAlignment:
-            isRight ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 5,
-              horizontal: 5,
-            ),
-            constraints: BoxConstraints(maxWidth: width * 0.7),
-            decoration: BoxDecoration(
-              color: isRight ? kChatTextColor : kPrimaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.all(
-                const Radius.circular(5),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (imageUrl.isNotEmpty)
-                  Container(
-                    width: double.infinity,
-                    height: 130,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        const Radius.circular(5),
-                      ),
-                    ),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      onTap: onTap,
-                      child: ResavationImage(
-                        image: imageUrl,
-                      ),
-                    ),
-                  ),
-                if (message.isNotEmpty && imageUrl.isNotEmpty)
-                  const SizedBox(
-                    height: 8,
-                  ),
-                if (message.isNotEmpty)
-                  Text(
-                    message,
-                    style: bodyText2,
-                  ),
-              ],
-            ),
+    return Align(
+      alignment: isRight ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 5,
+          horizontal: 5,
+        ),
+        margin: const EdgeInsets.only(bottom: 10),
+        constraints: BoxConstraints(maxWidth: width * 0.7),
+        decoration: BoxDecoration(
+          color:
+              isRight ? kPrimaryColor.withOpacity(0.8) : kGray.withOpacity(0.3),
+          borderRadius: BorderRadius.all(
+            const Radius.circular(5),
           ),
-          const SizedBox(height: 3),
-          date,
-        ],
+        ),
+        child: Column(
+          crossAxisAlignment:
+              isRight ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (imageUrl.isNotEmpty)
+              Container(
+                width: double.infinity,
+                height: 130,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    const Radius.circular(5),
+                  ),
+                ),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: onTap,
+                  child: ResavationImage(
+                    image: imageUrl,
+                  ),
+                ),
+              ),
+            if (message.isNotEmpty && imageUrl.isNotEmpty)
+              const SizedBox(
+                height: 8,
+              ),
+            if (message.isNotEmpty)
+              Text(
+                message,
+                style: bodyText2,
+              ),
+            const SizedBox(height: 5),
+            date,
+          ],
+        ),
       ),
     );
   }

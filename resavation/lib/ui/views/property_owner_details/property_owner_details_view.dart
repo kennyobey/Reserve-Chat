@@ -2,10 +2,11 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:resavation/app/app.router.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_elevated_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
-import 'package:resavation/ui/shared/dump_widgets/select_country.dart';
+
 import 'package:resavation/ui/shared/spacing.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/property_owner_details/property_owner_details_viewmodel.dart';
@@ -24,6 +25,213 @@ class PropertyOwnerDetailsView extends StatefulWidget {
 }
 
 class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
+  Future<bool> showSaveConfirmationDialog() async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Save property',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Do you wish to store your property for later editing? Your progress will be recovered when you upload again.',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    'Yes',
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(
+                    'No',
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      )),
+    );
+
+    final shouldShow = await showGeneralDialog<bool>(
+      context: context,
+      barrierLabel: "Save property confirmation",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+    if (shouldShow == null) {
+      return false;
+    } else {
+      return shouldShow;
+    }
+  }
+
+  showSavePropertyDialog(PropertyOwnerDetailsViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.blue,
+                valueColor: AlwaysStoppedAnimation(kWhite),
+              ),
+            ),
+            verticalSpaceMedium,
+            Text(
+              'Saving Property',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Saving property, please do not cancel until success',
+              textAlign: TextAlign.center,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+          ],
+        ),
+      )),
+    );
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Saving Property",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+
+    try {
+      await model.saveStage2Data();
+
+      Navigator.of(context).pop();
+      showSucessDialog(model);
+    } catch (exception) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred while saving your data'),
+        ),
+      );
+    }
+  }
+
+  showSucessDialog(PropertyOwnerDetailsViewModel model) async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 5,
+      child: Material(
+          child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Property Saved',
+              style: AppStyle.kBodyRegularBlack16W600,
+            ),
+            verticalSpaceTiny,
+            Text(
+              'Your property has been successfully saved and will be shown on your next property listing.',
+              textAlign: TextAlign.start,
+              style: AppStyle.kBodyRegularBlack14,
+            ),
+            verticalSpaceSmall,
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Okay',
+                ),
+              ),
+            ),
+          ],
+        ),
+      )),
+    );
+
+    await showGeneralDialog(
+      context: context,
+      barrierLabel: "Upload Property Success",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (_, __, ___) => dialog,
+      transitionBuilder: (_, anim, __, child) => FadeTransition(
+        opacity: Tween(begin: 0.0, end: 1.0).animate(anim),
+        child: child,
+      ),
+    );
+
+    model.uploadTypeService.clearStage1();
+    model.navigationService.clearStackAndShow(Routes.mainView);
+  }
+
   Column buildErrorBody() {
     final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
@@ -74,6 +282,32 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
             title: "Details",
             centerTitle: false,
             backEnabled: false,
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  if (model.selectedState != null) {
+                    if (model.uploadFormKey.currentState!.validate()) {
+                      bool shouldSave = await showSaveConfirmationDialog();
+                      if (shouldSave) {
+                        showSavePropertyDialog(model);
+                      }
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please pick your state'),
+                      ),
+                    );
+                  }
+                },
+                child: Text(
+                  'SAVE',
+                  style: AppStyle.kBodyRegularBlack14.copyWith(
+                    color: kPrimaryColor,
+                  ),
+                ),
+              )
+            ],
           ),
           backgroundColor: Colors.white,
           body: model.isLoading
@@ -98,6 +332,8 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
           Expanded(
             child: ResavationElevatedButton(
               child: Text("Back"),
+              color: Colors.grey,
+              foregroundColor: Colors.black,
               onPressed: () => Navigator.pop(context),
             ),
           ),

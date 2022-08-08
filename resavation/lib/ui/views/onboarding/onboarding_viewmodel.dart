@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
+import 'package:resavation/utility/app_preferences.dart';
 import 'package:resavation/utility/assets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -17,17 +18,13 @@ class OnboardingViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  setOnboardingVisibility() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboarding_visibility', false);
-  }
-
   void goToMainView() {
     _navigationService.navigateTo(Routes.mainView);
   }
 
   void goToSignInView() async {
-    await setOnboardingVisibility();
+    AppPreferences.setOnBoardingStatus(status: true);
+
     _navigationService.navigateTo(Routes.logInView);
   }
 

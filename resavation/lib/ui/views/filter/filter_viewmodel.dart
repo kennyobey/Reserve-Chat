@@ -2,25 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
-import 'package:resavation/model/filter/amenity_count.dart';
-import 'package:resavation/model/filter/availability.dart' as avail;
-import 'package:resavation/model/filter/filter.dart';
-import 'package:resavation/model/filter/price_range.dart';
+import 'package:resavation/model/filter.dart';
 import 'package:resavation/services/core/http_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-enum Availability {
-  Shortlet,
-  Months,
-  Year,
-  More,
-}
-
-enum LetType {
-  Sale,
-  Rent,
-}
 
 class FilterViewModel extends BaseViewModel {
   final oCcy = NumberFormat("#,##0.00", "en_US");
@@ -36,9 +21,10 @@ class FilterViewModel extends BaseViewModel {
 
   getPropertyType() async {
     hasErrorOnData = false;
-    isLoading = false;
+    isLoading = true;
     notifyListeners();
     try {
+      propertyStatusList = await _httpService.getPropertyStatus();
       final types = await Future.wait([
         _httpService.getRetailPropertyTypes(),
         _httpService.getCommercialPropertyTypes(),
@@ -63,40 +49,23 @@ class FilterViewModel extends BaseViewModel {
         '${String.fromCharCode(8358)}${oCcy.format(_rangeValues.start.round())}',
         '${String.fromCharCode(8358)}${oCcy.format(_rangeValues.end.round())}',
       );
+  bool rangeLabelsValid = false;
 
-  List<Availability> availablities = [];
-  List<LetType> letTypes = [];
+  List<String> propertyStatusList = ['---Empty---'];
 
   double surfaceArea = 0;
+  bool surfaceAreaValid = false;
 
   int carCount = 0;
+  bool carValid = false;
   int batTubCount = 0;
+  bool batTubValid = false;
   int bedroomCount = 0;
+  bool bedrooomValid = false;
 
   String? propertyType;
+  String? propertyStatus;
   List<String> propertyTypes = ['--Empty--'];
-
-  void onDurationChanged(Availability? value) {
-    if (value != null) {
-      if (availablities.contains(value)) {
-        availablities.remove(value);
-      } else {
-        availablities.add(value);
-      }
-      notifyListeners();
-    }
-  }
-
-  void onLetChanged(LetType? value) {
-    if (value != null) {
-      if (letTypes.contains(value)) {
-        letTypes.remove(value);
-      } else {
-        letTypes.add(value);
-      }
-      notifyListeners();
-    }
-  }
 
   void onPropertyTypeChanged(value) {
     if (value is String) {
@@ -108,10 +77,13 @@ class FilterViewModel extends BaseViewModel {
   void onIncrement(int position) {
     if (position == 0) {
       bedroomCount++;
+      bedrooomValid = true;
     } else if (position == 1) {
       batTubCount++;
+      batTubValid = true;
     } else {
       carCount++;
+      carValid = true;
     }
     notifyListeners();
   }
@@ -119,48 +91,39 @@ class FilterViewModel extends BaseViewModel {
   void onDecrement(int position) {
     if (position == 0 && bedroomCount != 0) {
       bedroomCount--;
+      bedrooomValid = true;
     } else if (position == 1 && batTubCount != 0) {
       batTubCount--;
+      batTubValid = true;
     } else if (carCount != 0) {
       carCount--;
+      carValid = true;
     }
     notifyListeners();
   }
 
   void onRangeSliderChanged(RangeValues value) {
     _rangeValues = value;
+    rangeLabelsValid = true;
     notifyListeners();
   }
 
   void onSliderChanged(double value) {
     surfaceArea = value;
+    surfaceAreaValid = true;
     notifyListeners();
   }
 
   void applyFilter() {
-    final availiability = avail.Availability(
-      moreThanOneYear: availablities.contains(Availability.More),
-      withinOneYear: availablities.contains(Availability.Year),
-      withinSixMonth: availablities.contains(Availability.Months),
-      shortLet: availablities.contains(Availability.Shortlet),
-    );
-    final amenityCount = AmenityCount(
-      bathTubCount: batTubCount,
-      bedRoomCount: bedroomCount,
-      carSlotCount: carCount,
-    );
-
-    final priceRange = PriceRange(
-      min: _rangeValues.start.round(),
-      max: _rangeValues.end.round(),
-    );
-    final filter = Filter(
-      availability: availiability,
-      surfaceArea: surfaceArea == 0 ? null : surfaceArea,
-      priceRange: priceRange,
-      amenityCount: amenityCount,
-      propertyType: propertyType,
-    );
+    final filter = Filter();
+    filter.bathrooms = bedrooomValid ? bedroomCount : null;
+    filter.bathtubs = batTubValid ? batTubCount : null;
+    filter.packingSpace = carValid ? carCount : null;
+    filter.minPrice = rangeLabelsValid ? _rangeValues.start.round() : null;
+    filter.maxPrice = rangeLabelsValid ? _rangeValues.end.round() : null;
+    filter.surfaceArea = surfaceAreaValid ? surfaceArea : null;
+    filter.propertyType = propertyType;
+    filter.propertyStatus = propertyStatus;
 
     _navigationService.replaceWith(
       Routes.filterDisplay,
@@ -170,5 +133,10 @@ class FilterViewModel extends BaseViewModel {
 
   void goToSearchView() {
     _navigationService.navigateTo(Routes.searchView);
+  }
+
+  void onPropertyStatusValueChange(value) {
+    propertyStatus = value;
+    notifyListeners();
   }
 }

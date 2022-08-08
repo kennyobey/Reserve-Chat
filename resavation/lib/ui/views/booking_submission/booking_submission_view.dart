@@ -58,7 +58,7 @@ class BookingSubmissionView extends StatelessWidget {
                 const Divider(),
                 verticalSpaceTiny,
                 buildDescription(),
-                verticalSpaceMedium,
+                verticalSpaceSmall,
                 buildCheckInDate(context),
                 verticalSpaceMedium,
                 buildCouponCode(),
@@ -181,7 +181,7 @@ class BookingSubmissionView extends StatelessWidget {
   }
 
   Widget buildDescription() {
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
@@ -189,44 +189,43 @@ class BookingSubmissionView extends StatelessWidget {
             image: property.propertyImages?[0].imageUrl ?? '',
           ),
           height: 120,
-          width: 120,
+          width: double.infinity,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
           ),
         ),
-        horizontalSpaceTiny,
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                property.propertyName ?? '',
-                style: AppStyle.kBodyRegularBlack15W500,
+        verticalSpaceSmall,
+        Text(
+          property.propertyName ?? '',
+          style: AppStyle.kBodyRegularBlack16W600,
+        ),
+        verticalSpaceTiny,
+        _PropertyDetailItem(
+          title: "Surface Area",
+          description: (property.surfaceArea?.toString() ?? '') + ' sqft',
+        ),
+        _PropertyDetailItem(
+          title: "Payment Option",
+          description: (choiceOfPayment.name),
+        ),
+        verticalSpaceSmall,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.location_on,
+              size: 16,
+              color: Colors.red,
+            ),
+            horizontalSpaceSmall,
+            Expanded(
+              child: Text(
+                '${property.address}, ${property.city}, ${property.state}, ${property.country}',
+                style: AppStyle.kBodySmallRegular12,
               ),
-              verticalSpaceTiny,
-              Text(
-                'Address: ' + (property.address ?? ''),
-                style: AppStyle.kBodySmallRegular,
-              ),
-              Text(
-                'City: ' + (property.city ?? ''),
-                style: AppStyle.kBodySmallRegular,
-              ),
-              Text(
-                'Country: ' + (property.country ?? ''),
-                style: AppStyle.kBodySmallRegular,
-              ),
-              Text(
-                'Surface Area: ' + (property.surfaceArea?.toString() ?? ''),
-                style: AppStyle.kBodySmallRegular,
-              ),
-              Text(
-                'Payment Option: ' + (choiceOfPayment.name),
-                style: AppStyle.kBodySmallRegular,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
@@ -512,6 +511,45 @@ class PaymentDetails extends StatelessWidget {
                 ? AppStyle.kBodyRegularBlack15
                     .copyWith(color: kBlack.withOpacity(0.8))
                 : AppStyle.kBodyRegularBlack15W500,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PropertyDetailItem extends StatelessWidget {
+  final String title;
+  final String description;
+
+  const _PropertyDetailItem(
+      {Key? key, required this.title, required this.description})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              title,
+              style: AppStyle.kBodySmallRegular12W500,
+            ),
+          ),
+          horizontalSpaceTiny,
+          Expanded(
+            flex: 3,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                description,
+                style: AppStyle.kBodySmallRegular12,
+              ),
+            ),
           ),
         ],
       ),

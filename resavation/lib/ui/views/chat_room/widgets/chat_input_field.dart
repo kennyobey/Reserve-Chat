@@ -57,7 +57,7 @@ class ChatInputField extends StatelessWidget {
                         height: 30,
                         width: 30,
                         alignment: Alignment.center,
-                        child: Icon(Icons.cancel_outlined, color: kWhite),
+                        child: Icon(Icons.cancel_rounded, color: kWhite),
                       ),
                     ),
                   ),
@@ -107,7 +107,7 @@ class ChatInputField extends StatelessWidget {
                           SizedBox(width: kDefaultPadding / 4),
                           buildInputField(model),
                           ChatInputIcon(
-                            icon: Icons.attach_file,
+                            icon: Icons.attach_file_rounded,
                             onTap: () {
                               try {
                                 model.showImagePicker(false);
@@ -129,7 +129,7 @@ class ChatInputField extends StatelessWidget {
                           SizedBox(width: kDefaultPadding / 4),
                           ChatInputIcon(
                             onTap: () => model.showImagePicker(true),
-                            icon: Icons.camera_alt_outlined,
+                            icon: Icons.camera_alt_rounded,
                           ),
                         ],
                       ),
@@ -147,7 +147,7 @@ class ChatInputField extends StatelessWidget {
   ChatInputIcon buildEmojiField(
       BuildContext context, ChatInputFieldViewModel model) {
     return ChatInputIcon(
-      icon: Icons.sentiment_satisfied_alt_outlined,
+      icon: Icons.sentiment_satisfied_alt_rounded,
       onTap: () {
         showModalBottomSheet(
             backgroundColor: kTransparent,
@@ -195,7 +195,7 @@ class ChatInputField extends StatelessWidget {
           InkWell(
         onTap: () => sendChatMessage(model, context),
         child: Icon(
-          Icons.send,
+          Icons.send_rounded,
           color: kPrimaryColor,
           size: 22,
         ),

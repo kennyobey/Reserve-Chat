@@ -1,20 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/audio_call/permission_checker.dart';
-
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import '../../../model/call_model.dart';
 import '../../shared/dump_widgets/resavation_image.dart';
 import '../../shared/text_styles.dart';
 import 'audio_call_view.dart';
 import 'call_methods.dart';
 
-class PickupScreen extends StatelessWidget {
+class PickupScreen extends StatefulWidget {
   final CallModel call;
-  final CallMethods callMethods = CallMethods();
 
   PickupScreen({
     required this.call,
   });
+
+  @override
+  State<PickupScreen> createState() => _PickupScreenState();
+}
+
+class _PickupScreenState extends State<PickupScreen> {
+  final CallMethods callMethods = CallMethods();
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterRingtonePlayer.play(
+      android: AndroidSounds.ringtone,
+      ios: IosSounds.glass,
+      looping: true, // Android only - API >= 28
+      volume: 0.5, // Android only - API >= 28
+      asAlarm: false, // Android only - all APIs
+    );
+  }
+
+  @override
+  void dispose() {
+    FlutterRingtonePlayer.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +60,11 @@ class PickupScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
               ),
-              child: ResavationImage(image: call.callerPic),
+              child: ResavationImage(image: widget.call.callerPic),
             ),
             const SizedBox(height: 30),
             Text(
-              'Incoming call from ${call.callerName}',
+              'Incoming call from ${widget.call.callerName}',
               style: AppStyle.kBodyRegularBlack16W600,
               textAlign: TextAlign.center,
             ),
@@ -52,7 +76,7 @@ class PickupScreen extends StatelessWidget {
                 InkWell(
                   splashColor: Colors.transparent,
                   onTap: () async {
-                    await callMethods.endCall(call: call);
+                    await callMethods.endCall(call: widget.call);
                   },
                   child: Container(
                     width: 60,
@@ -74,8 +98,8 @@ class PickupScreen extends StatelessWidget {
                       ? Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                AudioCallView(call: call, reciever: true),
+                            builder: (context) => AudioCallView(
+                                call: widget.call, reciever: true),
                           ),
                         )
                       : {},

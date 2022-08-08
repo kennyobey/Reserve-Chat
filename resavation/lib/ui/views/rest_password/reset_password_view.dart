@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_button.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textfield.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_textspan.dart';
@@ -9,13 +10,15 @@ import 'package:resavation/ui/views/rest_password/reset_password_viewmodel.dart'
 import 'package:stacked/stacked.dart';
 
 class ResetPasswordView extends StatelessWidget {
-  const ResetPasswordView({Key? key}) : super(key: key);
+  final bool isForgotPassword;
+  const ResetPasswordView({Key? key, this.isForgotPassword = true})
+      : super(key: key);
 
   List<Widget> buildEmailField(ResetPasswordViewModel model) {
     return [
       Text(
         'Email',
-        style: AppStyle.kBodyRegularBlack14,
+        style: AppStyle.kBodyRegularBlack14W500,
       ),
       ResavationTextField(
         textInputAction: TextInputAction.next,
@@ -96,7 +99,7 @@ class ResetPasswordView extends StatelessWidget {
     return [
       Text(
         'Password',
-        style: AppStyle.kBodyRegularBlack14,
+        style: AppStyle.kBodyRegularBlack14W500,
       ),
       ResavationTextField(
         textInputAction: TextInputAction.next,
@@ -122,7 +125,7 @@ class ResetPasswordView extends StatelessWidget {
     return [
       Text(
         'Verify Password',
-        style: AppStyle.kBodyRegularBlack14,
+        style: AppStyle.kBodyRegularBlack14W500,
       ),
       ResavationTextField(
         obscureText: true,
@@ -163,10 +166,6 @@ class ResetPasswordView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             leading: BackButton(
               color: Colors.black,
-            ),
-            title: Text(
-              'Reset Password',
-              style: AppStyle.kHeading0,
             ),
           ),
           body: Column(
@@ -235,20 +234,23 @@ class ResetPasswordView extends StatelessWidget {
 
   Widget buildStage1Widget(ResetPasswordViewModel model, BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 15, right: 15),
       child: Form(
         key: model.stage1FormKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             verticalSpaceMedium,
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Enter the e-mail address associated with the account. We’ll e-mail a code to reset your password.",
-                style: AppStyle.kBodyRegularBlack14,
-                textAlign: TextAlign.center,
-              ),
+            Text(
+              isForgotPassword ? "Forgot Password" : "Change Password",
+              style: AppStyle.kHeading1,
+              textAlign: TextAlign.center,
+            ),
+            verticalSpaceSmall,
+            Text(
+              "Enter the e-mail address associated with your account and we’ll e-mail a code to reset your password.",
+              style: AppStyle.kBodyRegularBlack14,
+              textAlign: TextAlign.start,
             ),
             verticalSpaceMedium,
             ...buildEmailField(model),
@@ -284,24 +286,58 @@ class ResetPasswordView extends StatelessWidget {
 
   Widget buildStage2Widget(ResetPasswordViewModel model, BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 15, right: 15),
       child: Form(
         key: model.stage2FormKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             verticalSpaceMedium,
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Enter the OTP that was sent to your account.",
-                style: AppStyle.kBodyRegularBlack14,
-                textAlign: TextAlign.center,
-              ),
+            Text(
+              "Recovery Code",
+              style: AppStyle.kHeading1,
+              textAlign: TextAlign.center,
+            ),
+            verticalSpaceSmall,
+            Text(
+              "An OTP has been sent to yout mail. Kindly enter the OTP that was sent to you below.",
+              style: AppStyle.kBodyRegularBlack14,
+              textAlign: TextAlign.start,
             ),
             verticalSpaceLarge,
             ...buildOTPField(model),
-            verticalSpaceLarge,
+            verticalSpaceMedium,
+            InkWell(
+              onTap: () async {
+                try {
+                  await model.sendOTP();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text('An OTP has been sent to your mail')),
+                  );
+                } catch (exception) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(exception.toString())),
+                  );
+                }
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Didn't recieve the code? ",
+                    style: AppStyle.kBodyRegularBlack14,
+                  ),
+                  Text(
+                    "Resend",
+                    style: AppStyle.kBodyRegularBlack14
+                        .copyWith(color: kLightButtonColor),
+                  ),
+                ],
+              ),
+            ),
+            verticalSpaceMedium,
             ResavationButton(
               title: 'Proceed',
               width: MediaQuery.of(context).size.width,
@@ -322,20 +358,23 @@ class ResetPasswordView extends StatelessWidget {
 
   Widget buildStage3Widget(ResetPasswordViewModel model, BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 15, right: 15),
       child: Form(
         key: model.stage3FormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             verticalSpaceMedium,
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Enter the new password for your account",
-                style: AppStyle.kBodyRegularBlack14,
-                textAlign: TextAlign.center,
-              ),
+            Text(
+              "Account Password",
+              style: AppStyle.kHeading1,
+              textAlign: TextAlign.start,
+            ),
+            verticalSpaceSmall,
+            Text(
+              "Enter the new password for your account",
+              style: AppStyle.kBodyRegularBlack14,
+              textAlign: TextAlign.center,
             ),
             verticalSpaceMedium,
             ...buildPasswordField(model),

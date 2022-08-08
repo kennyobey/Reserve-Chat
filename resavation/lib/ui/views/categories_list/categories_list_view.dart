@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:resavation/model/top_categories_model/content.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_app_bar.dart';
 import 'package:resavation/ui/shared/spacing.dart';
@@ -16,9 +17,14 @@ class CategoriesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<CategoriesListViewModel>.reactive(
       builder: (context, model, child) {
-        return Scaffold(
-          appBar: buildAppBar(),
-          body: buildBody(model, context),
+        return FocusDetector(
+          onFocusGained: () {
+            model.getData();
+          },
+          child: Scaffold(
+            appBar: buildAppBar(),
+            body: buildBody(model, context),
+          ),
         );
       },
       viewModelBuilder: () => CategoriesListViewModel(),
@@ -33,7 +39,7 @@ class CategoriesListView extends StatelessWidget {
   }
 
   Column buildErrorBody(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final bodyText1 = textTheme.bodyText1!
         .copyWith(fontSize: 16, fontWeight: FontWeight.w500);
     final bodyText2 = textTheme.bodyText2!.copyWith(fontSize: 14);
@@ -88,17 +94,25 @@ class CategoriesListView extends StatelessWidget {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
+  Widget buildLoadingWidget() {
+    return GridView.builder(
+        padding: const EdgeInsets.all(0),
+        physics: const BouncingScrollPhysics(),
+        itemCount: 10,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          childAspectRatio: 1 / 1,
+          mainAxisSpacing: 10,
         ),
-      ),
-    );
+        itemBuilder: (_, index) {
+          return CategoryCard(
+            image: '',
+            shimmerEnabled: true,
+            category: '',
+            onTap: () {},
+          );
+        });
   }
 
   Padding buildBody(CategoriesListViewModel model, BuildContext context) {
@@ -136,8 +150,11 @@ class CategoriesListView extends StatelessWidget {
     );
   }
 
-  Widget buildBodyItem(List<TopCategoriesContent> topCategories,
-      CategoriesListViewModel model, BuildContext context) {
+  Widget buildBodyItem(
+    List<TopCategoriesContent> topCategories,
+    CategoriesListViewModel model,
+    BuildContext context,
+  ) {
     if (model.isLoading) {
       return buildLoadingWidget();
     } else if (model.hasErrorOnData) {
@@ -145,23 +162,26 @@ class CategoriesListView extends StatelessWidget {
     } else if (topCategories.isEmpty) {
       return buildEmptyBody(context);
     } else {
-      return ListView.builder(
-        itemBuilder: (ctx, index) {
-          final topCategory = topCategories[index];
-
-          return LongCategoriesAndStatesCard(
-            onTap: () =>
-                model.goToSearchView(topCategory.propertyCategory ?? ''),
-            image: "",
-            title: topCategory.propertyCategory ?? '',
-            count: "${topCategory.numberOfProperties ?? ''} items",
-          );
-        },
-        padding: const EdgeInsets.all(0),
-        physics: const BouncingScrollPhysics(),
-        controller: model.scrollController,
-        itemCount: topCategories.length,
-      );
+      return GridView.builder(
+          padding: const EdgeInsets.all(0),
+          physics: const BouncingScrollPhysics(),
+          controller: model.scrollController,
+          itemCount: topCategories.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            childAspectRatio: 1 / 1,
+            mainAxisSpacing: 10,
+          ),
+          itemBuilder: (_, index) {
+            final topCategory = topCategories[index];
+            return CategoryCard(
+              image: model.topCategoriesImages[index],
+              category: topCategory.propertyCategory ?? '',
+              onTap: () =>
+                  model.goToSearchView(topCategory.propertyCategory ?? ''),
+            );
+          });
     }
   }
 }

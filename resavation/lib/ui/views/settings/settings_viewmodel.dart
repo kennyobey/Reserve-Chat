@@ -18,9 +18,8 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   /// updates the user to a property owner
-  updateUserType() {
-    _userTypeService.userType();
-    print(_userTypeService.isTenant);
+  toggleUserType() {
+    _userTypeService.toggleUserType();
     notifyListeners();
   }
 
@@ -44,6 +43,7 @@ class SettingsViewModel extends BaseViewModel {
   void logout() async {
     _userTypeService.error.value = "";
     await _navigationService.clearStackAndShow(Routes.logInView);
+    _userTypeService.serCurrentIndex(0);
   }
 
   void showComingSoon() {
@@ -54,8 +54,9 @@ class SettingsViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.propertyOwnerSpaceTypeView);
   }
 
-  void goToPropertyOwnerHomePageView() {
-    _navigationService.navigateTo(Routes.mainView);
+  void resetView() {
+    _userTypeService.serCurrentIndex(0);
+    notifyListeners();
   }
 
   void goToEditProfileView() {
@@ -63,6 +64,11 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   void goToResetPasswordView() {
-    _navigationService.navigateTo(Routes.resetPasswordView);
+    _navigationService.navigateTo(Routes.resetPasswordView,
+        arguments: ResetPasswordViewArguments(isForgotPassword: false));
+  }
+
+  bool get hasOwnerRole {
+    return _userTypeService.hasOwnerRole;
   }
 }

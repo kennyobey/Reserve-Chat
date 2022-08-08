@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resavation/model/filter/filter.dart';
+import 'package:resavation/model/filter.dart';
 import 'package:resavation/model/propety_model/property_model.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_card.dart';
 import 'package:resavation/ui/shared/dump_widgets/properties_sort.dart';
@@ -49,16 +49,28 @@ class FilterDisplay extends StatelessWidget {
     );
   }
 
-  Center buildLoadingWidget() {
-    return const Center(
-      child: SizedBox(
-        height: 40,
-        width: 40,
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: Colors.blue,
-          valueColor: AlwaysStoppedAnimation(kWhite),
-        ),
-      ),
+  Widget buildLoadingWidget() {
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return PropertyCard(
+          id: -1,
+          onTap: () {},
+          image: '',
+          amountPerYear: 0,
+          propertyName: '',
+          address: '',
+          numberOfBathrooms: 0,
+          numberOfBedrooms: 0,
+          numberOfCars: 0,
+          squareFeet: 0.0,
+          shimmerEnabled: true,
+          isFavoriteTap: false,
+          onFavoriteTap: () {},
+        );
+      },
+      padding: const EdgeInsets.all(0),
+      physics: const BouncingScrollPhysics(),
+      itemCount: 8,
     );
   }
 
@@ -140,6 +152,7 @@ class FilterDisplay extends StatelessWidget {
                 address: property.address ?? '',
                 numberOfBathrooms: property.bathTubCount ?? 0,
                 numberOfBedrooms: property.bedroomCount ?? 0,
+                numberOfCars: property.carSlot ?? 0,
                 squareFeet: property.surfaceArea ?? 0.0,
                 isFavoriteTap: property.favourite ?? false,
                 onFavoriteTap: () async {
