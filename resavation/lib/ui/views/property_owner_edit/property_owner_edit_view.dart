@@ -235,7 +235,6 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
-                  color: kSecondaryColor,
                   child: Text("Update Property Amenities"),
                   onPressed: () async {
                     showLoadingData(context);
@@ -303,7 +302,6 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
-                  color: kSecondaryColor,
                   child: Text("Update Property Rules"),
                   onPressed: () async {
                     showLoadingData(context);
@@ -360,7 +358,6 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
-                  color: kSecondaryColor,
                   child: Text("Update Availiablity Period(s)"),
                   onPressed: () async {
                     if (model.startDate.millisecondsSinceEpoch ==
@@ -432,6 +429,8 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
+                  color: Colors.grey,
+                  foregroundColor: kBlack,
                   child: Text("Add New Image"),
                   onPressed: () async {
                     if (model.selectedImages.length >= 10) {
@@ -462,7 +461,6 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
-                  color: kSecondaryColor,
                   child: Text("Update Property Images"),
                   onPressed: () async {
                     showLoadingData(context);

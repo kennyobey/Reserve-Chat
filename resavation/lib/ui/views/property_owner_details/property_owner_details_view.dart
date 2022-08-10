@@ -333,7 +333,7 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
             child: ResavationElevatedButton(
               child: Text("Back"),
               color: Colors.grey,
-              foregroundColor: Colors.black,
+              foregroundColor: Colors.white,
               onPressed: () => Navigator.pop(context),
             ),
           ),
