@@ -220,7 +220,7 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
-                  color: Colors.grey,
+                  color: kGray,
                   foregroundColor: kBlack,
                   child: Text("Add New Amenity"),
                   onPressed: () {
@@ -288,7 +288,7 @@ class _PropertyOwnerEditPropertyViewState
                 width: double.infinity,
                 child: ResavationElevatedButton(
                   child: Text("Add New Rule"),
-                  color: Colors.grey,
+                  color: kGray,
                   foregroundColor: kBlack,
                   onPressed: () {
                     showAddItemDialog(
@@ -429,7 +429,7 @@ class _PropertyOwnerEditPropertyViewState
               SizedBox(
                 width: double.infinity,
                 child: ResavationElevatedButton(
-                  color: Colors.grey,
+                  color: kGray,
                   foregroundColor: kBlack,
                   child: Text("Add New Image"),
                   onPressed: () async {

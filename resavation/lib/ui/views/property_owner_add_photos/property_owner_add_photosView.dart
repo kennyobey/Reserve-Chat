@@ -301,8 +301,8 @@ class _PropertyOwnerAddPhotosViewState
               Expanded(
                 child: ResavationElevatedButton(
                   child: Text("Back"),
-                  color: Colors.grey,
-                  foregroundColor: Colors.white,
+                  color: kGray,
+                  foregroundColor: kBlack,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),

@@ -347,6 +347,8 @@ class _PropertyOwnerPaymentViewState extends State<PropertyOwnerPaymentView> {
               Expanded(
                 child: ResavationElevatedButton(
                   child: Text("Back"),
+                  color: kGray,
+                  foregroundColor: kBlack,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),

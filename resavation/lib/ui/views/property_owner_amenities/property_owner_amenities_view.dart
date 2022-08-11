@@ -272,8 +272,8 @@ class _PropertyOwnerAmenitiesViewState
               Expanded(
                 child: ResavationElevatedButton(
                   child: Text("Back"),
-                  color: Colors.grey,
-                  foregroundColor: Colors.white,
+                  color: kGray,
+                  foregroundColor: kBlack,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
@@ -324,7 +324,7 @@ class _PropertyOwnerAmenitiesViewState
                 width: double.infinity,
                 child: ResavationElevatedButton(
                   child: Text("Add new amenity"),
-                  color: Colors.grey,
+                  color: kGray,
                   foregroundColor: kBlack,
                   onPressed: () {
                     showAddItemDialog(
@@ -363,7 +363,7 @@ class _PropertyOwnerAmenitiesViewState
                 width: double.infinity,
                 child: ResavationElevatedButton(
                   child: Text("Add new rule"),
-                  color: Colors.grey,
+                  color: kGray,
                   foregroundColor: kBlack,
                   onPressed: () {
                     showAddItemDialog(
