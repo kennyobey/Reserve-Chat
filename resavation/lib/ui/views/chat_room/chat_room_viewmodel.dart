@@ -82,6 +82,7 @@ class ChatRoomViewModel extends BaseViewModel {
         callerPic: userData.imageUrl,
         receiverId: otherUserEmail,
         receiverName: otherUserName,
+        callUtcTime: DateTime.now().toUtc().millisecondsSinceEpoch,
         receiverPic: otherUserImage,
         channelId: chatID,
         hasDialled: false,

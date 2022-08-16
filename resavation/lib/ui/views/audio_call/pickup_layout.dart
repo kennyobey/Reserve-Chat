@@ -31,7 +31,11 @@ class AppPickUpLayout extends StatelessWidget {
                       snapshot.hasData &&
                       snapshot.data!.data() != null) {
                     CallModel call = CallModel.fromMap(snapshot.data!.data()!);
-                    if (!call.hasDialled) {
+
+                    final callTime = call.callUtcTime;
+                    final currentTime =
+                        DateTime.now().toUtc().millisecondsSinceEpoch;
+                    if (!call.hasDialled && currentTime <= callTime + 180000) {
                       return PickupScreen(call: call);
                     }
                   }

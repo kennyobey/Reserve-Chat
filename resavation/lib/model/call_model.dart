@@ -7,17 +7,18 @@ class CallModel {
   String receiverPic;
   String channelId;
   bool hasDialled;
+  int callUtcTime;
 
-  CallModel({
-    required this.callerId,
-    required this.callerName,
-    required this.callerPic,
-    required this.receiverId,
-    required this.receiverName,
-    required this.receiverPic,
-    required this.channelId,
-    required this.hasDialled,
-  });
+  CallModel(
+      {required this.callerId,
+      required this.callerName,
+      required this.callerPic,
+      required this.receiverId,
+      required this.receiverName,
+      required this.receiverPic,
+      required this.channelId,
+      required this.hasDialled,
+      required this.callUtcTime});
 
   // to map
   Map<String, dynamic> toMap(CallModel call) {
@@ -30,12 +31,14 @@ class CallModel {
     callMap["receiver_pic"] = call.receiverPic;
     callMap["channel_id"] = call.channelId;
     callMap["has_dialled"] = call.hasDialled;
+    callMap["call_utc"] = call.callUtcTime;
     return callMap;
   }
 
   static CallModel fromMap(Map callMap) {
     return CallModel(
       callerId: callMap["caller_id"] ?? '',
+      callUtcTime: callMap['call_utc'] ?? 0,
       callerName: callMap["caller_name"] ?? '',
       callerPic: callMap["caller_pic"] ?? '',
       receiverId: callMap["receiver_id"] ?? '',

@@ -122,12 +122,50 @@ class _AudioCallViewBodyState extends State<AudioCallViewBody> {
   late StreamSubscription callStreamSubscription;
   bool hasPicked = false;
   bool muted = false;
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
     addPostFrameCallback();
     initializeAgora();
+    if (!widget.reciever) {
+      checkTime();
+    }
+  }
+
+  checkTime() {
+    Future.delayed(Duration(milliseconds: 180000), () async {
+      if (hasPicked) {
+        return;
+      } else {
+        /// show prompt here and end call if needed
+        AlertDialog alert = AlertDialog(
+          contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          titlePadding: EdgeInsets.only(left: 5, right: 5, top: 8, bottom: 5),
+          title: Text("Call Termination"),
+          content: Text(
+              "Your call would be terminated  has been no response for 3 minutes."),
+          actions: [
+            TextButton(
+              child: Text("Okay"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+        callMethods.endCall(
+          call: widget.call!,
+        );
+      }
+    });
   }
 
   Future<void> initializeAgora() async {
@@ -221,13 +259,13 @@ class _AudioCallViewBodyState extends State<AudioCallViewBody> {
           RawMaterialButton(
             onPressed: _onToggleMute,
             child: Icon(
-              muted ? Icons.mic : Icons.mic_off,
-              color: muted ? Colors.white : Colors.blueAccent,
+              muted ? Icons.mic_off : Icons.mic,
+              color: muted ? Colors.blueAccent : Colors.white,
               size: 20.0,
             ),
             shape: CircleBorder(),
             elevation: 2.0,
-            fillColor: muted ? Colors.blueAccent : Colors.white,
+            fillColor: muted ? Colors.white : Colors.blueAccent,
             padding: const EdgeInsets.all(12.0),
           ),
           RawMaterialButton(
