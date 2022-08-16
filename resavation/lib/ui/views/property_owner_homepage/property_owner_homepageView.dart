@@ -62,7 +62,7 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
                 child: Text(
                   'Start New Listing',
                 ),
-                color: Colors.grey,
+                color: kGray,
                 foregroundColor: kBlack,
                 onPressed: () {
                   Navigator.of(context).pop(false);
@@ -73,8 +73,6 @@ class _PropertyOwnerHomePageViewState extends State<PropertyOwnerHomePageView> {
             SizedBox(
               width: double.infinity,
               child: ResavationElevatedButton(
-                color: Colors.grey,
-                foregroundColor: kBlack,
                 child: Text('Resume Previous Listing'),
                 onPressed: () {
                   Navigator.of(context).pop(true);
