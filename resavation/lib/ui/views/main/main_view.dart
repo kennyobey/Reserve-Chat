@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/views/favorite/favorite_view.dart';
 import 'package:resavation/ui/views/home/home_view.dart';
 import 'package:resavation/ui/views/main/main_viewmodel.dart';
