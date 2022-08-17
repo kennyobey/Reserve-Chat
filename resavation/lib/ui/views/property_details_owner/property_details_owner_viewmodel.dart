@@ -77,22 +77,29 @@ class PropertyDetailsOwnerViewModel extends BaseViewModel {
     );
   }
 
-  Future<bool> gotToChatRoomView(
+  Future<void> gotToChatRoomView(
       OwnerBookedPropertyContent? ownerPropertyContent) async {
-    if (userService.userData.email ==
-        (ownerPropertyContent?.user?.email ?? '-')) {
-      return true;
-    } else {
-      final chatModel = await MessagesViewModel.createChat(
-        ownerPropertyContent?.user?.email?.trim() ?? '-',
-        (ownerPropertyContent?.user?.firstName?.trim() ?? '') +
-            ' ' +
-            (ownerPropertyContent?.user?.lastName?.trim() ?? ''),
-        ownerPropertyContent?.user?.imageUrl?.trim() ?? '',
-      );
-      _navigationService.navigateTo(Routes.chatRoomView,
-          arguments: ChatRoomViewArguments(chatModel: chatModel));
-      return false;
+    try {
+      if (ownerPropertyContent?.user?.email == null ||
+          ownerPropertyContent!.user!.email!.isEmpty) {
+        return Future.error('An error occurred fetching the user details');
+      } else if (userService.userData.email ==
+          (ownerPropertyContent.user?.email ?? '')) {
+        return Future.error('You can not create a chat room with your self');
+      } else {
+        final chatModel = await MessagesViewModel.createChat(
+          ownerPropertyContent.user?.email?.trim() ?? '-',
+          (ownerPropertyContent.user?.firstName?.trim() ?? '') +
+              ' ' +
+              (ownerPropertyContent.user?.lastName?.trim() ?? ''),
+          ownerPropertyContent.user?.imageUrl?.trim() ?? '',
+        );
+        _navigationService.navigateTo(Routes.chatRoomView,
+            arguments: ChatRoomViewArguments(chatModel: chatModel));
+        return;
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
     }
   }
 }

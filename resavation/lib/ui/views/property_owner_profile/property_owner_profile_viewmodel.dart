@@ -107,18 +107,22 @@ class PropertyOwnerProfileViewModel extends BaseViewModel {
     );
   }
 
-  Future<bool> gotToChatRoomView(User user) async {
-    if (userService.userData.email == (user.email ?? '-')) {
-      return true;
-    } else {
-      final chatModel = await MessagesViewModel.createChat(
-        user.email?.trim() ?? '-',
-        (user.firstName?.trim() ?? '') + ' ' + (user.lastName?.trim() ?? ''),
-        user.imageUrl?.trim() ?? '',
-      );
-      _navigationService.navigateTo(Routes.chatRoomView,
-          arguments: ChatRoomViewArguments(chatModel: chatModel));
-      return false;
+  Future<void> gotToChatRoomView(User user) async {
+    try {
+      if (userService.userData.email == (user.email ?? '')) {
+        return Future.error('You can not create a chat room with your self');
+      } else {
+        final chatModel = await MessagesViewModel.createChat(
+          user.email?.trim() ?? '-',
+          (user.firstName?.trim() ?? '') + ' ' + (user.lastName?.trim() ?? ''),
+          user.imageUrl?.trim() ?? '',
+        );
+        _navigationService.navigateTo(Routes.chatRoomView,
+            arguments: ChatRoomViewArguments(chatModel: chatModel));
+        return;
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
     }
   }
 

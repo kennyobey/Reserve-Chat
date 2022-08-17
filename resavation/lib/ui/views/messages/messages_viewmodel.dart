@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:intl/intl.dart';
 import 'package:resavation/app/app.locator.dart';
 import 'package:resavation/app/app.router.dart';
@@ -59,47 +60,53 @@ class MessagesViewModel extends BaseViewModel {
       String otherUserName, String otherUserImage) async {
     try {
       final _userTypeService = locator<UserTypeService>();
-      String userEmail = _userTypeService.userData.email;
+      String userEmail = _userTypeService.userData.email.trim();
       LoginModel userData = _userTypeService.userData;
 
-      final List<String> users = [userEmail, otherUserEmail]..sort();
+      final List<String> users = [userEmail, otherUserEmail.trim()]..sort();
       final chatId = users.join('-');
 
       var doc = FirebaseFirestore.instance.collection('chat').doc(chatId);
+
       final documentReference = await doc.get();
 
       late ChatModel chatModel;
+
       if (documentReference.exists) {
         //edit item here
         ChatModel oldModel = ChatModel.fromJson(documentReference.data() ?? {});
         oldModel.messageCount[userEmail] = 0;
         oldModel.usersName[userEmail] =
-            userData.firstName + " " + userData.lastName;
-        oldModel.usersProfileImage[userEmail] = userData.imageUrl;
+            userData.firstName.trim() + " " + userData.lastName.trim();
+        oldModel.usersProfileImage[userEmail] = userData.imageUrl.trim();
         chatModel = oldModel;
       } else {
         //create new
         chatModel = ChatModel(
-            chatId: chatId,
+            chatId: chatId.trim(),
             usersId: users,
             messageCount: {otherUserEmail: 0, userEmail: 0},
             lastMessage: ChatMessageModel(
                 message: '', userId: '', timestamp: 0, imageUrl: ''),
             lastMessageTimeStamp: DateTime.now().millisecondsSinceEpoch,
             usersName: {
-              otherUserEmail: otherUserName,
-              userEmail: userData.firstName + " " + userData.lastName,
+              otherUserEmail: otherUserName.trim(),
+              userEmail:
+                  userData.firstName.trim() + " " + userData.lastName.trim(),
             },
             usersProfileImage: {
-              otherUserEmail: otherUserImage,
-              userEmail: userData.imageUrl,
+              otherUserEmail: otherUserImage.trim(),
+              userEmail: userData.imageUrl.trim(),
             });
       }
 
       await doc.set(chatModel.toJson(), SetOptions(merge: true));
+
       return chatModel;
     } catch (exception) {
-      return Future.error('An error occurred, please try again later');
+      return Future.error(
+        exception.toString(),
+      );
     }
   }
 

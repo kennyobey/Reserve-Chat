@@ -80,20 +80,27 @@ class PropertyDetailsTenantViewModel extends BaseViewModel {
     }
   }
 
-  Future<bool> gotToChatRoomView() async {
-    if (userService.userData.email == (property?.user?.email ?? '-')) {
-      return true;
-    } else {
-      final chatModel = await MessagesViewModel.createChat(
-        property?.user?.email?.trim() ?? '-',
-        (property?.user?.firstName?.trim() ?? '') +
-            ' ' +
-            (property?.user?.lastName?.trim() ?? ''),
-        property?.user?.imageUrl?.trim() ?? '',
-      );
-      _navigationService.navigateTo(Routes.chatRoomView,
-          arguments: ChatRoomViewArguments(chatModel: chatModel));
-      return false;
+  Future<void> gotToChatRoomView() async {
+    try {
+      if (property?.user?.email == null || property!.user!.email!.isEmpty) {
+        return Future.error('An error occurred fetching the user details');
+      } else if (userService.userData.email == (property?.user?.email ?? '')) {
+        return Future.error('You can not create a chat room with your self');
+      } else {
+        final chatModel = await MessagesViewModel.createChat(
+          property?.user?.email?.trim() ?? '',
+          (property?.user?.firstName?.trim() ?? '') +
+              ' ' +
+              (property?.user?.lastName?.trim() ?? ''),
+          property?.user?.imageUrl?.trim() ?? '',
+        );
+        _navigationService.navigateTo(Routes.chatRoomView,
+            arguments: ChatRoomViewArguments(chatModel: chatModel));
+        return;
+      }
+    } catch (exception) {
+      debugPrint(exception.toString());
+      return Future.error(exception.toString());
     }
   }
 

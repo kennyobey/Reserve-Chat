@@ -427,12 +427,14 @@ class PropertyDetailsTenantView extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Setting up chatroom, please wait')),
                   );
-                  final error = await model.gotToChatRoomView();
-                  if (error) {
+                  try {
+                    await model.gotToChatRoomView();
+                  } catch (exception) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                            'You can not create a chat room with your self'),
+                          exception.toString(),
+                        ),
                       ),
                     );
                   }
