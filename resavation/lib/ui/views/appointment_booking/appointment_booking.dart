@@ -57,9 +57,9 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                   const Divider(),
                   verticalSpaceSmall,
                   CalendarDatePicker(
-                    initialDate: model.initialData,
-                    firstDate: model.initialData,
-                    lastDate: DateTime(model.initialData.year + 1),
+                    initialDate: model.initialDate,
+                    firstDate: model.initialDate,
+                    lastDate: model.endDate,
                     onDateChanged: model.onDateChanged,
                   ),
                   verticalSpaceSmall,

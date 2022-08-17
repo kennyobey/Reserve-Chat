@@ -113,7 +113,14 @@ class AppointmentBookingViewModel extends BaseViewModel {
   final _userService = locator<UserTypeService>();
 
   DateTime _selectedDate = DateTime.now();
-  DateTime initialData = DateTime.now();
+  DateTime date = DateTime.now();
+
+  DateTime get initialDate => date.add(
+        Duration(days: 1),
+      );
+  DateTime get endDate => date.add(
+        Duration(days: 365),
+      );
 
   Appointment? selectedAppointment;
   LoginModel get userData => _userService.userData;
@@ -125,11 +132,9 @@ class AppointmentBookingViewModel extends BaseViewModel {
       );
 
   AppointmentBookingViewModel() {
-    final currentTime = DateTime.now();
-    _selectedDate =
-        DateTime(currentTime.year, currentTime.month, currentTime.day);
-    initialData =
-        DateTime(currentTime.year, currentTime.month, currentTime.day);
+    _selectedDate = date.add(
+      Duration(days: 1),
+    );
   }
   bool isAppointmentSelected(Appointment appointment) {
     if (selectedAppointment == null) {

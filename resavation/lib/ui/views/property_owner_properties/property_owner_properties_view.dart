@@ -353,6 +353,7 @@ class PropertyOwnerPropertiesCard extends StatelessWidget {
                 children: [
                   Container(
                     height: 100,
+                    width: double.infinity,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),

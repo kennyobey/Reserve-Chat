@@ -77,13 +77,14 @@ class ChatRoomViewModel extends BaseViewModel {
     if (status) {
       var userData = _userTypeService.userData;
       CallModel call = CallModel(
-        callerId: userData.email,
-        callerName: userData.firstName + " " + userData.lastName,
-        callerPic: userData.imageUrl,
-        receiverId: otherUserEmail,
-        receiverName: otherUserName,
-        receiverPic: otherUserImage,
-        channelId: chatID,
+        callerId: userData.email.trim(),
+        callerName: userData.firstName.trim() + " " + userData.lastName.trim(),
+        callerPic: userData.imageUrl.trim(),
+        receiverId: otherUserEmail.trim(),
+        receiverName: otherUserName.trim(),
+        callUtcTime: DateTime.now().toUtc().millisecondsSinceEpoch,
+        receiverPic: otherUserImage.trim(),
+        channelId: chatID.trim(),
         hasDialled: false,
       );
 
