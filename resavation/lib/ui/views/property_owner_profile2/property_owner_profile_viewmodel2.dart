@@ -140,7 +140,7 @@ class PropertyOwnerProfileViewModel2 extends BaseViewModel {
   }
 
   Future<bool> gotToChatRoomView(User user) async {
-    if (userService.userData.email == (user.email ?? '-')) {
+    if (userService.userData.email == (user.email ?? '')) {
       return true;
     } else {
       final chatModel = await MessagesViewModel.createChat(

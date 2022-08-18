@@ -40,12 +40,14 @@ class _PropertyOwnerProfileViewState extends State<PropertyOwnerProfileView> {
                       SnackBar(
                           content: Text('Setting up chatroom, please wait')),
                     );
-                    final error = await model.gotToChatRoomView(widget.user);
-                    if (error) {
+                    try {
+                      await model.gotToChatRoomView(widget.user);
+                    } catch (exception) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                              'You can not create a chat room with your self'),
+                            exception.toString(),
+                          ),
                         ),
                       );
                     }
