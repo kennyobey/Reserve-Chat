@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
 import 'package:resavation/ui/shared/text_styles.dart';
 
@@ -41,7 +42,11 @@ class AvatarCard extends StatelessWidget {
                   ),
                   Text(
                     name,
-                    style: AppStyle.kBodyBoldBlack,
+                    style: AppStyle.kBodyRegularBlack14W600.copyWith(
+                      color: kBlack,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
 
                   /*   Text(

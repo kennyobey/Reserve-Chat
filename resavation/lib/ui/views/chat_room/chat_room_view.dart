@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:resavation/ui/shared/colors.dart';
 import 'package:resavation/ui/shared/dump_widgets/resavation_image.dart';
+import 'package:resavation/ui/shared/text_styles.dart';
 import 'package:resavation/ui/views/chat_room/chat_room_viewmodel.dart';
 import 'package:resavation/ui/views/chat_room/widgets/avatar_card_widget.dart';
 import 'package:resavation/ui/views/chat_room/widgets/chat_input_field.dart';
@@ -198,12 +199,11 @@ class MessageBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-    final bodyText2 = textTheme.bodyText2!.copyWith(
+    final bodyText2 = AppStyle.kBodyRegularBlack14W600.copyWith(
       fontSize: 14,
       overflow: TextOverflow.clip,
       color: isRight ? Colors.white : Colors.black,
-      fontWeight: FontWeight.w400,
+      fontWeight: !isRight ? FontWeight.w400 : FontWeight.w300,
     );
 
     final width = MediaQuery.of(context).size.width;
@@ -212,7 +212,6 @@ class MessageBox extends StatelessWidget {
       time,
       style: Theme.of(context).textTheme.headline1!.copyWith(
             fontSize: 10,
-            fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w400,
             color: isRight ? Colors.white : Colors.black,
           ),
@@ -227,8 +226,7 @@ class MessageBox extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         constraints: BoxConstraints(maxWidth: width * 0.7),
         decoration: BoxDecoration(
-          color:
-              isRight ? kPrimaryColor.withOpacity(0.8) : kGray.withOpacity(0.3),
+          color: isRight ? kPrimaryColor : kGray,
           borderRadius: BorderRadius.all(
             const Radius.circular(5),
           ),

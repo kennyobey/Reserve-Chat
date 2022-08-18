@@ -156,7 +156,11 @@ class MessagesView extends StatelessWidget {
       ),
       title: Text(
         'Messages',
-        style: AppStyle.kBodyBold.copyWith(color: kBlack),
+        style: AppStyle.kBodyRegularBlack14W600.copyWith(
+          color: kBlack,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       actions: [
         Padding(
@@ -287,7 +291,11 @@ class MessagesCard extends StatelessWidget {
         children: [
           Text(
             userName,
-            style: AppStyle.kBodyBold,
+            style: AppStyle.kBodyRegularBlack14W600.copyWith(
+              color: kBlack,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const SizedBox(height: 5),
           Text(
