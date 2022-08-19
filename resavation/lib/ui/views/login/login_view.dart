@@ -38,7 +38,7 @@ class _LogInViewState extends State<LogInView> {
           }
           return null;
         },
-        hintText: 'queenameh@gmail.com',
+        hintText: 'yourname@gmail.com',
       ),
       verticalSpaceSmall,
     ];
