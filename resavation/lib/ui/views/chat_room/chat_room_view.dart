@@ -30,7 +30,8 @@ class _ChatRoomViewState extends State<ChatRoomView> {
             Expanded(
               child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: ChatRoomViewModel.getChatMessages(
-                    widget.chatModel?.chatId ?? ''),
+                  widget.chatModel?.chatId ?? '',
+                ),
                 builder: (ctx, asyncDataSnapshot) {
                   if (asyncDataSnapshot.hasError) {
                     return buildErrorBody(ctx);
@@ -226,7 +227,7 @@ class MessageBox extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         constraints: BoxConstraints(maxWidth: width * 0.7),
         decoration: BoxDecoration(
-          color: isRight ? kPrimaryColor : kGray,
+          color: isRight ? kDarkGrey : kGray,
           borderRadius: BorderRadius.all(
             const Radius.circular(5),
           ),
