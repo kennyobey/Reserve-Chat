@@ -27,7 +27,7 @@ class FindYourLocation extends StatelessWidget {
             controller: controller,
             elevation: 0.0,
             showPrefix: true,
-            hintText: 'Enter your search',
+            hintText: 'Enter your address',
             fillColors: kWhite,
             onFieldSubmitted: onFieldSubmitted,
           ),
