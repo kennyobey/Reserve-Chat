@@ -34,7 +34,7 @@ class _VerifyUserAccountState extends State<VerifyUserAccount> {
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
+      border: Border.all(color: Colors.white),
       borderRadius: BorderRadius.circular(3),
     );
 
