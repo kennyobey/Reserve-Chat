@@ -283,7 +283,7 @@ class PendingItem extends StatelessWidget {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: kPrimaryColor,
+                        color: kGreen,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(

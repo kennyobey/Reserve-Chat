@@ -15,6 +15,7 @@ class ResavationElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
+        elevation: MaterialStateProperty.all<double>(0.0),
         foregroundColor: foregroundColor == null
             ? null
             : MaterialStateProperty.all<Color>(foregroundColor!),

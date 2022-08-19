@@ -185,7 +185,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.firstName ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -195,7 +195,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.lastName ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -205,7 +205,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.aboutMe ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -217,7 +217,7 @@ class _UserProfileViewState extends State<UserProfileView> {
         model.userProfile?.dateOfBirth == null
             ? ''
             : DateFormat('dd-MM-yyyy').format(model.userProfile!.dateOfBirth!),
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -227,7 +227,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.email ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -237,7 +237,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.phoneNumber ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -247,7 +247,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.gender ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -257,7 +257,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.occupation ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceSmall,
       const Divider(),
@@ -276,7 +276,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.country ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -286,7 +286,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.state ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -296,7 +296,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.city ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -306,7 +306,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.address ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMedium,
       Text(
@@ -316,7 +316,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       verticalSpaceTiny,
       Text(
         model.userProfile?.postalCode ?? "",
-        style: AppStyle.kBodyRegularBlack14W500.copyWith(color: kGray),
+        style: AppStyle.kBodyRegularBlack12W500.copyWith(color: kBlack),
       ),
       verticalSpaceMassive,
     ]);

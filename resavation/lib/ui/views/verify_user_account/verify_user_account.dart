@@ -28,14 +28,14 @@ class _VerifyUserAccountState extends State<VerifyUserAccount> {
           color: Color.fromRGBO(30, 60, 87, 1),
           fontWeight: FontWeight.w600),
       decoration: BoxDecoration(
-        border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(3),
       ),
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
       border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(3),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
@@ -78,33 +78,44 @@ class _VerifyUserAccountState extends State<VerifyUserAccount> {
       builder: (context, model, child) => Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Form(
               key: model.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Spacer(),
-                  SvgPicture.asset(
-                    'assets/icons/email.svg',
-                    height: 250,
-                    width: 250,
-                    fit: BoxFit.contain,
-                  ),
+                  // const Spacer(),
+                  verticalSpaceMedium,
+                  verticalSpaceMedium,
                   verticalSpaceMedium,
                   Align(
-                    alignment: Alignment.center,
+                    alignment: Alignment.topLeft,
                     child: Text(
-                      "Please enter the OTP that was sent to your account.",
+                      "Enter 4-digit\nOTP code",
+                      style: AppStyle.kHeading1,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  // SvgPicture.asset(
+                  //   'assets/icons/email.svg',
+                  //   height: 250,
+                  //   width: 250,
+                  //   fit: BoxFit.contain,
+                  // ),
+                  verticalSpaceMedium,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "The recovery code was sent to your \nemail.\nPlease senter the code.",
                       style: AppStyle.kBodyRegularBlack15W500,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                     ),
                   ),
                   verticalSpaceLarge,
                   ...buildOTPField(model),
                   verticalSpaceLarge,
                   ResavationButton(
-                    title: 'Verify OTP',
+                    title: 'SUBMIT',
                     isLoadingEnabled: model.isLoadingEnabled,
                     width: MediaQuery.of(context).size.width,
                     onTap: () async {
@@ -118,7 +129,7 @@ class _VerifyUserAccountState extends State<VerifyUserAccount> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                              "Your account has been verified, please proceed to Login ",
+                              "Your account has been verified, please proceed to Login",
                             ),
                           ),
                         );
