@@ -476,9 +476,6 @@ class _PropertyOwnerDetailsViewState extends State<PropertyOwnerDetailsView> {
             verticalSpaceTiny,
             DropdownButtonHideUnderline(
               child: DropdownButton2(
-                dropdownDecoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
                 hint: Text(
                   "Select State",
                   style: AppStyle.kBodyRegular,
